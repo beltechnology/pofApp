@@ -37,8 +37,7 @@ class TeamController extends Controller
      */
     public function store(Request $request)
     {
-        //$this->validate($request, ['teamId' => 'required', 'teamName' => 'required_with:teamName|alpha_num', 'teamLocation' => 'required', 'teamLeader' => 'required', 'teamCreationDate' => 'required', 'teamEndDate' => 'required', 'teamCode' => 'requried', 'description' => 'required', ]);
-
+        $this->validate($request, ['teamName' => 'required', 'teamLocation' => 'required', 'teamCreationDate' => 'required', 'teamEndDate' => 'required', ]);
         Team::create($request->all());
 
         Session::flash('flash_message', 'Team added!');
@@ -83,8 +82,7 @@ class TeamController extends Controller
      */
     public function update($id, Request $request)
     {
-        //$this->validate($request, ['teamId' => 'required', 'teamName' => 'required_with:teamName|alpha_num', 'teamLocation' => 'required', 'teamLeader' => 'required', 'teamCreationDate' => 'required', 'teamEndDate' => 'required', 'teamCode' => 'requried', 'description' => 'required', ]);
-
+        $this->validate($request, ['teamName' => 'required', 'teamLocation' => 'required', 'teamCreationDate' => 'required', 'teamEndDate' => 'required', ]);
         $team = Team::findOrFail($id);
         $team->update($request->all());
 
