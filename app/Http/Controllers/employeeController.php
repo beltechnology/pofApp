@@ -56,7 +56,7 @@ class employeeController extends Controller
      */
     public function store(Request $request)
     {
-		 $this->validate($request, ['employeeName' => 'required', 'dob' => 'required', 'address' => 'required', 'state' => 'required', 'district' => 'required', 'city' => 'required', 'pinCode' => 'required', 'primaryMobile' => 'required', 'secondaryMobile' => 'required', 'emailAddress' => 'required', 'designation' => 'required', 'dateOfJoining' => 'required', ]);	
+		 $this->validate($request, ['employeeName' => 'required', 'dob' => 'required', 'address' => 'required', 'state' => 'required', 'district' => 'required', 'city' => 'required', 'pinCode' => 'required', 'primaryMobile' => 'required', 'emailAddress' => 'required', 'designation' => 'required', 'dateOfJoining' => 'required', ]);	
 		 
 	 employee::create([
         'employeeId' => $request['employeeId'],
@@ -65,10 +65,9 @@ class employeeController extends Controller
         'state' => $request['state'],
 		'district' => $request['district'],
 		'city' => $request['city'],
-		'pincode' => $request['pinCode'],
 		'designation' => $request['designation'],
 		'dob' => $request['dob'],
-		'sess' => $request['city'],
+		'sessionYear' => $request['sessionYear'],
 					]);
 	entity::create([
 		'entityId' => $request['entityId'],
@@ -80,6 +79,7 @@ class employeeController extends Controller
 		'districtId' => $request['district'],
 		'cityId' => $request['city'],
 		'addressLine1' => $request['address'],
+		'pincode' => $request['pinCode'],
     ]);
 	emailaddress::create([
 		'entityId' => $request['entityId'],

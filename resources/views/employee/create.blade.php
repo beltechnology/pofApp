@@ -74,7 +74,7 @@
              <div class="form-group {{ $errors->has('secondaryMobile') ? 'has-error' : ''}}">
                 {!! Form::label('secondaryMobile', 'Secondary Mobile', ['class' => 'col-sm-5  control-label']) !!}
                 <div class="col-sm-6">
-                    {!! Form::text('secondaryMobile', null, ['class' => 'form-control','required' => 'required']) !!}
+                    {!! Form::text('secondaryMobile', null, ['class' => 'form-control']) !!}
                     {!! $errors->first('secondaryMobile', '<p class="help-block">:message</p>') !!}
                 </div>
             </div> 
