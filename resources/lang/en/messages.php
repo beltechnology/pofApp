@@ -20,6 +20,8 @@ return [
 	'ADD'=>'Add',
 	'EMPLOYEE_LIST'=>'Employee List',
 	'EMPLOYEE_ID' => 'Employee Id',
+	'EMPLOYEE_NAME' => 'Employee Name',
+	'CONTACT_NUMBER' => 'Contact Number',
 	'NAME' => 'Name',
 	'DOB' => 'Dob',
 	'PRIMARY_MOBILE' => 'Primary Mobile',
