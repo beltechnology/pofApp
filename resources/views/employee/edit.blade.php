@@ -12,9 +12,9 @@
     ]) !!}
 
                <div class=" col-md-6">
-                    {!! Form::hidden('employeeId',\DB::table('employees')->max('employeeId')+1, null, ['class' => 'form-control','required' => 'required'],['name'=>'employeeid']) !!}
+                    {!! Form::hidden('employeeId',null, ['class' => 'form-control'],['name'=>'employeeid']) !!}
                 
-                    {!! Form::hidden('entityId',\DB::table('entitys')->max('entityId')+1, null, ['class' => 'form-control','required' => 'required'],['name'=>'entityId']) !!}
+                    {!! Form::hidden('entityId', null, ['class' => 'form-control'],['name'=>'entityId']) !!}
                
                      
             <div class="form-group {{ $errors->has('employeeName') ? 'has-error' : ''}}">
