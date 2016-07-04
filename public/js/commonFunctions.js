@@ -15,5 +15,9 @@
     });
 	$(document).ready(function(){
 		
-		//alert();
+		$('.date').datetimepicker({
+                    format: "DD/MM/YYYY",
+					pickTime: false
+                });
+
 	});

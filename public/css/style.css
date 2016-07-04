@@ -268,37 +268,37 @@ a {
 /* Original */
 
 
-table {
+.main-table table {
     width: 100%;
     display:block;
 	  font-size:12px;
 }
 
-thead {
+.main-table thead {
     display: inline-block;
     width: 100%;
     height: 33px;
 }
 
-tbody {
+.main-table tbody {
     height: 384px;
     display: inline-block;
     width: 100%;
     overflow: auto;
 }
 
-.table-heading {
+.main-table .table-heading {
     border-top: 2px solid #e1e1e1;
     border-bottom: 2px solid #e1e1e1;
 }
 
-td, th {
+.main-table td, th {
     text-align: left;
     padding:0px;
 	width:137px;
 }
 
-tr{border-bottom:1px solid #aaa;
+.main-table tr{border-bottom:1px solid #aaa;
 }
 
 .main-table span {
@@ -505,4 +505,11 @@ label{margin-left: 20px;}
     color: #0088cf;
     background-color: transparent;
     border-color: transparent;
+}
+.input-group.date .input-group-addon span {
+    cursor: pointer;
+    display: block;
+    font-size: 20px;
+    height: 20px;
+    width: 20px;
 }

@@ -20,8 +20,11 @@
             </div>
             <div class="form-group {{ $errors->has('dob') ? 'has-error' : ''}}">
                 {!! Form::label('dob', 'Dob', ['class' => 'col-sm-5  control-label']) !!}
-                <div class="col-sm-6">
+                <div class="col-sm-6 input-group date">
                     {!! Form::text('dob', null, ['class' => 'form-control','required' => 'required']) !!}
+					<span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
                     {!! $errors->first('dob', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>   
@@ -74,7 +77,7 @@
              <div class="form-group {{ $errors->has('secondaryMobile') ? 'has-error' : ''}}">
                 {!! Form::label('secondaryMobile', 'Secondary Mobile', ['class' => 'col-sm-5  control-label']) !!}
                 <div class="col-sm-6">
-                    {!! Form::text('secondaryMobile', null, ['class' => 'form-control']) !!}
+                    {!! Form::text('secondaryMobile', null, ['class' => 'form-control','required' => 'required']) !!}
                     {!! $errors->first('secondaryMobile', '<p class="help-block">:message</p>') !!}
                 </div>
             </div> 
@@ -95,8 +98,11 @@
             </div>
             <div class="form-group {{ $errors->has('dateOfJoining') ? 'has-error' : ''}}">
                 {!! Form::label('dateOfJoining', 'Date Of Joining', ['class' => 'col-sm-5  control-label']) !!}
-                <div class="col-sm-6">
+                <div class="col-sm-6 input-group date">
                     {!! Form::text('dateOfJoining', null, ['class' => 'form-control','required' => 'required']) !!}
+					<span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
                     {!! $errors->first('dateOfJoining', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>
@@ -117,6 +123,7 @@
         </div>
     </div>
     </div>
+
     {!! Form::close() !!}
 
     @if ($errors->any())

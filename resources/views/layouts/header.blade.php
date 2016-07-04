@@ -3,21 +3,22 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>POF India</title>
-<link rel="stylesheet" type="text/css" href="../../css/bootstrap.css"/>
 <link rel="stylesheet" type="text/css" href="../../css/bootstrap.min.css"/>
+<link rel="stylesheet" type="text/css" href="../../css/bootstrap.css"/>
+<link rel="stylesheet" type="text/css" href="../../css/bootstrap-datetimepicker.min.css"/>
 <link rel="stylesheet" type="text/css" href="../../css/style.css"/>
-<link rel="stylesheet" type="text/css" href="../../css/datepicker.css"/>
 <link rel="stylesheet" type="text/css" href="../../font-awesome/css/font-awesome.min.css">
 <link rel="stylesheet" type="text/css" href="../../font-awesome/css/font-awesome.css">
 <link href='//fonts.googleapis.com/css?family=RobotoDraft:regular,bold,italic,thin,light,bolditalic,black,medium&lang=en' rel='stylesheet' type='text/css'>
 
 <!-- jQuery library -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="../../js/jquery.min.js"></script>
 <!-- Latest compiled JavaScript -->
-<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<script src="../../js/bootstrap.min.js"></script>
  <script type="text/javascript" src="../../js/bootstrap.min.js"></script>
  <script type="text/javascript" src="../../js/bootstrap.js"></script>
-   <script type="text/javascript" src="../../js/bootstrap-datepicker"></script>
+<script type="text/javascript" src="../../js/moment.js"></script>
+<script type="text/javascript" src="../../js/bootstrap-datetimepicker.min.js"></script>
    <script type="text/javascript" src="../../js/commonFunctions.js"></script>
 
 </head>
