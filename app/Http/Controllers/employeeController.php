@@ -67,7 +67,7 @@ class employeeController extends Controller
 		'city' => $request['city'],
 		'designation' => $request['designation'],
 		'dob' => $request['dob'],
-		'sessionYear' => $request['sessionYear'],
+		'sessionYear' => date('Y').'-'.(date('Y')+1),
 					]);
 	entity::create([
 		'entityId' => $request['entityId'],
@@ -90,11 +90,14 @@ class employeeController extends Controller
 		'phoneNumber' => $request['primaryMobile'],
 		'phoneType' => 'primary',
     ]);
+	if($request['secondaryMobile']!=="")
+	{
 	phone::create([
 		'entityId' => $request['entityId'],
 		'phoneNumber' => $request['secondaryMobile'],
 		'phoneType' => 'secondary',
     ]);
+	}
 
         //employee::create($request->all());
 
@@ -126,7 +129,14 @@ class employeeController extends Controller
      */
     public function edit($id)
     {
-		$employee = employee::findOrFail($id);
+		//$employee = employee::;
+		$employee= \DB::table('employees')
+                        ->join('entitys','entitys.entityId','=','employees.entityId')
+                        ->join('addresses','addresses.entityId','=','employees.entityId')
+						->join('phones','phones.entityId','=','employees.entityId')
+						->join('emailaddresses','emailaddresses.entityId','=','employees.entityId')
+						->where('entityId','=',$id)
+						->groupBy('employees.entityId');
 		return view('employee.edit', compact('employee'));
 		
     }
