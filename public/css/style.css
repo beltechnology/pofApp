@@ -1,0 +1,508 @@
+ body {
+    background: #fff;
+   font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+	  font-style: normal;
+  font-weight: 400;;
+    font-size: 16px;
+    line-height: 30px;
+    color: #737373;
+  }
+
+  html {
+    height: 100%;
+  }
+
+.fab {
+	  border:none;
+    font-size:1.5em;
+    color:white;
+    background-color: #ff4081;
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    margin: auto;
+    -webkit-box-shadow: 2px 3px 3px 0px rgba(41, 41, 41, .3);
+       -moz-box-shadow: 2px 3px 3px 0px rgba(41, 41, 41, .3);
+            box-shadow: 2px 3px 3px 0px rgba(41, 41, 41, .3);
+}
+
+
+img {
+  max-width: 100%;
+}
+
+a {
+    color: #0088CF;
+}
+
+  a:hover {
+    outline: none;
+    text-decoration:none;
+    color:#4fcccd;
+  }
+
+  a:focus {
+    outline:none;
+    outline-offset: 0;
+  }
+
+  a {
+    -webkit-transition: 300ms;
+    -moz-transition: 300ms;
+    -o-transition: 300ms;
+    transition: 300ms;
+  }
+  
+   p{font-family:roboto;
+	  font-style: normal;
+  font-weight: 400;;
+  font-size:16px;
+  text-align:center;
+  }
+  
+  h1{font-family:roboto;
+	  font-style: normal;
+  font-weight: 400;;
+  font-size:20px;
+  text-align:center;
+  color:#018fd7;;
+  }
+
+#header {
+    background-color: #0088cf;
+    box-shadow: 0px 3px 3px 0px #bfbdbd;
+}
+
+.main-header .fa {
+    color: #fff;
+    font-size: 1.5em !important;
+    margin-top: 18px;
+}
+
+.logo.col-md-3 {
+    margin: 0px 0px;
+    padding: 5px 0px;
+}
+
+.nav > li > a:focus, .nav > li > a:hover {
+    text-decoration: none;
+    background-color: #0088cf;
+	  color: #fff;
+}
+
+
+
+.nav > li > a {
+    position: relative;
+    display: block;
+    padding: 5px 8px;
+	background:url(../images/nav-active.png) no-repeat right;
+}
+
+.nav.nav-list {
+    border-top: 2px solid #161e2c;
+}
+
+.nav.nav-list li {
+    border-bottom: 1px solid #ccc;
+}
+
+.nav > li {
+    position: relative;
+    display: block;
+    font-size: 12px;
+}
+
+.nav > li > a:hover {
+    color: #fff;
+}
+
+.nav-text {
+    font-size: 12px;
+}
+
+.fa-2x {
+    font-size: 1em !important;
+}
+
+.main-menu {
+    margin-top: 15px;
+}
+
+.col-md-3.nav-bar {
+    position: fixed;
+}
+
+.styled-select {
+   background: url(../images/dropdown.png) no-repeat right center;
+   height: 29px;
+   overflow: hidden;
+  width: 160px;
+}
+
+.styled-select select {
+   background: transparent;
+   border: none;
+   font-size: 11px;
+   height: 29px;
+   padding: 5px; /* If you add too much padding here, the options won't show in IE */
+   width:162px;
+}
+
+.select-location {
+    width: 125px;
+}
+
+.select-location select {
+    width: 130px;
+}
+
+.school-name {
+    width: 125px;
+}
+
+.school-name  select {
+    width: 130px;
+}
+
+/* -------------------- Colors: Background */
+.slate   { background-color: #ddd; }
+
+.blue {
+    background-color: #fff;
+}
+
+
+/* -------------------- Colors: Text */
+.slate select   { color: #444; }
+.blue select    { color: #444; }
+
+/*//***************BUTTON DROPDOWN***********//*/
+
+/*#sel1 {
+    width: 170px;
+}
+
+.form-control {
+    display: block;
+    width: 100%;
+    height: 34px;
+    padding: 4px 12px;
+    font-size: 12px;
+    line-height: 1.42857143;
+    color: #0088CF;
+    background-color: #fff;
+    background-image: none;
+    border: transparent;
+    border-radius: 4px;
+    -webkit-box-shadow:none;
+    box-shadow:none;
+    -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+}
+
+
+.btn-default {
+    color: #0088CF;
+    background-color: transparent;
+    border-color: transparent;
+}
+
+.btn-default:active, .open > .dropdown-toggle.btn-default {
+    background-image: none;
+    border: none;
+}
+
+.open > .dropdown-toggle.btn-default:focus, .open > .dropdown-toggle.btn-default:hover {
+    color: #0088CF;
+    background-color: transparent;
+    border-color: transparent;
+}
+
+.btn-default:hover {
+    color: #0088CF;
+    background-color: transparent;
+    border-color: transparent;
+}
+
+.btn-default:focus {
+    color: #0088CF;
+    background-color: transparent;
+    border-color: transparent;
+}*/
+
+
+
+.top-filter {
+    /*border-top: 2px solid #161e2c;*/
+   margin: 10px 0px 0px;
+   padding: 0px;
+}
+
+.col-md-9.category {
+    float: right;
+  /*  margin: 0px -20px 0px 0px;*/
+}
+
+.col-md-3.category-name {
+    padding: 0px;
+}
+
+.category-filter {
+    margin-top: 0px;
+    font-size: 12px;
+}
+.category-name h1 {
+    margin-top: 5px;
+	text-align:left;
+}
+
+.add-emp p {
+    font-size: 14px;
+    color: #0088CF;
+    margin-top: 1px;
+    text-align: right;
+}
+
+/* Original */
+
+
+table {
+    width: 100%;
+    display:block;
+	  font-size:12px;
+}
+
+thead {
+    display: inline-block;
+    width: 100%;
+    height: 33px;
+}
+
+tbody {
+    height: 384px;
+    display: inline-block;
+    width: 100%;
+    overflow: auto;
+}
+
+.table-heading {
+    border-top: 2px solid #e1e1e1;
+    border-bottom: 2px solid #e1e1e1;
+}
+
+td, th {
+    text-align: left;
+    padding:0px;
+	width:137px;
+}
+
+tr{border-bottom:1px solid #aaa;
+}
+
+.main-table span {
+    margin: 0px 3px;
+}
+
+.main-table span .fa {
+    font-size: 10px;
+}
+
+.main-table .fa {
+    color: #444;
+}
+
+.main-table .fa:hover {
+    color:#0088CF;
+}
+
+tr:hover {
+    background-color: #E6F5FE;
+}
+
+
+/* RWD */
+
+@media (max-width: 600px) {
+
+/* make browsers include padding and border inside the width */
+/* http://paulirish.com/2012/box-sizing-border-box-ftw/ */
+/* http://html5please.com/#box-sizing */
+* {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+
+/* basic table styles and positioning */
+/*table {
+  width: 100%;
+  float: left;
+  border: 1px solid #aaa;
+}*/
+
+
+/* table cells get "display: block" and "float: left" */
+/*th, td {
+  display: block;
+  float: left;
+  text-align: center;
+  border: 0;
+  border-bottom: 1px solid #aaa;
+}*/
+
+
+/* the far left column will be full-width and called out */
+/*th {
+  width: 100%;
+  background-color: #000;
+  color: #fff;
+}*/
+
+
+/* each inner table cell will fit four-across (25%) */
+/*td {
+  width: 25%;
+  min-height: 3em;
+  border-right: 1px solid #aaa;
+}*/
+
+
+/* hide the header row */
+/*thead {
+  display: none;
+}*/
+
+/* the last option only has one inner cell, make it 100% */
+/*tr:nth-child(5) td {
+  width: 100%;
+}*/
+
+/* because the header row is dynamic and we need to see it for each row,
+   we're going to use generated content to fake it */
+/*td:before {
+  display: block;
+  font-weight: bold;
+  margin-bottom: .25em;
+}*/
+
+
+/* the second column (or the first inner table cell) is the first payment */
+/*td:nth-child(2):before {
+  content: "Today";
+}*/
+
+
+/* each additional inner cell is for the following month's payment */
+/*td:nth-child(3):before {
+  content: "Month 2";
+}
+td:nth-child(4):before {
+  content: "Month 3";
+}
+td:nth-child(5):before {
+  content: "Month 4";
+}
+td:nth-child(6):before {
+  content: "Month 5";
+}
+td:nth-child(7):before {
+  content: "Month 6";
+}
+td:nth-child(8):before {
+  content: "Month 7";
+}
+td:nth-child(9):before {
+  content: "Month 8";
+}
+td:nth-child(10):before {
+  content: "Month 9";
+}
+td:nth-child(11):before {
+  content: "Month 10";
+}
+td:nth-child(12):before {
+  content: "Month 11";
+}*/
+
+
+/* hide the empty cells at the end of each row */
+/*tr:nth-child(2) td:nth-child(11),
+tr:nth-child(2) td:nth-child(12),
+tr:nth-child(3) td:nth-child(12),
+tr:nth-child(4) td:nth-child(9),
+tr:nth-child(4) td:nth-child(10),
+tr:nth-child(4) td:nth-child(11),
+tr:nth-child(4) td:nth-child(12) {
+  display: none;
+}*/
+
+}
+
+#footer {
+    background-color: #0088cf;
+    margin-top: 30px;
+}
+
+#footer p {
+    font-size: 14px;
+    color: #fff;
+    margin-top: 5px;
+}
+.copyright p {
+    text-align: left;
+}
+
+.bel-techno p {
+    text-align: center;
+}
+
+.reserved p {
+    text-align: right;
+}
+
+/*********** LOGIN_REGISTRATION PAGE***********/
+
+.panel-default {
+    border-color: #0088cf;
+    border-radius: 5px;
+    margin-top: 75px;
+}
+
+.panel-default>.panel-heading {
+    color: #ffffff;
+    background-color: rgb(0, 136, 207);
+}
+
+.form-horizontal .control-label {
+    padding-top: 7px;
+    margin-bottom: 0;
+    text-align: right;
+    font-style: normal;
+    font-weight: normal;
+}
+
+.checkbox input[type=checkbox], .checkbox-inline input[type=checkbox], .radio input[type=radio], .radio-inline input[type=radio] {
+    position: absolute;
+    margin-top: 9px;
+    margin-left: -18px;
+}
+
+input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {
+    background-color: rgba(255,255,255,1.00) !important;
+    background-image: none;
+    color: rgb(0, 0, 0);
+}
+label{margin-left: 20px;}
+.btn-danger {
+    color: #0088cf;
+    background-color: transparent;
+    border-color: transparent;
+}
+.btn-danger:hover,.btn-danger:focus {
+    color: #0088cf;
+    background-color: transparent;
+    border-color: transparent;
+}
