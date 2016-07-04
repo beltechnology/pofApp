@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 04, 2016 at 06:02 AM
+-- Generation Time: Jul 04, 2016 at 01:08 PM
 -- Server version: 5.6.17
 -- PHP Version: 5.5.12
 
@@ -34,6 +34,7 @@ CREATE TABLE IF NOT EXISTS `addresses` (
   `cityId` int(12) NOT NULL,
   `addressLine1` varchar(200) NOT NULL,
   `addressLine2` varchar(200) NOT NULL,
+  `pincode` varchar(10) NOT NULL,
   `deleted` int(2) NOT NULL DEFAULT '0',
   `status` int(2) NOT NULL DEFAULT '0',
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -41,20 +42,25 @@ CREATE TABLE IF NOT EXISTS `addresses` (
   `addressType` varchar(100) NOT NULL,
   `description` varchar(500) NOT NULL,
   PRIMARY KEY (`addressId`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=13 ;
 
 --
 -- Dumping data for table `addresses`
 --
 
-INSERT INTO `addresses` (`addressId`, `entityId`, `stateId`, `districtId`, `cityId`, `addressLine1`, `addressLine2`, `deleted`, `status`, `created_at`, `updated_at`, `addressType`, `description`) VALUES
-(1, 1, 18, 0, 0, 'kalwar road ', '', 0, 0, '2016-07-02 05:01:30', '2016-07-02 05:01:30', '', ''),
-(2, 2, 12, 0, 0, 'Mandha Bhim Singh', '', 0, 0, '2016-07-02 05:08:44', '2016-07-02 05:08:44', '', ''),
-(3, 3, 18, 0, 0, 'Mandha Bhim Singh', '', 0, 0, '2016-07-02 05:09:54', '2016-07-02 05:09:54', '', ''),
-(4, 4, 15, 0, 0, 'Sindoli', '', 0, 0, '2016-07-02 05:10:44', '2016-07-02 05:10:44', '', ''),
-(5, 5, 27, 0, 0, 'Mandha Bhim Singh', '', 0, 0, '2016-07-02 05:11:26', '2016-07-02 05:11:26', '', ''),
-(6, 6, 31, 0, 0, 'Mandha Bhim Singh', '', 0, 0, '2016-07-02 05:12:18', '2016-07-02 05:12:18', '', ''),
-(7, 7, 16, 0, 0, 'Mandha Bhim Singh', '', 0, 0, '2016-07-02 05:48:16', '2016-07-02 05:48:16', '', '');
+INSERT INTO `addresses` (`addressId`, `entityId`, `stateId`, `districtId`, `cityId`, `addressLine1`, `addressLine2`, `pincode`, `deleted`, `status`, `created_at`, `updated_at`, `addressType`, `description`) VALUES
+(1, 1, 18, 0, 0, 'kalwar road ', '', '', 0, 0, '2016-07-02 05:01:30', '2016-07-02 05:01:30', '', ''),
+(2, 2, 12, 0, 0, 'Mandha Bhim Singh', '', '', 0, 0, '2016-07-02 05:08:44', '2016-07-02 05:08:44', '', ''),
+(3, 3, 18, 0, 0, 'Mandha Bhim Singh', '', '', 0, 0, '2016-07-02 05:09:54', '2016-07-02 05:09:54', '', ''),
+(4, 4, 15, 0, 0, 'Sindoli', '', '', 0, 0, '2016-07-02 05:10:44', '2016-07-02 05:10:44', '', ''),
+(5, 5, 27, 0, 0, 'Mandha Bhim Singh', '', '', 0, 0, '2016-07-02 05:11:26', '2016-07-02 05:11:26', '', ''),
+(6, 6, 31, 0, 0, 'Mandha Bhim Singh', '', '', 0, 0, '2016-07-02 05:12:18', '2016-07-02 05:12:18', '', ''),
+(7, 7, 16, 0, 0, 'Mandha Bhim Singh', '', '303604', 0, 0, '2016-07-02 05:48:16', '2016-07-04 04:32:01', '', ''),
+(8, 8, 18, 0, 0, 'Mandha Bhim Singh', '', '303604', 0, 0, '2016-07-03 23:36:33', '2016-07-03 23:36:33', '', ''),
+(9, 9, 17, 0, 0, 'Mandha Bhim Singh', '', '303604', 0, 0, '2016-07-03 23:44:18', '2016-07-03 23:44:18', '', ''),
+(10, 10, 16, 0, 0, 'Mandha Bhim Singh', '', '303604', 0, 0, '2016-07-03 23:44:59', '2016-07-03 23:44:59', '', ''),
+(11, 11, 16, 0, 0, 'kalwar road ', '', '303604', 1, 0, '2016-07-04 04:04:04', '2016-07-04 04:04:04', '', ''),
+(12, 12, 15, 0, 0, 'address', '', '30201', 1, 0, '2016-07-04 05:33:07', '2016-07-04 05:35:11', '', '');
 
 -- --------------------------------------------------------
 
@@ -737,7 +743,7 @@ CREATE TABLE IF NOT EXISTS `emailaddresses` (
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`emailId`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=13 ;
 
 --
 -- Dumping data for table `emailaddresses`
@@ -750,7 +756,12 @@ INSERT INTO `emailaddresses` (`emailId`, `entityId`, `email`, `emailType`, `desc
 (4, 4, 'ravi@bel-technology.com', '', '', 0, 0, '2016-07-02 05:10:44', '2016-07-02 05:10:44'),
 (5, 5, 'suraj@bel-technology.com', '', '', 0, 0, '2016-07-02 05:11:26', '2016-07-02 05:11:26'),
 (6, 6, 'suraj@bel-technology.com', '', '', 0, 0, '2016-07-02 05:12:18', '2016-07-02 05:12:18'),
-(7, 7, 'rajesh@bel-technology.com', '', '', 0, 0, '2016-07-02 05:48:16', '2016-07-02 05:48:16');
+(7, 7, 'rajesh@bel-technology.com', '', '', 0, 0, '2016-07-02 05:48:16', '2016-07-02 05:48:16'),
+(8, 8, 'ravi@bel-technology.com', '', '', 0, 0, '2016-07-03 23:36:33', '2016-07-03 23:36:33'),
+(9, 9, 'rajesh@bel-technology.com', '', '', 0, 0, '2016-07-03 23:44:19', '2016-07-03 23:44:19'),
+(10, 10, 'suraj@bel-technology.com', '', '', 0, 0, '2016-07-03 23:44:59', '2016-07-03 23:44:59'),
+(11, 11, 'ramkumawatk45@gmail.com', '', '', 1, 0, '2016-07-04 04:04:04', '2016-07-04 04:04:04'),
+(12, 12, 'test@testmail.com1', '', '', 1, 0, '2016-07-04 05:33:07', '2016-07-04 05:34:33');
 
 -- --------------------------------------------------------
 
@@ -765,7 +776,6 @@ CREATE TABLE IF NOT EXISTS `employees` (
   `employeeCode` varchar(100) NOT NULL,
   `dateOfJoining` varchar(100) NOT NULL,
   `dob` varchar(100) NOT NULL,
-  `pincode` varchar(6) NOT NULL,
   `designation` varchar(200) NOT NULL,
   `employeeLocation` varchar(200) NOT NULL,
   `description` varchar(500) NOT NULL,
@@ -774,20 +784,19 @@ CREATE TABLE IF NOT EXISTS `employees` (
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`employeeId`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=13 ;
 
 --
 -- Dumping data for table `employees`
 --
 
-INSERT INTO `employees` (`employeeId`, `entityId`, `sessionYear`, `employeeCode`, `dateOfJoining`, `dob`, `pincode`, `designation`, `employeeLocation`, `description`, `deleted`, `status`, `updated_at`, `created_at`) VALUES
-(1, 1, '', '', '12/03/2016', '', '', '', '', '', 0, 0, '2016-07-02 05:01:30', '2016-07-02 05:01:30'),
-(2, 2, '', '', '12/03/2016', '', '', '', '', '', 0, 0, '2016-07-02 05:08:44', '2016-07-02 05:08:44'),
-(3, 3, '', '', '12/03/2016', '', '', '', '', '', 0, 0, '2016-07-02 05:09:53', '2016-07-02 05:09:53'),
-(4, 4, '', '', '12/03/2016', '', '', '', '', '', 0, 0, '2016-07-02 05:10:44', '2016-07-02 05:10:44'),
-(5, 5, '', '', '12/03/2016', '', '', '', '', '', 0, 0, '2016-07-02 05:11:26', '2016-07-02 05:11:26'),
-(6, 6, '', '', '12/03/2016', '', '', '', '', '', 0, 0, '2016-07-02 05:12:17', '2016-07-02 05:12:17'),
-(7, 7, '', '', '12/03/2016', '', '', '', '', '', 0, 0, '2016-07-02 05:48:15', '2016-07-02 05:48:15');
+INSERT INTO `employees` (`employeeId`, `entityId`, `sessionYear`, `employeeCode`, `dateOfJoining`, `dob`, `designation`, `employeeLocation`, `description`, `deleted`, `status`, `updated_at`, `created_at`) VALUES
+(7, 7, '2016-2017', '', '12/03/2016', '11/03/1992', 'Employee', '', '', 1, 0, '2016-07-04 04:32:01', '2016-07-02 05:48:15'),
+(8, 8, '2016-2017', '', '12/03/2016', '14/07/1995', 'Employee', '', '', 0, 0, '2016-07-03 23:36:33', '2016-07-03 23:36:33'),
+(9, 9, '2016-2017', '', '12/03/2016', '14/07/1995', 'Employee', '', '', 0, 0, '2016-07-03 23:44:18', '2016-07-03 23:44:18'),
+(10, 10, '2016-2017', '', '12/03/2016', '14/07/1995', 'Employee', '', '', 0, 0, '2016-07-04 02:54:50', '2016-07-03 23:44:59'),
+(11, 11, '2016-2017', 'EMP11', '04/07/2016', '14/07/1995', 'Employee', '', '', 1, 0, '2016-07-04 04:04:04', '2016-07-04 04:04:04'),
+(12, 12, '2016-2017', 'EMP12', '04/07/2016', '06/07/2016', 'Team1', '', '', 1, 0, '2016-07-04 05:34:32', '2016-07-04 05:33:07');
 
 -- --------------------------------------------------------
 
@@ -805,7 +814,7 @@ CREATE TABLE IF NOT EXISTS `entitys` (
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `description` varchar(500) NOT NULL,
   PRIMARY KEY (`entityId`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=13 ;
 
 --
 -- Dumping data for table `entitys`
@@ -818,7 +827,12 @@ INSERT INTO `entitys` (`entityId`, `name`, `entityType`, `deleted`, `status`, `u
 (4, 'Babulal kumawat', '', 0, 0, '2016-07-02 05:10:44', '2016-07-02 05:10:44', ''),
 (5, 'Shyam singh', '', 0, 0, '2016-07-02 05:11:26', '2016-07-02 05:11:26', ''),
 (6, 'Pawan', '', 0, 0, '2016-07-02 05:12:17', '2016-07-02 05:12:17', ''),
-(7, 'Rajesh', '', 0, 0, '2016-07-02 05:48:16', '2016-07-02 05:48:16', '');
+(7, 'Rajesh', '', 0, 0, '2016-07-02 05:48:16', '2016-07-02 05:48:16', ''),
+(8, 'Shivam', '', 0, 0, '2016-07-03 23:36:33', '2016-07-03 23:36:33', ''),
+(9, 'kumar ', '', 0, 0, '2016-07-03 23:44:18', '2016-07-03 23:44:18', ''),
+(10, 'Ramniwas kumawat', '', 0, 0, '2016-07-04 03:43:48', '2016-07-03 23:44:59', ''),
+(11, 'Payal', '', 1, 0, '2016-07-04 04:04:04', '2016-07-04 04:04:04', ''),
+(12, 'Ravi kumawat news', '', 1, 0, '2016-07-04 05:33:56', '2016-07-04 05:33:07', '');
 
 -- --------------------------------------------------------
 
@@ -864,20 +878,20 @@ CREATE TABLE IF NOT EXISTS `password_resets` (
 CREATE TABLE IF NOT EXISTS `phones` (
   `phoneId` int(12) NOT NULL AUTO_INCREMENT,
   `entityId` int(11) NOT NULL,
-  `phoneNumber` varchar(200) NOT NULL,
-  `phoneType` varchar(200) NOT NULL,
+  `primaryNumber` varchar(15) NOT NULL,
+  `secondaryNumber` varchar(15) NOT NULL,
   `deleted` int(2) NOT NULL DEFAULT '0',
   `status` int(2) NOT NULL DEFAULT '0',
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`phoneId`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=15 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=23 ;
 
 --
 -- Dumping data for table `phones`
 --
 
-INSERT INTO `phones` (`phoneId`, `entityId`, `phoneNumber`, `phoneType`, `deleted`, `status`, `created_at`, `updated_at`) VALUES
+INSERT INTO `phones` (`phoneId`, `entityId`, `primaryNumber`, `secondaryNumber`, `deleted`, `status`, `created_at`, `updated_at`) VALUES
 (1, 1, '9166782146', 'primary', 0, 0, '2016-07-02 05:01:30', '2016-07-02 05:01:30'),
 (2, 1, '9929906336', 'secondary', 0, 0, '2016-07-02 05:01:31', '2016-07-02 05:01:31'),
 (3, 2, '9166782145', 'primary', 0, 0, '2016-07-02 05:08:45', '2016-07-02 05:08:45'),
@@ -891,7 +905,15 @@ INSERT INTO `phones` (`phoneId`, `entityId`, `phoneNumber`, `phoneType`, `delete
 (11, 6, '9166782145', 'primary', 0, 0, '2016-07-02 05:12:18', '2016-07-02 05:12:18'),
 (12, 6, '9929906337', 'secondary', 0, 0, '2016-07-02 05:12:18', '2016-07-02 05:12:18'),
 (13, 7, '9166782145', 'primary', 0, 0, '2016-07-02 05:48:16', '2016-07-02 05:48:16'),
-(14, 7, '0', 'secondary', 0, 0, '2016-07-02 05:48:16', '2016-07-02 05:48:16');
+(14, 7, '0', 'secondary', 0, 0, '2016-07-02 05:48:16', '2016-07-02 05:48:16'),
+(15, 8, '9166782146', 'primary', 0, 0, '2016-07-03 23:36:34', '2016-07-03 23:36:34'),
+(16, 8, '', 'secondary', 0, 0, '2016-07-03 23:36:34', '2016-07-03 23:36:34'),
+(17, 9, '9166782145', 'primary', 0, 0, '2016-07-03 23:44:19', '2016-07-03 23:44:19'),
+(18, 10, '9166782146', 'primary', 0, 0, '2016-07-03 23:44:59', '2016-07-03 23:44:59'),
+(19, 10, '9929906337', 'secondary', 0, 0, '2016-07-03 23:44:59', '2016-07-03 23:44:59'),
+(20, 11, '9166782145', '9166782146', 1, 0, '2016-07-04 04:04:04', '2016-07-04 04:27:12'),
+(21, 11, '9929906336', '9166782146', 1, 0, '2016-07-04 04:04:04', '2016-07-04 04:27:12'),
+(22, 12, '99508266421', '99508266421', 1, 0, '2016-07-04 05:33:07', '2016-07-04 05:34:33');
 
 -- --------------------------------------------------------
 
@@ -983,7 +1005,7 @@ INSERT INTO `teams` (`teamId`, `teamName`, `teamLocation`, `teamLeader`, `teamCr
 (8, 'sdvds', 'dsdsfvds', 'qfd', 'dv', 'qfds', 'qvc', 'qfdv', 0, 0, '2016-06-30 06:31:18', '2016-06-30 06:31:18'),
 (9, 'Team 04', 'Kota', 'Shyam', '29/06/2016', '29/06/2016', '1020', 'this is ram', 1, 1, '2016-06-30 22:43:19', '2016-06-30 22:43:19'),
 (11, 'Sikar', 'Sikar', 'Karan', '29/06/2016', '29/06/2016', '1313', 'sfsfsf', 0, 0, '2016-06-30 22:44:31', '2016-06-30 22:44:31'),
-(20, 'Jaipur Team', 'Jaipur', 'Ramniwas', '29/06/2016', '29/06/2016', '21313', 'sfdsf', 0, 1, '2016-06-30 22:23:02', '2016-06-30 22:23:02'),
+(20, 'Jaipur Team', 'Jaipur', 'Ramniwas', '29/06/2016', '29/06/2016', '2131', 'sfdsf', 0, 1, '2016-06-30 22:23:02', '2016-07-04 02:49:05'),
 (34, '44', '234', 'fdsf', 'dsfg', 'fsf', 'fsff', 'fsf', 0, 0, '2016-06-30 06:31:45', '2016-06-30 06:31:45');
 
 -- --------------------------------------------------------
@@ -1010,7 +1032,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `username`, `email`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'ravi', 'ravikumar', 'ravi@bel-technology.com', '$2y$10$i/KrdVeTn0HAEoC1py3WjO2bb9GPUF4MZ91fxiVbAdEfa79hWr1gy', '3nURrbhJmmvP26aMwTqXzwaCVoxmmh9BWtGQU8hodDIAX7Dc1Bb10gWYaHgk', '2016-06-29 02:02:32', '2016-07-02 05:27:10'),
+(1, 'ravi', 'ravikumar', 'ravi@bel-technology.com', '$2y$10$i/KrdVeTn0HAEoC1py3WjO2bb9GPUF4MZ91fxiVbAdEfa79hWr1gy', 'R2pn1RaVAwd1d22D03WATtqWXsI4Np8FdIufZoftgOpeZSaEbhgDC9MYiTDz', '2016-06-29 02:02:32', '2016-07-04 05:31:20'),
 (2, 'rakesh', 'rakesh', 'rakesh@test.com', '$2y$10$SfAsSwMdLnxPLLaiU8C6MudHN9Els3Y223l4f0L7eX41/URFLAGee', 'nTsXQnr32Cl8c3CUh14WDnWgGdUuKjeQJqYM0IIr0Cw6ElX4I3FILw7fmDPH', '2016-06-29 23:49:58', '2016-06-30 00:45:03');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
