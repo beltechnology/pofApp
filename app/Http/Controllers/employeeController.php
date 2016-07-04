@@ -23,11 +23,13 @@ class employeeController extends Controller
      */
     public function index()
     {
+		$deleted=0;
 		$employee= \DB::table('employees')
                         ->join('entitys','entitys.entityId','=','employees.entityId')
                         ->join('addresses','addresses.entityId','=','employees.entityId')
 						->join('phones','phones.entityId','=','employees.entityId')
 						->join('emailaddresses','emailaddresses.entityId','=','employees.entityId')
+						->where('employees.deleted',0)
 						->groupBy('employees.entityId')
 						// ->select('employees.*','entitys.name','employees.employeeId','employees.dateOfJoining','addresses.stateId','addresses.districtId','addresses.cityId','addresses.addressLine1','phones.phoneNumber','emailaddresses.email')
 						->paginate(5);
@@ -56,11 +58,12 @@ class employeeController extends Controller
      */
     public function store(Request $request)
     {
-		 $this->validate($request, ['employeeName' => 'required', 'dob' => 'required', 'address' => 'required', 'state' => 'required', 'district' => 'required', 'city' => 'required', 'pinCode' => 'required', 'primaryMobile' => 'required', 'emailAddress' => 'required', 'designation' => 'required', 'dateOfJoining' => 'required', ]);	
+		 $this->validate($request, ['employeeName' => 'required', 'dob' => 'required', 'address' => 'required', 'state' => 'required', 'district' => 'required', 'city' => 'required', 'pinCode' => 'required', 'primaryNumber' => 'required', 'emailAddress' => 'required', 'designation' => 'required', 'dateOfJoining' => 'required', ]);	
 		 
 	 employee::create([
         'employeeId' => $request['employeeId'],
 		'entityId' => $request['entityId'],
+		'employeeCode' => 'EMP'.$request['employeeCode'],
         'dateOfJoining' => $request['dateOfJoining'],
         'state' => $request['state'],
 		'district' => $request['district'],
@@ -87,18 +90,10 @@ class employeeController extends Controller
     ]);
 	phone::create([
 		'entityId' => $request['entityId'],
-		'phoneNumber' => $request['primaryMobile'],
-		'phoneType' => 'primary',
+		'primaryNumber' => $request['primaryNumber'],
+		'secondaryNumber' => $request['secondaryNumber'],
     ]);
-	if($request['secondaryMobile']!=="")
-	{
-	phone::create([
-		'entityId' => $request['entityId'],
-		'phoneNumber' => $request['secondaryMobile'],
-		'phoneType' => 'secondary',
-    ]);
-	}
-
+	
         //employee::create($request->all());
 
         Session::flash('flash_message', 'employee added!');
@@ -129,15 +124,12 @@ class employeeController extends Controller
      */
     public function edit($id)
     {
-		//$employee = employee::;
-		$employee= \DB::table('employees')
-                        ->join('entitys','entitys.entityId','=','employees.entityId')
-                        ->join('addresses','addresses.entityId','=','employees.entityId')
-						->join('phones','phones.entityId','=','employees.entityId')
-						->join('emailaddresses','emailaddresses.entityId','=','employees.entityId')
-						->where('entityId','=',$id)
-						->groupBy('employees.entityId');
-		return view('employee.edit', compact('employee'));
+		$employee = employee::findOrFail($id);
+		$entity = entity::findOrFail($id);
+		$address = address::findOrFail($id);
+		$emailaddress = emailaddress::findOrFail($id);
+		$phone = phone::findOrFail($id);
+		return view('employee.edit', ['employee' => $employee,'entity' => $entity,'address' => $address,'emailaddress' => $emailaddress,'phone' => $phone]);
 		
     }
 
@@ -150,22 +142,22 @@ class employeeController extends Controller
      */
     public function update($id, Request $request)
     {
-		$this->validate($request, ['employeeName' => 'required', 'dob' => 'required', 'address' => 'required', 'state' => 'required', 'district' => 'required', 'city' => 'required', 'pinCode' => 'required', 'primaryMobile' => 'required', 'secondaryMobile' => 'required', 'emailAddress' => 'required', 'designation' => 'required', 'dateOfJoining' => 'required', ]);
-        $employee = employee::findOrFail($id);
+		$this->validate($request, ['name' => 'required', 'dob' => 'required', 'addressLine1' => 'required', 'state' => 'required', 'district' => 'required', 'city' => 'required', 'pincode' => 'required', 'primaryNumber' => 'required', 'email' => 'required', 'designation' => 'required', 'dateOfJoining' => 'required', ]);
+        $employee = employee::findOrFail($id);	
+        $employee->update($request->all());
 		
-		employee::update([
-        'employeeId' => $request['employeeId'],
-        'dateOfJoining' => $request['dateOfJoining'],
-        'employeeLocation' => $request['employeeLocation'],
-		'employeeCode' => $request['employeeCode'],
-		'description' => $request['description'],
-    ]);
-		entity::update([
-		'name' => $request['employeeName'],
-    ]);
+		$address = address::findOrFail($id);	
+        $address->update($request->all());
 		
-        //$employee->update($request->all());
-
+		$emailaddress = emailaddress::findOrFail($id);	
+        $emailaddress->update($request->all());
+		
+		$phone = phone::findOrFail($id);	
+        $phone->update($request->all());
+		
+		$entity = entity::findOrFail($id);	
+        $entity->update($request->all());
+		
         Session::flash('flash_message', 'employee updated!');
 
         return redirect('employee');
@@ -180,10 +172,13 @@ class employeeController extends Controller
      */
     public function destroy($id)
     {
-        employee::destroy($id);
-
+        \DB::table('employees')->where('entityId', $id)->update(['deleted' => 1]);
+		\DB::table('addresses')->where('entityId', $id)->update(['deleted' => 1]);
+		\DB::table('entitys')->where('entityId', $id)->update(['deleted' => 1]);
+		\DB::table('emailaddresses')->where('entityId', $id)->update(['deleted' => 1]);
+		\DB::table('phones')->where('entityId', $id)->update(['deleted' => 1]);
+		
         Session::flash('flash_message', 'employee deleted!');
-
         return redirect('employee');
     }
 	public function dropdown()

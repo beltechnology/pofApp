@@ -1,13 +1,14 @@
 @extends('layouts.header')
 @section('content')
 <div class=" col-md-9 category">
-    <h1>Create New employee</h1>
+    <h1 class="text-left"><a href="{{ url('/employee') }}">Employee List </a></h1>
     <hr/>
 <div class="row">
     {!! Form::open(['url' => '/employee', 'class' => 'form-horizontal']) !!}
     			<div class=" col-md-6">
-                    {!! Form::hidden('employeeId',\DB::table('employees')->max('employeeId')+1, null, ['class' => 'form-control','required' => 'required'],['name'=>'employeeid']) !!}
-                
+                {!! Form::hidden('employeeId',\DB::table('employees')->max('employeeId')+1, null, ['class' => 'form-control','required' => 'required'],['name'=>'employeeid']) !!}
+                {!! Form::hidden('employeeCode',\DB::table('employees')->max('employeeId')+1, null, ['class' => 'form-control','required' => 'required'],['name'=>'employeeid']) !!}
+
                     {!! Form::hidden('entityId',\DB::table('entitys')->max('entityId')+1, null, ['class' => 'form-control','required' => 'required'],['name'=>'entityId']) !!}
                
                      
@@ -67,18 +68,18 @@
              </div>
             <div class=" col-md-6">
             
-             <div class="form-group {{ $errors->has('primaryMobile') ? 'has-error' : ''}}">
-                {!! Form::label('primaryMobile', 'Primary Mobile', ['class' => 'col-sm-5  control-label']) !!}
+             <div class="form-group {{ $errors->has('primaryNumber') ? 'has-error' : ''}}">
+                {!! Form::label('primaryNumber', 'Primary Mobile', ['class' => 'col-sm-5  control-label']) !!}
                 <div class="col-sm-6">
-                    {!! Form::text('primaryMobile', null, ['class' => 'form-control','required' => 'required']) !!}
-                    {!! $errors->first('primaryMobile', '<p class="help-block">:message</p>') !!}
+                    {!! Form::text('primaryNumber', null, ['class' => 'form-control','required' => 'required']) !!}
+                    {!! $errors->first('primaryNumber', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>
-             <div class="form-group {{ $errors->has('secondaryMobile') ? 'has-error' : ''}}">
-                {!! Form::label('secondaryMobile', 'Secondary Mobile', ['class' => 'col-sm-5  control-label']) !!}
+             <div class="form-group {{ $errors->has('secondaryNumber') ? 'has-error' : ''}}">
+                {!! Form::label('secondaryNumber', 'Secondary Mobile', ['class' => 'col-sm-5  control-label']) !!}
                 <div class="col-sm-6">
-                    {!! Form::text('secondaryMobile', null, ['class' => 'form-control','required' => 'required']) !!}
-                    {!! $errors->first('secondaryMobile', '<p class="help-block">:message</p>') !!}
+                    {!! Form::text('secondaryNumber', null, ['class' => 'form-control']) !!}
+                    {!! $errors->first('secondaryNumber', '<p class="help-block">:message</p>') !!}
                 </div>
             </div> 
             <div class="form-group {{ $errors->has('emailAddress') ? 'has-error' : ''}}">
