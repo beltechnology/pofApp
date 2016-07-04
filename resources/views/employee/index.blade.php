@@ -5,7 +5,7 @@
          <div class=" col-md-12 top-filter">
             
             <div class=" col-md-3 category-name">
-            <h1>Employee Creation</h1>
+            <h1>{{ trans('messages.EMPLOYEE_CREATION') }}</h1>
             </div>
             
             <div class=" col-md-7 category-filter">
@@ -60,7 +60,7 @@
             </div>
             
             <div class="add-emp col-md-2">
-            <a href="{{ url('/employee/create') }}"><p>Add <span class="glyphicon glyphicon-plus" aria-hidden="true"/></p></a>
+            <a href="{{ url('/employee/create') }}"><p>{{ trans('messages.ADD') }} <span class="glyphicon glyphicon-plus" aria-hidden="true"/></p></a>
             </div>
             
             </div>
@@ -68,13 +68,13 @@
             <table border="0" bgcolor="#eeeeee">
             <thead bgcolor="#ffffff" style="color:#4b4b4b">
       <tr class="table-heading">
-        <th width="200" class="emp-name"><span><i class="fa fa-square-o" aria-hidden="true"></i></span>Employee Name</th>
-        <th width="50" class="emp-id">Employee Id</th>
-        <th width="80" class="emp-dob">DOB</th>
-        <th width="110" class="emp-no">Contact Number</th>
-        <th width="200" class="emp-location">Address</th>
-        <th width="105" class="emp-team">E-Mail </th>
-        <th width="120">Actions</th>
+        <th width="200" class="emp-name"><span><i class="fa fa-square-o" aria-hidden="true"></i></span>{{ trans('messages.EMPLOYEE_NAME') }}</th>
+        <th width="50" class="emp-id">{{ trans('messages.EMPLOYEE_ID') }}</th>
+        <th width="80" class="emp-dob">{{ trans('messages.DOB') }}</th>
+        <th width="110" class="emp-no">{{ trans('messages.CONTACT_NUMBER') }}</th>
+        <th width="200" class="emp-location">{{ trans('messages.ADDRESS') }}</th>
+        <th width="105" class="emp-team">{{ trans('messages.EMAIL') }} </th>
+        <th width="120">{{ trans('messages.ACTIONS') }}</th>
       </tr>
     </thead>
             <tbody>
