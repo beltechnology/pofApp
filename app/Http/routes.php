@@ -25,3 +25,7 @@ Route::auth();
 
 //Route::get('/home', 'HomeController@index');
 
+
+Route::resource('state', 'StateController');
+Route::resource('district', 'DistrictController');
+Route::resource('citys', 'CitysController');
