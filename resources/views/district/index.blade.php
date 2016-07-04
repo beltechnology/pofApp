@@ -1,7 +1,7 @@
-@extends('layouts.app')
+@extends('layouts.header')
 
 @section('content')
-<div class="container">
+<div class=" col-md-9 category">
 
     <h1>District <a href="{{ url('/district/create') }}" class="btn btn-primary btn-xs" title="Add New District"><span class="glyphicon glyphicon-plus" aria-hidden="true"/></a></h1>
     <div class="table">
