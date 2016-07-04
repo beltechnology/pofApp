@@ -4,7 +4,7 @@
                 <li>
                     <a href="{{ url('/employee') }}">
                     	<i class="fa fa-user fa-2x"></i>
-                         Employee Creation 
+                         {{ trans('messages.EMPLOYEE_CREATION') }}
                         </span>
                     </a>
                   
@@ -12,7 +12,7 @@
                 <li class="has-subnav">
                     <a href="{{ url('/team') }}">
                         <i class="fa fa-users fa-2x"></i>
-                         Team Creation
+                         {{ trans('messages.TEAM_CREATION') }}
                         </span>
                     </a>
                     
@@ -20,7 +20,7 @@
                 <li class="has-subnav">
                     <a href="#">
                         <i class="fa fa-building-o fa-2x"></i>
-                         Schools
+                        {{ trans('messages.SCHOOLS') }}
                         </span>
                     </a>
                     
@@ -28,7 +28,7 @@
                 <li class="has-subnav">
                     <a href="#">
                        <i class="fa fa-newspaper-o fa-2x"></i>
-                         Admit Card
+                        {{ trans('messages.ADMIT_CARD') }}
                         </span>
                     </a>
                    
@@ -36,14 +36,35 @@
                 <li>
                     <a href="#">
                         <i class="glyphicon glyphicon-list-alt fa-2x"></i>
-                         Attendance Sheet
+                          {{ trans('messages.ATTENDANCE_SHEET') }}
                         </span>
                     </a>
                 </li>
                 <li>
                     <a href="#">
                        <i class="fa fa-certificate fa-2x"></i>
-                         Participation Certificates
+                       {{ trans('messages.PARTICIPATION_CERTIFICATES') }}
+                        </span>
+                    </a>
+                </li>
+                 <li>
+                    <a href="{{ url('/state') }}">
+                       <i class="fa fa-certificate fa-2x"></i>
+                       {{ trans('messages.STATE') }}
+                        </span>
+                    </a>
+                </li>
+                 <li>
+                    <a href="{{ url('/district') }}">
+                       <i class="fa fa-certificate fa-2x"></i>
+                       {{ trans('messages.DISTRICT') }}
+                        </span>
+                    </a>
+                </li>
+                 <li>
+                    <a href="{{ url('/city') }}">
+                       <i class="fa fa-certificate fa-2x"></i>
+                       {{ trans('messages.CITY') }}
                         </span>
                     </a>
                 </li>
