@@ -19,8 +19,8 @@
                     <td>{{ $x }}</td>
                     <td>{{ $item->name }}</td>
                     <td>
-                        <a href="{{ url('/class-name/' . $item->id) }}" class="btn btn-success btn-xs" title="View ClassName"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"/></a>
-                        <a href="{{ url('/class-name/' . $item->id . '/edit') }}" class="btn btn-primary btn-xs" title="Edit ClassName"><span class="glyphicon glyphicon-pencil" aria-hidden="true"/></a>
+                        <a href="{{ url('/class-name/' . $item->id) }}" class="btn btn-success btn-xs" title="{{ trans('messages.VIEW_CLASS') }}"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"/></a>
+                        <a href="{{ url('/class-name/' . $item->id . '/edit') }}" class="btn btn-primary btn-xs" title="{{ trans('messages.EDIT_CLASS')}}"><span class="glyphicon glyphicon-pencil" aria-hidden="true"/></a>
                         {!! Form::open([
                             'method'=>'DELETE',
                             'url' => ['/class-name', $item->id],

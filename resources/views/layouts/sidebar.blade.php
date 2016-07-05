@@ -85,7 +85,7 @@
 				 <li>
                     <a href="{{ url('/class-name') }}">
                        <i class="fa fa-certificate fa-2x"></i>
-                       Add Class
+                      {{ trans('messages.CLASS') }}
                         </span>
                     </a>
                 </li>
