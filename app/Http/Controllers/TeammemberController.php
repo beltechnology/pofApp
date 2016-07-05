@@ -3,10 +3,17 @@ namespace App\Http\Controllers;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Team;
+
+use App\employee;
+use App\address;
+use App\entity;
+use App\emailaddress;
+use App\phone;
+
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Session;
-class TeamController extends Controller
+class TeammemberController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,7 +24,7 @@ class TeamController extends Controller
     {
         $team = Team::paginate(15);
 
-        return view('team.index', compact('team'));
+        return view('teammember.index', compact('team'));
     }
 
     /**
@@ -27,7 +34,16 @@ class TeamController extends Controller
      */
     public function create()
     {
-        return view('team.create');
+       $deleted=0;
+		$employee= \DB::table('employees')
+                        ->join('entitys','entitys.entityId','=','employees.entityId')
+                        ->join('addresses','addresses.entityId','=','employees.entityId')
+						->join('phones','phones.entityId','=','employees.entityId')
+						->join('emailaddresses','emailaddresses.entityId','=','employees.entityId')
+						->where('employees.deleted',0)
+						->groupBy('employees.entityId')
+						->paginate(5);
+        return view('teammember.create', compact('employee'));
     }
 
     /**
@@ -47,9 +63,9 @@ class TeamController extends Controller
 		'teamCode' => 'TEAM'.$request['teamCode'],
 					]);
 
-        Session::flash('flash_message', 'Team added!');
+        Session::flash('flash_message', 'Team Member added!');
 
-        return redirect('team');
+        return redirect('teammember');
     }
 
     /**
@@ -63,7 +79,7 @@ class TeamController extends Controller
     {
         $team = Team::findOrFail($id);
 
-        return view('team.show', compact('team'));
+        return view('teammember.show', compact('team'));
     }
 
     /**
@@ -77,7 +93,7 @@ class TeamController extends Controller
     {
         $team = Team::findOrFail($id);
 
-        return view('team.edit', compact('team'));
+        return view('teammember.edit', compact('team'));
     }
 
     /**
@@ -93,9 +109,9 @@ class TeamController extends Controller
         $team = Team::findOrFail($id);
         $team->update($request->all());
 
-        Session::flash('flash_message', 'Team updated!');
+        Session::flash('flash_message', 'Team Member updated!');
 
-        return redirect('team');
+        return redirect('teammember');
     }
 
     /**
@@ -109,8 +125,8 @@ class TeamController extends Controller
     {
         Team::destroy($id);
 
-        Session::flash('flash_message', 'Team deleted!');
+        Session::flash('flash_message', 'Team member deleted!');
 
-        return redirect('team');
+        return redirect('teammember');
     }
 }

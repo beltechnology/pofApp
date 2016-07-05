@@ -2,13 +2,13 @@
 
 @section('content')
 <div class=" col-md-9 category">
-  <h1 class="text-left">{{ trans('messages.TEAM') }}</h1>
-    <h1 class="text-right">{{ trans('messages.TEAM') }} <a href="{{ url('/team/create') }}" class="btn btn-primary btn-xs" title="Add New Team"><span class="glyphicon glyphicon-plus" aria-hidden="true"/></a></h1>
+  <h1 class="text-left">{{ trans('messages.TEAM') }} Members</h1>
+    <h1 class="text-right">Add{{ trans('messages.TEAM') }} Member <a href="{{ url('/teammember/create') }}" class="btn btn-primary btn-xs" title="Add New Team"><span class="glyphicon glyphicon-plus" aria-hidden="true"/></a></h1>
     <div class="main-table col-md">
         <table class="table table-bordered table-striped table-hover">
             <thead>
                 <tr>
-                    <th>{{ trans('messages.TEAM_NAME') }}</th><th>{{ trans('messages.TEAM_CODE') }}</th><th>{{ trans('messages.TEAM_LOCATION') }}</th><th>{{ trans('messages.TEAM_MEMBERS') }}</th><th>{{ trans('messages.ACTIONS') }}</th>
+                    <th>Member Name</th><th>Member Location</th><th>{{ trans('messages.ACTIONS') }}</th>
                 </tr>
             </thead>
             <tbody>
@@ -17,10 +17,8 @@
                 {{-- */$x++;/* --}}
                 <tr>
                     <td>{{ $item->teamName }}</td>
-                    <td>{{ $item->teamCode }}</td><td>{{ $item->teamLocation }}</td><td> <a href="{{ url('/teammember/') }}" class="btn  btn-xs" title="View Team"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"/></a></td>
-                    <td>
-					   
-                        <a href="{{ url('/team/' . $item->teamId. '/edit') }}" class="btn  btn-xs" title="Edit Team"><span class="glyphicon glyphicon-pencil" aria-hidden="true"/></a>
+                    <td>{{ $item->teamCode }}</td>
+                    <td><a href="{{ url('/team/' . $item->teamId. '/edit') }}" class="btn  btn-xs" title="Edit Team"><span class="glyphicon glyphicon-pencil" aria-hidden="true"/></a>
                         {!! Form::open([
                             'method'=>'DELETE',
                             'url' => ['/team', $item->teamId],

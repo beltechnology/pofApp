@@ -15,6 +15,12 @@ Route::group(array('middleware' => 'auth'), function() {
 	Route::resource('employee', 'employeeController');
 	Route::resource('team', 'TeamController');
 	//Route::get('employee', 'employeeController@dropdown');
+	Route::resource('state', 'StateController');
+	Route::resource('district', 'DistrictController');
+	Route::resource('citys', 'CitysController');
+	Route::resource('designations', 'DesignationsController');
+	Route::resource('locations', 'LocationsController');
+	Route::resource('teammember', 'TeammemberController');
     });
 	
 Route::get('/', function () {
@@ -26,6 +32,3 @@ Route::auth();
 //Route::get('/home', 'HomeController@index');
 
 
-Route::resource('state', 'StateController');
-Route::resource('district', 'DistrictController');
-Route::resource('citys', 'CitysController');
