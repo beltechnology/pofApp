@@ -19,10 +19,12 @@ class StateController extends Controller
      */
     public function index()
     {
-        $state = State::paginate(15);
+
+        $state =\DB::table('states')->where('states.deleted',0)->groupBy('states.id')
+		->paginate(15);
 
         return view('state.index', compact('state'));
-    }
+    }	
 
     /**
      * Show the form for creating a new resource.
@@ -106,7 +108,7 @@ class StateController extends Controller
      */
     public function destroy($id)
     {
-        State::destroy($id);
+        \DB::table('states')->where('id', $id)->update(['deleted' => 1]);
 
         Session::flash('flash_message', 'State deleted!');
 

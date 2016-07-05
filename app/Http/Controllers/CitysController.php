@@ -19,11 +19,13 @@ class CitysController extends Controller
      */
     public function index()
     {
-        $citys = City::paginate(15);
+        $citys = \DB::table('citys')
+		->where('citys.deleted',0)
+		->groupBy('citys.id')
+		->paginate(15);
 
         return view('citys.index', compact('citys'));
     }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -106,7 +108,7 @@ class CitysController extends Controller
      */
     public function destroy($id)
     {
-        City::destroy($id);
+		\DB::table('citys')->where('id', $id)->update(['deleted' => 1]);
 
         Session::flash('flash_message', 'City deleted!');
 

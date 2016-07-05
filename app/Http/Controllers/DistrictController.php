@@ -19,7 +19,7 @@ class DistrictController extends Controller
      */
     public function index()
     {
-        $district = District::paginate(15);
+        $district =\DB::table('districts')->where('districts.deleted',0)->groupBy('districts.id')->paginate(15);
 
         return view('district.index', compact('district'));
     }
@@ -106,7 +106,7 @@ class DistrictController extends Controller
      */
     public function destroy($id)
     {
-        District::destroy($id);
+        \DB::table('districts')->where('id',$id)->update(['deleted' => 1]);
 
         Session::flash('flash_message', 'District deleted!');
 
