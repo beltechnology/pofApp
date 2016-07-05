@@ -74,8 +74,9 @@ class DistrictController extends Controller
     public function edit($id)
     {
         $district = District::findOrFail($id);
-
-        return view('district.edit', compact('district'));
+		$states = \DB::table('states')->lists('name', 'id');
+	//	return view('employee.create')->with('states', $states);		
+        return view('district.edit', compact('district'))->with('states', $states);;
     }
 
     /**
