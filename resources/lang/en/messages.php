@@ -55,5 +55,8 @@ return [
 	'CLASS' => 'Class',
 	'VIEW_CLASS' => 'View Class',
 	'EDIT_CLASS' => 'Edit Class',
-	'DELETE_CLASS' => 'Detete Class'
+	'DELETE_CLASS' => 'Del',
+	'ADD_CLASS' => 'Add New Class',
+	'ADD_LOCATION' => 'Add Location',
+	'ADD_DESIGNATION' =>'Add Designation'
 ];

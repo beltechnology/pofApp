@@ -71,14 +71,14 @@
                  <li>
                     <a href="{{ url('/locations') }}">
                        <i class="fa fa-certificate fa-2x"></i>
-                       Add Location
+                       {{trans('messages.ADD_LOCATION')}}
                         </span>
                     </a>
                 </li>
                  <li>
                     <a href="{{ url('/designations') }}">
                        <i class="fa fa-certificate fa-2x"></i>
-                       Add Designation
+                       {{trans('messages.ADD_DESIGNATION')}}
                         </span>
                     </a>
                 </li>

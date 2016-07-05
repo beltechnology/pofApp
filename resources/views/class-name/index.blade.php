@@ -3,7 +3,7 @@
 @section('content')
 <div class=" col-md-9 category">
 
-    <h1>Classname <a href="{{ url('/class-name/create') }}" class="btn btn-primary btn-xs" title="Add New ClassName"><span class="glyphicon glyphicon-plus" aria-hidden="true"/></a></h1>
+    <h1>Classname <a href="{{ url('/class-name/create') }}" class="btn btn-primary btn-xs" title="{{ trans('messages.ADD_CLASS')}}"><span class="glyphicon glyphicon-plus" aria-hidden="true"/></a></h1>
     <div class="table">
         <table class="table table-bordered table-striped table-hover">
             <thead>
