@@ -14,15 +14,9 @@
                 <div class="form-group {{ $errors->has('state_id') ? 'has-error' : ''}}">
                 {!! Form::label('state_id', 'State Id', ['class' => 'col-sm-3 control-label']) !!}
                 <div class="col-sm-6">
-                    {!! Form::number('state_id', null, ['class' => 'form-control', 'required' => 'required']) !!}
+                    {!! Form::select('state_id',\DB::table('states')->lists('name','id'), "Debugging", ['class' => 'form-control stateSelect','placeholder' => 'Select State Id','id' => 'stateSelect']) !!}
+                    
                     {!! $errors->first('state_id', '<p class="help-block">:message</p>') !!}
-                </div>
-            </div>
-            <div class="form-group {{ $errors->has('district_id') ? 'has-error' : ''}}">
-                {!! Form::label('district_id', 'District Id', ['class' => 'col-sm-3 control-label']) !!}
-                <div class="col-sm-6">
-                    {!! Form::number('district_id', null, ['class' => 'form-control', 'required' => 'required']) !!}
-                    {!! $errors->first('district_id', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>
             <div class="form-group {{ $errors->has('cityName') ? 'has-error' : ''}}">
@@ -32,21 +26,6 @@
                     {!! $errors->first('cityName', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>
-            <div class="form-group {{ $errors->has('deleted') ? 'has-error' : ''}}">
-                {!! Form::label('deleted', 'Deleted', ['class' => 'col-sm-3 control-label']) !!}
-                <div class="col-sm-6">
-                    {!! Form::number('deleted', null, ['class' => 'form-control']) !!}
-                    {!! $errors->first('deleted', '<p class="help-block">:message</p>') !!}
-                </div>
-            </div>
-            <div class="form-group {{ $errors->has('status') ? 'has-error' : ''}}">
-                {!! Form::label('status', 'status', ['class' => 'col-sm-3 control-label']) !!}
-                <div class="col-sm-6">
-                    {!! Form::number('status', null, ['class' => 'form-control']) !!}
-                    {!! $errors->first('status', '<p class="help-block">:message</p>') !!}
-                </div>
-            </div>
-
 
     <div class="form-group">
         <div class="col-sm-offset-3 col-sm-3">
