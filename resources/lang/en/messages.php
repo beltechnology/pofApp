@@ -52,5 +52,11 @@ return [
 	'TEAM_CREATION_DATE' => 'Team Creation Date',
 	'TEAM_END_DATE' => 'Team End Date',
 	'TEAM_CODE' => 'Team Code',
-	
+	'CLASS' => 'Class',
+	'VIEW_CLASS' => 'View Class',
+	'EDIT_CLASS' => 'Edit Class',
+	'DELETE_CLASS' => 'Del',
+	'ADD_CLASS' => 'Add New Class',
+	'ADD_LOCATION' => 'Add Location',
+	'ADD_DESIGNATION' =>'Add Designation'
 ];

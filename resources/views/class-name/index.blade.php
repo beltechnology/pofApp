@@ -3,7 +3,7 @@
 @section('content')
 <div class=" col-md-9 category">
 
-    <h1>Classname <a href="{{ url('/class-name/create') }}" class="btn btn-primary btn-xs" title="Add New ClassName"><span class="glyphicon glyphicon-plus" aria-hidden="true"/></a></h1>
+    <h1>Classname <a href="{{ url('/class-name/create') }}" class="btn btn-primary btn-xs" title="{{ trans('messages.ADD_CLASS')}}"><span class="glyphicon glyphicon-plus" aria-hidden="true"/></a></h1>
     <div class="table">
         <table class="table table-bordered table-striped table-hover">
             <thead>
@@ -19,8 +19,8 @@
                     <td>{{ $x }}</td>
                     <td>{{ $item->name }}</td>
                     <td>
-                        <a href="{{ url('/class-name/' . $item->id) }}" class="btn btn-success btn-xs" title="View ClassName"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"/></a>
-                        <a href="{{ url('/class-name/' . $item->id . '/edit') }}" class="btn btn-primary btn-xs" title="Edit ClassName"><span class="glyphicon glyphicon-pencil" aria-hidden="true"/></a>
+                        <a href="{{ url('/class-name/' . $item->id) }}" class="btn btn-success btn-xs" title="{{ trans('messages.VIEW_CLASS') }}"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"/></a>
+                        <a href="{{ url('/class-name/' . $item->id . '/edit') }}" class="btn btn-primary btn-xs" title="{{ trans('messages.EDIT_CLASS')}}"><span class="glyphicon glyphicon-pencil" aria-hidden="true"/></a>
                         {!! Form::open([
                             'method'=>'DELETE',
                             'url' => ['/class-name', $item->id],

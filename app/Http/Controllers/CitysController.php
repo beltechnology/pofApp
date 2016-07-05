@@ -76,8 +76,9 @@ class CitysController extends Controller
     public function edit($id)
     {
         $city = City::findOrFail($id);
+		$states = \DB::table('states')->lists('name', 'id');
 
-        return view('citys.edit', compact('city'));
+        return view('citys.edit', compact('city'))->with('states', $states);;
     }
 
     /**
