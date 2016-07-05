@@ -62,9 +62,23 @@
                     </a>
                 </li>
                  <li>
-                    <a href="{{ url('/city') }}">
+                    <a href="{{ url('/citys') }}">
                        <i class="fa fa-certificate fa-2x"></i>
                        {{ trans('messages.CITY') }}
+                        </span>
+                    </a>
+                </li>
+                 <li>
+                    <a href="{{ url('/locations') }}">
+                       <i class="fa fa-certificate fa-2x"></i>
+                       Add Location
+                        </span>
+                    </a>
+                </li>
+                 <li>
+                    <a href="{{ url('/designations') }}">
+                       <i class="fa fa-certificate fa-2x"></i>
+                       Add Designation
                         </span>
                     </a>
                 </li>
