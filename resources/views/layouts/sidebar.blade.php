@@ -82,6 +82,13 @@
                         </span>
                     </a>
                 </li>
+				 <li>
+                    <a href="{{ url('/class-name') }}">
+                       <i class="fa fa-certificate fa-2x"></i>
+                       Add Class
+                        </span>
+                    </a>
+                </li>
                 
             </ul>
 
