@@ -2,6 +2,7 @@
 
 @section('content')
 <div class=" col-md-9 category">
+
     <h1>Create New City</h1>
     <hr/>
 
@@ -28,18 +29,18 @@
                     {!! $errors->first('cityName', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>
-            <div class="form-group {{ $errors->has('cityDelete') ? 'has-error' : ''}}">
-                {!! Form::label('cityDelete', 'Citydelete', ['class' => 'col-sm-3 control-label']) !!}
+            <div class="form-group {{ $errors->has('deleted') ? 'has-error' : ''}}">
+                {!! Form::label('deleted', 'Deleted', ['class' => 'col-sm-3 control-label']) !!}
                 <div class="col-sm-6">
-                    {!! Form::number('cityDelete', null, ['class' => 'form-control']) !!}
-                    {!! $errors->first('cityDelete', '<p class="help-block">:message</p>') !!}
+                    {!! Form::number('deleted', null, ['class' => 'form-control']) !!}
+                    {!! $errors->first('deleted', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>
             <div class="form-group {{ $errors->has('cityStatus') ? 'has-error' : ''}}">
-                {!! Form::label('cityStatus', 'Citystatus', ['class' => 'col-sm-3 control-label']) !!}
+                {!! Form::label('status', 'Status', ['class' => 'col-sm-3 control-label']) !!}
                 <div class="col-sm-6">
-                    {!! Form::number('cityStatus', null, ['class' => 'form-control']) !!}
-                    {!! $errors->first('cityStatus', '<p class="help-block">:message</p>') !!}
+                    {!! Form::number('status', null, ['class' => 'form-control']) !!}
+                    {!! $errors->first('status', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>
 

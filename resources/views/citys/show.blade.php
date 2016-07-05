@@ -1,7 +1,7 @@
-@extends('layouts.app')
+@extends('layouts.header')
 
 @section('content')
-<div class="container">
+<div class=" col-md-9 category">
 
     <h1>City {{ $city->id }}
         <a href="{{ url('citys/' . $city->id . '/edit') }}" class="btn btn-primary btn-xs" title="Edit City"><span class="glyphicon glyphicon-pencil" aria-hidden="true"/></a>

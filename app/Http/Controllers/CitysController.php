@@ -41,7 +41,7 @@ class CitysController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, ['state_id' => 'required', 'district_id' => 'required', 'cityName' => 'required', 'cityDelete' => 'alpha_num', 'cityStatus' => 'alpha_num', ]);
+        $this->validate($request, ['state_id' => 'required', 'district_id' => 'required', 'cityName' => 'required', 'deleted' => 'alpha_num', 'status' => 'alpha_num', ]);
 
         City::create($request->all());
 
@@ -87,7 +87,7 @@ class CitysController extends Controller
      */
     public function update($id, Request $request)
     {
-        $this->validate($request, ['state_id' => 'required', 'district_id' => 'required', 'cityName' => 'required', 'cityDelete' => 'alpha_num', 'cityStatus' => 'alpha_num', ]);
+        $this->validate($request, ['state_id' => 'required', 'district_id' => 'required', 'cityName' => 'required', 'deleted' => 'alpha_num', 'status' => 'alpha_num', ]);
 
         $city = City::findOrFail($id);
         $city->update($request->all());
