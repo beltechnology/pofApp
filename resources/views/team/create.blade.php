@@ -57,7 +57,7 @@
             </div>
 			
             <div class="form-group {{ $errors->has('teamCode') ? 'has-error' : ''}}">
-                {!! Form::label('teamCode', 'Team Code', ['class' => 'col-sm-5 control-label']) !!}
+                {!! Form::hidden('teamCode', 'Team Code', ['class' => 'col-sm-5 control-label']) !!}
                 <div class="col-sm-6">
                     {!! Form::hidden('teamCode', \DB::table('teams')->max('teamId')+1,null,['class' => 'form-control']) !!}
                     {!! $errors->first('teamCode', '<p class="help-block">:message</p>') !!}
