@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Team;
+use App\Location;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Session;
@@ -15,7 +16,12 @@ class TeamController extends Controller
      */
     public function index()
     {
-        $team = Team::paginate(15);
+		
+		$deleted=0;
+		$team= \DB::table('teams')
+                        ->join('locations','locations.id','=','teams.teamLocation')
+						->where('teams.deleted',0)
+						->paginate(15);
 
         return view('team.index', compact('team'));
     }

@@ -103,7 +103,7 @@
               <div class="form-group {{ $errors->has('designation') ? 'has-error' : ''}}">
                 {!! Form::label('designation', trans('messages.DESIGNATION'), ['class' => 'col-sm-5  control-label']) !!}
                 <div class="col-sm-6">
-                    {!! Form::text('designation', null, ['class' => 'form-control','required' => 'required']) !!}
+                    {!! Form::select('designation',\DB::table('designations')->lists('designation','id'), "Debugging", ['class' => 'form-control stateSelect','id' => 'designation']) !!}
                     {!! $errors->first('designation', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>

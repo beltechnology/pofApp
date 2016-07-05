@@ -20,7 +20,7 @@
             <div class="form-group {{ $errors->has('teamLeader') ? 'has-error' : ''}}">
                 {!! Form::label('teamLeader', 'Team Leader', ['class' => 'col-sm-5 control-label']) !!}
                 <div class="col-sm-6">
-                    {!! Form::select('teamLeader',\DB::table('teams')->lists('teamLeader','teamId'), "Debugging", ['class' => 'form-control teamSelect','placeholder' => 'Select Team Leader','id' => 'teamSelect']) !!}
+                    {!! Form::select('teamLeader',\DB::table('entitys')->lists('name','entityId'), "Debugging", ['class' => 'form-control teamSelect','placeholder' => 'Select Team Leader','id' => 'teamSelect']) !!}
                     {!! $errors->first('teamLeader', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>
@@ -40,7 +40,7 @@
 	<div class="form-group {{ $errors->has('teamLocation') ? 'has-error' : ''}}">
                 {!! Form::label('teamLocation', 'Team Location', ['class' => 'col-sm-5 control-label']) !!}
                 <div class="col-sm-6">
-                    {!! Form::text('teamLocation', null, ['class' => 'form-control', 'required' => 'required']) !!}
+                   {!! Form::select('teamLocation',\DB::table('locations')->lists('location','id'), "Debugging", ['class' => ' form-control teamSelect','placeholder' => 'Select location','id' => 'teamLocation']) !!}
                     {!! $errors->first('teamLocation', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>

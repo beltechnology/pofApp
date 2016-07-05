@@ -6,6 +6,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use App\employee;
+use App\User;
 use App\address;
 use App\entity;
 use App\emailaddress;
@@ -72,6 +73,12 @@ class employeeController extends Controller
 		'dob' => $request['dob'],
 		'sessionYear' => date('Y').'-'.(date('Y')+1),
 					]);
+	 User::create([
+            'name' => $request['employeeName'],
+			'username' => $request['employeeName'],
+            'email' => $request['emailAddress'],
+            'password' => bcrypt('secret123#'),	
+				]);
 	entity::create([
 		'entityId' => $request['entityId'],
 		'name' => $request['employeeName'],

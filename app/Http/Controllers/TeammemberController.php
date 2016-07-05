@@ -22,8 +22,11 @@ class TeammemberController extends Controller
      */
     public function index()
     {
-        $team = Team::paginate(15);
-
+        $deleted=0;
+		$team= \DB::table('teams')
+                        ->join('locations','locations.id','=','teams.teamLocation')
+						->where('teams.deleted',0)
+						->paginate(15);
         return view('teammember.index', compact('team'));
     }
 
@@ -32,7 +35,7 @@ class TeammemberController extends Controller
      *
      * @return void
      */
-    public function create()
+    public function create(Request $request)
     {
        $deleted=0;
 		$employee= \DB::table('employees')
@@ -129,4 +132,5 @@ class TeammemberController extends Controller
 
         return redirect('teammember');
     }
+
 }

@@ -17,7 +17,7 @@
                 {{-- */$x++;/* --}}
                 <tr>
                     <td>{{ $item->teamName }}</td>
-                    <td>{{ $item->teamCode }}</td><td>{{ $item->teamLocation }}</td><td> <a href="{{ url('/teammember/') }}" class="btn  btn-xs" title="View Team"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"/></a></td>
+                    <td>{{ $item->teamCode }}</td><td>{{ $item->location }}</td><td> <a href="{{ url('/teammember/') }}" class="btn  btn-xs" title="View Team"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"/></a></td>
                     <td>
 					   
                         <a href="{{ url('/team/' . $item->teamId. '/edit') }}" class="btn  btn-xs" title="Edit Team"><span class="glyphicon glyphicon-pencil" aria-hidden="true"/></a>

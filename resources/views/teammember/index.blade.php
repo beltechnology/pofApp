@@ -2,7 +2,7 @@
 
 @section('content')
 <div class=" col-md-9 category">
-  <h1 class="text-left">{{ trans('messages.TEAM') }} Members</h1>
+  <h1 class="text-left">{{ trans('messages.TEAM') }} Members </h1>
     <h1 class="text-right">Add{{ trans('messages.TEAM') }} Member <a href="{{ url('/teammember/create') }}" class="btn btn-primary btn-xs" title="Add New Team"><span class="glyphicon glyphicon-plus" aria-hidden="true"/></a></h1>
     <div class="main-table col-md">
         <table class="table table-bordered table-striped table-hover">
@@ -16,8 +16,8 @@
             @foreach($team as $item)
                 {{-- */$x++;/* --}}
                 <tr>
-                    <td>{{ $item->teamName }}</td>
-                    <td>{{ $item->teamCode }}</td>
+                    <td></td>
+                    <td></td>
                     <td><a href="{{ url('/team/' . $item->teamId. '/edit') }}" class="btn  btn-xs" title="Edit Team"><span class="glyphicon glyphicon-pencil" aria-hidden="true"/></a>
                         {!! Form::open([
                             'method'=>'DELETE',
