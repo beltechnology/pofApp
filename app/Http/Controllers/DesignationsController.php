@@ -19,7 +19,7 @@ class DesignationsController extends Controller
      */
     public function index()
     {
-        $designations = Designation::paginate(15);
+        $designations = \DB::table('designations')->where('deleted',0)->paginate(15);
 
         return view('designations.index', compact('designations'));
     }
@@ -106,8 +106,7 @@ class DesignationsController extends Controller
      */
     public function destroy($id)
     {
-        Designation::destroy($id);
-
+       \DB::table('designations')->where('id',$id)->update(['deleted'=>1]);
         Session::flash('flash_message', 'Designation deleted!');
 
         return redirect('designations');

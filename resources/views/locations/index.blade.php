@@ -8,7 +8,7 @@
         <table class="table table-bordered table-striped table-hover">
             <thead>
                 <tr>
-                    <th>S.No</th><th> Location </th><th> Deleted </th><th> Status </th><th>Actions</th>
+                    <th>S.No</th><th> Location </th><th>Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -17,7 +17,7 @@
                 {{-- */$x++;/* --}}
                 <tr>
                     <td>{{ $x }}</td>
-                    <td>{{ $item->location }}</td><td>{{ $item->deleted }}</td><td>{{ $item->status }}</td>
+                    <td>{{ $item->location }}</td>
                     <td>
                         <a href="{{ url('/locations/' . $item->id) }}" class="btn btn-success btn-xs" title="View Location"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"/></a>
                         <a href="{{ url('/locations/' . $item->id . '/edit') }}" class="btn btn-primary btn-xs" title="Edit Location"><span class="glyphicon glyphicon-pencil" aria-hidden="true"/></a>

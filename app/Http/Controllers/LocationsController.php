@@ -19,7 +19,7 @@ class LocationsController extends Controller
      */
     public function index()
     {
-        $locations = Location::paginate(15);
+        $locations = \DB::table('locations')->where('deleted',0)->paginate(15);
 
         return view('locations.index', compact('locations'));
     }
@@ -106,7 +106,7 @@ class LocationsController extends Controller
      */
     public function destroy($id)
     {
-        Location::destroy($id);
+        \DB:: table('locations')->where('id',$id)->update(['deleted'=>1]);
 
         Session::flash('flash_message', 'Location deleted!');
 
