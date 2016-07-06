@@ -41,7 +41,7 @@ class DesignationsController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, ['designation' => 'required|unique:designations', ]);
+        $this->validate($request, ['designation' => 'required|unique:designations,deleted,1']);
 
         Designation::create($request->all());
 
@@ -87,9 +87,10 @@ class DesignationsController extends Controller
      */
     public function update($id, Request $request)
     {
-        $this->validate($request, ['designation' => 'required', ]);
+     //   $this->validate($request, ['designation' => 'required', ]);
 
         $designation = Designation::findOrFail($id);
+		$this->validate($request, ['designation' => 'required|unique:designations,designation,'.$designation->id.',id,deleted,0']);
         $designation->update($request->all());
 
         Session::flash('flash_message', 'Designation updated!');
