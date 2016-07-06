@@ -3,7 +3,7 @@
 @section('content')
 <div class=" col-md-9 category">
 
-    <h1>Edit City {{ $city->id }}</h1>
+    <h1>{{trans('messages.EDIT_CITY')}}  {{ $city->id }}</h1>
 
     {!! Form::model($city, [
         'method' => 'PATCH',
@@ -12,14 +12,14 @@
     ]) !!}
 
                 <div class="form-group {{ $errors->has('state_id') ? 'has-error' : ''}}">
-                {!! Form::label('state_id', 'State Id', ['class' => 'col-sm-3 control-label']) !!}
+                {!! Form::label('state_id', trans('messages.STATE_ID'), ['class' => 'col-sm-3 control-label']) !!}
                 <div class="col-sm-6">
                     {!! Form::select('state_id', ['0' => 'Select a States'] +$states, null, ['class' => 'form-control stateSelect']) !!}
                     {!! $errors->first('state_id', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>
             <div class="form-group {{ $errors->has('cityName') ? 'has-error' : ''}}">
-                {!! Form::label('cityName', 'Cityname', ['class' => 'col-sm-3 control-label']) !!}
+                {!! Form::label('cityName', trans('messages.NAME_CITY'), ['class' => 'col-sm-3 control-label']) !!}
                 <div class="col-sm-6">
                     {!! Form::text('cityName', null, ['class' => 'form-control', 'required' => 'required']) !!}
                     {!! $errors->first('cityName', '<p class="help-block">:message</p>') !!}
