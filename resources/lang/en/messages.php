@@ -105,5 +105,10 @@ return [
 	'EDIT_CLASS' => 'Edit Class',
 	'VIEW_CLASS' => 'View Class',
 	'CLASS_DELETE' => 'Delete Class',
-	
+	'STATE_CREATION' => 'State Creation',
+	'STATE_LIST' => 'State List',
+	'DISTRICT_CREATION' => 'District Creation',
+	'DISTRICT_LIST' => 'Disrict List',
+	'CITY_CREATION' => 'City Creation',
+	'CITY_LIST' => 'City List'
 ];
