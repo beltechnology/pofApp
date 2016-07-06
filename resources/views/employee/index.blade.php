@@ -13,17 +13,7 @@
             <div class="row">
           
           <div class="styled-select blue semi-square col-md-2">
-  			<select>
-    		<option>Select Employee Name</option>
-    		<option>The second option</option>
-    		<option>The third option</option>
-            <option>The Fourth option</option>
-    		<option>The Fifth option</option>
-            <option>The Six option</option>
-    		<option>The Seven option</option>
-            <option>The Eight option</option>
-    		<option>The Nine option</option>
-  			</select>
+  			 {!! Form::select('designation',\DB::table('entitys')->lists('name','entityId'), "Debugging", ['class' => 'form-control stateSelect','id' => 'designation','placeholder' => 'Select Employee Name']) !!}
 		</div>
         
          <div class="styled-select blue semi-square select-location col-md-2">
@@ -64,17 +54,17 @@
             </div>
             
             </div>
-        <div class="main-table col-md">
-            <table border="0" bgcolor="#eeeeee">
-            <thead bgcolor="#ffffff" style="color:#4b4b4b">
-      <tr class="table-heading">
-        <th width="200" class="emp-name"><span><i class="fa fa-square-o" aria-hidden="true"></i></span>{{ trans('messages.EMPLOYEE_NAME') }}</th>
-        <th width="50" class="emp-id">{{ trans('messages.EMPLOYEE_ID') }}</th>
-        <th width="80" class="emp-dob">{{ trans('messages.DOB') }}</th>
-        <th width="110" class="emp-no">{{ trans('messages.CONTACT_NUMBER') }}</th>
-        <th width="200" class="emp-location">{{ trans('messages.ADDRESS') }}</th>
-        <th width="105" class="emp-team">{{ trans('messages.EMAIL') }} </th>
-        <th width="120">{{ trans('messages.ACTIONS') }}</th>
+        <div class="table">
+            <table class="table table-bordered table-striped table-hover" >
+            <thead>
+      <tr>
+        <th><input type="checkbox" id="selectall" />{{ trans('messages.EMPLOYEE_NAME') }}</th>
+        <th>{{ trans('messages.EMPLOYEE_ID') }}</th>
+        <th>{{ trans('messages.DOB') }}</th>
+        <th>{{ trans('messages.CONTACT_NUMBER') }}</th>
+        <th>{{ trans('messages.ADDRESS') }}</th>
+        <th>{{ trans('messages.EMAIL') }} </th>
+        <th>{{ trans('messages.ACTIONS') }}</th>
       </tr>
     </thead>
             <tbody>
@@ -82,13 +72,14 @@
             @foreach($employee as $item)
                 {{-- */$x++;/* --}}
                 <tr>
-                    <td width="200">{{ $item->name }}</td>
-                    <td width="50">{{ $item->employeeId }}</td>
-					<td width="80">{{ $item->dob }}</td>
-					<td width="110">{{ $item->primaryNumber }}</td>
-					<td width="200">{{ $item->addressLine1 }}</td>
-					<td width="105">{{ $item->email }}</td>
-                    <td width="120">
+                    <td><input id="box{{$x}}" type="checkbox" />
+					{{ $item->name }}</td>
+                    <td>{{ $item->employeeId }}</td>
+					<td>{{ $item->dob }}</td>
+					<td>{{ $item->primaryNumber }}</td>
+					<td>{{ $item->addressLine1 }}</td>
+					<td>{{ $item->email }}</td>
+                    <td>
                         <!--<a href="{{ url('/employee/' . $item->employeeId) }}" class="btn  btn-xs" title="View employee"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"/></a>-->
                         <a href="{{ url('/employee/' . $item->entityId . '/edit') }}" class="btn  btn-xs" title="Edit employee"><span class="glyphicon glyphicon-pencil" aria-hidden="true"/></a>
                         {!! Form::open([
