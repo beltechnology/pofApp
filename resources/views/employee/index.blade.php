@@ -13,21 +13,11 @@
             <div class="row">
           
           <div class="styled-select blue semi-square col-md-2">
-  			 {!! Form::select('designation',\DB::table('entitys')->lists('name','entityId'), "Debugging", ['class' => 'form-control stateSelect','id' => 'designation','placeholder' => 'Select Employee Name']) !!}
+  			 {!! Form::select('employeeName',\DB::table('entitys')->lists('name','entityId'), "Debugging", ['class' => 'form-control stateSelect','id' => 'designation','placeholder' => 'Select Employee Name']) !!}
 		</div>
         
          <div class="styled-select blue semi-square select-location col-md-2">
-  			<select>
-    		<option>Select Location</option>
-    		<option>The second option</option>
-    		<option>The third option</option>
-            <option>The Fourth option</option>
-    		<option>The Fifth option</option>
-            <option>The Six option</option>
-    		<option>The Seven option</option>
-            <option>The Eight option</option>
-    		<option>The Nine option</option>
-  			</select>
+  			{!! Form::select('employeeName',\DB::table('locations')->lists('location','id'), "Debugging", ['class' => 'form-control stateSelect','id' => 'designation','placeholder' => 'Select Location']) !!}
 		</div>
          <div class="styled-select blue semi-square school-name col-md-2">
   			<select>
