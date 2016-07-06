@@ -41,7 +41,7 @@ class LocationsController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, ['location' => 'required', ]);
+        $this->validate($request, ['location' => 'required|unique:locations', ]);
 
         Location::create($request->all());
 

@@ -41,7 +41,7 @@ class ClassNameController extends Controller
      */
     public function store(Request $request)
     {
-        
+        $this->validate($request, ['name' => 'required|unique:class_names',]);
         ClassName::create($request->all());
 
         Session::flash('flash_message', 'ClassName added!');

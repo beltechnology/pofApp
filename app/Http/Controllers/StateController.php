@@ -43,7 +43,7 @@ class StateController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, ['name' => 'required', ]);
+        $this->validate($request, ['name' => 'required|unique:states', ]);
 
         State::create($request->all());
 
