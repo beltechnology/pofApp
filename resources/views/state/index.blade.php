@@ -28,7 +28,7 @@
                             {!! Form::button('<span class="glyphicon glyphicon-trash" aria-hidden="true" title="trans(messages.DELETE_STATE)" />', array(
                                     'type' => 'submit',
                                     'class' => 'btn btn-danger btn-xs',
-                                    'title' => 'Delete State',
+                                    'title' => trans('messages.DELETE_STATE'),
                                     'onclick'=>'return confirm("Confirm delete?")'
                             ));!!}
                         {!! Form::close() !!}

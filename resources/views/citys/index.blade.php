@@ -29,7 +29,7 @@
                             {!! Form::button('<span class="glyphicon glyphicon-trash" aria-hidden="true" title="trans(messages.DELETE_CITY) " />', array(
                                     'type' => 'submit',
                                     'class' => 'btn btn-danger btn-xs',
-                                    'title' => 'Delete City',
+                                    'title' => trans('messages.DELETE_CITY'),
                                     'onclick'=>'return confirm("Confirm delete?")'
                             ));!!}
                         {!! Form::close() !!}

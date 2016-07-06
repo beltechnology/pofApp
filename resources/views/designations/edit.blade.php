@@ -3,7 +3,7 @@
 @section('content')
 <div class=" col-md-9 category">
 
-    <h1>Edit Designation {{ $designation->id }}</h1>
+    <h1>{{ trans('messages.EDIT_DESIGNATION') }} {{ $designation->id }}</h1>
 
     {!! Form::model($designation, [
         'method' => 'PATCH',
@@ -12,7 +12,7 @@
     ]) !!}
 
                 <div class="form-group {{ $errors->has('designation') ? 'has-error' : ''}}">
-                {!! Form::label('designation', 'Designation', ['class' => 'col-sm-3 control-label']) !!}
+                {!! Form::label('designation', trans('messages.NAME_DESIGNATION'), ['class' => 'col-sm-3 control-label']) !!}
                 <div class="col-sm-6">
                     {!! Form::text('designation', null, ['class' => 'form-control', 'required' => 'required']) !!}
                     {!! $errors->first('designation', '<p class="help-block">:message</p>') !!}
@@ -20,7 +20,7 @@
             </div>
     <div class="form-group">
         <div class="col-sm-offset-3 col-sm-3">
-            {!! Form::submit('Update', ['class' => 'btn btn-primary form-control']) !!}
+            {!! Form::submit(trans('messages.UPDATE'), ['class' => 'btn btn-primary form-control']) !!}
         </div>
     </div>
     {!! Form::close() !!}
