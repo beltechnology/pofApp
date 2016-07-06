@@ -2,12 +2,12 @@
 @section('content')
 <div class=" col-md-9 category">
 
-    <h1>State <a href="{{ url('/state/create') }}" class="btn btn-primary btn-xs" title="Add New State"><span class="glyphicon glyphicon-plus" aria-hidden="true"/></a></h1>
+    <h1>{{trans('messages.STATE')}} <a href="{{ url('/state/create') }}" class="btn btn-primary btn-xs" title="{{trans('messages.NEW_STATE')}}"><span class="glyphicon glyphicon-plus" aria-hidden="true"/></a></h1>
     <div class="table">
         <table class="table table-bordered table-striped table-hover">
             <thead>
                 <tr>
-                    <th>S.No</th><th> Name </th><th>Actions</th>
+                    <th>{{trans('messages.S_NO')}}</th><th>{{trans('messages.NAME_STATE')}} </th><th>{{trans('messages.ACTION')}}</th>
                 </tr>
             </thead>
             <tbody>
@@ -18,17 +18,17 @@
                     <td>{{ $x }}</td>
                     <td>{{ $item->name }}</td>
                     <td>
-                        <a href="{{ url('/state/' . $item->id) }}" class="btn btn-success btn-xs" title="View State"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"/></a>
-                        <a href="{{ url('/state/' . $item->id . '/edit') }}" class="btn btn-primary btn-xs" title="Edit State"><span class="glyphicon glyphicon-pencil" aria-hidden="true"/></a>
+                        <a href="{{ url('/state/' . $item->id) }}" class="btn btn-success btn-xs" title="{{trans('messages.VIEW_STATE')}}"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"/></a>
+                        <a href="{{ url('/state/' . $item->id . '/edit') }}" class="btn btn-primary btn-xs" title="{{trans('messages.EDIT_STATE')}}"><span class="glyphicon glyphicon-pencil" aria-hidden="true"/></a>
                         {!! Form::open([
                             'method'=>'DELETE',
                             'url' => ['/state', $item->id],
                             'style' => 'display:inline'
                         ]) !!}
-                            {!! Form::button('<span class="glyphicon glyphicon-trash" aria-hidden="true" title="Delete State" />', array(
+                            {!! Form::button('<span class="glyphicon glyphicon-trash" aria-hidden="true" title="trans(messages.DELETE_STATE)" />', array(
                                     'type' => 'submit',
                                     'class' => 'btn btn-danger btn-xs',
-                                    'title' => 'Delete State',
+                                    'title' => trans('messages.DELETE_STATE'),
                                     'onclick'=>'return confirm("Confirm delete?")'
                             ));!!}
                         {!! Form::close() !!}

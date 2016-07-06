@@ -41,7 +41,7 @@ class ClassNameController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, ['name' => 'required|unique:class_names',]);
+        $this->validate($request, ['name' => 'required|unique:class_names,deleted,1',]);
         ClassName::create($request->all());
 
         Session::flash('flash_message', 'ClassName added!');
@@ -88,6 +88,8 @@ class ClassNameController extends Controller
     {
         
         $classname = ClassName::findOrFail($id);
+		//'email' => 'unique:users,email_address,'.$user->id.',user_id'
+		$this->validate($request, ['name' => 'required|unique:class_names,name,'.$classname->id.',id,deleted,0']);
         $classname->update($request->all());
 
         Session::flash('flash_message', 'ClassName updated!');

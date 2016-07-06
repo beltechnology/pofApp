@@ -3,13 +3,13 @@
 @section('content')
 <div class=" col-md-9 category">
 
-    <h1>Create New Location</h1>
+    <h1>{{ trans('messages.CREATE_LOCATION')}}</h1>
     <hr/>
 
     {!! Form::open(['url' => '/locations', 'class' => 'form-horizontal']) !!}
 
                 <div class="form-group {{ $errors->has('location') ? 'has-error' : ''}}">
-                {!! Form::label('location', 'Location', ['class' => 'col-sm-3 control-label']) !!}
+                {!! Form::label('location', trans('messages.NAME_LOCATION'), ['class' => 'col-sm-3 control-label']) !!}
                 <div class="col-sm-6">
                     {!! Form::text('location', null, ['class' => 'form-control', 'required' => 'required']) !!}
                     {!! $errors->first('location', '<p class="help-block">:message</p>') !!}
@@ -20,7 +20,7 @@
 
     <div class="form-group">
         <div class="col-sm-offset-3 col-sm-3">
-            {!! Form::submit('Create', ['class' => 'btn btn-primary form-control']) !!}
+            {!! Form::submit(trans('messages.CREATE'), ['class' => 'btn btn-primary form-control']) !!}
         </div>
     </div>
     {!! Form::close() !!}

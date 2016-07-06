@@ -21,6 +21,7 @@ Route::group(array('middleware' => 'auth'), function() {
 	Route::resource('designations', 'DesignationsController');
 	Route::resource('locations', 'LocationsController');
 	Route::resource('teammember', 'TeammemberController');
+	Route::resource('class-name', 'ClassNameController');
     });
 	
 Route::get('/', function () {
@@ -33,4 +34,3 @@ Route::auth();
 
 
 
-Route::resource('class-name', 'ClassNameController');

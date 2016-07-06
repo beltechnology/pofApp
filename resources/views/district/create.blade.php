@@ -2,20 +2,20 @@
 @section('content')
 <div class=" col-md-9 category">
 
-    <h1>Create New District</h1>
+    <h1>{{ trans('messages.CRE_DISTRICT') }}</h1>
     <hr/>
 
     {!! Form::open(['url' => '/district', 'class' => 'form-horizontal']) !!}
 
                 <div class="form-group {{ $errors->has('state_id') ? 'has-error' : ''}}">
-                {!! Form::label('state_id', 'State Id', ['class' => 'col-sm-3 control-label']) !!}
+                {!! Form::label('state_id',trans('messages.STATE_ID'), ['class' => 'col-sm-3 control-label']) !!}
                 <div class="col-sm-6">
 					{!! Form::select('state_id',\DB::table('states')->lists('name','id'), "Debugging", ['class' => 'form-control stateSelect','placeholder' => 'Select State Id','id' => 'stateSelect']) !!}
                     {!! $errors->first('state_id', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>
             <div class="form-group {{ $errors->has('name') ? 'has-error' : ''}}">
-                {!! Form::label('name', 'Name', ['class' => 'col-sm-3 control-label']) !!}
+                {!! Form::label('name', trans('messages.NAME_DISTRICT'), ['class' => 'col-sm-3 control-label']) !!}
                 <div class="col-sm-6">
                     {!! Form::text('name', null, ['class' => 'form-control', 'required' => 'required']) !!}
                     {!! $errors->first('name', '<p class="help-block">:message</p>') !!}
@@ -25,7 +25,7 @@
 
     <div class="form-group">
         <div class="col-sm-offset-3 col-sm-3">
-            {!! Form::submit('Create', ['class' => 'btn btn-primary form-control']) !!}
+            {!! Form::submit(trans('messages.CREATE'), ['class' => 'btn btn-primary form-control']) !!}
         </div>
     </div>
     {!! Form::close() !!}

@@ -3,12 +3,12 @@
 @section('content')
 <div class=" col-md-9 category">
 
-    <h1>Locations <a href="{{ url('/locations/create') }}" class="btn btn-primary btn-xs" title="Add New Location"><span class="glyphicon glyphicon-plus" aria-hidden="true"/></a></h1>
+    <h1>{{ trans('messages.LOCATION') }} <a href="{{ url('/locations/create') }}" class="btn btn-primary btn-xs" title="{{trans('messages.NEW_LOCATION')}}"><span class="glyphicon glyphicon-plus" aria-hidden="true"/></a></h1>
     <div class="table">
         <table class="table table-bordered table-striped table-hover">
             <thead>
                 <tr>
-                    <th>S.No</th><th> Location </th><th>Actions</th>
+                    <th>{{trans('messages.S_NO')}}</th> <th>{{trans('messages.NAME_LOCATION')}} </th><th>{{trans('messages.ACTION')}}</th>
                 </tr>
             </thead>
             <tbody>
@@ -19,17 +19,17 @@
                     <td>{{ $x }}</td>
                     <td>{{ $item->location }}</td>
                     <td>
-                        <a href="{{ url('/locations/' . $item->id) }}" class="btn btn-success btn-xs" title="View Location"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"/></a>
-                        <a href="{{ url('/locations/' . $item->id . '/edit') }}" class="btn btn-primary btn-xs" title="Edit Location"><span class="glyphicon glyphicon-pencil" aria-hidden="true"/></a>
+                        <a href="{{ url('/locations/' . $item->id) }}" class="btn btn-success btn-xs" title="{{trans('messages.VIEW_LOCATION')}}"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"/></a>
+                        <a href="{{ url('/locations/' . $item->id . '/edit') }}" class="btn btn-primary btn-xs" title="{{trans('messages.EDIT_LOCATION')}}"><span class="glyphicon glyphicon-pencil" aria-hidden="true"/></a>
                         {!! Form::open([
                             'method'=>'DELETE',
                             'url' => ['/locations', $item->id],
                             'style' => 'display:inline'
                         ]) !!}
-                            {!! Form::button('<span class="glyphicon glyphicon-trash" aria-hidden="true" title="Delete Location" />', array(
+                            {!! Form::button('<span class="glyphicon glyphicon-trash" aria-hidden="true" title="trans(messages.DELETE_LOCATION)" />', array(
                                     'type' => 'submit',
                                     'class' => 'btn btn-danger btn-xs',
-                                    'title' => 'Delete Location',
+                                    'title' => trans('messages.DELETE_LOCATION'),
                                     'onclick'=>'return confirm("Confirm delete?")'
                             ));!!}
                         {!! Form::close() !!}

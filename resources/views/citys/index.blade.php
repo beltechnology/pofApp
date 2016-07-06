@@ -3,12 +3,12 @@
 @section('content')
 <div class=" col-md-9 category">
 
-    <h1>Citys <a href="{{ url('/citys/create') }}" class="btn btn-primary btn-xs" title="Add New City"><span class="glyphicon glyphicon-plus" aria-hidden="true"/></a></h1>
+    <h1>{{ trans('messages.CITY') }}  <a href="{{ url('/citys/create') }}" class="btn btn-primary btn-xs" title="{{trans('messages.NEW_CITY')}}"><span class="glyphicon glyphicon-plus" aria-hidden="true"/></a></h1>
     <div class="table">
         <table class="table table-bordered table-striped table-hover">
             <thead>
                 <tr>
-                    <th>S.No</th><th> State Id </th><th> CityName </th><th>Actions</th>
+                    <th>{{trans('messages.S_NO')}}</th><th>{{trans('messages.STATE_ID')}} </th> <th>{{trans('messages.NAME_CITY')}} </th><th>{{trans('messages.ACTION')}}</th>
                 </tr>
             </thead>
             <tbody>
@@ -19,17 +19,17 @@
                     <td>{{ $x }}</td>
                     <td>{{ $item->state_id }}</td><td>{{ $item->cityName }}</td>
                     <td>
-                        <a href="{{ url('/citys/' . $item->id) }}" class="btn btn-success btn-xs" title="View City"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"/></a>
-                        <a href="{{ url('/citys/' . $item->id . '/edit') }}" class="btn btn-primary btn-xs" title="Edit City"><span class="glyphicon glyphicon-pencil" aria-hidden="true"/></a>
+                        <a href="{{ url('/citys/' . $item->id) }}" class="btn btn-success btn-xs" title="{{trans('messages.VIEW_CITY')}}"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"/></a>
+                        <a href="{{ url('/citys/' . $item->id . '/edit') }}" class="btn btn-primary btn-xs" title="{{trans('messages.EDIT_CITY')}}"><span class="glyphicon glyphicon-pencil" aria-hidden="true"/></a>
                         {!! Form::open([
                             'method'=>'DELETE',
                             'url' => ['/citys', $item->id],
                             'style' => 'display:inline'
                         ]) !!}
-                            {!! Form::button('<span class="glyphicon glyphicon-trash" aria-hidden="true" title="Delete City" />', array(
+                            {!! Form::button('<span class="glyphicon glyphicon-trash" aria-hidden="true" title="trans(messages.DELETE_CITY) " />', array(
                                     'type' => 'submit',
                                     'class' => 'btn btn-danger btn-xs',
-                                    'title' => 'Delete City',
+                                    'title' => trans('messages.DELETE_CITY'),
                                     'onclick'=>'return confirm("Confirm delete?")'
                             ));!!}
                         {!! Form::close() !!}
