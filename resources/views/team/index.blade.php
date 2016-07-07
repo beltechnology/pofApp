@@ -2,13 +2,21 @@
 
 @section('content')
 <div class=" col-md-9 category">
-  <h1 class="text-left">{{ trans('messages.TEAM') }}</h1>
-    <h1 class="text-right">{{ trans('messages.TEAM') }} <a href="{{ url('/team/create') }}" class="btn btn-primary btn-xs" title="Add New Team"><span class="glyphicon glyphicon-plus" aria-hidden="true"/></a></h1>
-    <div class="main-table col-md">
+ <div class=" col-md-12 top-filter">
+ 
+            <div class=" col-md-6 category-name">
+            <h1>{{ trans('messages.TEAM_MANAGE') }}</h1>
+            </div>	
+     
+            <div class="add-emp col-md-2" style="float:right">
+            <a href="{{ url('/team/create') }}"><p>{{ trans('messages.ADD') }} <span class="glyphicon glyphicon-plus" aria-hidden="true"/></p></a>
+            </div>
+	</div>
+	<div class="table">
         <table class="table table-bordered table-striped table-hover">
             <thead>
                 <tr>
-                    <th>{{ trans('messages.TEAM_NAME') }}</th><th>{{ trans('messages.TEAM_CODE') }}</th><th>{{ trans('messages.TEAM_LOCATION') }}</th><th>{{ trans('messages.TEAM_MEMBERS') }}</th><th>{{ trans('messages.ACTIONS') }}</th>
+                    <th >{{ trans('messages.TEAM_NAME') }}</th><th >{{ trans('messages.TEAM_CODE') }}</th><th>{{ trans('messages.TEAM_LOCATION') }}</th><th style="padding-left:30px">{{ trans('messages.TEAM_MEMBERS') }}</th><th style="padding-left:70px">{{ trans('messages.ACTIONS') }}</th>
                 </tr>
             </thead>
             <tbody>
@@ -17,8 +25,8 @@
                 {{-- */$x++;/* --}}
                 <tr>
                     <td>{{ $item->teamName }}</td>
-                    <td>{{ $item->teamCode }}</td><td>{{ $item->location }}</td><td> <a href="{{ url('/teammember/') }}" class="btn  btn-xs" title="View Team"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"/></a></td>
-                    <td>
+                    <td>{{ $item->teamCode }}</td><td>{{ $item->location }}</td><td style="padding-left:27px"> <a href="{{ url('/teammember/') }}" class="btn  btn-xs" title="View Team"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"/></a></td>
+                    <td style="padding-left:65px">
 					   
                         <a href="{{ url('/team/' . $item->teamId. '/edit') }}" class="btn  btn-xs" title="Edit Team"><span class="glyphicon glyphicon-pencil" aria-hidden="true"/></a>
                         {!! Form::open([
@@ -40,6 +48,5 @@
         </table>
         <div class="pagination-wrapper"> {!! $team->render() !!} </div>
     </div>
-
 </div>
 @endsection

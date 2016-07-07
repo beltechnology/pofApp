@@ -2,7 +2,7 @@
 
 return [
     'LOGIN' => 'Login',//login form
-	'EMAIL_ADDRESS' => 'E-Mail Address',
+	'EMAIL_ADDRESS' => 'User Id',
 	'PASSWORD' => 'Password',
 	'REMEMBER_ME' => 'Remember Me',
 	'FORGET_PASSWORD' => 'Forgot Your Password ?',
@@ -11,8 +11,7 @@ return [
 	'COPYRIGHT' => 'Copyright',//footer
 	'CREATED_AND_MAINTAINED' => 'Created & Maintained By Bel-Technology ',
 	'ALL_RIGHTS_RESERVED' => 'All Rights Reserved',
-	'EMPLOYEE_CREATION' => 'Employee Creation',//sidebar nav
-	'TEAM_CREATION' => 'Team Creation',
+	'EMPLOYEE_CREATION' => 'Employee Management',//sidebar nav
 	'SCHOOLS' => 'Schools',
 	'ADMIT_CARD' => 'Admit Card',
 	'ATTENDANCE_SHEET' => 'Attendance Sheet',
@@ -29,9 +28,9 @@ return [
 	'ADDRESS'=>'Address',
 	'EMAIL'=>'Email',
 	'ACTIONS'=>'Actions',
-	'STATE' => 'State',
-	'DISTRICT' => 'District',
-	'CITY' => 'City',
+	'STATE' => 'Add State',
+	'DISTRICT' => 'Add District',
+	'CITY' => 'Add City',
 	'PINCODE' => 'Pincode',
 	'EMPLOYEE_CODE' => 'Employee Code',
 	'DESCRIPTION' => 'Description',
@@ -52,14 +51,14 @@ return [
 	'TEAM_CREATION_DATE' => 'Team Creation Date',
 	'TEAM_END_DATE' => 'Team End Date',
 	'TEAM_CODE' => 'Team Code',
-	'CLASS' => 'Class',
+	'TEAM_CREATION'=> 'Manage Teams',
+	'CLASS' => 'Add Class',
 	'ADD_LOCATION' => 'Add Location',
 	'ADD_DESIGNATION' =>'Add Designation',
 	'NAME_STATE' => 'State Name',
 	'CREATE_STATE' => 'Create New State',
 	'CREATE' => 'Create',
 	'UPDATE' => 'Update',
-	'STATE' => 'State',
 	'S_NO' => 'S.No',
 	'ACTION' => 'Action',
 	'EDIT_STATE' => 'Edit State',
@@ -67,7 +66,7 @@ return [
 	'DELETE_STATE' => 'Delete State',
 	'NEW_STATE' => 'Add New State',
 	'NAME_DISTRICT' => 'Distirct Name',
-	'DISTIRCT' => 'District',
+	'DISTIRCT' => 'Add District',
 	'CRE_DISTRICT' => 'Create New District',
 	'STATE_ID' => 'State Id',
 	'NEW_DISTIRICT' => 'Add New District',
@@ -97,9 +96,7 @@ return [
 	'EDIT_DESIGNATION' => 'Edit Designation',
 	'VIEW_DESIGNATION' => 'View Designation',
 	'DELETE_CLASS' => 'Delete Designation',
-	'CLASS' => 'Class',
 	'NAME_CLASS' => 'Class Name',
-	'CLASS' => 'Class',
 	'NEW_CLASS' => 'Add New Class',
 	'CREATE_CLASS' => 'Create New Class',
 	'EDIT_CLASS' => 'Edit Class',
@@ -110,5 +107,14 @@ return [
 	'DISTRICT_CREATION' => 'District Creation',
 	'DISTRICT_LIST' => 'Disrict List',
 	'CITY_CREATION' => 'City Creation',
-	'CITY_LIST' => 'City List'
+	'CITY_LIST' => 'City List',
+	'TEAM_MANAGE' => 'Team Management Console',
+	
+	'TEAM_LIST'=>'Team List',
+	'LOCATION_LIST' => 'Location list',
+	'LOCATION_CREATION' => 'Location Creation',
+	'DESIGNATION_CREATION' => 'Designation Creation',
+	'DESIGNATION_LIST' => 'Designation List',
+	'CLASS_CREATION' => 'Class Creation',
+	'CLASS_LIST' => 'Class List',
 ];

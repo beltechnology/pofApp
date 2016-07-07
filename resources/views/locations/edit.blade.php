@@ -2,18 +2,19 @@
 
 @section('content')
 <div class=" col-md-9 category">
-
-    <h1>{{ trans('messages.EDIT_LOCATION') }} {{ $location->id }}</h1>
+<div class="row">
+   <h1 class="text-left"><a href="{{ url('/locations') }}" class="fa fa-angle-left  fa-2x"> {{ trans('messages.LOCATION_LIST') }}</a></h1>
+    <hr/>
 
     {!! Form::model($location, [
         'method' => 'PATCH',
         'url' => ['/locations', $location->id],
         'class' => 'form-horizontal'
     ]) !!}
-
+            <div class=" col-md-6 create-emp-list">
                 <div class="form-group {{ $errors->has('location') ? 'has-error' : ''}}">
-                {!! Form::label('location', trans('messages.NAME_LOCATION'), ['class' => 'col-sm-3 control-label']) !!}
-                <div class="col-sm-6">
+                {!! Form::label('location', trans('messages.NAME_LOCATION'), ['class' => 'col-sm-4 control-label']) !!}
+                <div class="col-sm-8">
                     {!! Form::text('location', null, ['class' => 'form-control', 'required' => 'required']) !!}
                     {!! $errors->first('location', '<p class="help-block">:message</p>') !!}
                 </div>
@@ -21,11 +22,16 @@
         
 
 
+   		
+			  <div class=" col-md-12 button-group">
     <div class="form-group">
-        <div class="col-sm-offset-3 col-sm-3">
-            {!! Form::submit(trans('messages.UPDATE'), ['class' => 'btn btn-primary form-control']) !!}
+        <div class="col-sm-offset-3 col-sm-12 ">
+            {!! Form::reset(trans('messages.CANCEL_BTN'), ['class' => 'btn btn-primary ']) !!}
+            {!! Form::submit(trans('messages.SUBMIT_BTN'), ['class' => 'btn btn-primary ']) !!}
         </div>
     </div>
+    </div>
+	</div>
     {!! Form::close() !!}
 
     @if ($errors->any())
@@ -35,6 +41,6 @@
             @endforeach
         </ul>
     @endif
-
+</div>
 </div>
 @endsection

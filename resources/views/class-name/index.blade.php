@@ -3,12 +3,21 @@
 @section('content')
 <div class=" col-md-9 category">
 
-    <h1>{{ trans('messages.DISTRICT') }} <a href="{{ url('/class-name/create') }}" class="btn btn-primary btn-xs" title="{{ trans('messages.ADD_CLASS')}}"><span class="glyphicon glyphicon-plus" aria-hidden="true"/></a></h1>
-    <div class="table">
+     <div class=" col-md-12 top-filter">
+ 
+            <div class=" col-md-3 category-name">
+            <h1>{{ trans('messages.CLASS_CREATION') }}</h1>
+            </div>	
+     
+            <div class="add-emp col-md-2" style="float:right">
+            <a href="{{ url('/class-name/create') }}"><p>{{ trans('messages.ADD') }} <span class="glyphicon glyphicon-plus" aria-hidden="true"/></p></a>
+            </div>
+	</div>  
+	<div class="table">
         <table class="table table-bordered table-striped table-hover">
             <thead>
                 <tr>
-                    <th>{{trans('messages.S_NO')}}</th><th>{{trans('messages.NAME_CLASS')}} </th><th>{{trans('messages.ACTION')}}</th>
+                    <th>{{trans('messages.S_NO')}}</th><th class="text-center">{{trans('messages.NAME_CLASS')}} </th><th class="text-right" style="padding-right:45px">{{trans('messages.ACTION')}}</th>
                 </tr>
             </thead>
             <tbody>
@@ -17,9 +26,8 @@
                 {{-- */$x++;/* --}}
                 <tr>
                     <td>{{ $x }}</td>
-                    <td>{{ $item->name }}</td>
-                    <td>
-                        <a href="{{ url('/class-name/' . $item->id) }}" class="btn btn-success btn-xs" title="{{ trans('messages.VIEW_CLASS') }}"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"/></a>
+                    <td class="text-center">{{ $item->name }}</td>
+                    <td class="text-right" style="padding-right:30px">
                         <a href="{{ url('/class-name/' . $item->id . '/edit') }}" class="btn btn-primary btn-xs" title="{{ trans('messages.EDIT_CLASS')}}"><span class="glyphicon glyphicon-pencil" aria-hidden="true"/></a>
                         {!! Form::open([
                             'method'=>'DELETE',
