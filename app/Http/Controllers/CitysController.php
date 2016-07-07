@@ -43,7 +43,7 @@ class CitysController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, ['state_id' => 'required', 'cityName' => 'required|unique:citys', ]);
+        $this->validate($request, ['state_id' => 'required', 'district_id' => 'required','cityName' => 'required|unique:citys,cityName,null,id,deleted,0', ]);
 
         City::create($request->all());
 
@@ -77,7 +77,7 @@ class CitysController extends Controller
     {
 
         $city = City::findOrFail($id);
-		$states = \DB::table('states')->lists('name', 'id');
+		$states = \DB::table('states')->lists('stateName', 'id');
 
         return view('citys.edit', compact('city'))->with('states', $states);;
     }

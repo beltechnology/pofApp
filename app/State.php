@@ -25,5 +25,11 @@ class State extends Model
      *
      * @var array
      */
-    protected $fillable = ['name'];
+    protected $fillable = ['stateName','id'];
+	
 }
+ // class State extends Model {
+	// public function cities(){
+         // return $this->has_many('City');
+      // }
+	 // }

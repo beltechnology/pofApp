@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Auth;
 
 use App\User;
+use App\Designation;
 use Validator;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
@@ -28,6 +30,7 @@ class AuthController extends Controller
      *
      * @var string
      */
+	
     protected $redirectTo = '/employee';
 
     /**
@@ -38,6 +41,7 @@ class AuthController extends Controller
     public function __construct()
     {
         $this->middleware($this->guestMiddleware(), ['except' => 'logout']);
+		
     }
 
     /**
@@ -55,6 +59,7 @@ class AuthController extends Controller
             'password' => 'required|min:6|confirmed',
         ]);
     }
+	
 
     /**
      * Create a new user instance after a valid registration.
@@ -71,4 +76,6 @@ class AuthController extends Controller
             'password' => bcrypt($data['password']),
         ]);
     }
+	
+	 
 }

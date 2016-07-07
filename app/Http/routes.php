@@ -10,6 +10,10 @@
 | and give it the controller to call when that URI is requested.
 |
 */
+use App\District;
+use App\City;
+use Illuminate\Support\Facades\Input;
+ 
 Route::group(array('middleware' => 'auth'), function() {
     Route::get('/home', 'HomeController@index');
 	Route::resource('employee', 'employeeController');
@@ -22,6 +26,50 @@ Route::group(array('middleware' => 'auth'), function() {
 	Route::resource('locations', 'LocationsController');
 	Route::resource('teammember', 'TeammemberController');
 	Route::resource('class-name', 'ClassNameController');
+	
+	Route::get('/employee/create/ajax-state',function()
+{
+    $state_id = Input::get('state_id');
+    $subcategories = District::where('state_id','=',$state_id)->get();
+    return $subcategories;
+ 
+});
+Route::get('/employee/create/district',function()
+{
+    $dist_id = Input::get('dist_id');
+    $subcategories = City::where('district_id','=',$dist_id)->get();
+    return $subcategories;
+ 
+});
+Route::get('/employee/edit/district',function()
+{
+    $dist_id = Input::get('dist_id');
+    $subcategories = City::where('district_id','=',$dist_id)->get();
+    return $subcategories;
+ 
+});
+Route::get('/employee/edit/ajax-state',function()
+{
+    $state_id = Input::get('state_id');
+    $subcategories = District::where('state_id','=',$state_id)->get();
+    return $subcategories;
+ 
+});
+Route::get('/citys/create/ajax-state',function()
+{
+    $state_id = Input::get('state_id');
+    $subcategories = District::where('state_id','=',$state_id)->get();
+    return $subcategories;
+ 
+});
+Route::get('/citys/edit/ajax-state',function()
+{
+    $state_id = Input::get('state_id');
+    $subcategories = District::where('state_id','=',$state_id)->get();
+    return $subcategories;
+ 
+});
+
     });
 	
 Route::get('/', function () {

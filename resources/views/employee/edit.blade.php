@@ -46,25 +46,29 @@
                     {!! $errors->first('address', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>      
-            <div class="form-group {{ $errors->has('state') ? 'has-error' : ''}}">
-                {!! Form::label('state', trans('messages.STATE'), ['class' => 'col-sm-4  control-label']) !!}
+            <div class="form-group {{ $errors->has('stateId') ? 'has-error' : ''}}">
+                {!! Form::label('stateId', trans('messages.STATE'), ['class' => 'col-sm-4  control-label']) !!}
                 <div class="col-sm-8">
-					{!! Form::select('state',\DB::table('states')->lists('name','id'), "Debugging", ['class' => 'form-control stateSelect','placeholder' => 'Select a State','id' => 'stateSelect']) !!}
-                    {!! $errors->first('state', '<p class="help-block">:message</p>') !!}
+					{!! Form::select('stateId',\DB::table('states')->lists('stateName','id'), "Debugging", ['class' => 'form-control stateSelect','id' => 'state']) !!}
+                    {!! $errors->first('stateId', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>
-			 <div class="form-group {{ $errors->has('district') ? 'has-error' : ''}}">
-                {!! Form::label('district', trans('messages.DISTRICT'), ['class' => 'col-sm-4  control-label']) !!}
+			 <div class="form-group {{ $errors->has('districtId') ? 'has-error' : ''}}">
+                {!! Form::label('districtId', trans('messages.DISTRICT'), ['class' => 'col-sm-4  control-label']) !!}
                 <div class="col-sm-8">
-					{!!	Form::select('district', array('key' => 'value'), 'key', array('class' => 'form-control','id'=>'selectCity', 'placeholder' => 'City')) !!}
-					 {!! $errors->first('district', '<p class="help-block">:message</p>') !!}
+					 <select id="district" class="form-control " name="districtId">
+					<option value=""></option>
+					</select>
+					 {!! $errors->first('districtId', '<p class="help-block">:message</p>') !!}
                 </div>
-            </div>
-             <div class="form-group {{ $errors->has('city') ? 'has-error' : ''}}">
-                {!! Form::label('city', trans('messages.CITY'), ['class' => 'col-sm-4  control-label']) !!}
+            </div>  
+             <div class="form-group {{ $errors->has('cityId') ? 'has-error' : ''}}">
+                {!! Form::label('cityId', trans('messages.CITY'), ['class' => 'col-sm-4  control-label']) !!}
                 <div class="col-sm-8">
-					{!!	Form::select('city', array('key' => 'value'), 'key', array('class' => 'form-control','id'=>'selectCity', 'placeholder' => 'City')) !!}
-					 {!! $errors->first('city', '<p class="help-block">:message</p>') !!}
+					<select id="city" class="form-control " name="cityId">
+					<option value=""></option>
+					</select>
+					 {!! $errors->first('cityId', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>
              <div class="form-group {{ $errors->has('pinCode') ? 'has-error' : ''}}">
@@ -158,4 +162,28 @@
 
 </div>
 </div>
+<script>
+    $('#state').on('change', function(e){
+        console.log(e);
+        var state_id = e.target.value;
+        $.get('{{ url('employee') }}/edit/ajax-state?state_id=' + state_id, function(data) {
+            console.log(data);
+            $('#district').empty();
+            $.each(data, function(index,subCatObj){
+                $('#district').append('<option value="'+subCatObj.id+'">'+subCatObj.name+'</option>');
+            });
+        });
+    });
+$('#district').on('change', function(e){
+        console.log(e);
+        var dist_id = e.target.value;
+        $.get('{{ url('employee') }}/edit/district?dist_id=' + dist_id, function(data) {
+            console.log(data);
+            $('#city').empty();
+            $.each(data, function(index,subCatObj){
+                $('#city').append('<option value="'+subCatObj.id+'">'+subCatObj.cityName+'</option>');
+            });
+        });
+    });
+</script>
 @endsection

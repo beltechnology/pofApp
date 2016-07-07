@@ -10,9 +10,9 @@
 
 		<div class=" col-md-6 create-emp-list">
                 <div class="form-group {{ $errors->has('state_id') ? 'has-error' : ''}}">
-                {!! Form::label('state_id',trans('messages.STATE_ID'), ['class' => 'col-sm-4 control-label']) !!}
+                {!! Form::label('state_id',trans('messages.STATE_NAME'), ['class' => 'col-sm-4 control-label']) !!}
                 <div class="col-sm-8">
-					{!! Form::select('state_id',\DB::table('states')->lists('name','id'), "Debugging", ['class' => 'form-control stateSelect','placeholder' => 'Select State Id','id' => 'stateSelect']) !!}
+					{!! Form::select('state_id',\DB::table('states')->lists('stateName','id'), "Debugging", ['class' => 'form-control stateSelect','placeholder' => 'Select a state ','id' => 'stateSelect']) !!}
                     {!! $errors->first('state_id', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>

@@ -24,7 +24,7 @@
                 {{-- */$x++;/* --}}
                 <tr>
                     <td>{{ $x }}</td>
-                    <td style="padding-left:45px">{{ $item->name }}</td>
+                    <td style="padding-left:45px">{{ $item->stateName }}</td>
                     <td class="text-right" style="padding-right:45px";>
                         <!--<a href="{{ url('/state/' . $item->id) }}" class="btn btn-success btn-xs" title="{{trans('messages.VIEW_STATE')}}"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"/></a>-->
                         <a href="{{ url('/state/' . $item->id . '/edit') }}" class="btn btn-primary btn-xs" title="{{trans('messages.EDIT_STATE')}}"><span class="glyphicon glyphicon-pencil" aria-hidden="true"/></a>

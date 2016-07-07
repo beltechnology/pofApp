@@ -11,6 +11,7 @@ use App\address;
 use App\entity;
 use App\emailaddress;
 use App\phone;
+use App\State;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Session;
@@ -24,16 +25,14 @@ class employeeController extends Controller
      */
     public function index()
     {
-		$deleted=0;
-		$employee= \DB::table('employees')
+			$employee= \DB::table('employees')
                         ->join('entitys','entitys.entityId','=','employees.entityId')
                         ->join('addresses','addresses.entityId','=','employees.entityId')
 						->join('phones','phones.entityId','=','employees.entityId')
 						->join('emailaddresses','emailaddresses.entityId','=','employees.entityId')
 						->where('employees.deleted',0)
 						->groupBy('employees.entityId')
-						// ->select('employees.*','entitys.name','employees.employeeId','employees.dateOfJoining','addresses.stateId','addresses.districtId','addresses.cityId','addresses.addressLine1','phones.phoneNumber','emailaddresses.email')
-						->paginate(5);
+						->paginate(10);
         return view('employee.index', compact('employee'));
 		
 		 
@@ -48,8 +47,8 @@ class employeeController extends Controller
      */
     public function create()
     {
-        return view('employee.create');
-		
+		$states = State::lists('stateName', 'id');
+    return view('employee.create', compact('states'));
     }
 
     /**
@@ -60,7 +59,13 @@ class employeeController extends Controller
     public function store(Request $request)
     {
 		 $this->validate($request, ['employeeName' => 'required', 'dob' => 'required', 'address' => 'required', 'state' => 'required', 'district' => 'required', 'city' => 'required', 'pinCode' => 'required', 'primaryNumber' => 'required', 'emailAddress' => 'required', 'designation' => 'required', 'dateOfJoining' => 'required', ]);	
-		 
+	 User::create([
+			'designationId' => $request['designation'],
+            'name' => $request['employeeName'],
+			'username' => $request['employeeName'],
+            'email' => $request['emailAddress'],
+            'password' => bcrypt('secret123#'),	
+				]);	 
 	 employee::create([
         'employeeId' => $request['employeeId'],
 		'entityId' => $request['entityId'],
@@ -73,15 +78,11 @@ class employeeController extends Controller
 		'dob' => $request['dob'],
 		'sessionYear' => date('Y').'-'.(date('Y')+1),
 					]);
-	 User::create([
-            'name' => $request['employeeName'],
-			'username' => $request['employeeName'],
-            'email' => $request['emailAddress'],
-            'password' => bcrypt('secret123#'),	
-				]);
+	
 	entity::create([
 		'entityId' => $request['entityId'],
 		'name' => $request['employeeName'],
+		'entityType' => $request['designation'],
     ]);
 	address::create([
 		'entityId' => $request['entityId'],
@@ -149,7 +150,7 @@ class employeeController extends Controller
      */
     public function update($id, Request $request)
     {
-		$this->validate($request, ['name' => 'required', 'dob' => 'required', 'addressLine1' => 'required', 'state' => 'required', 'district' => 'required', 'city' => 'required', 'pincode' => 'required', 'primaryNumber' => 'required', 'email' => 'required', 'designation' => 'required', 'dateOfJoining' => 'required', ]);
+		$this->validate($request, ['name' => 'required', 'dob' => 'required', 'addressLine1' => 'required', 'stateId' => 'required', 'districtId' => 'required', 'pincode' => 'required', 'primaryNumber' => 'required', 'email' => 'required', 'designation' => 'required', 'dateOfJoining' => 'required', ]);
         $employee = employee::findOrFail($id);	
         $employee->update($request->all());
 		

@@ -19,8 +19,11 @@ class DistrictController extends Controller
      */
     public function index()
     {
-        $district =\DB::table('districts')->where('districts.deleted',0)->groupBy('districts.id')->paginate(15);
-
+		$district= \DB::table('districts')
+                        ->join('states','states.id','=','districts.state_id')
+						->where('districts.deleted',0)
+						->groupBy('districts.id')
+						->paginate(15);
         return view('district.index', compact('district'));
     }
 
@@ -74,8 +77,7 @@ class DistrictController extends Controller
     public function edit($id)
     {
         $district = District::findOrFail($id);
-		$states = \DB::table('states')->lists('name', 'id');
-	//	return view('employee.create')->with('states', $states);		
+		$states = \DB::table('states')->where('states.deleted',0)->lists('stateName', 'id');		
         return view('district.edit', compact('district'))->with('states', $states);;
     }
 

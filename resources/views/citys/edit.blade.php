@@ -12,10 +12,19 @@
     ]) !!}
 <div class=" col-md-6 create-emp-list">
                 <div class="form-group {{ $errors->has('state_id') ? 'has-error' : ''}}">
-                {!! Form::label('state_id', trans('messages.STATE_ID'), ['class' => 'col-sm-4 control-label']) !!}
+                {!! Form::label('state_id', trans('messages.STATE_NAME'), ['class' => 'col-sm-4 control-label']) !!}
                 <div class="col-sm-8">
-                    {!! Form::select('state_id', ['0' => 'Select a States'] +$states, null, ['class' => 'form-control stateSelect']) !!}
+                    {!! Form::select('state_id', ['0' => 'Select a States'] +$states, null, ['class' => 'form-control','id' => 'state']) !!}
                     {!! $errors->first('state_id', '<p class="help-block">:message</p>') !!}
+                </div>
+            </div>
+			 <div class="form-group {{ $errors->has('district_id') ? 'has-error' : ''}}">
+                {!! Form::label('district_id', trans('messages.NAME_DISTRICT'), ['class' => 'col-sm-4 control-label']) !!}
+                <div class="col-sm-8">
+                     <select id="district" class="form-control " name="district_id">
+					<option value=""></option>
+					</select>
+                    {!! $errors->first('district_id', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>
             <div class="form-group {{ $errors->has('cityName') ? 'has-error' : ''}}">
@@ -40,4 +49,17 @@
    
 </div>
 </div>
+<script>
+    $('#state').on('change', function(e){
+        console.log(e);
+        var state_id = e.target.value;
+        $.get('{{ url('citys') }}/edit/ajax-state?state_id=' + state_id, function(data) {
+            console.log(data);
+            $('#district').empty();
+            $.each(data, function(index,subCatObj){
+                $('#district').append('<option value="'+subCatObj.id+'">'+subCatObj.name+'</option>');
+            });
+        });
+    });
+</script>
 @endsection
