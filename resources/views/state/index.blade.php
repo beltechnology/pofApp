@@ -15,7 +15,7 @@
         <table class="table table-bordered table-striped table-hover">
             <thead>
                 <tr>
-                    <th>{{trans('messages.S_NO')}}</th><th style="padding-left:45px">{{trans('messages.NAME_STATE')}} </th><th class="text-right" style="padding-right:65px">{{trans('messages.ACTION')}}</th>
+                    <th>{{trans('messages.S_NO')}}</th><th style="padding-left:45px">{{trans('messages.STATE_NAME')}} </th><th class="text-right" style="padding-right:65px">{{trans('messages.ACTION')}}</th>
                 </tr>
             </thead>
             <tbody>

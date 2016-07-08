@@ -8,7 +8,7 @@
     {!! Form::open(['url' => '/state', 'class' => 'form-horizontal']) !!}
 <div class=" col-md-6 create-emp-list">
                 <div class="form-group {{ $errors->has('stateName') ? 'has-error' : ''}}">
-                {!! Form::label('stateName',trans('messages.NAME_STATE'), ['class' => 'col-sm-4 control-label']) !!}
+                {!! Form::label('stateName',trans('messages.STATE_NAME'), ['class' => 'col-sm-4 control-label']) !!}
                 <div class="col-sm-8">
                     {!! Form::text('stateName', null, ['class' => 'form-control', 'required' => 'required']) !!}
                     {!! $errors->first('stateName', '<p class="help-block">:message</p>') !!}

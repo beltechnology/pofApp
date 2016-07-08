@@ -77,7 +77,7 @@ class CitysController extends Controller
     {
 
         $city = City::findOrFail($id);
-		$states = \DB::table('states')->lists('stateName', 'id');
+		$states = \DB::table('states')->where('states.deleted',0)->lists('stateName', 'id');
 
         return view('citys.edit', compact('city'))->with('states', $states);;
     }
@@ -91,9 +91,8 @@ class CitysController extends Controller
      */
     public function update($id, Request $request)
     {
-        $this->validate($request, ['state_id' => 'required', 'cityName' => 'required', ]);
-
-        $city = City::findOrFail($id);
+		$city = City::findOrFail($id);
+        $this->validate($request, ['state_id' => 'required', 'cityName' => 'required|unique:citys,cityName,null,id,deleted,0', ]);
         $city->update($request->all());
 
         Session::flash('flash_message', 'City updated!');

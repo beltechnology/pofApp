@@ -19,11 +19,7 @@ class DistrictController extends Controller
      */
     public function index()
     {
-		$district= \DB::table('districts')
-                        ->join('states','states.id','=','districts.state_id')
-						->where('districts.deleted',0)
-						->groupBy('districts.id')
-						->paginate(15);
+		$district= \DB::table('districts')->where('districts.deleted',0)->groupBy('districts.id')->paginate(15);
         return view('district.index', compact('district'));
     }
 
@@ -44,7 +40,7 @@ class DistrictController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, ['name' => 'required|unique:districts', ]);
+        $this->validate($request, ['name' => 'required|unique:districts,name,null,id,deleted,0', ]);
 
         District::create($request->all());
 
@@ -90,9 +86,8 @@ class DistrictController extends Controller
      */
     public function update($id, Request $request)
     {
-        $this->validate($request, ['name' => 'required', ]);
-
-        $district = District::findOrFail($id);
+		$district = District::findOrFail($id);
+        $this->validate($request, ['name' => 'required|unique:districts,name,'.$district->id.',id,deleted,0']);
         $district->update($request->all());
 
         Session::flash('flash_message', 'District updated!');

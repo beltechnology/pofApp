@@ -43,7 +43,7 @@ class StateController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, ['stateName' => 'required|unique:states', ]);
+        $this->validate($request, ['stateName' => 'required|unique:states,stateName,null,id,deleted,0', ]);
 
         State::create($request->all());
 
@@ -89,9 +89,10 @@ class StateController extends Controller
      */
     public function update($id, Request $request)
     {
-        $this->validate($request, ['stateName' => 'required', ]);
+		        $state = State::findOrFail($id);
 
-        $state = State::findOrFail($id);
+        $this->validate($request, ['stateName' => 'required|unique:states,stateName,'.$state->id.',id,deleted,0', ]);
+
         $state->update($request->all());
 
         Session::flash('flash_message', 'State updated!');

@@ -49,7 +49,7 @@
             <div class="form-group {{ $errors->has('stateId') ? 'has-error' : ''}}">
                 {!! Form::label('stateId', trans('messages.STATE'), ['class' => 'col-sm-4  control-label']) !!}
                 <div class="col-sm-8">
-					{!! Form::select('stateId',\DB::table('states')->lists('stateName','id'), "Debugging", ['class' => 'form-control stateSelect','id' => 'state']) !!}
+					{!! Form::select('stateId',\DB::table('states')->where('states.deleted',0)->lists('stateName','id'), "Debugging", ['class' => 'form-control stateSelect','id' => 'state']) !!}
                     {!! $errors->first('stateId', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>

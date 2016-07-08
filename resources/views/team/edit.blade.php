@@ -23,7 +23,7 @@
 			 <div class="form-group {{ $errors->has('teamLeader') ? 'has-error' : ''}}">
                 {!! Form::label('teamLeader', 'Team Leader', ['class' => 'col-sm-4 control-label']) !!}
                 <div class="col-sm-8">
-                   {!! Form::select('team',\DB::table('teams')->lists('teamLeader','teamId'), "Debugging", ['class' => 'form-control teamSelect','placeholder' => 'Select Team Leader','id' => 'teamSelect']) !!}
+                   {!! Form::select('team',\DB::table('entitys')->where('entitys.deleted',0)->lists('name','entityId'), "Debugging", ['class' => 'form-control teamSelect','placeholder' => 'Select Team Leader','id' => 'teamSelect']) !!}
                     {!! $errors->first('teamLeader', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>

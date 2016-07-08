@@ -41,7 +41,7 @@ class DesignationsController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, ['designation' => 'required|unique:designations,deleted,1']);
+        $this->validate($request, ['designation' => 'required|unique:designations']);
 
         Designation::create($request->all());
 

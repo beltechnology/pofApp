@@ -16,7 +16,7 @@
         <table class="table table-bordered table-striped table-hover">
             <thead>
                 <tr>
-					<th>{{trans('messages.S_NO')}}</th><th>{{trans('messages.STATE_NAME')}} </th> <th>{{trans('messages.NAME_DISTRICT')}} </th><th class="text-right" style="padding-right:60px">{{trans('messages.ACTIONS')}}</th>
+					<th>{{trans('messages.S_NO')}}</th><th>{{trans('messages.NAME_DISTRICT')}} </th><th class="text-right" style="padding-right:60px">{{trans('messages.ACTIONS')}}</th>
                 </tr>
             </thead>
             <tbody>
@@ -25,7 +25,7 @@
                 {{-- */$x++;/* --}}
                 <tr>
                     <td>{{ $x }}</td>
-                    <td>{{ $item->stateName }}</td><td>{{ $item->name }}</td>
+                   <td>{{ $item->name }}</td>
                     <td class="text-right" style="padding-right:42px">
                         <a href="{{ url('/district/' . $item->id . '/edit') }}" class="btn btn-primary btn-xs" title="{{trans('messages.EDIT_DISTRICT')}}"><span class="glyphicon glyphicon-pencil" aria-hidden="true"/></a>
                         {!! Form::open([
