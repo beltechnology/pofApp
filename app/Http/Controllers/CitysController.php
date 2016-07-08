@@ -75,11 +75,12 @@ class CitysController extends Controller
      */
     public function edit($id)
     {
-
+		$state_id='';
         $city = City::findOrFail($id);
 		$states = \DB::table('states')->where('states.deleted',0)->lists('stateName', 'id');
-
-        return view('citys.edit', compact('city'))->with('states', $states);;
+		$stateid = \DB::table('citys')->where('citys.deleted',0,'citys.id',$id);
+        $districts = \DB::table('districts')->where('districts.deleted',0)->where('state_id',29)->lists('name', 'id');
+		return view('citys.edit', compact('city'))->with('states', $states)->with('districts',$districts);;;
     }
 
     /**
