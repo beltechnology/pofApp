@@ -2,7 +2,7 @@
 
 return [
     'LOGIN' => 'Login',//login form
-	'EMAIL_ADDRESS' => 'User Id',
+	'EMAIL_ADDRESS' => 'Email Address',
 	'PASSWORD' => 'Password',
 	'REMEMBER_ME' => 'Remember Me',
 	'FORGET_PASSWORD' => 'Forgot Your Password ?',

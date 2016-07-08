@@ -92,7 +92,7 @@ class CitysController extends Controller
     public function update($id, Request $request)
     {
 		$city = City::findOrFail($id);
-        $this->validate($request, ['state_id' => 'required', 'cityName' => 'required|unique:citys,cityName,null,id,deleted,0', ]);
+        $this->validate($request, ['state_id' => 'required', 'cityName' => 'required|unique:citys,cityName,'.$city->id.',id,deleted,0', ]);
         $city->update($request->all());
 
         Session::flash('flash_message', 'City updated!');

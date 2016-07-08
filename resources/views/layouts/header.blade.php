@@ -45,11 +45,11 @@
             </div>
             
             <div class="logout col-md-3">
-            <i class="fa fa-cog fa-2x" ></i>
+            <!--<i class="fa fa-cog fa-2x" ></i>-->
             </div>
             
              <div class="logout col-md-3">
-            <a href="{{ url('/logout') }}"><i class="fa fa-power-off fa-2x"> </i></a>
+            <a href="{{ url('/logout') }}" title="Log Out"><i class="fa fa-power-off fa-2x"> </i></a>
             </div>
             
             </div>

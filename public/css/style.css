@@ -295,8 +295,7 @@ a {
 .main-table td, th {
     text-align: left;
     padding: 0px;
-    width: 137px;
-    font-size: 9px;
+    font-size:12px;
 }
 
 .main-table tr{border-bottom:1px solid #aaa;

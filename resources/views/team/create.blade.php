@@ -40,7 +40,7 @@
 	<div class="form-group {{ $errors->has('teamLocation') ? 'has-error' : ''}}">
                 {!! Form::label('teamLocation', 'Team Location', ['class' => 'col-sm-4 control-label']) !!}
                 <div class="col-sm-8">
-                   {!! Form::select('teamLocation',\DB::table('locations')->lists('location','id'), "Debugging", ['class' => ' form-control teamSelect','placeholder' => 'Select location','id' => 'teamLocation']) !!}
+                   {!! Form::select('teamLocation',\DB::table('locations')->where('locations.deleted',0)->lists('location','id'), "Debugging", ['class' => ' form-control teamSelect','placeholder' => 'Select location','id' => 'teamLocation']) !!}
                     {!! $errors->first('teamLocation', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>
