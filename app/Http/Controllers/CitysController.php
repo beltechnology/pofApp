@@ -5,6 +5,11 @@ namespace App\Http\Controllers;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+use Illuminate\Database\Eloquent\Scope;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
+
+
 use App\City;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
@@ -77,9 +82,14 @@ class CitysController extends Controller
     {
 
         $city = City::findOrFail($id);
+		$state_id = \DB::table('citys')->where('citys.id', '=', $id)->get();
+		foreach($state_id as $statesid)
+		{
+			$states_id=$statesid->state_id;
 		$states = \DB::table('states')->where('states.deleted',0)->lists('stateName', 'id');
-
-        return view('citys.edit', compact('city'))->with('states', $states);;
+		$district = \DB::table('districts')->where('districts.state_id',$states_id)->where('districts.deleted',0)->lists('name', 'id');
+        return view('citys.edit', compact('city'))->with('states', $states)->with('district', $district);
+		}
     }
 
     /**

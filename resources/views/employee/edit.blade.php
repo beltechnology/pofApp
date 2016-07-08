@@ -49,25 +49,21 @@
             <div class="form-group {{ $errors->has('stateId') ? 'has-error' : ''}}">
                 {!! Form::label('stateId', trans('messages.STATE'), ['class' => 'col-sm-4  control-label']) !!}
                 <div class="col-sm-8">
-					{!! Form::select('stateId',\DB::table('states')->where('states.deleted',0)->lists('stateName','id'), "Debugging", ['class' => 'form-control stateSelect','id' => 'state']) !!}
+					{!! Form::select('stateId',$states, null, ['class' => 'form-control stateSelect','id' => 'state']) !!}
                     {!! $errors->first('stateId', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>
 			 <div class="form-group {{ $errors->has('districtId') ? 'has-error' : ''}}">
                 {!! Form::label('districtId', trans('messages.DISTRICT'), ['class' => 'col-sm-4  control-label']) !!}
                 <div class="col-sm-8">
-					 <select id="district" class="form-control " name="districtId">
-					<option value=""></option>
-					</select>
+				{!! Form::select('districtId',$districts, null, ['class' => 'form-control stateSelect','id' => 'district']) !!}
 					 {!! $errors->first('districtId', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>  
              <div class="form-group {{ $errors->has('cityId') ? 'has-error' : ''}}">
                 {!! Form::label('cityId', trans('messages.CITY'), ['class' => 'col-sm-4  control-label']) !!}
                 <div class="col-sm-8">
-					<select id="city" class="form-control " name="cityId">
-					<option value=""></option>
-					</select>
+				{!! Form::select('cityId',$citys, null, ['class' => 'form-control stateSelect','id' => 'city']) !!}
 					 {!! $errors->first('cityId', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>

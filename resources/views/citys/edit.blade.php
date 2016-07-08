@@ -14,16 +14,14 @@
                 <div class="form-group {{ $errors->has('state_id') ? 'has-error' : ''}}">
                 {!! Form::label('state_id', trans('messages.STATE_NAME'), ['class' => 'col-sm-4 control-label']) !!}
                 <div class="col-sm-8">
-                    {!! Form::select('state_id', ['0' => 'Select a States'] +$states, null, ['class' => 'form-control','id' => 'state']) !!}
+                    {!! Form::select('state_id',$states, null, ['class' => 'form-control','id' => 'state']) !!}
                     {!! $errors->first('state_id', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>
 			 <div class="form-group {{ $errors->has('district_id') ? 'has-error' : ''}}">
                 {!! Form::label('district_id', trans('messages.NAME_DISTRICT'), ['class' => 'col-sm-4 control-label']) !!}
                 <div class="col-sm-8">
-                     <select id="district" class="form-control " name="district_id">
-					<option value=""></option>
-					</select>
+				{!! Form::select('district_id',$district, null, ['class' => 'form-control','id' => 'district']) !!}
                     {!! $errors->first('district_id', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>

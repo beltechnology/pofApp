@@ -12,6 +12,8 @@ use App\entity;
 use App\emailaddress;
 use App\phone;
 use App\State;
+use App\District;
+use App\City;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Session;
@@ -137,7 +139,14 @@ class employeeController extends Controller
 		$address = address::findOrFail($id);
 		$emailaddress = emailaddress::findOrFail($id);
 		$phone = phone::findOrFail($id);
-		return view('employee.edit', ['employee' => $employee,'entity' => $entity,'address' => $address,'emailaddress' => $emailaddress,'phone' => $phone]);
+		$states = \DB::table('states')->where('states.deleted',0)->lists('stateName', 'id');
+		// foreach($address as $statesid)
+		// {
+			// $states_id=$statesid->stateId;
+		// }
+		$districts = \DB::table('districts')->where('districts.deleted',0)->lists('name', 'id');
+		$citys = \DB::table('citys')->where('citys.deleted',0)->lists('cityName', 'id');
+		return view('employee.edit', ['employee' => $employee,'entity' => $entity,'address' => $address,'emailaddress' => $emailaddress,'phone' => $phone,'states' => $states,'districts' => $districts,'citys' => $citys]);
 		
     }
 
