@@ -21,6 +21,7 @@ class TeamController extends Controller
 		$team= \DB::table('teams')
                         ->join('locations','locations.id','=','teams.teamLocation')
 						->where('teams.deleted',0)
+						->orderby('teams.teamId')
 						->paginate(15);
 
         return view('team.index', compact('team'));
