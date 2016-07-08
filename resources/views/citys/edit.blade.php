@@ -21,7 +21,11 @@
 			 <div class="form-group {{ $errors->has('district_id') ? 'has-error' : ''}}">
                 {!! Form::label('district_id', trans('messages.NAME_DISTRICT'), ['class' => 'col-sm-4 control-label']) !!}
                 <div class="col-sm-8">
+
 				{!! Form::select('district_id',$district, null, ['class' => 'form-control','id' => 'district']) !!}
+=======
+			  {!! Form::select('district_id', ['0' => 'Select a district'] +$districts, null, ['class' => 'form-control','id' => 'district']) !!}
+
                     {!! $errors->first('district_id', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>
