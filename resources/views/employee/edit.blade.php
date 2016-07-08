@@ -99,7 +99,7 @@
             <div class="form-group {{ $errors->has('emailAddress') ? 'has-error' : ''}}">
                 {!! Form::label('emailAddress', trans('messages.EMAIL'), ['class' => 'col-sm-4  control-label']) !!}
                 <div class="col-sm-8">
-                    {!! Form::text('email', null, ['class' => 'form-control','required' => 'required']) !!}
+                    {!! Form::text('email', null, ['class' => 'form-control','required' => 'required','readonly'=>'readonly']) !!}
                     {!! $errors->first('emailAddress', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>

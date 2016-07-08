@@ -22,6 +22,8 @@ class AuthController extends Controller
     | a simple trait to add these behaviors. Why don't you explore it?
     |
     */
+	protected $maxLoginAttempts =2; // Amount of bad attempts user can make
+	protected $lockoutTime = 60;
 
     use AuthenticatesAndRegistersUsers, ThrottlesLogins;
 

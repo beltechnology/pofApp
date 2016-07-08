@@ -49,7 +49,7 @@
             <thead>
       <tr>
         <th><input type="checkbox" id="selectall" />{{ trans('messages.EMPLOYEE_NAME') }}</th>
-        <th>{{ trans('messages.EMPLOYEE_ID') }}</th>
+        <th>{{ trans('messages.EMPLOYEE_CODE') }}</th>
         <th>{{ trans('messages.DOB') }}</th>
         <th>{{ trans('messages.CONTACT_NUMBER') }}</th>
         <th>{{ trans('messages.ADDRESS') }}</th>
@@ -64,7 +64,7 @@
                 <tr>
                     <td><input id="box{{$x}}" type="checkbox" />
 					{{ $item->name }}</td>
-                    <td>{{ $item->employeeId }}</td>
+                    <td>{{ $item->employeeCode }}</td>
 					<td>{{ $item->dob }}</td>
 					<td>{{ $item->primaryNumber }}</td>
 					<td>{{ $item->addressLine1 }}</td>

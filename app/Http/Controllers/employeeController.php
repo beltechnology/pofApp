@@ -58,7 +58,7 @@ class employeeController extends Controller
      */
     public function store(Request $request)
     {
-		 $this->validate($request, ['employeeName' => 'required', 'dob' => 'required', 'address' => 'required', 'state' => 'required', 'district' => 'required', 'city' => 'required', 'pinCode' => 'required', 'primaryNumber' => 'required', 'emailAddress' => 'required', 'designation' => 'required', 'dateOfJoining' => 'required', ]);	
+		 $this->validate($request, ['employeeName' => 'required', 'dob' => 'required', 'address' => 'required', 'state' => 'required', 'district' => 'required', 'city' => 'required', 'pinCode' => 'required', 'primaryNumber' => 'required', 'emailAddress' => 'required |unique:emailaddresses,email,null,id,deleted,0', 'designation' => 'required', 'dateOfJoining' => 'required', ]);	
 	 User::create([
 			'designationId' => $request['designation'],
             'name' => $request['employeeName'],
@@ -150,7 +150,7 @@ class employeeController extends Controller
      */
     public function update($id, Request $request)
     {
-		$this->validate($request, ['name' => 'required', 'dob' => 'required', 'addressLine1' => 'required', 'stateId' => 'required', 'districtId' => 'required', 'pincode' => 'required', 'primaryNumber' => 'required', 'email' => 'required', 'designation' => 'required', 'dateOfJoining' => 'required', ]);
+		$this->validate($request, ['name' => 'required', 'dob' => 'required', 'addressLine1' => 'required', 'stateId' => 'required', 'pincode' => 'required', 'primaryNumber' => 'required', 'email' => 'required', 'designation' => 'required', 'dateOfJoining' => 'required', ]);
         $employee = employee::findOrFail($id);	
         $employee->update($request->all());
 		

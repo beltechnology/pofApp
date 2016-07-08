@@ -97,4 +97,3 @@
     </div>
 </div>
 </div>
-@extends('layouts.footer')
