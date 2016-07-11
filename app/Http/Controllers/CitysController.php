@@ -80,22 +80,16 @@ class CitysController extends Controller
      */
     public function edit($id)
     {
-		$state_id='';
+
         $city = City::findOrFail($id);
 		$state_id = \DB::table('citys')->where('citys.id', '=', $id)->get();
 		foreach($state_id as $statesid)
 		{
 			$states_id=$statesid->state_id;
 		$states = \DB::table('states')->where('states.deleted',0)->lists('stateName', 'id');
-
 		$district = \DB::table('districts')->where('districts.state_id',$states_id)->where('districts.deleted',0)->lists('name', 'id');
         return view('citys.edit', compact('city'))->with('states', $states)->with('district', $district);
 		}
-
-		$stateid = \DB::table('citys')->where('citys.deleted',0,'citys.id',$id);
-        $districts = \DB::table('districts')->where('districts.deleted',0)->where('state_id',29)->lists('name', 'id');
-		return view('citys.edit', compact('city'))->with('states', $states)->with('districts',$districts);;;
-
     }
 
     /**
