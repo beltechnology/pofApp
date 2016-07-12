@@ -31,7 +31,9 @@ class LocationsController extends Controller
      */
     public function create()
     {
-        return view('locations.create');
+		$districts = \DB::table('districts')->where('districts.deleted',0)->where('districts.state_id',session()->get('currentStateId'))->lists('name', 'id');
+    return view('locations.create', compact('districts'));
+		
     }
 
     /**
@@ -41,9 +43,14 @@ class LocationsController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, ['location' => 'required|unique:locations', ]);
+        $this->validate($request, [ 'district' => 'required', 'city' => 'required','location' => 'required|unique:locations', ]);
 
-        Location::create($request->all());
+		Location::create([
+			'state_id' => $request['state'],
+            'district_id' => $request['district'],
+			'city_id' => $request['city'],
+            'location' => $request['location'],
+           				]);	 
 
         Session::flash('flash_message', 'Location added!');
 
@@ -73,9 +80,10 @@ class LocationsController extends Controller
      */
     public function edit($id)
     {
-        $location = Location::findOrFail($id);
-
-        return view('locations.edit', compact('location'));
+        $location = Location::findOrFail($id);	
+		$districts = \DB::table('districts')->where('districts.deleted',0)->lists('name', 'id');
+		$citys = \DB::table('citys')->where('citys.deleted',0)->lists('cityName', 'id');
+		return view('locations.edit', ['location' => $location,'districts' => $districts,'citys' => $citys]);
     }
 
     /**

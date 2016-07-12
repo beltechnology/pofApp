@@ -8,23 +8,16 @@
 
     {!! Form::open(['url' => '/citys', 'class' => 'form-horizontal']) !!}
 <div class=" col-md-6 create-emp-list">
-                <div class="form-group {{ $errors->has('state_id') ? 'has-error' : ''}}">
-                {!! Form::label('state_id', trans('messages.STATE_NAME'), ['class' => 'col-sm-4 control-label']) !!}
-                <div class="col-sm-8">
-					{!! Form::select('state_id',\DB::table('states')->where('states.deleted',0)->lists('stateName','id'), "Debugging", ['class' => 'form-control stateSelect','placeholder' => 'Select State Id','id' => 'state']) !!}
-                    {!! $errors->first('state_id', '<p class="help-block">:message</p>') !!}
-                </div>
-				</div>
+			{!! Form::hidden('state_id',$value=session()->get('currentStateId'),['id' => 'state'])  !!}
+             
 				 <div class="form-group {{ $errors->has('district_id') ? 'has-error' : ''}}">
-                {!! Form::label('district_id', trans('messages.NAME_DISTRICT'), ['class' => 'col-sm-4 control-label']) !!}
+                {!! Form::label('district_id', trans('messages.DISTRICT'), ['class' => 'col-sm-4  control-label']) !!}
                 <div class="col-sm-8">
-                     <select id="district" class="form-control " name="district_id">
-					 <option >Select a District </option>
-					<option value=""></option>
-					</select>
-                    {!! $errors->first('district_id', '<p class="help-block">:message</p>') !!}
+				{!! Form::select('district_id',$districts,null,['class' => 'form-control stateSelect','placeholder' => 'Select a District','id' => 'district']) !!} 
+					 
+					 {!! $errors->first('district_id', '<p class="help-block">:message</p>') !!}
                 </div>
-            </div>
+            </div>  
 				
             
             <div class="form-group {{ $errors->has('cityName') ? 'has-error' : ''}}">
@@ -58,7 +51,7 @@
 <script>
     $('#state').on('change', function(e){
         console.log(e);
-        var state_id = e.target.value;
+        var state_id = $("#state").val();
         $.get('{{ url('citys') }}/create/ajax-state?state_id=' + state_id, function(data) {
             console.log(data);
             $('#district').empty();

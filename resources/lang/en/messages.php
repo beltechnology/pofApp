@@ -120,4 +120,6 @@ return [
 	'DESIGNATION_LIST' => 'Designation List',
 	'CLASS_CREATION' => 'Class Creation',
 	'CLASS_LIST' => 'Class List',
+	
+	'SELECT_STATE_NAME' => 'Select State',
 ];

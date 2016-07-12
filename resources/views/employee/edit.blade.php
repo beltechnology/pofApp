@@ -45,14 +45,17 @@
                     {!! Form::text('addressLine1', null, ['class' => 'form-control','required' => 'required']) !!}
                     {!! $errors->first('address', '<p class="help-block">:message</p>') !!}
                 </div>
-            </div>      
+            </div>
+			{!! Form::hidden('stateId',session()->get('currentStateId'),['id' => 'state']) !!}
+			<!--	
             <div class="form-group {{ $errors->has('stateId') ? 'has-error' : ''}}">
                 {!! Form::label('stateId', trans('messages.STATE'), ['class' => 'col-sm-4  control-label']) !!}
                 <div class="col-sm-8">
-					{!! Form::select('stateId',$states, null, ['class' => 'form-control stateSelect','id' => 'state']) !!}
+					
                     {!! $errors->first('stateId', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>
+			-->
 			 <div class="form-group {{ $errors->has('districtId') ? 'has-error' : ''}}">
                 {!! Form::label('districtId', trans('messages.DISTRICT'), ['class' => 'col-sm-4  control-label']) !!}
                 <div class="col-sm-8">
@@ -159,6 +162,33 @@
 </div>
 </div>
 <script>
+$(document).ready(function(){
+	
+        var state_id = $("#state").val();
+        var district = $("#district").val();
+        var city = $("#city").val();
+
+        $.get('{{ url('employee') }}/edit/ajax-state?state_id=' + state_id, function(data) {
+            console.log(data);
+            $('#district').empty();
+            $.each(data, function(index,subCatObj){
+                $('#district').append('<option value="'+subCatObj.id+'">'+subCatObj.name+'</option>');
+            });
+		$("#district").val(district);
+		var dist_id = $("#district").val();
+	 $.get('{{ url('employee') }}/edit/district?dist_id=' + dist_id, function(data) {
+            console.log(data);
+            $('#city').empty();
+            $.each(data, function(index,subCatObj){
+                $('#city').append('<option value="'+subCatObj.id+'">'+subCatObj.cityName+'</option>');
+            });
+			$("#city").val(city);
+        });
+
+        });	
+
+});
+
     $('#state').on('change', function(e){
         console.log(e);
         var state_id = e.target.value;

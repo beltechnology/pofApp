@@ -25,5 +25,5 @@ class Location extends Model
      *
      * @var array
      */
-    protected $fillable = ['location', 'deleted', 'status'];
+    protected $fillable = ['state_id','district_id','city_id','location', 'deleted', 'status'];
 }

@@ -12,6 +12,21 @@
         'class' => 'form-horizontal'
     ]) !!}
             <div class=" col-md-6 create-emp-list">
+			{!! Form::hidden('state_Id',session()->get('currentStateId'),['id' => 'state']) !!}
+			 <div class="form-group {{ $errors->has('districtId') ? 'has-error' : ''}}">
+                {!! Form::label('districtId', trans('messages.DISTRICT'), ['class' => 'col-sm-4  control-label']) !!}
+                <div class="col-sm-8">
+				{!! Form::select('district_id',$districts, null, ['class' => 'form-control stateSelect','id' => 'district']) !!}
+					 {!! $errors->first('districtId', '<p class="help-block">:message</p>') !!}
+                </div>
+            </div>  
+             <div class="form-group {{ $errors->has('cityId') ? 'has-error' : ''}}">
+                {!! Form::label('cityId', trans('messages.CITY'), ['class' => 'col-sm-4  control-label']) !!}
+                <div class="col-sm-8">
+				{!! Form::select('city_id',$citys, null, ['class' => 'form-control stateSelect','id' => 'city']) !!}
+					 {!! $errors->first('cityId', '<p class="help-block">:message</p>') !!}
+                </div>
+            </div>
                 <div class="form-group {{ $errors->has('location') ? 'has-error' : ''}}">
                 {!! Form::label('location', trans('messages.NAME_LOCATION'), ['class' => 'col-sm-4 control-label']) !!}
                 <div class="col-sm-8">
@@ -43,4 +58,44 @@
     @endif
 </div>
 </div>
+<script>
+$(document).ready(function(){
+	
+        var state = $("#state").val();
+		var district = $("#district").val();
+        var city = $("#city").val();
+
+        $.get('{{ url('locations') }}/edit/ajax-state?state_id=' + state, function(data) {
+            console.log(data);
+            $('#district').empty();
+            $.each(data, function(index,subCatObj){
+                $('#district').append('<option value="'+subCatObj.id+'">'+subCatObj.name+'</option>');
+            });
+		$("#district").val(district);
+		var dist_id = $("#district").val();
+	 $.get('{{ url('locations') }}/edit/district?dist_id=' + dist_id, function(data) {
+            console.log(data);
+            $('#city').empty();
+            $.each(data, function(index,subCatObj){
+                $('#city').append('<option value="'+subCatObj.id+'">'+subCatObj.cityName+'</option>');
+            });
+			$("#city").val(city);
+        });
+
+        });	
+
+});
+
+$('#district').on('change', function(e){
+        console.log(e);
+        var dist_id = e.target.value;
+        $.get('{{ url('locations') }}/edit/district?dist_id=' + dist_id, function(data) {
+            console.log(data);
+            $('#city').empty();
+            $.each(data, function(index,subCatObj){
+                $('#city').append('<option value="'+subCatObj.id+'">'+subCatObj.cityName+'</option>');
+            });
+        });
+    });
+</script>
 @endsection

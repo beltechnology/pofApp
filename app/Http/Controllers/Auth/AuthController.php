@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers\Auth;
-
 use App\User;
 use App\Designation;
 use Validator;
@@ -26,14 +25,25 @@ class AuthController extends Controller
 	protected $lockoutTime = 60;
 
     use AuthenticatesAndRegistersUsers, ThrottlesLogins;
-
     /**
      * Where to redirect users after login / registration.
      *
      * @var string
      */
+	 protected function authenticated($request, $user)
+    {
+        if($user->remember_token=='') 
+		{
+            return redirect()->intended('/resetPassword');
+        }
+		// elseif($user->role =='employee')
+		 // {
+            // return redirect()->intended('/statelist');
+        // }
+        //return redirect()->intended('/statelist');
+    }
 	
-    protected $redirectTo = '/employee';
+		//$redirectTo = '/statelist';
 
     /**
      * Create a new authentication controller instance.

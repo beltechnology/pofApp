@@ -36,24 +36,27 @@
                     {!! $errors->first('address', '<p class="help-block">:message</p>') !!}
                 </div>
             </div> 
+			{!! Form::hidden('state',$value=session()->get('currentStateId'),['id' => 'state'])  !!} 
+			<!-- 
 			  <div class="form-group {{ $errors->has('state') ? 'has-error' : ''}}">
+			  
                 {!! Form::label('state', trans('messages.STATE'), ['class' => 'col-sm-4  control-label']) !!}
                 <div class="col-sm-8">
-					{!! Form::select('state',\DB::table('states')->where('states.deleted',0)->lists('stateName','id'), "Debugging", ['class' => 'form-control stateSelect','placeholder' => 'Select a State','id' => 'state']) !!}
+				
+					{!! Form::select('state',\DB::table('states')->where('states.deleted',0)->lists('stateName','id'), "Debugging", ['class' => 'form-control stateSelect','placeholder' => 'Select a State','id' => 'state']) !!} 
                     {!! $errors->first('state', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>
+			-->
 			 <div class="form-group {{ $errors->has('district') ? 'has-error' : ''}}">
                 {!! Form::label('district', trans('messages.DISTRICT'), ['class' => 'col-sm-4  control-label']) !!}
                 <div class="col-sm-8">
-					 <select id="district" class="form-control " name="district">
-					 <option >Select a District </option>
-					<option value=""></option>
-					</select>
+				{!! Form::select('district',$districts,null,['class' => 'form-control stateSelect','placeholder' => 'Select a District','id' => 'district']) !!} 
+					 
 					 {!! $errors->first('district', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>   		  
- <div class="form-group {{ $errors->has('city') ? 'has-error' : ''}}">
+			<div class="form-group {{ $errors->has('city') ? 'has-error' : ''}}">
                 {!! Form::label('city', trans('messages.CITY'), ['class' => 'col-sm-4  control-label']) !!}
                 <div class="col-sm-8">
 					<select id="city" class="form-control " name="city">
@@ -63,18 +66,18 @@
 					 {!! $errors->first('city', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>
-             
-            
-             </div>
-            <div class=" col-md-6 create-emp-list">
-			
-			<div class="form-group {{ $errors->has('pinCode') ? 'has-error' : ''}}">
+             <div class="form-group {{ $errors->has('pinCode') ? 'has-error' : ''}}">
                 {!! Form::label('pinCode', trans('messages.PINCODE'), ['class' => 'col-sm-4  control-label']) !!}
                 <div class="col-sm-8">
                     {!! Form::text('pinCode', null, ['class' => 'form-control','required' => 'required']) !!}
                     {!! $errors->first('pinCode', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>
+            
+             </div>
+            <div class=" col-md-6 create-emp-list">
+			
+			
             
              <div class="form-group {{ $errors->has('primaryNumber') ? 'has-error' : ''}}">
                 {!! Form::label('primaryNumber', trans('messages.PRIMARY_MOBILE'), ['class' => 'col-sm-4  control-label']) !!}

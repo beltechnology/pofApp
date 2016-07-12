@@ -17,6 +17,7 @@ use App\City;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Session;
+use Illuminate\Support\Facades\Input;
 
 class employeeController extends Controller
 {
@@ -33,6 +34,7 @@ class employeeController extends Controller
 						->join('phones','phones.entityId','=','employees.entityId')
 						->join('emailaddresses','emailaddresses.entityId','=','employees.entityId')
 						->where('employees.deleted',0)
+						->where('addresses.stateId',session()->get('currentStateId'))
 						->groupBy('employees.entityId')
 						->paginate(10);
         return view('employee.index', compact('employee'));
@@ -49,8 +51,8 @@ class employeeController extends Controller
      */
     public function create()
     {
-		$states = State::lists('stateName', 'id');
-    return view('employee.create', compact('states'));
+		$districts = \DB::table('districts')->where('districts.deleted',0)->where('districts.state_id',session()->get('currentStateId'))->lists('name', 'id');
+    return view('employee.create', compact('districts'));
     }
 
     /**
@@ -139,14 +141,13 @@ class employeeController extends Controller
 		$address = address::findOrFail($id);
 		$emailaddress = emailaddress::findOrFail($id);
 		$phone = phone::findOrFail($id);
-		$states = \DB::table('states')->where('states.deleted',0)->lists('stateName', 'id');
 		// foreach($address as $statesid)
 		// {
 			// $states_id=$statesid->stateId;
 		// }
 		$districts = \DB::table('districts')->where('districts.deleted',0)->lists('name', 'id');
 		$citys = \DB::table('citys')->where('citys.deleted',0)->lists('cityName', 'id');
-		return view('employee.edit', ['employee' => $employee,'entity' => $entity,'address' => $address,'emailaddress' => $emailaddress,'phone' => $phone,'states' => $states,'districts' => $districts,'citys' => $citys]);
+		return view('employee.edit', ['employee' => $employee,'entity' => $entity,'address' => $address,'emailaddress' => $emailaddress,'phone' => $phone,'districts' => $districts,'citys' => $citys]);
 		
     }
 

@@ -38,7 +38,8 @@ class CitysController extends Controller
      */
     public function create()
     {
-        return view('citys.create');
+        $districts = \DB::table('districts')->where('districts.deleted',0)->where('districts.state_id',session()->get('currentStateId'))->lists('name', 'id');
+        return view('citys.create', compact('districts'));
     }
 
     /**
@@ -48,7 +49,7 @@ class CitysController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, ['state_id' => 'required', 'district_id' => 'required','cityName' => 'required|unique:citys,cityName,null,id,deleted,0', ]);
+         $this->validate($request, ['district_id' => 'required','cityName' => 'required|unique:citys,cityName,null,id,deleted,0', ]);
 
         City::create($request->all());
 
@@ -102,7 +103,7 @@ class CitysController extends Controller
     public function update($id, Request $request)
     {
 		$city = City::findOrFail($id);
-        $this->validate($request, ['state_id' => 'required', 'cityName' => 'required|unique:citys,cityName,'.$city->id.',id,deleted,0', ]);
+        $this->validate($request, ['cityName' => 'required|unique:citys,cityName,'.$city->id.',id,deleted,0', ]);
         $city->update($request->all());
 
         Session::flash('flash_message', 'City updated!');
