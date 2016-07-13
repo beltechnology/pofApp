@@ -90,7 +90,14 @@
                     </a>
                     
                 </li>
-                
+                <li class="has-subnav">
+                    <a href="{{ url('/schools') }}">
+                        <i class="fa fa-users fa-2x"></i>
+                         Mange Schools
+                        </span>
+                    </a>
+                    
+                </li>
             </ul>
 
         </nav>
