@@ -1,7 +1,7 @@
 @extends('layouts.header')
 @section('content')
 <div class=" col-md-9 category">
-    <h1 class="text-left"><a href="{{ url('/employee') }}">{{ trans('messages.EMPLOYEE_LIST') }} </a></h1>
+    <h1 class="text-left"><a href="{{ url('/employee') }}" class="fa fa-angle-left  fa-2x"> {{ trans('messages.EMPLOYEE_LIST') }} </a></h1>
     <hr/>
 <div class="row">
     {!! Form::open(['url' => '/employee', 'class' => 'form-horizontal']) !!}

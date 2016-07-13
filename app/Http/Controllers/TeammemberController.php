@@ -106,19 +106,14 @@ class TeammemberController extends Controller
      */
     public function edit($id)
     {
-      $teamMember= \DB::table('employees')
-                        ->join('entitys','entitys.entityId','=','employees.entityId')
-                        ->join('addresses','addresses.entityId','=','employees.entityId')
-						->join('phones','phones.entityId','=','employees.entityId')
-						->join('emailaddresses','emailaddresses.entityId','=','employees.entityId')
-						->where('employees.deleted',0)
-						->where('employees.entityId',$id)
-						->where('addresses.stateId',session()->get('currentStateId'));
-						//->get();
-						//var_dump($teamMember);
-		$cities = \DB::table('citys')->where('citys.deleted',0)->where('citys.state_id',session()->get('currentStateId'))->lists('cityName', 'id');			
-       return view('teammember.edit',['teamMember' => $teamMember,'cities' => $cities]);
-   
+      $employee = employee::findOrFail($id);
+		$entity = entity::findOrFail($id);
+		$address = address::findOrFail($id);
+		$emailaddress = emailaddress::findOrFail($id);
+		$phone = phone::findOrFail($id);
+		$citys = DB::table('citys')->where('citys.deleted',0)->where('citys.state_id',session()->get('currentStateId'))->lists('cityName','id');
+		$locations = DB::table('locations')->where('locations.deleted',0)->where('locations.state_id',session()->get('currentStateId'))->lists('location', 'id');		
+		return view('teammember.edit', ['employee' => $employee,'entity' => $entity,'address' => $address,'emailaddress' => $emailaddress,'phone' => $phone,'citys' => $citys,'locations'=>$locations]);
     }
 
     /**
@@ -147,11 +142,11 @@ class TeammemberController extends Controller
      */
     public function destroy($id)
     {
-        Team::destroy($id);
+        DB::table('employees')->where('entityId',$id)->update(['teamId' =>0,'locationId' =>0]);
 
         Session::flash('flash_message', 'Team member deleted!');
 
-        return redirect('teammember');
+        return redirect('team');
     }
 
 }
