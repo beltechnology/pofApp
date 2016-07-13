@@ -1,84 +1,70 @@
 @extends('layouts.header')
 
 @section('content')
-<div class=" col-md-9 category">
 
-    <h1>Edit Team {{ $team->teamId }}</h1>
-<div class="row">
-    {!! Form::model($team, [
+<div class=" col-md-9 category">
+    <h1>Add Team Member</h1>
+<div class="table">
+            <table class='table table-bordered table-striped table-hover'>
+            <thead>
+      <tr>
+        <th>Member Name</th>
+        <th>{{ trans('messages.DOB') }}</th>
+        <th>{{ trans('messages.CONTACT_NUMBER') }}</th>
+        <th>{{ trans('messages.EMAIL') }} </th>
+		<th>{{ trans('messages.SELECT_CITY') }}</th>
+		<th>{{ trans('messages.LOCATION') }} </th>
+        <th>{{ trans('messages.ACTIONS') }}</th>
+      </tr>
+    </thead>
+            <tbody>
+                <tr>
+				{!! Form::model($teamMember,[
         'method' => 'PATCH',
-        'url' => ['/team', $team->teamId],
+       'action' => ['TeammemberController@update', $teamMember->entityId],
         'class' => 'form-horizontal'
     ]) !!}
-        <div class=" col-md-6">
-               
-            <div class="form-group {{ $errors->has('teamName') ? 'has-error' : ''}}">
-                {!! Form::label('teamName', 'Team Name', ['class' => 'col-sm-5 control-label']) !!}
-                <div class="col-sm-6">
-                    {!! Form::text('teamName', null, ['class' => 'form-control']) !!}
-                    {!! $errors->first('teamName', '<p class="help-block">:message</p>') !!}
-                </div>
-            </div>
-			 <div class="form-group {{ $errors->has('teamLeader') ? 'has-error' : ''}}">
-                {!! Form::label('teamLeader', 'Team Leader', ['class' => 'col-sm-5 control-label']) !!}
-                <div class="col-sm-6">
-                   {!! Form::select('team',\DB::table('teams')->lists('teamLeader','teamId'), "Debugging", ['class' => 'form-control teamSelect','placeholder' => 'Select Team Leader','id' => 'teamSelect']) !!}
-                    {!! $errors->first('teamLeader', '<p class="help-block">:message</p>') !!}
-                </div>
-            </div>
-			 <div class="form-group {{ $errors->has('teamEndDate') ? 'has-error' : ''}}">
-                {!! Form::label('teamEndDate', 'Team End Date', ['class' => 'col-sm-5 control-label']) !!}
-                <div class="col-sm-6 input-group date">
-                    {!! Form::text('teamEndDate', null, ['class' => 'form-control', 'required' => 'required']) !!}
-					<span class="input-group-addon">
-                        <span class="glyphicon glyphicon-calendar"></span>
-                    </span>
-                    {!! $errors->first('teamEndDate', '<p class="help-block">:message</p>') !!}
-                </div>
-            </div>
-		</div>	
-		<div class="col-md-6">
-           
-		     <div class="form-group {{ $errors->has('teamLocation') ? 'has-error' : ''}}">
-                {!! Form::label('teamLocation', 'Team Location', ['class' => 'col-sm-5 control-label']) !!}
-                <div class="col-sm-6">
-                    {!! Form::text('teamLocation', null, ['class' => 'form-control', 'required' => 'required']) !!}
-                    {!! $errors->first('teamLocation', '<p class="help-block">:message</p>') !!}
-                </div>
-            </div>
-            <div class="form-group {{ $errors->has('teamCreationDate') ? 'has-error' : ''}}">
-                {!! Form::label('teamCreationDate', 'Team Creation Date', ['class' => 'col-sm-5 control-label']) !!}
-                <div class="col-sm-6 input-group date">
-                    {!! Form::text('teamCreationDate', null, ['class' => 'form-control', 'required' => 'required']) !!}
-					<span class="input-group-addon">
-                        <span class="glyphicon glyphicon-calendar"></span>
-                    </span>
-                    {!! $errors->first('teamCreationDate', '<p class="help-block">:message</p>') !!}
-                </div>
-            </div>
-            <div class="form-group {{ $errors->has('teamcode') ? 'has-error' : ''}}">
-                {!! Form::label('teamCode', 'Team Code', ['class' => 'col-sm-5 control-label']) !!}
-                <div class="col-sm-6">
-                    {!! Form::text('teamCode', null, ['class' => 'form-control','readonly' => 'readonly']) !!}
-                    {!! $errors->first('teamCode', '<p class="help-block">:message</p>') !!}
-                </div>
-            </div>
-		</div>
-
-    <div class="form-group">
-        <div class="col-sm-offset-3 col-sm-3">
-            {!! Form::submit('Update', ['class' => 'btn btn-primary form-control']) !!}
-        </div>
+				
+                    <td>{{ $teamMember->name }}</td>
+					<td>{{ $teamMember->dob }}</td>
+					<td>{{ $teamMember->primaryNumber }}</td>
+					<td>{{ $teamMember->email }}</td>
+					<td id='city_{{ $x }}'>{!! Form::select('city_id',$cities,null, ['class' => 'cityDropDown','placeholder' => 'Select City']) !!}</td>
+					<td><select id='location_{{ $x }}'  name="locationId">
+					 <option>Select Location </option>
+					<option value=""></option>
+					</select></td>
+                    <td>
+                        <!--<a href="{{ url('/employee/' . $item->employeeId) }}" class="btn  btn-xs" title="View employee"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"/></a>
+                        <a href="{{ url('/teammember/' . $item->entityId . '/edit') }}" class="btn  btn-xs" title="Select Member"><span class="glyphicon fa-check fa" aria-hidden="true"/></a>-->
+						
+                            {!! Form::button('<span class=" glyphicon fa-check fa" aria-hidden="true" title="Select Member" />', array(
+                                    'type' => 'submit',
+                                    'class' => '',
+                                    'title' => 'Select Member',
+                                    
+                            ));!!}
+                        {!! Form::close() !!}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+		 <div class="pagination-wrapper"> {!! $teamMember->render() !!} </div> 
     </div>
-    {!! Form::close() !!}
-
-    @if ($errors->any())
-        <ul class="alert alert-danger">
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    @endif
 </div>
-</div>
+<script>
+$('.cityDropDown').on('change', function(e){
+       var ele = $(this).parent().attr('id');
+		var locationId = ele.split('_');
+		var newEle = locationId[1];
+        var city_id = e.target.value;
+        $.get('{{ url('teammember') }}/create/city?city_id=' + city_id, function(data) {
+            console.log(data);
+            $('#location_'+newEle).empty();
+            $.each(data, function(index,subCatObj){
+                $('#location_'+newEle).append('<option value="'+subCatObj.id+'">'+subCatObj.location+'</option>');
+            });
+        });
+    });
+</script>
 @endsection

@@ -18,7 +18,7 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Session;
 use Illuminate\Support\Facades\Input;
-
+use DB;
 class employeeController extends Controller
 {
     /**
@@ -28,7 +28,7 @@ class employeeController extends Controller
      */
     public function index()
     {
-			$employee= \DB::table('employees')
+			$employee= DB::table('employees')
                         ->join('entitys','entitys.entityId','=','employees.entityId')
                         ->join('addresses','addresses.entityId','=','employees.entityId')
 						->join('phones','phones.entityId','=','employees.entityId')
@@ -51,7 +51,7 @@ class employeeController extends Controller
      */
     public function create()
     {
-		$districts = \DB::table('districts')->where('districts.deleted',0)->where('districts.state_id',session()->get('currentStateId'))->lists('name', 'id');
+		$districts = DB::table('districts')->where('districts.deleted',0)->where('districts.state_id',session()->get('currentStateId'))->lists('name', 'id');
     return view('employee.create', compact('districts'));
     }
 
@@ -145,8 +145,8 @@ class employeeController extends Controller
 		// {
 			// $states_id=$statesid->stateId;
 		// }
-		$districts = \DB::table('districts')->where('districts.deleted',0)->lists('name', 'id');
-		$citys = \DB::table('citys')->where('citys.deleted',0)->lists('cityName', 'id');
+		$districts = DB::table('districts')->where('districts.deleted',0)->lists('name', 'id');
+		$citys = DB::table('citys')->where('citys.deleted',0)->lists('cityName', 'id');
 		return view('employee.edit', ['employee' => $employee,'entity' => $entity,'address' => $address,'emailaddress' => $emailaddress,'phone' => $phone,'districts' => $districts,'citys' => $citys]);
 		
     }
@@ -190,11 +190,11 @@ class employeeController extends Controller
      */
     public function destroy($id)
     {
-        \DB::table('employees')->where('entityId', $id)->update(['deleted' => 1]);
-		\DB::table('addresses')->where('entityId', $id)->update(['deleted' => 1]);
-		\DB::table('entitys')->where('entityId', $id)->update(['deleted' => 1]);
-		\DB::table('emailaddresses')->where('entityId', $id)->update(['deleted' => 1]);
-		\DB::table('phones')->where('entityId', $id)->update(['deleted' => 1]);
+        DB::table('employees')->where('entityId', $id)->update(['deleted' => 1]);
+		DB::table('addresses')->where('entityId', $id)->update(['deleted' => 1]);
+		DB::table('entitys')->where('entityId', $id)->update(['deleted' => 1]);
+		DB::table('emailaddresses')->where('entityId', $id)->update(['deleted' => 1]);
+		DB::table('phones')->where('entityId', $id)->update(['deleted' => 1]);
 		
         Session::flash('flash_message', 'employee deleted!');
         return redirect('employee');

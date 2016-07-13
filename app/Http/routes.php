@@ -12,6 +12,7 @@
 */
 use App\District;
 use App\City;
+use App\Location;
 use Illuminate\Support\Facades\Input;
  
 Route::group(array('middleware' => 'auth'), function() {
@@ -45,6 +46,13 @@ Route::get('/locations/create/district',function()
 {
     $dist_id = Input::get('dist_id');
     $subcategories = City::where('district_id','=',$dist_id)->get();
+    return $subcategories;
+ 
+});
+Route::get('/teammember/create/city',function()
+{
+    $city_id = Input::get('city_id');
+    $subcategories = Location::where('city_id','=',$city_id)->get();
     return $subcategories;
  
 });
@@ -93,12 +101,14 @@ Route::get('/citys/edit/ajax-state',function()
 });
     });
 	
-Route::get('/', function () {return view('login');});
+Route::get('/', function () 
+{
+	return view('login');
+});
+
 Route::resource('resetPassword','resetpasswordController');
 
 Route::auth();
-
-//Route::get('/home', 'HomeController@index');
 
 
 

@@ -34,13 +34,13 @@ class AuthController extends Controller
     {
         if($user->remember_token=='') 
 		{
-            return redirect()->intended('/resetPassword');
+            return redirect('/resetPassword/'. $user->id.'/edit');
         }
 		// elseif($user->role =='employee')
 		 // {
             // return redirect()->intended('/statelist');
         // }
-        //return redirect()->intended('/statelist');
+        return redirect()->intended('/statelist');
     }
 	
 		//$redirectTo = '/statelist';

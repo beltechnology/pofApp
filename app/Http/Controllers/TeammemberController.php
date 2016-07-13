@@ -2,17 +2,23 @@
 namespace App\Http\Controllers;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Team;
 
 use App\employee;
+use App\User;
 use App\address;
 use App\entity;
 use App\emailaddress;
 use App\phone;
-
+use App\State;
+use App\District;
+use App\City;
+use App\Team;
+use App\Teammember;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Session;
+use Illuminate\Support\Facades\Input;
+use DB;
 class TeammemberController extends Controller
 {
     /**
@@ -22,12 +28,8 @@ class TeammemberController extends Controller
      */
     public function index()
     {
-        $deleted=0;
-		$team= \DB::table('teams')
-                        ->join('locations','locations.id','=','teams.teamLocation')
-						->where('teams.deleted',0)
-						->paginate(15);
-        return view('teammember.index', compact('team'));
+		
+        return view('teammember.index');
     }
 
     /**
@@ -37,16 +39,19 @@ class TeammemberController extends Controller
      */
     public function create(Request $request)
     {
-       $deleted=0;
-		$employee= \DB::table('employees')
+		$employee= DB::table('employees')
                         ->join('entitys','entitys.entityId','=','employees.entityId')
                         ->join('addresses','addresses.entityId','=','employees.entityId')
 						->join('phones','phones.entityId','=','employees.entityId')
 						->join('emailaddresses','emailaddresses.entityId','=','employees.entityId')
 						->where('employees.deleted',0)
+						->where('employees.teamId',0)
+						->where('employees.locationId',0)
+						->where('addresses.stateId',session()->get('currentStateId'))
 						->groupBy('employees.entityId')
 						->paginate(5);
-        return view('teammember.create', compact('employee'));
+		$cities = DB::table('citys')->where('citys.deleted',0)->where('citys.state_id',session()->get('currentStateId'))->lists('cityName', 'id');			
+        return view('teammember.create',['employee' => $employee,'cities' => $cities]);
     }
 
     /**
@@ -80,9 +85,16 @@ class TeammemberController extends Controller
      */
     public function show($id)
     {
-        $team = Team::findOrFail($id);
-
-        return view('teammember.show', compact('team'));
+        //$team = Team::findOrFail($id);
+		$team= \DB::table('employees')
+                        ->join('entitys','entitys.entityId','=','employees.entityId')
+						->join('locations','locations.id','=','employees.locationId')
+						->where('employees.deleted',0)
+						->where('locations.state_id',session()->get('currentStateId'))
+						->where('employees.teamId',$id)
+						->paginate(10);
+		session()->put('teamId',$id);				
+        return view('teammember.index', compact('team'));
     }
 
     /**
@@ -94,9 +106,19 @@ class TeammemberController extends Controller
      */
     public function edit($id)
     {
-        $team = Team::findOrFail($id);
-
-        return view('teammember.edit', compact('team'));
+      $teamMember= \DB::table('employees')
+                        ->join('entitys','entitys.entityId','=','employees.entityId')
+                        ->join('addresses','addresses.entityId','=','employees.entityId')
+						->join('phones','phones.entityId','=','employees.entityId')
+						->join('emailaddresses','emailaddresses.entityId','=','employees.entityId')
+						->where('employees.deleted',0)
+						->where('employees.entityId',$id)
+						->where('addresses.stateId',session()->get('currentStateId'));
+						//->get();
+						//var_dump($teamMember);
+		$cities = \DB::table('citys')->where('citys.deleted',0)->where('citys.state_id',session()->get('currentStateId'))->lists('cityName', 'id');			
+       return view('teammember.edit',['teamMember' => $teamMember,'cities' => $cities]);
+   
     }
 
     /**
@@ -108,13 +130,12 @@ class TeammemberController extends Controller
      */
     public function update($id, Request $request)
     {
-        $this->validate($request, ['teamName' => 'required', 'teamLocation' => 'required', 'teamCreationDate' => 'required', 'teamEndDate' => 'required', ]);
-        $team = Team::findOrFail($id);
-        $team->update($request->all());
-
+		$teamId=session()->get('teamId');
+		$locationId= $request['locationId'];
+		DB::table('employees')->where('entityId',$id)->update(['teamId' => $teamId,'locationId' => $locationId]);
         Session::flash('flash_message', 'Team Member updated!');
-
-        return redirect('teammember');
+		session()->forget('teamId');
+        return redirect('team');
     }
 
     /**

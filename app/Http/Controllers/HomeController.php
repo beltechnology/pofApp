@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\User;
 use App\Http\Requests;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -24,14 +24,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-       // return view('home');
+      
     }
-	  public function resetPassword()
-    {	
-		// $email= \DB::table('entitys')
-						// ->join('emailaddresses','emailaddresses.entityId','=','entitys.entityId')
-						// ->where('entitys.deleted',0)
-						// ->groupBy('entitys.entityId');
-       return view('resetpassword', compact('email'));
-    }
+	 
 }

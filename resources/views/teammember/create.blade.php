@@ -2,19 +2,18 @@
 
 @section('content')
 <div class=" col-md-9 category">
-
     <h1>Add Team Member</h1>
-    <hr/>
-<div class="main-table col-md">
-            <table border="0" bgcolor="#eeeeee">
-            <thead bgcolor="#ffffff" style="color:#4b4b4b">
-      <tr class="table-heading">
-        <th width="200" class="emp-name"><span><i class="fa fa-square-o" aria-hidden="true"></i></span>Member Name</th>
-        <th width="80" class="emp-dob">{{ trans('messages.DOB') }}</th>
-        <th width="110" class="emp-no">{{ trans('messages.CONTACT_NUMBER') }}</th>
-        <th width="105" class="emp-team">{{ trans('messages.EMAIL') }} </th>
-		<th width="200" class="emp-team">Location </th>
-        <th width="120">{{ trans('messages.ACTIONS') }}</th>
+<div class="table">
+            <table class='table table-bordered table-striped table-hover'>
+            <thead>
+      <tr>
+        <th>Member Name</th>
+        <th>{{ trans('messages.DOB') }}</th>
+        <th>{{ trans('messages.CONTACT_NUMBER') }}</th>
+        <th>{{ trans('messages.EMAIL') }} </th>
+		<th>{{ trans('messages.SELECT_CITY') }}</th>
+		<th>{{ trans('messages.LOCATION') }} </th>
+        <th>{{ trans('messages.ACTIONS') }}</th>
       </tr>
     </thead>
             <tbody>
@@ -23,16 +22,20 @@
                 {{-- */$x++;/* --}}
                 <tr>
 				{!! Form::open([
-                            'method'=>'post',
-                            'url' => ['/teammember', $item->entityId],
+                            'method'=>'PATCH',
+                            'action' => ['TeammemberController@update', $item->entityId],
                             'style' => 'display:inline'
                         ]) !!}
-                    <td width="200">{{ $item->name }}</td>
-					<td width="80">{{ $item->dob }}</td>
-					<td width="110">{{ $item->primaryNumber }}</td>
-					<td width="105">{{ $item->email }}</td>
-					<td width="200">{!! Form::select('locationId',\DB::table('locations')->lists('location','id'), "Debugging", ['class' => ' teamSelect','placeholder' => 'Select location','id' => 'locationId']) !!}</td>
-                    <td width="120">
+                    <td>{{ $item->name }}</td>
+					<td>{{ $item->dob }}</td>
+					<td>{{ $item->primaryNumber }}</td>
+					<td>{{ $item->email }}</td>
+					<td id='city_{{ $x }}'>{!! Form::select('city_id',$cities,null, ['class' => 'cityDropDown','placeholder' => 'Select City']) !!}</td>
+					<td><select id='location_{{ $x }}'  name="locationId">
+					 <option>Select Location </option>
+					<option value=""></option>
+					</select></td>
+                    <td>
                         <!--<a href="{{ url('/employee/' . $item->employeeId) }}" class="btn  btn-xs" title="View employee"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"/></a>
                         <a href="{{ url('/teammember/' . $item->entityId . '/edit') }}" class="btn  btn-xs" title="Select Member"><span class="glyphicon fa-check fa" aria-hidden="true"/></a>-->
 						
@@ -50,6 +53,20 @@
         </table>
 		 <div class="pagination-wrapper"> {!! $employee->render() !!} </div> 
     </div>
-
 </div>
+<script>
+$('.cityDropDown').on('change', function(e){
+       var ele = $(this).parent().attr('id');
+		var locationId = ele.split('_');
+		var newEle = locationId[1];
+        var city_id = e.target.value;
+        $.get('{{ url('teammember') }}/create/city?city_id=' + city_id, function(data) {
+            console.log(data);
+            $('#location_'+newEle).empty();
+            $.each(data, function(index,subCatObj){
+                $('#location_'+newEle).append('<option value="'+subCatObj.id+'">'+subCatObj.location+'</option>');
+            });
+        });
+    });
+</script>
 @endsection
