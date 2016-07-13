@@ -2,7 +2,7 @@
 
 @section('content')
 <div class=" col-md-9 category">
-  <h1 class="text-left">{{ trans('messages.TEAM') }} Members </h1>
+  <h1 class="text-left"><a href="{{ url('/team') }}" class="fa fa-angle-left  fa-2x"> {{ trans('messages.TEAM') }} Members </a></h1>
     <h1 class="text-right">Add{{ trans('messages.TEAM') }} Member <a href="{{ url('/teammember/create') }}" class="btn btn-primary btn-xs" title="Add New Team"><span class="glyphicon glyphicon-plus" aria-hidden="true"/></a></h1>
     <div class="table">
         <table class="table table-bordered table-striped table-hover">
@@ -21,7 +21,7 @@
                     <td><a href="{{ url('/teammember/' . $item->entityId. '/edit') }}" class="btn  btn-xs" title="Edit Team"><span class="glyphicon glyphicon-pencil" aria-hidden="true"/></a>
                         {!! Form::open([
                             'method'=>'DELETE',
-                            'url' => ['/team', $item->teamId],
+                            'url' => ['/teammember', $item->entityId],
                             'style' => 'display:inline'
                         ]) !!}
                             {!! Form::button('<span class="glyphicon glyphicon-trash" aria-hidden="true" title="Delete Team" />', array(

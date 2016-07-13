@@ -56,6 +56,13 @@ Route::get('/teammember/create/city',function()
     return $subcategories;
  
 });
+Route::get('/teammember/edit/city',function()
+{
+    $city_id = Input::get('city_id');
+    $subcategories = Location::where('city_id','=',$city_id)->get();
+    return $subcategories;
+ 
+});
 Route::get('/employee/edit/district',function()
 {
     $dist_id = Input::get('dist_id');

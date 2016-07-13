@@ -3,7 +3,7 @@
 @section('content')
 
 <div class=" col-md-9 category">
-    <h1>Add Team Member</h1>
+    <h1>Edit Team Member Location</h1>
 <div class="table">
             <table class='table table-bordered table-striped table-hover'>
             <thead>
@@ -19,24 +19,16 @@
     </thead>
             <tbody>
                 <tr>
-				{!! Form::model($teamMember,[
-        'method' => 'PATCH',
-       'action' => ['TeammemberController@update', $teamMember->entityId],
-        'class' => 'form-horizontal'
-    ]) !!}
+				{!! Form::model($employee->toArray()+$entity->toArray()+$address->toArray()+$emailaddress->toArray()+$phone->toArray(),['method' => 'PATCH','action' => ['TeammemberController@update', $entity->entityId],'class' => 'form-horizontal']) !!}
 				
-                    <td>{{ $teamMember->name }}</td>
-					<td>{{ $teamMember->dob }}</td>
-					<td>{{ $teamMember->primaryNumber }}</td>
-					<td>{{ $teamMember->email }}</td>
-					<td id='city_{{ $x }}'>{!! Form::select('city_id',$cities,null, ['class' => 'cityDropDown','placeholder' => 'Select City']) !!}</td>
-					<td><select id='location_{{ $x }}'  name="locationId">
-					 <option>Select Location </option>
-					<option value=""></option>
-					</select></td>
+                    <td>{{ $entity->name }}</td>
+					<td>{{ $employee->dob }}</td>
+					<td>{{ $phone->primaryNumber }}</td>
+					<td>{{ $emailaddress->email }}</td>
+					<td id='city'>{!! Form::select('cityId',$citys,null, ['class' => 'cityDropDown']) !!}</td>
+					<td>{!! Form::select('locationId',$locations,null, ['id' => 'location']) !!}</td>
                     <td>
-                        <!--<a href="{{ url('/employee/' . $item->employeeId) }}" class="btn  btn-xs" title="View employee"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"/></a>
-                        <a href="{{ url('/teammember/' . $item->entityId . '/edit') }}" class="btn  btn-xs" title="Select Member"><span class="glyphicon fa-check fa" aria-hidden="true"/></a>-->
+                       
 						
                             {!! Form::button('<span class=" glyphicon fa-check fa" aria-hidden="true" title="Select Member" />', array(
                                     'type' => 'submit',
@@ -49,22 +41,22 @@
                 </tr>
             </tbody>
         </table>
-		 <div class="pagination-wrapper"> {!! $teamMember->render() !!} </div> 
+		
     </div>
 </div>
 <script>
+
+	
 $('.cityDropDown').on('change', function(e){
-       var ele = $(this).parent().attr('id');
-		var locationId = ele.split('_');
-		var newEle = locationId[1];
         var city_id = e.target.value;
-        $.get('{{ url('teammember') }}/create/city?city_id=' + city_id, function(data) {
+        $.get('{{ url('teammember') }}/edit/city?city_id=' + city_id, function(data) {
             console.log(data);
-            $('#location_'+newEle).empty();
+            $('#location').empty();
             $.each(data, function(index,subCatObj){
-                $('#location_'+newEle).append('<option value="'+subCatObj.id+'">'+subCatObj.location+'</option>');
+                $('#location').append('<option value="'+subCatObj.id+'">'+subCatObj.location+'</option>');
             });
         });
     });
+});
 </script>
 @endsection

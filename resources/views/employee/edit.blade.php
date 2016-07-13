@@ -3,7 +3,7 @@
 @section('content')
 <div class=" col-md-9 category">
 <div class="row">
-   <h1 class="text-left"><a href="{{ url('/employee') }}">{{ trans('messages.EMPLOYEE_LIST') }}</a></h1>
+   <h1 class="text-left"><a href="{{ url('/employee') }}" class="fa fa-angle-left  fa-2x"> {{ trans('messages.EMPLOYEE_LIST') }}</a></h1>
     <hr/>
 
     {!! Form::model($employee->toArray()+$entity->toArray()+$address->toArray()+$emailaddress->toArray()+$phone->toArray(), [
