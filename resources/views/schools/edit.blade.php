@@ -14,7 +14,7 @@
                 <tr>
 					<th><a href="#"> School Profile </a> </th>
 					<th><a href="{{ url('/book-details/'.$school->entityId.'/edit') }}"> Book Detail </a>  </th>
-					<th> <a href="#"> No. of students from school </a></th>
+					<th> <a href="{{ url('/student-count/'.$school->entityId.'/edit') }}"> No. of students from school </a></th>
 					<th> <a href="#"> Payment Mode </a></th>
                 </tr>
             </thead>

@@ -15,6 +15,7 @@ use App\District;
 use App\City;
 use App\BookDetail;
 use App\ClassName;
+use App\studentCount;
 use Illuminate\Support\Facades\Input;
 use DB;
 use Illuminate\Http\Request;
@@ -85,6 +86,11 @@ class schoolsController extends Controller
             'email' => $request['emailAddress'],
             'password' => bcrypt('secret123#'),
         ]);
+		 entity::create([
+            'entityId' => $request['entityId'],
+            'name' => $request['schoolName'],
+            'entityType' => '',
+        ]);
         school::create([
 			'entityId' => $request['entityId'],
             'posterDistributionDate' => $request['posterDistributionDate'],
@@ -117,19 +123,18 @@ class schoolsController extends Controller
 		$classId = DB::table('class_names')->where('class_names.deleted',0)->where('class_names.status',0)->get();
 		foreach($classId as $class_Id)
 		{
-			 $classid=$class_Id->id;
+		$classid=$class_Id->id;
 		BookDetail::create(['entityId' => $request['entityId'],
 		'classId' => $classid,
 		'schoolId' => $request['schoolCode'],
 		'sessionYear' => date('Y').'-'.(date('Y')+1),
 		]);
+		studentCount::create(['entityId' => $request['entityId'],
+		'classId' => $classid,
+		'schoolId' => $request['schoolCode'],
+		'sessionYear' => date('Y').'-'.(date('Y')+1),
+		]);
 		}
-		
-        entity::create([
-            'entityId' => $request['entityId'],
-            'name' => $request['schoolName'],
-            'entityType' => '',
-        ]);
         address::create([
             'entityId' => $request['entityId'],
             'stateId' => $request['state'],
