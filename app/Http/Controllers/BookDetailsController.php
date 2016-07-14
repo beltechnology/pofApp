@@ -9,6 +9,7 @@ use App\BookDetail;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Session;
+use DB;
 
 class BookDetailsController extends Controller
 {
@@ -74,6 +75,9 @@ class BookDetailsController extends Controller
     public function edit($id)
     {
         $bookdetail = BookDetail::findOrFail($id);
+		$bookdetails = DB::table('book_details')->where('deleted',0)->where('entityId',$id)->get();
+        return view('book-details.edit', compact('bookdetail'))->with('bookdetails',$bookdetails);
+
 
         return view('book-details.edit', compact('bookdetail'));
     }
