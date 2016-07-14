@@ -7,7 +7,8 @@
         'url' => ['/book-details', $bookdetail->entityId],
         'class' => 'form-horizontal'
     ]) !!}
-	<div class="table">
+ <div class="row create-emp-list">
+ 	<div class="table">
         <table class="table table-bordered table-striped table-hover">
             <thead>
                 <tr>
@@ -19,9 +20,8 @@
             </thead>
 			</table>
 	</div>
-	 <h1>Edit BookDetail {{ $bookdetail->entityId }}</h1>
- <div class="row create-emp-list">
- 
+	 <h1> Book Detail </h1>
+
  <div class="table">
         <table class="table table-bordered table-striped table-hover">
             <thead>
@@ -41,13 +41,13 @@
                 <tr>
 					<td>{!! Form::hidden('classId[]', $item->classId, ['class' => '','readonly'=>'readonly']) !!}
 					{!! Form::label('name', $item->name, ['class' => '','readonly'=>'readonly']) !!}</td>
-					<td> {!! Form::number('noofBookFirstVisitPMO[]', $item->noofBookFirstVisitPMO, ['class' => 'form-control']) !!} </td>
-					<td> {!! Form::number('noofBookFirstVisitPSO[]', $item->noofBookFirstVisitPSO, ['class' => 'form-control']) !!}</td>
-					<td> {!! Form::number('noofBookLastVisitPMO[]', $item->noofBookLastVisitPMO, ['class' => 'form-control']) !!}</td>
-					<td> {!! Form::number('noofBookLastVisitPSO[]', $item->noofBookLastVisitPSO, ['class' => 'form-control']) !!}</td>
-					<td> {!! Form::number('returnBook[]', $item->returnBook, ['class' => 'form-control']) !!}</td>
-					<td> {!! Form::number('other[]',$item->other, ['class' => 'form-control']) !!}</td>
-					<td> {!! Form::number('total',$item->total, ['class' => 'form-control']) !!}</td>
+					<td> {!! Form::number('noofBookFirstVisitPMO[]', $item->noofBookFirstVisitPMO, ['class' => 'form-control','min'=>'0']) !!} </td>
+					<td> {!! Form::number('noofBookFirstVisitPSO[]', $item->noofBookFirstVisitPSO, ['class' => 'form-control','min'=>'0']) !!}</td>
+					<td> {!! Form::number('noofBookLastVisitPMO[]', $item->noofBookLastVisitPMO, ['class' => 'form-control','min'=>'0']) !!}</td>
+					<td> {!! Form::number('noofBookLastVisitPSO[]', $item->noofBookLastVisitPSO, ['class' => 'form-control','min'=>'0']) !!}</td>
+					<td> {!! Form::number('returnBook[]', $item->returnBook, ['class' => 'form-control','min'=>'0']) !!}</td>
+					<td> {!! Form::number('other[]',$item->other, ['class' => 'form-control','min'=>'0']) !!}</td>
+					<td> {!! Form::number('total[]',$item->total, ['class' => 'form-control','min'=>'0']) !!}</td>
                 </tr>
 			@endforeach
 				 <tr>
@@ -72,5 +72,27 @@
     </div>
     {!! Form::close() !!}
 </div>
-</div>
+
+<script>
+$(document).ready(function(){
+	
+$("form input").on("change keyup mouseup", function(){
+	var ele =$(this).parent().parent();
+	var eleLength =$(ele).find('input').length;
+	var total =0;
+	for(var i=1;i<eleLength-1;i++)
+	{
+		totalval = parseInt($(ele).find('input').eq(i).val());
+		total = parseInt(totalval)+parseInt(total);
+	}
+	var returnBook = parseInt($(ele).find('input').eq(eleLength-3).val());
+	returnBook = parseInt(returnBook)+parseInt(returnBook);
+	total = parseInt(total) - parseInt(returnBook);
+	 $(ele).find('input:last').val(total);
+});
+	
+	
+});
+
+</script>
 @endsection

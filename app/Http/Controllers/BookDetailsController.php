@@ -103,8 +103,9 @@ class BookDetailsController extends Controller
 			$noofBookLastVisitPMO=$request->input('noofBookLastVisitPMO')[$i];
 			$noofBookLastVisitPSO=$request->input('noofBookLastVisitPSO')[$i];
 			$returnBook=$request->input('returnBook')[$i];
+			$total=$request->input('total')[$i];
 			$other=$request->input('other')[$i];
-			DB::table('book_details')->where('entityId', $id)->where('classId', $classId)->update(['noofBookFirstVisitPMO' =>$noofBookFirstVisitPMO,'noofBookFirstVisitPSO' =>$noofBookFirstVisitPSO,'noofBookLastVisitPMO' =>$noofBookLastVisitPMO,'noofBookLastVisitPSO' =>$noofBookLastVisitPSO,'returnBook' =>$returnBook,'other' =>$other]);
+			DB::table('book_details')->where('entityId', $id)->where('classId', $classId)->update(['noofBookFirstVisitPMO' =>$noofBookFirstVisitPMO,'noofBookFirstVisitPSO' =>$noofBookFirstVisitPSO,'noofBookLastVisitPMO' =>$noofBookLastVisitPMO,'noofBookLastVisitPSO' =>$noofBookLastVisitPSO,'returnBook' =>$returnBook,'other' =>$other,'total' =>$total]);
 			$i++;
 		}
     //    $bookdetail = BookDetail::findOrFail($id);
