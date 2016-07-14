@@ -1,14 +1,26 @@
 @extends('layouts.header')
 @section('content')
     <div class=" col-md-9 category">
-
-    <h1>Edit school</h1>
+			
+   
     {!! Form::model($school->toArray()+$entity->toArray()+$address->toArray()+$emailaddress->toArray()+$phone->toArray(), [
         'method' => 'PATCH',
         'url' => ['/schools', $school->entityId],
         'class' => 'form-horizontal'
     ]) !!}
-
+	<div class="table">
+        <table class="table table-bordered table-striped table-hover">
+            <thead>
+                <tr>
+					<th><a href="#"> School Profile </a> </th>
+					<th><a href="{{ url('/book-details/'.$school->entityId.'/edit') }}"> Book Detail </a>  </th>
+					<th> <a href="#"> No. of students from school </a></th>
+					<th> <a href="#"> Payment Mode </a></th>
+                </tr>
+            </thead>
+			</table>
+	</div>
+	 <h1>Edit school</h1>
         <div class="row create-emp-list">
 		@if(Session::has('flash_message'))
 		<p class="alert {{ Session::get('alert-class', 'alert-info') }}">{{ Session::get('flash_message') }}</p>

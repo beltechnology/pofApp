@@ -18,12 +18,12 @@ class BookDetail extends Model
     *
     * @var string
     */
-    protected $primaryKey = 'id';
+    protected $primaryKey = 'entityId';
 
     /**
      * Attributes that should be mass-assignable.
      *
      * @var array
      */
-    protected $fillable = ['entityId', 'classId', 'schoolId', 'sessionYear', 'noofBookFirstVisitPMO', 'noofBookFirstVisitPSO', 'noofBookLastVisitPMO', 'noofBookLastVisitPSO', 'returnBook', 'other', 'total'];
+    protected $fillable = ['entityId', 'classId', 'schoolId', 'sessionYear', 'noofBookFirstVisitPMO', 'noofBookFirstVisitPSO', 'noofBookLastVisitPMO', 'noofBookLastVisitPSO', 'returnBook', 'other', 'total','deleted','status'];
 }
