@@ -92,7 +92,7 @@
                 </li>
                 <li class="has-subnav">
                     <a href="{{ url('/schools') }}">
-                        <i class="fa fa-users fa-2x"></i>
+                        <i class="glyphicon glyphicon-book"></i>
                          Mange Schools
                         </span>
                     </a>
