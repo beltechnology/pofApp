@@ -119,3 +119,8 @@ Route::auth();
 
 
 
+
+
+
+
+Route::resource('book-details', 'BookDetailsController');
