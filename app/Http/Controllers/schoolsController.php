@@ -34,13 +34,14 @@ class schoolsController extends Controller
                         ->join('addresses','addresses.entityId','=','schools.entityId')
 						->join('phones','phones.entityId','=','schools.entityId')
 						->join('emailaddresses','emailaddresses.entityId','=','schools.entityId')
+						->join('citys','citys.id','=','addresses.cityId')
+						->join('districts','districts.id','=','addresses.districtId')
 						->where('schools.deleted',0)
 						->where('addresses.stateId',session()->get('currentStateId'))
 						->groupBy('schools.entityId')
 						->orderBy('schools.entityId','desc')
 						->paginate(10);
         return view('schools.index', compact('schools'));
-    //    return view('schools.index', compact('schools'))->where('employees.deleted',0);
     }
 
     /**
@@ -200,7 +201,7 @@ class schoolsController extends Controller
      */
     public function update($id, Request $request)
     {
-        $this->validate($request, ['posterDistributionDate' => 'required', 'closingDate' => 'required', 'formNo' => 'required', 'schoolName' => 'required', 'PrincipalName' => 'required', 'principalEmail' => 'required', 'firstCoordinatorName' => 'required', 'firstCoordinatorMobile' => 'required', 'firstCoordinatorEmail' => 'required', 'secondCoordinator' => 'required', 'PMOExamDate' => 'required', 'PSOExamDate' => 'required', 'schoolcode' => 'required', 'teamCode' => 'required', 'employeeCode' => 'required', 'schoolTotalStrength' => 'required', 'classStrength' => 'required', 'followUpDate' => 'required', 'callStatus' => 'required', 'posterDistributed' => 'required', 'KMS' => 'required', ]);
+        $this->validate($request, ['posterDistributionDate' => 'required', 'closingDate' => 'required', 'formNo' => 'required', 'schoolName' => 'required', 'principalName' => 'required','principalMobile' => 'required', 'principalEmail' => 'required', 'firstCoordinatorName' => 'required', 'firstCoordinatorMobile' => 'required', 'firstCoordinatorEmail' => 'required', 'secondCoordinator' => 'required', 'PMOExamDate' => 'required', 'PSOExamDate' => 'required', 'schoolcode' => 'required', 'teamCode' => 'required', 'employeeCode' => 'required', 'schoolTotalStrength' => 'required', 'classStrength' => 'required', 'followUpDate' => 'required', 'callStatus' => 'required', 'posterDistributed' => 'required', 'KMS' => 'required', ]);
 
         $school = school::findOrFail($id);
         $school->update($request->all());
@@ -231,14 +232,11 @@ class schoolsController extends Controller
      */
     public function destroy($id)
     {
-    //    school::destroy($id);
 	    DB::table('schools')->where('entityId', $id)->update(['deleted' => 1]);
 		DB::table('addresses')->where('entityId', $id)->update(['deleted' => 1]);
 		DB::table('entitys')->where('entityId', $id)->update(['deleted' => 1]);
 		DB::table('emailaddresses')->where('entityId', $id)->update(['deleted' => 1]);
 		DB::table('phones')->where('entityId', $id)->update(['deleted' => 1]);
-
-	
         Session::flash('flash_message', 'school deleted!');
 
         return redirect('schools');

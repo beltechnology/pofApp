@@ -105,15 +105,22 @@
                     </div>
                 </div>
 
-                <div class="form-group {{ $errors->has('PrincipalName') ? 'has-error' : ''}}">
-                {!! Form::label('PrincipalName', 'Principal name', ['class' => 'col-sm-5 control-label']) !!}
+                <div class="form-group {{ $errors->has('principalName') ? 'has-error' : ''}}">
+                {!! Form::label('principalName', 'Principal Name', ['class' => 'col-sm-5 control-label']) !!}
                 <div class="col-sm-6">
-                    {!! Form::text('PrincipalName', null, ['class' => 'form-control', 'required' => 'required']) !!}
-                    {!! $errors->first('PrincipalName', '<p class="help-block">:message</p>') !!}
+                    {!! Form::text('principalName', null, ['class' => 'form-control', 'required' => 'required']) !!}
+                    {!! $errors->first('principalName', '<p class="help-block">:message</p>') !!}
+                </div>
+            </div>
+			 <div class="form-group {{ $errors->has('principalMobile') ? 'has-error' : ''}}">
+                {!! Form::label('principalMobile', 'Principal Mobile', ['class' => 'col-sm-5 control-label']) !!}
+                <div class="col-sm-6">
+                    {!! Form::text('principalMobile', null, ['class' => 'form-control', 'required' => 'required']) !!}
+                    {!! $errors->first('principalMobile', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>
             <div class="form-group {{ $errors->has('principalEmail') ? 'has-error' : ''}}">
-                {!! Form::label('principalEmail', 'Principal email', ['class' => 'col-sm-5 control-label']) !!}
+                {!! Form::label('principalEmail', 'Principal Email', ['class' => 'col-sm-5 control-label']) !!}
                 <div class="col-sm-6">
                     {!! Form::text('principalEmail', null, ['class' => 'form-control', 'required' => 'required']) !!}
                     {!! $errors->first('principalEmail', '<p class="help-block">:message</p>') !!}
@@ -196,7 +203,7 @@
             <div class="form-group {{ $errors->has('uniqueSchoolCode') ? 'has-error' : ''}}">
                 {!! Form::label('uniqueSchoolCode', 'Unique school code', ['class' => 'col-sm-5 control-label']) !!}
                 <div class="col-sm-6">
-                    {!! Form::text('uniqueSchoolCode', null, ['class' => 'form-control']) !!}
+                    {!! Form::text('uniqueSchoolCode', null, ['class' => 'form-control','readonly'=>'readonly']) !!}
                     {!! $errors->first('uniqueSchoolCode', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>

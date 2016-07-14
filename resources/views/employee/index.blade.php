@@ -10,7 +10,7 @@
             
             <div class=" col-md-7 category-filter">
             
-            <div class="row">
+          <!--  <div class="row">
           
           <div class="styled-select blue semi-square col-md-2">
   			 {!! Form::select('employeeName',\DB::table('entitys')->lists('name','entityId'), "Debugging", ['class' => 'form-control stateSelect','id' => 'designation','placeholder' => 'Select Employee Name']) !!}
@@ -34,6 +34,7 @@
 		</div>
         
     		</div>  
+			-->
             
           
             
@@ -48,7 +49,7 @@
             <table class="table table-bordered table-striped table-hover" >
             <thead>
       <tr>
-        <th><input type="checkbox" id="selectall" />{{ trans('messages.EMPLOYEE_NAME') }}</th>
+        <th>{{ trans('messages.EMPLOYEE_NAME') }}</th>
         <th>{{ trans('messages.EMPLOYEE_CODE') }}</th>
         <th>{{ trans('messages.DOB') }}</th>
         <th>{{ trans('messages.CONTACT_NUMBER') }}</th>
@@ -62,7 +63,7 @@
             @foreach($employee as $item)
                 {{-- */$x++;/* --}}
                 <tr>
-                    <td><input id="box{{$x}}" type="checkbox" />
+                    <td>
 					{{ $item->name }}</td>
                     <td>{{ $item->employeeCode }}</td>
 					<td>{{ $item->dob }}</td>
