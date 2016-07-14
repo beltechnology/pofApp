@@ -13,6 +13,8 @@ use App\phone;
 use App\State;
 use App\District;
 use App\City;
+use App\BookDetail;
+use App\ClassName;
 use Illuminate\Support\Facades\Input;
 use DB;
 use Illuminate\Http\Request;
@@ -73,7 +75,7 @@ class schoolsController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, ['posterDistributionDate' => 'required', 'closingDate' => 'required', 'formNo' => 'required', 'schoolName' => 'required', 'PrincipalName' => 'required', 'principalEmail' => 'required', 'firstCoordinatorName' => 'required', 'firstCoordinatorMobile' => 'required', 'firstCoordinatorEmail' => 'required', 'PMOExamDate' => 'required', 'PSOExamDate' => 'required', 'schoolcode' => 'required', 'teamCode' => 'required', 'employeeCode' => 'required', 'schoolTotalStrength' => 'required', 'classStrength' => 'required', 'followUpDate' => 'required', 'callStatus' => 'required', 'posterDistributed' => 'required', 'KMS' => 'required', ]);
+        $this->validate($request, ['posterDistributionDate' => 'required', 'closingDate' => 'required', 'formNo' => 'required', 'schoolName' => 'required', 'principalName' => 'required', 'principalEmail' => 'required', 'firstCoordinatorName' => 'required', 'firstCoordinatorMobile' => 'required', 'firstCoordinatorEmail' => 'required', 'PMOExamDate' => 'required', 'PSOExamDate' => 'required', 'schoolcode' => 'required', 'teamCode' => 'required', 'employeeCode' => 'required', 'schoolTotalStrength' => 'required', 'classStrength' => 'required', 'followUpDate' => 'required', 'callStatus' => 'required', 'posterDistributed' => 'required', 'KMS' => 'required', ]);
 
     //    school::create($request->all());
         User::create([
@@ -112,6 +114,17 @@ class schoolsController extends Controller
             'remarks' => $request['remarks'],
             'sessionYear' => date('Y').'-'.(date('Y')+1),
         ]);
+		$classId = DB::table('class_names')->where('class_names.deleted',0)->where('class_names.status',0)->get();
+		foreach($classId as $class_Id)
+		{
+			 $classid=$class_Id->id;
+		BookDetail::create(['entityId' => $request['entityId'],
+		'classId' => $classid,
+		'schoolId' => $request['schoolCode'],
+		'sessionYear' => date('Y').'-'.(date('Y')+1),
+		]);
+		}
+		
         entity::create([
             'entityId' => $request['entityId'],
             'name' => $request['schoolName'],

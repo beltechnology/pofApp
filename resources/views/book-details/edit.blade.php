@@ -1,94 +1,68 @@
-@extends('layouts.app')
+@extends('layouts.header')
 
 @section('content')
-<div class="container">
-
-    <h1>Edit BookDetail {{ $bookdetail->id }}</h1>
-
+ <div class=" col-md-9 category">
     {!! Form::model($bookdetail, [
         'method' => 'PATCH',
         'url' => ['/book-details', $bookdetail->id],
         'class' => 'form-horizontal'
     ]) !!}
-
-                <div class="form-group {{ $errors->has('entityId') ? 'has-error' : ''}}">
-                {!! Form::label('entityId', 'Entityid', ['class' => 'col-sm-3 control-label']) !!}
-                <div class="col-sm-6">
-                    {!! Form::number('entityId', null, ['class' => 'form-control']) !!}
-                    {!! $errors->first('entityId', '<p class="help-block">:message</p>') !!}
-                </div>
-            </div>
-            <div class="form-group {{ $errors->has('classId') ? 'has-error' : ''}}">
-                {!! Form::label('classId', 'Classid', ['class' => 'col-sm-3 control-label']) !!}
-                <div class="col-sm-6">
-                    {!! Form::number('classId', null, ['class' => 'form-control']) !!}
-                    {!! $errors->first('classId', '<p class="help-block">:message</p>') !!}
-                </div>
-            </div>
-            <div class="form-group {{ $errors->has('schoolId') ? 'has-error' : ''}}">
-                {!! Form::label('schoolId', 'Schoolid', ['class' => 'col-sm-3 control-label']) !!}
-                <div class="col-sm-6">
-                    {!! Form::number('schoolId', null, ['class' => 'form-control']) !!}
-                    {!! $errors->first('schoolId', '<p class="help-block">:message</p>') !!}
-                </div>
-            </div>
-            <div class="form-group {{ $errors->has('sessionYear') ? 'has-error' : ''}}">
-                {!! Form::label('sessionYear', 'Sessionyear', ['class' => 'col-sm-3 control-label']) !!}
-                <div class="col-sm-6">
-                    {!! Form::text('sessionYear', null, ['class' => 'form-control']) !!}
-                    {!! $errors->first('sessionYear', '<p class="help-block">:message</p>') !!}
-                </div>
-            </div>
-            <div class="form-group {{ $errors->has('noofBookFirstVisitPMO') ? 'has-error' : ''}}">
-                {!! Form::label('noofBookFirstVisitPMO', 'Noofbookfirstvisitpmo', ['class' => 'col-sm-3 control-label']) !!}
-                <div class="col-sm-6">
-                    {!! Form::number('noofBookFirstVisitPMO', null, ['class' => 'form-control']) !!}
-                    {!! $errors->first('noofBookFirstVisitPMO', '<p class="help-block">:message</p>') !!}
-                </div>
-            </div>
-            <div class="form-group {{ $errors->has('noofBookFirstVisitPSO') ? 'has-error' : ''}}">
-                {!! Form::label('noofBookFirstVisitPSO', 'Noofbookfirstvisitpso', ['class' => 'col-sm-3 control-label']) !!}
-                <div class="col-sm-6">
-                    {!! Form::number('noofBookFirstVisitPSO', null, ['class' => 'form-control']) !!}
-                    {!! $errors->first('noofBookFirstVisitPSO', '<p class="help-block">:message</p>') !!}
-                </div>
-            </div>
-            <div class="form-group {{ $errors->has('noofBookLastVisitPMO') ? 'has-error' : ''}}">
-                {!! Form::label('noofBookLastVisitPMO', 'Noofbooklastvisitpmo', ['class' => 'col-sm-3 control-label']) !!}
-                <div class="col-sm-6">
-                    {!! Form::number('noofBookLastVisitPMO', null, ['class' => 'form-control']) !!}
-                    {!! $errors->first('noofBookLastVisitPMO', '<p class="help-block">:message</p>') !!}
-                </div>
-            </div>
-            <div class="form-group {{ $errors->has('noofBookLastVisitPSO') ? 'has-error' : ''}}">
-                {!! Form::label('noofBookLastVisitPSO', 'Noofbooklastvisitpso', ['class' => 'col-sm-3 control-label']) !!}
-                <div class="col-sm-6">
-                    {!! Form::number('noofBookLastVisitPSO', null, ['class' => 'form-control']) !!}
-                    {!! $errors->first('noofBookLastVisitPSO', '<p class="help-block">:message</p>') !!}
-                </div>
-            </div>
-            <div class="form-group {{ $errors->has('returnBook') ? 'has-error' : ''}}">
-                {!! Form::label('returnBook', 'Returnbook', ['class' => 'col-sm-3 control-label']) !!}
-                <div class="col-sm-6">
-                    {!! Form::number('returnBook', null, ['class' => 'form-control']) !!}
-                    {!! $errors->first('returnBook', '<p class="help-block">:message</p>') !!}
-                </div>
-            </div>
-            <div class="form-group {{ $errors->has('other') ? 'has-error' : ''}}">
-                {!! Form::label('other', 'Other', ['class' => 'col-sm-3 control-label']) !!}
-                <div class="col-sm-6">
-                    {!! Form::number('other', null, ['class' => 'form-control']) !!}
-                    {!! $errors->first('other', '<p class="help-block">:message</p>') !!}
-                </div>
-            </div>
-            <div class="form-group {{ $errors->has('total') ? 'has-error' : ''}}">
-                {!! Form::label('total', 'Total', ['class' => 'col-sm-3 control-label']) !!}
-                <div class="col-sm-6">
-                    {!! Form::number('total', null, ['class' => 'form-control']) !!}
-                    {!! $errors->first('total', '<p class="help-block">:message</p>') !!}
-                </div>
-            </div>
-
+	<div class="table">
+        <table class="table table-bordered table-striped table-hover">
+            <thead>
+                <tr>
+					<th><a href="#"> School Profile </a> </th>
+					<th><a href="{{ url('/book-details/'.$bookdetail->entityId.'/edit') }}"> Book Detail </a>  </th>
+					<th> <a href="#"> No. of students from school </a></th>
+					<th> <a href="#"> Payment Mode </a></th>
+                </tr>
+            </thead>
+			</table>
+	</div>
+	 <h1>Edit BookDetail {{ $bookdetail->id }}</h1>
+ <div class="row create-emp-list">
+ 
+ <div class="table">
+        <table class="table table-bordered table-striped table-hover">
+            <thead>
+                <tr>
+					<th>Class</th>
+					<th>No. of Books in first visit PMO </th>
+					<th> No. of Books in first visit PSO</th>
+					<th>No. of Books in last visit PMO </th>
+					<th> No. of Books in last visit PSO</th>
+					<th>Return Books</th>
+					<th>Other</th>
+					<th>Total</th>
+                </tr>
+            </thead>
+			<tbody>
+            @foreach($bookdetail as $item)
+                <tr>
+					<td>{!! Form::number('classId', null, ['class' => 'form-control']) !!}</td>
+					<td> {!! Form::number('noofBookFirstVisitPMO', null, ['class' => 'form-control']) !!} </td>
+					<td> {!! Form::number('noofBookFirstVisitPSO', null, ['class' => 'form-control']) !!}</td>
+					<td> {!! Form::number('noofBookLastVisitPMO', null, ['class' => 'form-control']) !!}</td>
+					<td> {!! Form::number('noofBookLastVisitPSO', null, ['class' => 'form-control']) !!}</td>
+					<td> {!! Form::number('returnBook', null, ['class' => 'form-control']) !!}</td>
+					<td> {!! Form::number('other', null, ['class' => 'form-control']) !!}</td>
+					<td> {!! Form::number('total', null, ['class' => 'form-control']) !!}</td>
+                </tr>
+			@endforeach
+				 <tr>
+					<td>Total</td>
+					<td> {!! Form::number('entityId', null, ['class' => 'form-control']) !!} </td>
+					<td> {!! Form::number('entityId', null, ['class' => 'form-control']) !!}</td>
+					<td> {!! Form::number('entityId', null, ['class' => 'form-control']) !!}</td>
+					<td> {!! Form::number('entityId', null, ['class' => 'form-control']) !!}</td>
+					<td> {!! Form::number('entityId', null, ['class' => 'form-control']) !!}</td>
+					<td> {!! Form::number('entityId', null, ['class' => 'form-control']) !!}</td>
+					<td> {!! Form::number('entityId', null, ['class' => 'form-control']) !!}</td>
+                </tr>
+            </body>
+			</table>
+	</div>
+			</div>
 
     <div class="form-group">
         <div class="col-sm-offset-3 col-sm-3">
@@ -105,5 +79,6 @@
         </ul>
     @endif
 
+</div>
 </div>
 @endsection
