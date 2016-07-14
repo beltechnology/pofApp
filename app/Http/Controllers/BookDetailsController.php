@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 
 use App\BookDetail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Input;
+
 use Carbon\Carbon;
 use Session;
 use DB;
@@ -75,11 +77,12 @@ class BookDetailsController extends Controller
     public function edit($id)
     {
         $bookdetail = BookDetail::findOrFail($id);
-		$bookdetails = DB::table('book_details')->where('deleted',0)->where('entityId',$id)->get();
+		$bookdetails = DB::table('book_details')
+						->join('class_names','class_names.id','=','book_details.classId')
+						->where('book_details.deleted',0)
+						->where('book_details.entityId',$id)
+						->get();
         return view('book-details.edit', compact('bookdetail'))->with('bookdetails',$bookdetails);
-
-
-        return view('book-details.edit', compact('bookdetail'));
     }
 
     /**
@@ -92,13 +95,24 @@ class BookDetailsController extends Controller
     public function update($id, Request $request)
     {
         $this->validate($request, ['entityId' => '', ]);
-
-        $bookdetail = BookDetail::findOrFail($id);
-        $bookdetail->update($request->all());
+		$i= 0;
+		foreach($request->input('classId') as $classId)
+		{
+			$noofBookFirstVisitPMO=$request->input('noofBookFirstVisitPMO')[$i];
+			$noofBookFirstVisitPSO=$request->input('noofBookFirstVisitPSO')[$i];
+			$noofBookLastVisitPMO=$request->input('noofBookLastVisitPMO')[$i];
+			$noofBookLastVisitPSO=$request->input('noofBookLastVisitPSO')[$i];
+			$returnBook=$request->input('returnBook')[$i];
+			$other=$request->input('other')[$i];
+			DB::table('book_details')->where('entityId', $id)->where('classId', $classId)->update(['noofBookFirstVisitPMO' =>$noofBookFirstVisitPMO,'noofBookFirstVisitPSO' =>$noofBookFirstVisitPSO,'noofBookLastVisitPMO' =>$noofBookLastVisitPMO,'noofBookLastVisitPSO' =>$noofBookLastVisitPSO,'returnBook' =>$returnBook,'other' =>$other]);
+			$i++;
+		}
+    //    $bookdetail = BookDetail::findOrFail($id);
+    //    $bookdetail->update($request->all());
 
         Session::flash('flash_message', 'BookDetail updated!');
 
-        return redirect('book-details');
+        return redirect('book-details/'.$id.'/edit');
     }
 
     /**

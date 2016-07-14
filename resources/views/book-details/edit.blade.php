@@ -4,14 +4,14 @@
  <div class=" col-md-9 category">
     {!! Form::model($bookdetail, [
         'method' => 'PATCH',
-        'url' => ['/book-details', $bookdetail->id],
+        'url' => ['/book-details', $bookdetail->entityId],
         'class' => 'form-horizontal'
     ]) !!}
 	<div class="table">
         <table class="table table-bordered table-striped table-hover">
             <thead>
                 <tr>
-					<th><a href="#"> School Profile </a> </th>
+					<th><a href="{{ url('/schools/'.$bookdetail->entityId.'/edit') }}"> School Profile </a> </th>
 					<th><a href="{{ url('/book-details/'.$bookdetail->entityId.'/edit') }}"> Book Detail </a>  </th>
 					<th> <a href="#"> No. of students from school </a></th>
 					<th> <a href="#"> Payment Mode </a></th>
@@ -19,7 +19,7 @@
             </thead>
 			</table>
 	</div>
-	 <h1>Edit BookDetail {{ $bookdetail->id }}</h1>
+	 <h1>Edit BookDetail {{ $bookdetail->entityId }}</h1>
  <div class="row create-emp-list">
  
  <div class="table">
@@ -37,16 +37,17 @@
                 </tr>
             </thead>
 			<tbody>
-            @foreach($bookdetail as $item)
+            @foreach($bookdetails as $item)
                 <tr>
-					<td>{!! Form::number('classId', null, ['class' => 'form-control']) !!}</td>
-					<td> {!! Form::number('noofBookFirstVisitPMO', null, ['class' => 'form-control']) !!} </td>
-					<td> {!! Form::number('noofBookFirstVisitPSO', null, ['class' => 'form-control']) !!}</td>
-					<td> {!! Form::number('noofBookLastVisitPMO', null, ['class' => 'form-control']) !!}</td>
-					<td> {!! Form::number('noofBookLastVisitPSO', null, ['class' => 'form-control']) !!}</td>
-					<td> {!! Form::number('returnBook', null, ['class' => 'form-control']) !!}</td>
-					<td> {!! Form::number('other', null, ['class' => 'form-control']) !!}</td>
-					<td> {!! Form::number('total', null, ['class' => 'form-control']) !!}</td>
+					<td>{!! Form::hidden('classId[]', $item->classId, ['class' => '','readonly'=>'readonly']) !!}
+					{!! Form::label('name', $item->name, ['class' => '','readonly'=>'readonly']) !!}</td>
+					<td> {!! Form::number('noofBookFirstVisitPMO[]', $item->noofBookFirstVisitPMO, ['class' => 'form-control']) !!} </td>
+					<td> {!! Form::number('noofBookFirstVisitPSO[]', $item->noofBookFirstVisitPSO, ['class' => 'form-control']) !!}</td>
+					<td> {!! Form::number('noofBookLastVisitPMO[]', $item->noofBookLastVisitPMO, ['class' => 'form-control']) !!}</td>
+					<td> {!! Form::number('noofBookLastVisitPSO[]', $item->noofBookLastVisitPSO, ['class' => 'form-control']) !!}</td>
+					<td> {!! Form::number('returnBook[]', $item->returnBook, ['class' => 'form-control']) !!}</td>
+					<td> {!! Form::number('other[]',$item->other, ['class' => 'form-control']) !!}</td>
+					<td> {!! Form::number('total',$item->total, ['class' => 'form-control']) !!}</td>
                 </tr>
 			@endforeach
 				 <tr>
@@ -62,7 +63,7 @@
             </body>
 			</table>
 	</div>
-			</div>
+	</div>
 
     <div class="form-group">
         <div class="col-sm-offset-3 col-sm-3">
@@ -70,15 +71,6 @@
         </div>
     </div>
     {!! Form::close() !!}
-
-    @if ($errors->any())
-        <ul class="alert alert-danger">
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    @endif
-
 </div>
 </div>
 @endsection
