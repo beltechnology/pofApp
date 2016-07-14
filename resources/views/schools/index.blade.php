@@ -11,24 +11,35 @@
         <table class="table table-bordered table-striped table-hover">
             <thead>
                 <tr>
-                    <th>S.No</th>
 					<th> School Name </th>
-					<th>School Code </th>
-					<th> Principal Name </th>
-					<th>Actions</th>
+					<th>Address </th>
+					<th> City </th>
+					<th> District</th>
+					<th> Pincode </th>
+					<th>Primary Mobile No.</th>
+					<th> Email Id </th>
+					<th> Principal Name</th>
+					<th> Principal Mobile No.</th>
+					<th> Edit</th>
+					<th> Delete</th>
+					<th>Actions<input type="checkbox" id="selectall" /></th>
                 </tr>
             </thead>
             <tbody>
-            {{-- */$x=0;/* --}}
             @foreach($schools as $item)
-                {{-- */$x++;/* --}}
                 <tr>
-                    <td>{{ $x }}</td>
                     <td>{{ $item->schoolName }}</td>
-					<td>{{ $item->schoolcode }}</td>
-					<td>{{ $item->PrincipalName }}</td>
+					<td>{{ $item->addressLine1 }}</td>
+					<td>{{ $item->cityName }}</td>
+					<td>{{ $item->name }}</td>
+					<td>{{ $item->pincode }}</td>
+					<td>{{ $item->primaryNumber }}</td>
+					<td>{{ $item->email }}</td>	
+					<td>{{ $item->principalName }}</td>
+					<td>{{ $item->principalMobile }}</td>
                     <td>
-                        <a href="{{ url('/schools/' . $item->entityId . '/edit') }}" class="btn btn-primary btn-xs" title="Edit school"><span class="glyphicon glyphicon-pencil" aria-hidden="true"/></a>
+                        <a href="{{ url('/schools/' . $item->entityId . '/edit') }}" class="btn btn-primary btn-xs" title="Edit school"><span class="glyphicon glyphicon-pencil" aria-hidden="true"/></a> </td>
+					<td>	
                         {!! Form::open([
                             'method'=>'DELETE',
                             'url' => ['/schools', $item->entityId],
@@ -42,6 +53,7 @@
                             ));!!}
                         {!! Form::close() !!}
                     </td>
+					<td><input type="checkbox"  /> </td>
                 </tr>
             @endforeach
             </tbody>
