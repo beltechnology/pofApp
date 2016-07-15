@@ -3,7 +3,11 @@
     <div class=" col-md-9 category">
 
 
-    <h1>Schools <a href="{{ url('/schools/create') }}" class="btn btn-primary btn-xs" title="Add New school"><span class="glyphicon glyphicon-plus" aria-hidden="true"/></a></h1>
+    <h1 class="school_category">Schools</h1>
+	 
+            <div class="add-emp add-school col-md-2">
+            <a href="{{ url('/schools/create') }}" title="Add New school"><p>{{ trans('messages.ADD') }} <span class="glyphicon glyphicon-plus" aria-hidden="true"/></p></a>
+            </div>
 		@if(Session::has('flash_message'))
 		<p class="alert {{ Session::get('alert-class', 'alert-info') }}">{{ Session::get('flash_message') }}</p>
 		@endif

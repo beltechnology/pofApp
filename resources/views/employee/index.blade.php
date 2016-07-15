@@ -40,7 +40,7 @@
             
             </div>
             
-            <div class="add-emp col-md-2">
+            <div class="add-emp  col-md-2">
             <a href="{{ url('/employee/create') }}"><p>{{ trans('messages.ADD') }} <span class="glyphicon glyphicon-plus" aria-hidden="true"/></p></a>
             </div>
             

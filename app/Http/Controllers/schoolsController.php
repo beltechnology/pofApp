@@ -76,7 +76,7 @@ class schoolsController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, ['posterDistributionDate' => 'required', 'closingDate' => 'required', 'formNo' => 'required', 'schoolName' => 'required', 'principalName' => 'required', 'principalEmail' => 'required', 'firstCoordinatorName' => 'required', 'firstCoordinatorMobile' => 'required', 'firstCoordinatorEmail' => 'required', 'PMOExamDate' => 'required', 'PSOExamDate' => 'required', 'schoolcode' => 'required', 'teamCode' => 'required', 'employeeCode' => 'required', 'schoolTotalStrength' => 'required', 'classStrength' => 'required', 'followUpDate' => 'required', 'callStatus' => 'required', 'posterDistributed' => 'required', 'KMS' => 'required', ]);
+        $this->validate($request, ['posterDistributionDate' => 'required', 'closingDate' => 'required', 'formNo' => 'required', 'schoolName' => 'required', 'principalName' => 'required', 'principalMobile' => 'required', 'principalEmail' => 'required', 'firstCoordinatorName' => 'required', 'firstCoordinatorMobile' => 'required', 'firstCoordinatorEmail' => 'required', 'PMOExamDate' => 'required', 'PSOExamDate' => 'required', 'schoolcode' => 'required', 'teamCode' => 'required', 'employeeCode' => 'required', 'schoolTotalStrength' => 'required', 'classStrength' => 'required', 'followUpDate' => 'required', 'callStatus' => 'required', 'posterDistributed' => 'required', 'KMS' => 'required', ]);
 
     //    school::create($request->all());
         User::create([
@@ -97,7 +97,8 @@ class schoolsController extends Controller
             'closingDate' => $request['closingDate'],
             'formNo' => $request['formNo'],
             'schoolName' => $request['schoolName'],
-            'PrincipalName' => $request['PrincipalName'],
+            'principalName' => $request['principalName'],
+			'principalMobile' => $request['principalMobile'],
             'principalEmail' => $request['principalEmail'],
             'firstCoordinatorName' => $request['firstCoordinatorName'],
             'firstCoordinatorMobile' => $request['firstCoordinatorMobile'],
