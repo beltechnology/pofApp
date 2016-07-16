@@ -41,7 +41,7 @@ class studentController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, ['studentName' => 'required', 'fatherName' => 'required', 'dob' => 'required', 'class' => 'required', 'section' => 'required', 'pmo' => 'required', 'pso' => 'required', 'handicapped' => 'required', 'rollNo' => 'required', ]);
+        $this->validate($request, ['studentName' => 'required', 'fatherName' => 'required', 'dob' => 'required', 'classId' => 'required', 'section' => 'required', 'pmo' => 'required', 'pso' => 'required', 'handicapped' => 'required', ]);
 
         student::create($request->all());
 

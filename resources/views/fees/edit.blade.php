@@ -18,6 +18,7 @@
       <li ><a href="{{ url('/student-count/'.$fee->entityId.'/edit') }}"> No. of students from school </a></li>
       <li><a href="{{ url('/payments/'.$fee->entityId.'/edit') }}"> Payment Mode </a></li>
 	  <li class="active"><a href="{{ url('/fees/'.$fee->entityId.'/edit') }}">Fees</a></li>
+	   <li><a href="{{ url('/student/') }}">Student Registration</a></li>
     </ul>
   </div>
 </nav>
