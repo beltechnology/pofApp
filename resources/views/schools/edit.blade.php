@@ -17,7 +17,7 @@
       <li class="active"><a href="{{ url('/schools/'.$school->entityId.'/edit') }}"> School Profile </a></li>
       <li><a href="{{ url('/book-details/'.$school->entityId.'/edit') }}"> Book Detail </a></li>
       <li><a href="{{ url('/student-count/'.$school->entityId.'/edit') }}"> No. of students from school </a></li>
-      <!--<li><a href="#"> Payment Mode </a></li>-->
+      <li><a href="{{ url('/payments/'.$school->entityId.'/edit') }}"> Payment Mode </a></li>
     </ul>
   </div>
 </nav>
@@ -71,7 +71,7 @@
                 <div class="form-group {{ $errors->has('addressLine1') ? 'has-error' : ''}}">
                     {!! Form::label('addressLine1', trans('messages.ADDRESS'), ['class' => 'col-sm-5  control-label']) !!}
                     <div class="col-sm-6">
-                        {!! Form::text('addressLine1', null, ['class' => 'form-control','required' => 'required']) !!}
+                        {!! Form::textarea('addressLine1', null, ['class' => 'form-control','required' => 'required']) !!}
                         {!! $errors->first('addressLine1', '<p class="help-block">:message</p>') !!}
                     </div>
                 </div>
@@ -290,7 +290,7 @@
             <div class="form-group {{ $errors->has('remarks') ? 'has-error' : ''}}">
                 {!! Form::label('remarks', 'Remarks', ['class' => 'col-sm-5 control-label']) !!}
                 <div class="col-sm-6">
-                    {!! Form::text('remarks', null, ['class' => 'form-control']) !!}
+                    {!! Form::textarea('remarks', null, ['class' => 'form-control']) !!}
                     {!! $errors->first('remarks', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>

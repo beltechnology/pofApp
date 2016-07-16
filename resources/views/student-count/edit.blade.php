@@ -19,7 +19,7 @@
       <li><a href="{{ url('/schools/'.$studentcount->entityId.'/edit') }}"> School Profile </a></li>
       <li><a href="{{ url('/book-details/'.$studentcount->entityId.'/edit') }}"> Book Detail </a></li>
       <li class="active"><a href="{{ url('/student-count/'.$studentcount->entityId.'/edit') }}"> No. of students from school </a></li>
-     <!-- <li><a href="#"> Payment Mode </a></li>-->
+      <li><a href="{{ url('/payments/'.$studentcount->entityId.'/edit') }}"> Payment Mode </a></li>
     </ul>
   </div>
 </nav>
@@ -54,9 +54,9 @@
 			@endforeach
 				 <tr>
 					<td>Total No. of Students</td>
-					<td> {!! Form::number('totalnoofstudentPMO', null, ['class' => 'form-control']) !!} </td>
-					<td> {!! Form::number('totalnoofstudentPSO', null, ['class' => 'form-control']) !!}</td>
-					<td> {!! Form::number('totalhandicapped', null, ['class' => 'form-control']) !!}</td>
+					<td> {!! Form::number('totalnoofstudentPMO', null, ['class' => 'form-control','readonly'=>'readonly']) !!} </td>
+					<td> {!! Form::number('totalnoofstudentPSO', null, ['class' => 'form-control','readonly'=>'readonly']) !!}</td>
+					<td> {!! Form::number('totalhandicapped', null, ['class' => 'form-control','readonly'=>'readonly']) !!}</td>
                 </tr>
             </body>
 			</table>

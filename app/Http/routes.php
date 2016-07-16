@@ -125,3 +125,7 @@ Route::auth();
 
 
 
+
+Route::resource('payments', 'paymentsController');
+Route::resource('fees', 'feesController');
+Route::resource('student', 'studentController');

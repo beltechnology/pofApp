@@ -16,6 +16,8 @@ use App\City;
 use App\BookDetail;
 use App\ClassName;
 use App\studentCount;
+use App\payment;
+use App\fee;
 use Illuminate\Support\Facades\Input;
 use DB;
 use Illuminate\Http\Request;
@@ -121,6 +123,14 @@ class schoolsController extends Controller
             'remarks' => $request['remarks'],
             'sessionYear' => date('Y').'-'.(date('Y')+1),
         ]);
+		payment::create(['entityId' => $request['entityId'],
+		'schoolId' => $request['schoolCode'],
+		'sessionYear' => date('Y').'-'.(date('Y')+1),
+		]);
+		fee::create(['entityId' => $request['entityId'],
+		'schoolId' => $request['schoolCode'],
+		'sessionYear' => date('Y').'-'.(date('Y')+1),
+		]);
 		$classId = DB::table('class_names')->where('class_names.deleted',0)->where('class_names.status',0)->get();
 		foreach($classId as $class_Id)
 		{
@@ -193,7 +203,7 @@ class schoolsController extends Controller
 		$phone = phone::findOrFail($id);
 		$districts = DB::table('districts')->where('districts.deleted',0)->lists('name', 'id');
 		$citys = DB::table('citys')->where('citys.deleted',0)->lists('cityName', 'id');
-		
+		session()->put('entityId',$id);	
        $employee= DB::table('employees')
                         ->join('entitys','entitys.entityId','=','employees.entityId')
                         ->join('addresses','addresses.entityId','=','employees.entityId')

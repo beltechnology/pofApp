@@ -53,7 +53,7 @@
                 <div class="form-group {{ $errors->has('address') ? 'has-error' : ''}}">
                     {!! Form::label('address', trans('messages.ADDRESS'), ['class' => 'col-sm-5  control-label']) !!}
                     <div class="col-sm-6">
-                        {!! Form::text('address', null, ['class' => 'form-control','required' => 'required']) !!}
+                        {!! Form::textarea('address', null, ['class' => 'form-control','required' => 'required']) !!}
                         {!! $errors->first('address', '<p class="help-block">:message</p>') !!}
                     </div>
                 </div>
@@ -268,7 +268,7 @@
             <div class="form-group {{ $errors->has('remarks') ? 'has-error' : ''}}">
                 {!! Form::label('remarks', 'Remarks', ['class' => 'col-sm-5 control-label']) !!}
                 <div class="col-sm-6">
-                    {!! Form::text('remarks', null, ['class' => 'form-control']) !!}
+                    {!! Form::textarea('remarks', null, ['class' => 'form-control']) !!}
                     {!! $errors->first('remarks', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>

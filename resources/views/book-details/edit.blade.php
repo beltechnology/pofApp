@@ -16,7 +16,7 @@
       <li><a href="{{ url('/schools/'.$bookdetail->entityId.'/edit') }}"> School Profile </a></li>
       <li class="active"><a href="{{ url('/book-details/'.$bookdetail->entityId.'/edit') }}"> Book Detail </a></li>
       <li><a href="{{ url('/student-count/'.$bookdetail->entityId.'/edit') }}"> No. of students from school </a></li>
-     <!-- <li><a href="#"> Payment Mode </a></li>-->
+    <li><a href="{{ url('/payments/'.$bookdetail->entityId.'/edit') }}"> Payment Mode </a></li>
     </ul>
   </div>
 </nav>
@@ -52,18 +52,18 @@
 					<td> {!! Form::number('noofBookLastVisitPSO[]', $item->noofBookLastVisitPSO, ['class' => 'form-control','min'=>'0']) !!}</td>
 					<td> {!! Form::number('returnBook[]', $item->returnBook, ['class' => 'form-control','min'=>'0']) !!}</td>
 					<td> {!! Form::number('other[]',$item->other, ['class' => 'form-control','min'=>'0']) !!}</td>
-					<td> {!! Form::number('total[]',$item->total, ['class' => 'form-control','min'=>'0']) !!}</td>
+					<td> {!! Form::number('total[]',$item->total, ['class' => 'form-control','min'=>'0','readonly'=>'readonly']) !!}</td>
                 </tr>
 			@endforeach
 				 <tr>
 					<td>Total</td>
-					<td> {!! Form::number('entityId', null, ['class' => 'form-control']) !!} </td>
-					<td> {!! Form::number('entityId', null, ['class' => 'form-control']) !!}</td>
-					<td> {!! Form::number('entityId', null, ['class' => 'form-control']) !!}</td>
-					<td> {!! Form::number('entityId', null, ['class' => 'form-control']) !!}</td>
-					<td> {!! Form::number('entityId', null, ['class' => 'form-control']) !!}</td>
-					<td> {!! Form::number('entityId', null, ['class' => 'form-control']) !!}</td>
-					<td> {!! Form::number('entityId', null, ['class' => 'form-control']) !!}</td>
+					<td> {!! Form::number('TOTAL', null, ['class' => 'form-control','readonly'=>'readonly']) !!} </td>
+					<td> {!! Form::number('TOTAL', null, ['class' => 'form-control','readonly'=>'readonly']) !!}</td>
+					<td> {!! Form::number('TOTAL', null, ['class' => 'form-control','readonly'=>'readonly']) !!}</td>
+					<td> {!! Form::number('TOTAL', null, ['class' => 'form-control','readonly'=>'readonly']) !!}</td>
+					<td> {!! Form::number('TOTAL', null, ['class' => 'form-control','readonly'=>'readonly']) !!}</td>
+					<td> {!! Form::number('TOTAL', null, ['class' => 'form-control','readonly'=>'readonly']) !!}</td>
+					<td> {!! Form::number('TOTAL', null, ['class' => 'form-control','readonly'=>'readonly']) !!}</td>
                 </tr>
             </tbody>
 			</table>

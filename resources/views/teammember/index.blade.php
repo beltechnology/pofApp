@@ -2,8 +2,10 @@
 
 @section('content')
 <div class=" col-md-9 category">
-  <h1 class="text-left"><a href="{{ url('/team') }}" class="fa fa-angle-left  fa-2x"> {{ trans('messages.TEAM') }} Members </a></h1>
-    <h1 class="text-right">Add{{ trans('messages.TEAM') }} Member <a href="{{ url('/teammember/create') }}" class="btn btn-primary btn-xs" title="Add New Team"><span class="glyphicon glyphicon-plus" aria-hidden="true"/></a></h1>
+  <h1 class="school_category"><a href="{{ url('/team') }}" class="fa fa-angle-left  fa-2x"> {{ trans('messages.TEAM') }} List </a></h1>
+            <div class="add-emp add-school col-md-2">
+            <a href="{{ url('/teammember/create') }}" title="Add New Team Member"><p>{{ trans('messages.ADD') }} <span class="glyphicon glyphicon-plus" aria-hidden="true"/></p></a>
+            </div>
     <div class="table">
         <table class="table table-bordered table-striped table-hover">
             <thead>
