@@ -46,24 +46,24 @@
                 <tr>
 					<td>{!! Form::hidden('classId[]', $item->classId, ['class' => '','readonly'=>'readonly']) !!}
 					{!! Form::label('name', $item->name, ['class' => '','readonly'=>'readonly']) !!}</td>
-					<td> {!! Form::number('noofBookFirstVisitPMO[]', $item->noofBookFirstVisitPMO, ['class' => 'form-control','min'=>'0']) !!} </td>
-					<td> {!! Form::number('noofBookFirstVisitPSO[]', $item->noofBookFirstVisitPSO, ['class' => 'form-control','min'=>'0']) !!}</td>
-					<td> {!! Form::number('noofBookLastVisitPMO[]', $item->noofBookLastVisitPMO, ['class' => 'form-control','min'=>'0']) !!}</td>
-					<td> {!! Form::number('noofBookLastVisitPSO[]', $item->noofBookLastVisitPSO, ['class' => 'form-control','min'=>'0']) !!}</td>
-					<td> {!! Form::number('returnBook[]', $item->returnBook, ['class' => 'form-control','min'=>'0']) !!}</td>
-					<td> {!! Form::number('other[]',$item->other, ['class' => 'form-control','min'=>'0']) !!}</td>
+					<td> {!! Form::number('noofBookFirstVisitPMO[]', $item->noofBookFirstVisitPMO, ['class' => 'form-control noofBookFirstVisitPMO','min'=>'0']) !!} </td>
+					<td> {!! Form::number('noofBookFirstVisitPSO[]', $item->noofBookFirstVisitPSO, ['class' => 'form-control noofBookFirstVisitPSO','min'=>'0']) !!}</td>
+					<td> {!! Form::number('noofBookLastVisitPMO[]', $item->noofBookLastVisitPMO, ['class' => 'form-control noofBookLastVisitPMO','min'=>'0']) !!}</td>
+					<td> {!! Form::number('noofBookLastVisitPSO[]', $item->noofBookLastVisitPSO, ['class' => 'form-control noofBookLastVisitPSO','min'=>'0']) !!}</td>
+					<td> {!! Form::number('returnBook[]', $item->returnBook, ['class' => 'form-control returnBook','min'=>'0']) !!}</td>
+					<td> {!! Form::number('other[]',$item->other, ['class' => 'form-control other','min'=>'0']) !!}</td>
 					<td> {!! Form::number('total[]',$item->total, ['class' => 'form-control readonlyClass','min'=>'0','readonly'=>'readonly']) !!}</td>
                 </tr>
 			@endforeach
 				 <tr>
 					<td>Total</td>
-					<td> {!! Form::number('TOTAL', null, ['class' => 'form-control','readonly'=>'readonly']) !!} </td>
-					<td> {!! Form::number('TOTAL', null, ['class' => 'form-control','readonly'=>'readonly']) !!}</td>
-					<td> {!! Form::number('TOTAL', null, ['class' => 'form-control','readonly'=>'readonly']) !!}</td>
-					<td> {!! Form::number('TOTAL', null, ['class' => 'form-control','readonly'=>'readonly']) !!}</td>
-					<td> {!! Form::number('TOTAL', null, ['class' => 'form-control','readonly'=>'readonly']) !!}</td>
-					<td> {!! Form::number('TOTAL', null, ['class' => 'form-control','readonly'=>'readonly']) !!}</td>
-					<td> {!! Form::number('TOTAL', null, ['class' => 'form-control','readonly'=>'readonly']) !!}</td>
+					<td> {!! Form::number('TOTAL', null, ['class' => 'form-control noofBookFirstVisitPMOTotal','readonly'=>'readonly']) !!} </td>
+					<td> {!! Form::number('TOTAL', null, ['class' => 'form-control noofBookFirstVisitPSOTotal','readonly'=>'readonly']) !!}</td>
+					<td> {!! Form::number('TOTAL', null, ['class' => 'form-control noofBookLastVisitPMOTotal','readonly'=>'readonly']) !!}</td>
+					<td> {!! Form::number('TOTAL', null, ['class' => 'form-control noofBookLastVisitPSOTotal','readonly'=>'readonly']) !!}</td>
+					<td> {!! Form::number('TOTAL', null, ['class' => 'form-control returnBookTotal','readonly'=>'readonly']) !!}</td>
+					<td> {!! Form::number('TOTAL', null, ['class' => 'form-control otherTotal','readonly'=>'readonly']) !!}</td>
+					<td> {!! Form::number('TOTAL', null, ['class' => 'form-control readonlyClassTotal','readonly'=>'readonly']) !!}</td>
                 </tr>
             </tbody>
 			</table>
@@ -93,7 +93,129 @@ $("form input").on("change keyup mouseup", function(){
 	total = parseInt(total) - parseInt(returnBook);
 	 $(ele).find('.readonlyClass').val(total);
 });
+
+// start noofBookFirstVisitPMO Total
+    var noofBookFirstVisitPMOTotal = 0;
+    $('.noofBookFirstVisitPMO').each(function() {
+        noofBookFirstVisitPMOTotal += Number($(this).val());
+    });
+    $(".noofBookFirstVisitPMOTotal").val(noofBookFirstVisitPMOTotal);
 	
+	
+	
+	$("form input").on("change keyup mouseup", function(){
+		var noofBookFirstVisitPMOTotal = 0;
+		$('.noofBookFirstVisitPMO').each(function() {
+        noofBookFirstVisitPMOTotal += Number($(this).val());
+		});
+		$(".noofBookFirstVisitPMOTotal").val(noofBookFirstVisitPMOTotal);
+	});
+// 1. end noofBookFirstVisitPMO Total	
+
+
+// 2.start noofBookFirstVisitPSO Total
+    var noofBookFirstVisitPSOTotal = 0;
+    $('.noofBookFirstVisitPSO').each(function() {
+        noofBookFirstVisitPSOTotal += Number($(this).val());
+    });
+    $(".noofBookFirstVisitPSOTotal").val(noofBookFirstVisitPSOTotal);
+	
+	
+	
+	$("form input").on("change keyup mouseup", function(){
+		var noofBookFirstVisitPSOTotal = 0;
+		$('.noofBookFirstVisitPSO').each(function() {
+        noofBookFirstVisitPSOTotal += Number($(this).val());
+		});
+		$(".noofBookFirstVisitPSOTotal").val(noofBookFirstVisitPSOTotal);
+	});
+// end noofBookFirstVisitPSO Total	
+
+
+// 3. start noofBookLastVisitPMO Total
+    var noofBookLastVisitPMOTotal = 0;
+    $('.noofBookLastVisitPMO').each(function() {
+       noofBookLastVisitPMOTotal += Number($(this).val());
+    });
+    $(".noofBookLastVisitPMOTotal").val(noofBookLastVisitPMOTotal);
+	
+	$("form input").on("change keyup mouseup", function(){
+		var noofBookLastVisitPMOTotal = 0;
+		$('.noofBookLastVisitPMO').each(function() {
+        noofBookLastVisitPMOTotal += Number($(this).val());
+		});
+		$(".noofBookLastVisitPMOTotal").val(noofBookLastVisitPMOTotal);
+	});
+// end noofBookFirstVisitPSO Total	
+
+	
+// 4. start noofBookLastVisitPSO Total
+    var noofBookLastVisitPSOTotal = 0;
+    $('.noofBookLastVisitPSO').each(function() {
+       noofBookLastVisitPSOTotal += Number($(this).val());
+    });
+    $(".noofBookLastVisitPMOTotal").val(noofBookLastVisitPMOTotal);
+	
+	$("form input").on("change keyup mouseup", function(){
+		var noofBookLastVisitPSOTotal = 0;
+		$('.noofBookLastVisitPSO').each(function() {
+        noofBookLastVisitPSOTotal += Number($(this).val());
+		});
+		$(".noofBookLastVisitPSOTotal").val(noofBookLastVisitPSOTotal);
+	});
+// end noofBookLastVisitPSO Total	
+
+// 5. start returnBook Total
+
+    var returnBookTotal = 0;
+    $('.returnBook').each(function() {
+       returnBookTotal += Number($(this).val());
+    });
+    $(".returnBookTotal").val(returnBookTotal);
+	
+	$("form input").on("change keyup mouseup", function(){
+		var returnBookTotal = 0;
+		$('.returnBook').each(function() {
+        returnBookTotal += Number($(this).val());
+		});
+		$(".returnBookTotal").val(returnBookTotal);
+	});
+// end returnBook Total	
+
+// 6. start other Total
+
+    var otherTotal = 0;
+    $('.other').each(function() {
+       otherTotal += Number($(this).val());
+    });
+    $(".otherTotal").val(otherTotal);
+	
+	$("form input").on("change keyup mouseup", function(){
+		var otherTotal = 0;
+		$('.other').each(function() {
+        otherTotal += Number($(this).val());
+		});
+		$(".otherTotal").val(otherTotal);
+	});
+// end returnBook Total	
+
+// 7. start  Total
+
+    var Total = 0;
+    $('.readonlyClass').each(function() {
+       Total += Number($(this).val());
+    });
+    $(".readonlyClassTotal").val(Total);
+	
+	$("form input").on("change keyup mouseup", function(){
+		var Total = 0;
+		$('.readonlyClass').each(function() {
+        Total += Number($(this).val());
+		});
+		$(".readonlyClassTotal").val(Total);
+	});
+// end returnBook Total	
+
 	
 });
 
