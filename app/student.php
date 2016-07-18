@@ -18,12 +18,12 @@ class student extends Model
     *
     * @var string
     */
-    protected $primaryKey = 'id';
+    protected $primaryKey = 'entityId';
 
     /**
      * Attributes that should be mass-assignable.
      *
      * @var array
      */
-    protected $fillable = ['studentName', 'fatherName', 'dob', 'class', 'section', 'pmo', 'pso', 'handicapped', 'rollNo'];
+    protected $fillable = ['entityId','schoolEntityId','sessionYear','studentName', 'fatherName', 'dob', 'classId', 'section', 'pmo', 'pso', 'handicapped', 'rollNo','deleted','status'];
 }

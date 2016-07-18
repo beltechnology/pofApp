@@ -74,7 +74,7 @@ class DistrictController extends Controller
     {
         $district = District::findOrFail($id);
 		$states = \DB::table('states')->where('states.deleted',0)->lists('stateName', 'id');		
-        return view('district.edit', compact('district'))->with('states', $states);;
+        return view('district.edit', compact('district'))->with('states', $states);
     }
 
     /**

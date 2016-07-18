@@ -4,12 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-
 use App\student;
+use App\entity;
+use App\school;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Session;
-
+use DB;
 class studentController extends Controller
 {
     /**
@@ -19,8 +20,13 @@ class studentController extends Controller
      */
     public function index()
     {
-        $student = student::paginate(15);
-
+       // $student = student::paginate(15);
+	   $student= DB::table('students')
+                        ->join('class_names','class_names.id','=','students.classId')
+						->where('students.deleted',0)
+						->where('class_names.deleted',0)
+						->where('students.schoolEntityId',session()->get('entityId'))
+						->paginate(10);
         return view('student.index', compact('student'));
     }
 
@@ -31,7 +37,11 @@ class studentController extends Controller
      */
     public function create()
     {
-        return view('student.create');
+		$schoolId = DB::table('schools')->where('schools.deleted',0)->where('schools.entityId',session()->get('entityId'))->lists('id', 'id');
+		$classes = DB::table('class_names')->where('class_names.deleted',0)->lists('name', 'id');
+		$rollNo = DB::table('students')->max('id')+1;
+		$rollNo='POFST'.$rollNo;
+        return view('student.create',['classes' => $classes,'rollNo' => $rollNo,'schoolId' => $schoolId]);
     }
 
     /**
@@ -42,8 +52,25 @@ class studentController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, ['studentName' => 'required', 'fatherName' => 'required', 'dob' => 'required', 'classId' => 'required', 'section' => 'required', 'pmo' => 'required', 'pso' => 'required', 'handicapped' => 'required', ]);
-
-        student::create($request->all());
+		entity::create([
+		'entityId' => $request['entityId'],
+		'name' => $request['studentName'],
+		'entityType' => 'student',
+    ]);
+        student::create([
+		'entityId'=>$request['entityId'],
+		'schoolEntityId'=>session()->get('entityId'),
+		'sessionYear'=> date('Y').'-'.(date('Y')+1),
+		'studentName'=>$request['studentName'],
+		'fatherName'=>$request['fatherName'],
+		'dob'=>$request['dob'],
+		'classId'=>$request['classId'],
+		'section'=>$request['section'],
+		'pmo'=>$request['pmo'],
+		'pso'=>$request['pso'],
+		'handicapped'=>$request['handicapped'],
+		'rollNo'=>$request['rollNo'],
+	]);
 
         Session::flash('flash_message', 'student added!');
 
@@ -74,8 +101,8 @@ class studentController extends Controller
     public function edit($id)
     {
         $student = student::findOrFail($id);
-
-        return view('student.edit', compact('student'));
+		$classes = DB::table('class_names')->where('class_names.deleted',0)->lists('name', 'id');
+        return view('student.edit', compact('student'))->with('classes', $classes);
     }
 
     /**
@@ -87,7 +114,7 @@ class studentController extends Controller
      */
     public function update($id, Request $request)
     {
-        $this->validate($request, ['studentName' => 'required', 'fatherName' => 'required', 'dob' => 'required', 'class' => 'required', 'section' => 'required', 'pmo' => 'required', 'pso' => 'required', 'handicapped' => 'required', 'rollNo' => 'required', ]);
+        $this->validate($request, ['studentName' => 'required', 'fatherName' => 'required', 'dob' => 'required', 'classId' => 'required', 'section' => 'required', 'pmo' => 'required', 'pso' => 'required', 'handicapped' => 'required', 'rollNo' => 'required', ]);
 
         $student = student::findOrFail($id);
         $student->update($request->all());
@@ -106,7 +133,9 @@ class studentController extends Controller
      */
     public function destroy($id)
     {
-        student::destroy($id);
+        //student::destroy($id);
+		DB::table('students')->where('entityId', $id)->update(['deleted' => 1]);
+		
 
         Session::flash('flash_message', 'student deleted!');
 

@@ -52,7 +52,7 @@
 					<td> {!! Form::number('noofBookLastVisitPSO[]', $item->noofBookLastVisitPSO, ['class' => 'form-control','min'=>'0']) !!}</td>
 					<td> {!! Form::number('returnBook[]', $item->returnBook, ['class' => 'form-control','min'=>'0']) !!}</td>
 					<td> {!! Form::number('other[]',$item->other, ['class' => 'form-control','min'=>'0']) !!}</td>
-					<td> {!! Form::number('total[]',$item->total, ['class' => 'form-control','min'=>'0','readonly'=>'readonly']) !!}</td>
+					<td> {!! Form::number('total[]',$item->total, ['class' => 'form-control readonlyClass','min'=>'0','readonly'=>'readonly']) !!}</td>
                 </tr>
 			@endforeach
 				 <tr>
@@ -91,7 +91,7 @@ $("form input").on("change keyup mouseup", function(){
 	var returnBook = parseInt($(ele).find('input').eq(eleLength-3).val());
 	returnBook = parseInt(returnBook)+parseInt(returnBook);
 	total = parseInt(total) - parseInt(returnBook);
-	 $(ele).find('input:last').val(total);
+	 $(ele).find('.readonlyClass').val(total);
 });
 	
 	

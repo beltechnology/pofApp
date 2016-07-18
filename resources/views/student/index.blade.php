@@ -18,16 +18,19 @@
 </nav>
  <div class="h1-two col-md-12">
 	 <h1 class="text-left col-md-4"><a href="{{ url('/fees/'.session()->get('entityId').'/edit') }}" class="fa fa-angle-left  fa-2x"> Fees</a></h1>
-      <h1 class="text-center col-md-4">Student Registration</h1>
-      <h1 class="text-left col-md-4"></h1>
-      </div>
+      <h1 class="text-center col-md-4"></h1>
+	    <div class="add-emp add-school col-md-2">
+            <a href="{{ url('/student/create') }}" title="Add New student"><p>{{ trans('messages.ADD') }} <span class="glyphicon glyphicon-plus" aria-hidden="true"/></p></a>
+            </div>
+  </div>
+	 
 	</div>
-    <h1>Student <a href="{{ url('/student/create') }}" class="btn btn-primary btn-xs" title="Add New student"><span class="glyphicon glyphicon-plus" aria-hidden="true"/></a></h1>
+    
     <div class="table">
         <table class="table table-bordered table-striped table-hover">
             <thead>
                 <tr>
-                    <th>S.No</th><th> StudentName </th><th> FatherName </th><th> Dob </th><th>Actions</th>
+                    <th> StudentName </th><th> Dob </th><th>Class</th><th>Roll No.</th><th>Handicapped</th><th>Actions <input type="checkbox"></th><th>Edit</th><th>Delete</th>
                 </tr>
             </thead>
             <tbody>
@@ -35,14 +38,19 @@
             @foreach($student as $item)
                 {{-- */$x++;/* --}}
                 <tr>
-                    <td>{{ $x }}</td>
-                    <td>{{ $item->studentName }}</td><td>{{ $item->fatherName }}</td><td>{{ $item->dob }}</td>
+                    <td>{{ $item->studentName }}</td>
+					<td>{{ $item->dob }}</td>
+					<td>{{ $item->name }}</td>
+					<td>{{ $item->rollNo }}</td>
+					<td>@if($item->handicapped === 0)  NO @else  Yes @endif</td>
+					<td><input type="checkbox"></td>
                     <td>
-                        <a href="{{ url('/student/' . $item->id) }}" class="btn btn-success btn-xs" title="View student"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"/></a>
-                        <a href="{{ url('/student/' . $item->id . '/edit') }}" class="btn btn-primary btn-xs" title="Edit student"><span class="glyphicon glyphicon-pencil" aria-hidden="true"/></a>
+                        <a href="{{ url('/student/' . $item->entityId . '/edit') }}" class="btn btn-primary btn-xs" title="Edit student"><span class="glyphicon glyphicon-pencil" aria-hidden="true"/></a>
+					</td>
+					<td>
                         {!! Form::open([
                             'method'=>'DELETE',
-                            'url' => ['/student', $item->id],
+                            'url' => ['/student', $item->entityId],
                             'style' => 'display:inline'
                         ]) !!}
                             {!! Form::button('<span class="glyphicon glyphicon-trash" aria-hidden="true" title="Delete student" />', array(

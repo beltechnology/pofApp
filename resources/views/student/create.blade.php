@@ -18,15 +18,14 @@
   </div>
 </nav>
  <div class="h1-two col-md-12">
-	 <h1 class="text-left col-md-4"><a href="{{ url('/fees/'.session()->get('entityId').'/edit') }}" class="fa fa-angle-left  fa-2x"> Fees</a></h1>
-      <h1 class="text-center col-md-4">Student Registration</h1>
-      <h1 class="text-left col-md-4"></h1>
-      </div>
+	 <h1 class="text-left col-md-4"><a href="{{ url('/student/') }}" class="fa fa-angle-left  fa-2x"> Student List</a></h1>
+      <h1 class="text-center col-md-4"></h1> 
+  </div>
 	</div>
-    <h1>Create New student</h1>
-    <hr/>
-
     {!! Form::open(['url' => '/student', 'class' => 'form-horizontal']) !!}
+	
+     {!! Form::hidden('entityId',\DB::table('entitys')->max('entityId')+1, null, ['class' => 'form-control','required' => 'required'],['name'=>'entityId']) !!}
+	  {!! Form::select('schoolId',$schoolId,null,['class' => 'form-control','style'=>'display:none','required' => 'required'],['name'=>'schoolId']) !!}
 
 	<div class="row create-emp-list">
 	<div class="col-md-6">
@@ -57,14 +56,14 @@
             <div class="form-group {{ $errors->has('classId') ? 'has-error' : ''}}">
                 {!! Form::label('classId', 'Class', ['class' => 'col-sm-4 control-label']) !!}
                 <div class="col-sm-8">
-                    {!! Form::text('classId', null, ['class' => 'form-control', 'required' => 'required']) !!}
+                    {!! Form::select('classId',$classes,null,['placeholder'=>'Select Class','class' => 'form-control', 'required' => 'required']) !!}
                     {!! $errors->first('classId', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>
             <div class="form-group {{ $errors->has('section') ? 'has-error' : ''}}">
                 {!! Form::label('section', 'Section', ['class' => 'col-sm-4 control-label']) !!}
                 <div class="col-sm-8">
-                    {!! Form::text('section', null, ['class' => 'form-control', 'required' => 'required']) !!}
+                    {!! Form::select('section',['1'=>'A','2'=>'B','3'=>'C'],null,['class' => 'form-control', 'required' => 'required','placeholder'=>'Select Section']) !!}
                     {!! $errors->first('section', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>
@@ -97,7 +96,7 @@
             <div class="form-group {{ $errors->has('rollNo') ? 'has-error' : ''}}">
                 {!! Form::label('rollNo', 'Rollno', ['class' => 'col-sm-4 control-label']) !!}
                 <div class="col-sm-8">
-                    {!! Form::text('rollNo', null, ['class' => 'form-control','readonly'=>'readonly']) !!}
+                    {!! Form::text('rollNo',$rollNo, ['class' => 'form-control','readonly'=>'readonly']) !!}
                     {!! $errors->first('rollNo', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>

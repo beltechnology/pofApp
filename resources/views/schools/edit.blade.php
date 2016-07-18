@@ -269,7 +269,7 @@
             <div class="form-group {{ $errors->has('callStatus') ? 'has-error' : ''}}">
                 {!! Form::label('callStatus', 'Call status', ['class' => 'col-sm-5 control-label']) !!}
                 <div class="col-sm-6">
-                    {!! Form::text('callStatus', null, ['class' => 'form-control', 'required' => 'required']) !!}
+                   {!! Form::select('callStatus',['1'=>'Cold Call','2'=>'Warm Call','3'=>'Hot Call'],null,['class' => 'form-control', 'required' => 'required']) !!}
                     {!! $errors->first('callStatus', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>
