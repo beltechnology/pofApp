@@ -49,16 +49,16 @@
                 <tr>
 					<td>{!! Form::hidden('classId[]', $item->classId, ['class' => '','readonly'=>'readonly']) !!}
 					{!! Form::label('name', $item->name, ['class' => '','readonly'=>'readonly']) !!}</td>
-					<td> {!! Form::number('noofstudentPMO[]', $item->noofstudentPMO, ['class' => 'form-control']) !!} </td>
-					<td> {!! Form::number('noofstudentPSO[]', $item->noofstudentPSO, ['class' => 'form-control']) !!}</td>
-					<td> {!! Form::number('handicapped[]', $item->handicapped, ['class' => 'form-control']) !!}</td>
+					<td> {!! Form::number('noofstudentPMO[]', $item->noofstudentPMO, ['class' => 'form-control noofstudentPMO']) !!} </td>
+					<td> {!! Form::number('noofstudentPSO[]', $item->noofstudentPSO, ['class' => 'form-control noofstudentPSO']) !!}</td>
+					<td> {!! Form::number('handicapped[]', $item->handicapped, ['class' => 'form-control handicapped']) !!}</td>
                 </tr>
 			@endforeach
 				 <tr>
 					<td>Total No. of Students</td>
-					<td> {!! Form::number('totalnoofstudentPMO',$noofstudentPMO, ['class' => 'form-control','readonly'=>'readonly']) !!} </td>
-					<td> {!! Form::number('totalnoofstudentPSO',$noofstudentPSO, ['class' => 'form-control','readonly'=>'readonly']) !!}</td>
-					<td> {!! Form::number('totalhandicapped',$handicapped, ['class' => 'form-control','readonly'=>'readonly']) !!}</td>
+					<td> {!! Form::number('totalnoofstudentPMO',$noofstudentPMO, ['class' => 'form-control noofstudentPMOTotal','readonly'=>'readonly']) !!} </td>
+					<td> {!! Form::number('totalnoofstudentPSO',$noofstudentPSO, ['class' => 'form-control noofstudentPSOTotal','readonly'=>'readonly']) !!}</td>
+					<td> {!! Form::number('totalhandicapped',$handicapped, ['class' => 'form-control handicappedTotal','readonly'=>'readonly']) !!}</td>
                 </tr>
             </body>
 			</table>
@@ -79,4 +79,31 @@
         </ul>
     @endif
 </div>
+<script>
+	$("form input").on("change keyup mouseup", function(){
+		var noofstudentPMOTotal = 0;
+		$('.noofstudentPMO').each(function() {
+        noofstudentPMOTotal += Number($(this).val());
+		});
+		$(".noofstudentPMOTotal").val(noofstudentPMOTotal);
+	});
+// end noofstudentPMOTotal Total	
+	$("form input").on("change keyup mouseup", function(){
+		var noofstudentPSOTotal = 0;
+		$('.noofstudentPSO').each(function() {
+        noofstudentPSOTotal += Number($(this).val());
+		});
+		$(".noofstudentPSOTotal").val(noofstudentPSOTotal);
+	});
+// end noofstudentPSOTotal Total	
+	$("form input").on("change keyup mouseup", function(){
+		var handicappedTotal = 0;
+		$('.handicapped').each(function() {
+        handicappedTotal += Number($(this).val());
+		});
+		$(".handicappedTotal").val(handicappedTotal);
+	});
+// end handicappedTotal Total	
+
+</script>
 @endsection

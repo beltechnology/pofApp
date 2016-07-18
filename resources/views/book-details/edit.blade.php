@@ -13,10 +13,12 @@
   		<div class="container-fluid">
    		
     	<ul class="nav navbar-nav">
-      <li><a href="{{ url('/schools/'.$bookdetail->entityId.'/edit') }}"> School Profile </a></li>
-      <li class="active"><a href="{{ url('/book-details/'.$bookdetail->entityId.'/edit') }}"> Book Detail </a></li>
-      <li><a href="{{ url('/student-count/'.$bookdetail->entityId.'/edit') }}"> No. of students from school </a></li>
-    <li><a href="{{ url('/payments/'.$bookdetail->entityId.'/edit') }}"> Payment Mode </a></li>
+       <li><a href="{{ url('/schools/'.session()->get('entityId').'/edit') }}"> School Profile </a></li>
+      <li  class="active"><a href="{{ url('/book-details/'.session()->get('entityId').'/edit') }}"> Book Detail </a></li>
+      <li><a href="{{ url('/student-count/'.session()->get('entityId').'/edit') }}"> No. of students from school </a></li>
+      <li ><a href="{{ url('/payments/'.session()->get('entityId').'/edit') }}"> Payment Mode </a></li>
+	  <li ><a href="{{ url('/fees/'.session()->get('entityId').'/edit') }}">Fees</a></li>
+	  <li><a href="{{ url('/student/'.session()->get('entityId').'/edit') }}">Student Registration</a></li>
     </ul>
   </div>
 </nav>
