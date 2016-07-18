@@ -6,10 +6,12 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use App\fee;
+use App\studentCount;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Session;
-
+use DB;
+use Illuminate\Support\Facades\Input;
 class feesController extends Controller
 {
     /**
@@ -74,8 +76,11 @@ class feesController extends Controller
     public function edit($id)
     {
         $fee = fee::findOrFail($id);
-
-        return view('fees.edit', compact('fee'));
+		$noofstudentPMO = DB::table('student_counts')->where('student_counts.entityId',$id)->sum('noofstudentPMO');
+		$noofstudentPSO = DB::table('student_counts')->where('student_counts.entityId',$id)->sum('noofstudentPSO');
+		$handicapped = DB::table('student_counts')->where('student_counts.entityId',$id)->sum('handicapped');
+		$totalStudents=($noofstudentPMO+$noofstudentPSO)-$handicapped;
+        return view('fees.edit', compact('fee'))->with('totalStudents',$totalStudents);
     }
 
     /**
@@ -87,14 +92,17 @@ class feesController extends Controller
      */
     public function update($id, Request $request)
     {
-        $this->validate($request, ['teamId' => 'required', ]);
-
-        $fee = fee::findOrFail($id);
-        $fee->update($request->all());
-
-        Session::flash('flash_message', 'fee updated!');
-
-        return redirect('fees');
+       // $this->validate($request, ['totalAmount' => 'totalAmount', ]);
+        //$fee = fee::findOrFail($id);
+        //$fee->update($request->all());
+			$examLevelId=$request->input('examLevelId');
+			$totalAmount=$request->input('totalAmount');
+			$restAmount=$request->input('restAmount');
+			$otherExpenses=$request->input('otherExpenses');
+			$receivedAmount=$request->input('receivedAmount');
+			DB::table('fees')->where('entityId', $id)->update(['examLevelId' =>$examLevelId,'totalAmount' =>$totalAmount,'otherExpenses' =>$otherExpenses,'restAmount'=>$restAmount,'receivedAmount'=>$receivedAmount]);
+			Session::flash('flash_message', 'fee updated!');
+			return redirect('fees/'.$id.'/edit');
     }
 
     /**

@@ -16,10 +16,12 @@
   		<div class="container-fluid">
    		
     	<ul class="nav navbar-nav">
-      <li><a href="{{ url('/schools/'.$studentcount->entityId.'/edit') }}"> School Profile </a></li>
-      <li><a href="{{ url('/book-details/'.$studentcount->entityId.'/edit') }}"> Book Detail </a></li>
-      <li class="active"><a href="{{ url('/student-count/'.$studentcount->entityId.'/edit') }}"> No. of students from school </a></li>
-      <li><a href="{{ url('/payments/'.$studentcount->entityId.'/edit') }}"> Payment Mode </a></li>
+      <li><a href="{{ url('/schools/'.session()->get('entityId').'/edit') }}"> School Profile </a></li>
+      <li><a href="{{ url('/book-details/'.session()->get('entityId').'/edit') }}"> Book Detail </a></li>
+      <li class="active"><a href="{{ url('/student-count/'.session()->get('entityId').'/edit') }}"> No. of students from school </a></li>
+      <li><a href="{{ url('/payments/'.session()->get('entityId').'/edit') }}"> Payment Mode </a></li>
+	  <li ><a href="{{ url('/fees/'.session()->get('entityId').'/edit') }}">Fees</a></li>
+	  <li><a href="{{ url('/student/'.session()->get('entityId').'/edit') }}">Student Registration</a></li>
     </ul>
   </div>
 </nav>
@@ -54,9 +56,9 @@
 			@endforeach
 				 <tr>
 					<td>Total No. of Students</td>
-					<td> {!! Form::number('totalnoofstudentPMO', null, ['class' => 'form-control','readonly'=>'readonly']) !!} </td>
-					<td> {!! Form::number('totalnoofstudentPSO', null, ['class' => 'form-control','readonly'=>'readonly']) !!}</td>
-					<td> {!! Form::number('totalhandicapped', null, ['class' => 'form-control','readonly'=>'readonly']) !!}</td>
+					<td> {!! Form::number('totalnoofstudentPMO',$noofstudentPMO, ['class' => 'form-control','readonly'=>'readonly']) !!} </td>
+					<td> {!! Form::number('totalnoofstudentPSO',$noofstudentPSO, ['class' => 'form-control','readonly'=>'readonly']) !!}</td>
+					<td> {!! Form::number('totalhandicapped',$handicapped, ['class' => 'form-control','readonly'=>'readonly']) !!}</td>
                 </tr>
             </body>
 			</table>

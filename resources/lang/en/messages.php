@@ -120,6 +120,31 @@ return [
 	'DESIGNATION_LIST' => 'Designation List',
 	'CLASS_CREATION' => 'Class Creation',
 	'CLASS_LIST' => 'Class List',
-	
+
 	'SELECT_STATE_NAME' => 'Select State',
+	'SCHOOL_CREATE_NEW_SCHOOL'=>'Create New School',
+	'SCHOOL_POSTER_DISTRIBUTION_DATE'=>'Poster Distribution Date',
+	'SCHOOL_CLOSING_DATE'=>'Closing Date',
+	'SCHOOL_FORM_NO'=>'Form No.',
+	'SCHOOL_Name'=>'School Name',
+	'SCHOOL_ADDRESS'=>'Address',
+	'SCHOOL_DISTRICT_NAME'=>'District Name',
+	'SCHOOL_CITY'=>'City',
+	'SCHOOL_PINCODE'=>'Pincode',
+	'SCHOOL_PRIMARY_MOBILE'=>'Primary Mobile',
+	'SCHOOL_SECONDARY_MOBILE'=>'Secondary Mobile',
+	'SCHOOL_EMAIL'=>'Email',
+	'SCHOOL_PRINCIPAL_NAME'=>'Principal Name',
+	'SCHOOL_PRINCIPAL_MOBILE'=>'Principal Mobile',
+	'SCHOOL_PRINCIPAL_EMAIL'=>'Principal Email',
+	'SCHOOL_PRINCIPAL_NAME'=>'Principal Name',
+	'SCHOOL_FIRST_COORDINATOR_NAME'=>'First Coordinator Name',
+	'SCHOOL_FIRST_COORDINATOR_MOBILE'=>'First Coordinator Mobile',
+	'SCHOOL_FIRST_COORDINATOR_EMAIL'=>'First Coordinator Email',
+	'SCHOOL_SECOND_COORDINATOR_NAME'=>'Second Coordinator Name',
+	'SCHOOL_SECOND_COORDINATOR_MOBILE'=>'Second Coordinator Mobile',
+	'SCHOOL_SECOND_COORDINATOR_EMAIL'=>'Second Coordinator Email',	
+	
+	
+	'PER_STUDENT_FEES'=>'100',
 ];

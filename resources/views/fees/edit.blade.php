@@ -13,12 +13,12 @@
   		<div class="container-fluid">
    		
     	<ul class="nav navbar-nav">
-      <li><a href="{{ url('/schools/'.$fee->entityId.'/edit') }}"> School Profile </a></li>
-      <li><a href="{{ url('/book-details/'.$fee->entityId.'/edit') }}"> Book Detail </a></li>
-      <li ><a href="{{ url('/student-count/'.$fee->entityId.'/edit') }}"> No. of students from school </a></li>
-      <li><a href="{{ url('/payments/'.$fee->entityId.'/edit') }}"> Payment Mode </a></li>
-	  <li class="active"><a href="{{ url('/fees/'.$fee->entityId.'/edit') }}">Fees</a></li>
-	   <li><a href="{{ url('/student/') }}">Student Registration</a></li>
+      <li><a href="{{ url('/schools/'.session()->get('entityId').'/edit') }}"> School Profile </a></li>
+      <li><a href="{{ url('/book-details/'.session()->get('entityId').'/edit') }}"> Book Detail </a></li>
+      <li ><a href="{{ url('/student-count/'.session()->get('entityId').'/edit') }}"> No. of students from school </a></li>
+      <li><a href="{{ url('/payments/'.session()->get('entityId').'/edit') }}"> Payment Mode </a></li>
+	  <li class="active"><a href="{{ url('/fees/'.session()->get('entityId').'/edit') }}">Fees</a></li>
+	  <li><a href="{{ url('/student/'.session()->get('entityId').'/edit') }}">Student Registration</a></li>
     </ul>
   </div>
 </nav>
@@ -53,14 +53,14 @@
             <div class="form-group {{ $errors->has('totalAmount') ? 'has-error' : ''}}">
                 {!! Form::label('totalAmount', 'Total Amount', ['class' => 'col-sm-5 control-label']) !!}
                 <div class="col-sm-7">
-                    {!! Form::text('totalAmount',null,['class' => 'form-control']) !!}
+                    {!! Form::text('totalAmount',$totalStudents*trans('messages.PER_STUDENT_FEES'),['class' => 'form-control','readonly'=>'readonly']) !!}
                     {!! $errors->first('totalAmount', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>
 			 <div class="form-group {{ $errors->has('restAmount') ? 'has-error' : ''}}">
                 {!! Form::label('restAmount', 'Rest Amount', ['class' => 'col-sm-5 control-label']) !!}
                 <div class="col-sm-7">
-                    {!! Form::text('restAmount',null,['class' => 'form-control']) !!}
+                    {!! Form::text('restAmount',null,['class' => 'form-control','readonly'=>'readonly']) !!}
                     {!! $errors->first('restAmount', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>

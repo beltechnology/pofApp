@@ -13,7 +13,7 @@
                             <label for="state" class="col-md-4 control-label">{{ trans('messages.STATE_NAME') }}</label>
 
                             <div class="col-md-6">
-                               {!! Form::select('state',\DB::table('states')->where('states.deleted',0)->lists('stateName','id'), "Debugging", ['class' => 'form-control stateSelect','placeholder' => 'Select a State','id' => 'state']) !!}
+                               {!! Form::select('state',\DB::table('states')->where('states.deleted',0)->lists('stateName','id'), "Debugging", ['class' => 'form-control stateSelect','placeholder' => 'Select a State','id' => 'state','required'=>'required']) !!}
                                 @if ($errors->has('state'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('state') }}</strong>

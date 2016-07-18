@@ -72,9 +72,12 @@ class studentCountController extends Controller
      */
     public function edit($id)
     {
-        $studentcount = studentCount::findOrFail($id);
-	$studentcounts = DB::table('student_counts')->join('class_names','class_names.id','=','student_counts.classId')->where('student_counts.deleted',0)->where('student_counts.entityId',$id)->get();
-        return view('student-count.edit', compact('studentcount'))->with('studentcounts',$studentcounts);
+		$studentcount = studentCount::findOrFail($id);
+		$studentcounts = DB::table('student_counts')->join('class_names','class_names.id','=','student_counts.classId')->where('student_counts.deleted',0)->where('student_counts.entityId',$id)->get();
+		$noofstudentPMO = DB::table('student_counts')->where('student_counts.entityId',$id)->sum('noofstudentPMO');
+		$noofstudentPSO = DB::table('student_counts')->where('student_counts.entityId',$id)->sum('noofstudentPSO');
+		$handicapped = DB::table('student_counts')->where('student_counts.entityId',$id)->sum('handicapped');
+        return view('student-count.edit', compact('studentcount'))->with('studentcounts',$studentcounts)->with('noofstudentPMO',$noofstudentPMO)->with('noofstudentPSO',$noofstudentPSO)->with('handicapped',$handicapped);
     }
 
     /**
