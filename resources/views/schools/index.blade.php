@@ -1,9 +1,7 @@
 @extends('layouts.header')
 @section('content')
     <div class=" col-md-9 category">
-
-
-    <h1 class="school_category">Schools</h1>
+    <h1 class="school_category">{{ trans('messages.SCHOOLS') }}</h1>
 	 
             <div class="add-emp add-school col-md-2">
             <a href="{{ url('/schools/create') }}" title="Add New school"><p>{{ trans('messages.ADD') }} <span class="glyphicon glyphicon-plus" aria-hidden="true"/></p></a>
@@ -12,18 +10,18 @@
         <table class="table table-bordered table-striped table-hover">
             <thead>
                 <tr>
-					<th> School Name </th>
-					<th>Address </th>
-					<th> City </th>
-					<th> District</th>
-					<th> Pincode </th>
-					<th>Primary Mobile No.</th>
-					<th> Email Id </th>
-					<th> Principal Name</th>
-					<th> Principal Mobile No.</th>
-					<th> Edit</th>
-					<th> Delete</th>
-					<th>Actions<input type="checkbox" id="selectall" /></th>
+					<th> {{ trans('messages.SCHOOL_NAME') }} </th>
+					<th>{{ trans('messages.SCHOOL_ADDRESS') }} </th>
+					<th>{{ trans('messages.SCHOOL_CITY') }} </th>
+					<th> {{ trans('messages.SCHOOL_DISTRICT_NAME') }} </th>
+					<th> {{ trans('messages.PINCODE') }}  </th>
+					<th>{{ trans('messages.SCHOOL_PRIMARY_MOBILE') }} </th>
+					<th>{{ trans('messages.SCHOOL_EMAIL') }}</th>
+					<th>{{ trans('messages.SCHOOL_PRINCIPAL_NAME') }}</th>
+					<th>{{ trans('messages.SCHOOL_PRINCIPAL_MOBILE') }}</th>
+					<th> {{ trans('messages.EDIT') }}</th>
+					<th> {{ trans('messages.DELETE') }}</th>
+					<th>{{ trans('messages.ACTIONS') }}<input type="checkbox" id="selectall" /></th>
                 </tr>
             </thead>
             <tbody>
