@@ -8,9 +8,6 @@
             <div class="add-emp add-school col-md-2">
             <a href="{{ url('/schools/create') }}" title="Add New school"><p>{{ trans('messages.ADD') }} <span class="glyphicon glyphicon-plus" aria-hidden="true"/></p></a>
             </div>
-		@if(Session::has('flash_message'))
-		<p class="alert {{ Session::get('alert-class', 'alert-info') }}">{{ Session::get('flash_message') }}</p>
-		@endif
 		<div class="table">
         <table class="table table-bordered table-striped table-hover">
             <thead>

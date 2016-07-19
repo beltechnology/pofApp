@@ -19,7 +19,8 @@
       <li><a href="{{ url('/student-count/'.session()->get('entityId').'/edit') }}"> No. of students from school </a></li>
       <li ><a href="{{ url('/payments/'.session()->get('entityId').'/edit') }}"> Payment Mode </a></li>
 	  <li ><a href="{{ url('/fees/'.session()->get('entityId').'/edit') }}">Fees</a></li>
-	  <li><a href="{{ url('/student/'.session()->get('entityId').'/edit') }}">Student Registration</a></li>
+	  <li><a href="{{ url('/student/') }}">Student Registration</a></li>
+	  <li><a href="{{ url('/first-level/'.session()->get('entityId').'/edit') }}">First Level Exam Time</a></li>
     </ul>
   </div>
 </nav>

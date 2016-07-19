@@ -1,24 +1,19 @@
 @extends('layouts.header')
 @section('content')
 <div class=" col-md-9 category">
-    {!! Form::model($fee, [
-        'method' => 'PATCH',
-        'url' => ['/fees', $fee->entityId],
-        'class' => 'form-horizontal'
-    ]) !!}
+   
 
-	 <div class="edit_school">
-		
+	 <div class="edit_school">	
         <nav class="navbar navbar-default">
   		<div class="container-fluid">
-   		
     	<ul class="nav navbar-nav">
       <li><a href="{{ url('/schools/'.session()->get('entityId').'/edit') }}"> School Profile </a></li>
       <li><a href="{{ url('/book-details/'.session()->get('entityId').'/edit') }}"> Book Detail </a></li>
       <li ><a href="{{ url('/student-count/'.session()->get('entityId').'/edit') }}"> No. of students from school </a></li>
       <li><a href="{{ url('/payments/'.session()->get('entityId').'/edit') }}"> Payment Mode </a></li>
 	  <li class="active"><a href="{{ url('/fees/'.session()->get('entityId').'/edit') }}">Fees</a></li>
-	  <li><a href="{{ url('/student/'.session()->get('entityId').'/edit') }}">Student Registration</a></li>
+	   <li><a href="{{ url('/student/') }}">Student Registration</a></li>
+	  <li><a href="{{ url('/first-level/'.session()->get('entityId').'/edit') }}">First Level Exam Time</a></li>
     </ul>
   </div>
 </nav>
@@ -29,25 +24,30 @@
       </div>
 	</div>
   <div class="row create-emp-list">
-	<div class="col-md-6">
+		<div class="col-md-6">
             <div class="form-group {{ $errors->has('examLevelId') ? 'has-error' : ''}}">
                 {!! Form::label('examLevelId', 'Exam Level', ['class' => 'col-sm-5 control-label']) !!}
                 <div class="col-sm-7">
                     {!! Form::select('examLevelId',(['1' => 'First Level']),null,['class' => 'form-control']) !!}
                     {!! $errors->first('examLevelId', '<p class="help-block">:message</p>') !!}
                 </div>
-            </div>
-			
+            </div>		
 			</div>
 			<div class="col-md-6">
             <div class="form-group">
                 <div class="col-sm-offset-3 col-sm-3">
-                   {!! Form::button('Activate', ['class' => 'btn btn-primary form-control']) !!}
+				 {!! Form::open(['method'=>'DELETE','url' => ['/fees', $fee->entityId],'style' => 'display:inline']) !!}              
+				{!! Form::submit('Activate', ['class' => 'btn btn-primary form-control','onclick'=>'return confirm("Confirm to school activate ?")']) !!}
+				{!! Form::close() !!}
                 </div>
             </div>
-			</div>		
-	</div>
-
+			</div>	
+		</div>			
+ {!! Form::model($fee, [
+        'method' => 'PATCH',
+        'url' => ['/fees', $fee->entityId],
+        'class' => 'form-horizontal'
+    ]) !!}
 	 <div class="row create-emp-list">
 	<div class="col-md-6">
             <div class="form-group {{ $errors->has('totalAmount') ? 'has-error' : ''}}">
@@ -81,14 +81,14 @@
                     {!! $errors->first('receivedAmount', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>
-			</div>		
-				</div>
-
+			</div>			
+			</div>
     <div class="form-group">
         <div class="col-sm-offset-3 col-sm-3">
             {!! Form::submit('Update', ['class' => 'btn btn-primary form-control']) !!}
         </div>
     </div>
+	
     {!! Form::close() !!}
 
     @if ($errors->any())

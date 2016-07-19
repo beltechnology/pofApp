@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 
 use App\fee;
 use App\studentCount;
+use App\school;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Session;
@@ -114,10 +115,12 @@ class feesController extends Controller
      */
     public function destroy($id)
     {
-        fee::destroy($id);
-
+        //fee::destroy($id);
+		 DB::table('schools')->where('entityId', $id)->update(['status' => 1]);
         Session::flash('flash_message', 'fee deleted!');
 
-        return redirect('fees');
+        return redirect('fees/'.$id.'/edit');
     }
+	
+	
 }

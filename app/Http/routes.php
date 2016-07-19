@@ -30,6 +30,9 @@ Route::group(array('middleware' => 'auth'), function() {
 	Route::resource('schools', 'schoolsController');
 	Route::resource('book-details', 'BookDetailsController');
 	Route::resource('student-count', 'studentCountController');
+	Route::resource('payments', 'paymentsController');
+	Route::resource('fees', 'feesController');
+	Route::resource('student', 'studentController');
 	Route::get('/employee/create/ajax-state',function()
 {
     $state_id = session()->get('currentStateId');
@@ -126,6 +129,5 @@ Route::auth();
 
 
 
-Route::resource('payments', 'paymentsController');
-Route::resource('fees', 'feesController');
-Route::resource('student', 'studentController');
+
+Route::resource('first-level', 'firstLevelController');

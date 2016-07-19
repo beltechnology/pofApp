@@ -135,6 +135,7 @@ class studentController extends Controller
     {
         //student::destroy($id);
 		DB::table('students')->where('entityId', $id)->update(['deleted' => 1]);
+		DB::table('entitys')->where('entityId', $id)->update(['deleted' => 1]);
 		
 
         Session::flash('flash_message', 'student deleted!');

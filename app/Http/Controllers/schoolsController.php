@@ -18,6 +18,7 @@ use App\ClassName;
 use App\studentCount;
 use App\payment;
 use App\fee;
+use App\firstLevel;
 use Illuminate\Support\Facades\Input;
 use DB;
 use Illuminate\Http\Request;
@@ -128,6 +129,10 @@ class schoolsController extends Controller
 		'sessionYear' => date('Y').'-'.(date('Y')+1),
 		]);
 		fee::create(['entityId' => $request['entityId'],
+		'schoolId' => $request['schoolCode'],
+		'sessionYear' => date('Y').'-'.(date('Y')+1),
+		]);
+		firstLevel::create(['entityId' => $request['entityId'],
 		'schoolId' => $request['schoolCode'],
 		'sessionYear' => date('Y').'-'.(date('Y')+1),
 		]);

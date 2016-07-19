@@ -18,7 +18,8 @@
       <li><a href="{{ url('/student-count/'.session()->get('entityId').'/edit') }}"> No. of students from school </a></li>
       <li class="active"><a href="{{ url('/payments/'.session()->get('entityId').'/edit') }}"> Payment Mode </a></li>
 	  <li ><a href="{{ url('/fees/'.session()->get('entityId').'/edit') }}">Fees</a></li>
-	  <li><a href="{{ url('/student/'.session()->get('entityId').'/edit') }}">Student Registration</a></li>
+	  <li><a href="{{ url('/student/') }}">Student Registration</a></li>
+	  <li><a href="{{ url('/first-level/'.session()->get('entityId').'/edit') }}">First Level Exam Time</a></li>
     </ul>
   </div>
 </nav>
@@ -37,9 +38,20 @@
                     {!! $errors->first('examLevelId', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>
+			<div class="form-group {{ $errors->has('paymentDate') ? 'has-error' : ''}}">
+					{!! Form::label('paymentDate', 'Date', ['class' => 'col-sm-5 control-label']) !!}
+					<div class="col-sm-7   input-group date">
+                    {!! Form::text('paymentDate', null, ['class' => 'form-control']) !!}
+					<span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                    {!! $errors->first('paymentDate', '<p class="help-block">:message</p>') !!}
+							</div>
+						</div>
 			
 			</div>
 			<div class="col-md-6">
+			
             <div class="form-group {{ $errors->has('paymentModeId') ? 'has-error' : ''}}">
                 {!! Form::label('paymentModeId', 'Payment Mode', ['class' => 'col-sm-5 control-label']) !!}
                 <div class="col-sm-7">
@@ -47,113 +59,58 @@
                     {!! $errors->first('paymentModeId', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>
-			</div>		
-				</div>
-				<!-- cheque div -->
-				 <div class="row create-emp-list Cheque commonDiv">
-					<div class="col-md-6">
-					<div class="form-group {{ $errors->has('paymentDate') ? 'has-error' : ''}}">
-					{!! Form::label('paymentDate', 'Date', ['class' => 'col-sm-5 control-label']) !!}
-					<div class="col-sm-7   input-group date">
-                    {!! Form::text('paymentDate', null, ['class' => 'form-control']) !!}
-					<span class="input-group-addon">
-                        <span class="glyphicon glyphicon-calendar"></span>
-                    </span>
-                    {!! $errors->first('paymentDate', '<p class="help-block">:message</p>') !!}
-							</div>
-						</div>
-					</div>
-					<div class="col-md-6">
-					<div class="form-group {{ $errors->has('modeRefNo') ? 'has-error' : ''}}">
+			<!-- cheque div -->
+			<div class="form-group Cheque commonDiv {{ $errors->has('modeRefNo') ? 'has-error' : ''}}">
 					{!! Form::label('modeRefNo', 'Cheque No.', ['class' => 'col-sm-5 control-label']) !!}
 					<div class="col-sm-7">
                     {!! Form::text('modeRefNo', null, ['class' => 'form-control']) !!}
                     {!! $errors->first('modeRefNo', '<p class="help-block">:message</p>') !!}
 							</div>
 						</div>
-					</div>
-				</div>
-			<!-- cheque div -->
-			
-			<!-- demand draft div -->
-				 <div class="row create-emp-list hide DD commonDiv" >
-					<div class="col-md-6">
-					<div class="form-group {{ $errors->has('paymentDate') ? 'has-error' : ''}}">
-					{!! Form::label('paymentDate', 'Date', ['class' => 'col-sm-5 control-label']) !!}
-					<div class="col-sm-7   input-group date">
-                    {!! Form::text('paymentDate', null, ['class' => 'form-control']) !!}
-					<span class="input-group-addon">
-                        <span class="glyphicon glyphicon-calendar"></span>
-                    </span>
-                    {!! $errors->first('paymentDate', '<p class="help-block">:message</p>') !!}
-							</div>
-						</div>
-					</div>
-					<div class="col-md-6">
-					<div class="form-group {{ $errors->has('modeRefNo') ? 'has-error' : ''}}">
+				<!-- cheque div -->	
+				<!-- demand draft div -->
+				<div class="form-group hide DD commonDiv {{ $errors->has('modeRefNo') ? 'has-error' : ''}}">
 					{!! Form::label('modeRefNo', 'Demand Draft No.', ['class' => 'col-sm-5 control-label']) !!}
 					<div class="col-sm-7">
                     {!! Form::text('modeRefNo', null, ['class' => 'form-control']) !!}
                     {!! $errors->first('modeRefNo', '<p class="help-block">:message</p>') !!}
 							</div>
 						</div>
-					</div>
-				</div>
-			<!-- demand draft div -->
-			
-			<!-- RTGS div -->
-				 <div class="row create-emp-list hide RTGS commonDiv">
-					<div class="col-md-6">
-					<div class="form-group {{ $errors->has('paymentDate') ? 'has-error' : ''}}">
-					{!! Form::label('paymentDate', 'Date', ['class' => 'col-sm-5 control-label']) !!}
-					<div class="col-sm-7   input-group date">
-                    {!! Form::text('paymentDate',null, ['class' => 'form-control','id'=>'statusChkBox']) !!}
-					<span class="input-group-addon">
-                        <span class="glyphicon glyphicon-calendar"></span>
-                    </span>
-                    {!! $errors->first('paymentDate', '<p class="help-block">:message</p>') !!}
-							</div>
-						</div>
-					</div>
-					<div class="col-md-6">
-					<div class="form-group {{ $errors->has('paymentStatus') ? 'has-error' : ''}}">
+				<!-- demand draft div -->	
+
+					<!-- RTGS div -->
+					<div class="form-group hide RTGS commonDiv {{ $errors->has('paymentStatus') ? 'has-error' : ''}}">
 					{!! Form::label('paymentStatus', 'Received', ['class' => 'col-sm-5 control-label']) !!}
 					<div class="col-sm-6">
                     {!! Form::checkbox('paymentStatus',$payment->paymentStatus, ['class' => 'form-control','id'=>'paymentStatus']) !!}
                     {!! $errors->first('paymentStatus', '<p class="help-block">:message</p>') !!}
 							</div>
 						</div>
-					</div>
-				</div>
-			<!-- RTGS div -->
-			<!-- NEFT Div -->
-				 <div class="row create-emp-list hide NEFT commonDiv">
-					<div class="col-md-6">
-					<div class="form-group {{ $errors->has('paymentDate') ? 'has-error' : ''}}">
-					{!! Form::label('paymentDate', 'Date', ['class' => 'col-sm-5 control-label']) !!}
-					<div class="col-sm-7   input-group date">
-                    {!! Form::text('paymentDate', null, ['class' => 'form-control']) !!}
-					<span class="input-group-addon">
-                        <span class="glyphicon glyphicon-calendar"></span>
-                    </span>
-                    {!! $errors->first('paymentDate', '<p class="help-block">:message</p>') !!}
-							</div>
-						</div>
-					</div>
-					<div class="col-md-6">
-					<div class="form-group {{ $errors->has('paymentStatus') ? 'has-error' : ''}}">
+					<!-- RTGS div -->
+				
+				<!-- NEFT Div -->
+					<div class="form-group hide NEFT commonDiv{{ $errors->has('paymentStatus') ? 'has-error' : ''}}">
 					{!! Form::label('paymentStatus1', 'Received', ['class' => 'col-sm-5 control-label','id'=>'paymentStatus1'])!!}
 					<div class="col-sm-6 ">
                     {!! Form::checkbox('paymentStatus',$payment->paymentStatus, ['class' => 'form-control','id'=>'paymentStatusNeft']) !!}
                     {!! $errors->first('paymentStatus', '<p class="help-block">:message</p>') !!}
-							</div>
-						</div>
 					</div>
 				</div>
 			<!-- NEFT DIV -->
-				
-				
-
+			
+			<!-- Cash Div -->
+				<div class="form-group hide Cash commonDiv {{ $errors->has('modeRefNo') ? 'has-error' : ''}}">
+					{!! Form::label('modeRefNo', 'Amount', ['class' => 'col-sm-5 control-label']) !!}
+					<div class="col-sm-7">
+                    {!! Form::text('modeRefNo', null, ['class' => 'form-control']) !!}
+                    {!! $errors->first('modeRefNo', '<p class="help-block">:message</p>') !!}						
+						</div>
+					</div>
+		
+			<!-- Cash DIV -->
+			
+			</div>		
+				</div>
     <div class="form-group">
         <div class="col-sm-offset-3 col-sm-3">
             {!! Form::submit('Update', ['class' => 'btn btn-primary form-control']) !!}

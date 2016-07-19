@@ -47,6 +47,7 @@ class TeamController extends Controller
         
 			$employee= \DB::table('entitys')
                         ->join('addresses','addresses.entityId','=','entitys.entityId')
+						->join('employees','employees.designation','=','entitys.entityType')
 						->where('entitys.deleted',0)
 						->where('addresses.stateId',session()->get('currentStateId'))->lists('entitys.name', 'entitys.entityId');
 			return view('team.create', compact('employee'));
@@ -100,6 +101,7 @@ class TeamController extends Controller
         $team = Team::findOrFail($id);
 		$employee= \DB::table('entitys')
                         ->join('addresses','addresses.entityId','=','entitys.entityId')
+						->join('employees','employees.designation','=','entitys.entityType')
 						->where('entitys.deleted',0)
 						->where('addresses.stateId',session()->get('currentStateId'))->lists('entitys.name', 'entitys.entityId');
 						

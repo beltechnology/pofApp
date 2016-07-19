@@ -22,4 +22,12 @@
 
 	});
 	
+	$(function () {
+                $('.datetime').datetimepicker({
+					pickDate:false,
+					pickTime:true,
+					autoclose:true
+                });
+            });
+	
    
