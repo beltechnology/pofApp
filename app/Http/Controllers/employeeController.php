@@ -37,12 +37,25 @@ class employeeController extends Controller
 						->where('addresses.stateId',session()->get('currentStateId'))
 						->groupBy('employees.entityId')
 						->paginate(10);
-        return view('employee.index', compact('employee'));
-		
-		 
-
-    
+						return view('employee.index', compact('employee'));
     }
+	
+	public function filter()
+    {		$q = Input::get ( 'q' );
+			$employee= DB::table('employees')
+                        ->join('entitys','entitys.entityId','=','employees.entityId')
+                        ->join('addresses','addresses.entityId','=','employees.entityId')
+						->join('phones','phones.entityId','=','employees.entityId')
+						->join('emailaddresses','emailaddresses.entityId','=','employees.entityId')
+						->where('employees.deleted',0)
+						->where('addresses.stateId',session()->get('currentStateId'))
+						->where('name', 'like', '%'.$q.'%')
+						->groupBy('employees.entityId')
+						->paginate(10);
+						$pagination = $employee->appends ( array ('q' => Input::get ( 'q' )));						
+						return view('employee.index', compact('employee'));
+    }
+
 
     /**
      * Show the form for creating a new resource.
