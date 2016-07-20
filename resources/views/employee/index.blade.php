@@ -2,6 +2,7 @@
 
 @section('content')
 <div class=" col-md-9 category">
+
          <div class=" col-md-12 top-filter">
             
             <div class=" col-md-3 category-name">
@@ -9,6 +10,18 @@
             </div>
             
             <div class=" col-md-7 category-filter">
+		<form action="/search" method="POST" role="search">
+			{{ csrf_field() }}
+			<div class="input-group">
+				<input type="text" class="form-control" name="q"
+					placeholder="Search users"> <span class="input-group-btn">
+					<button type="submit" class="btn btn-default">
+						<span class="glyphicon glyphicon-search"></span>
+					</button>
+				</span>
+			</div>
+		</form>
+
             
           <!--  <div class="row">
           
@@ -90,7 +103,7 @@
             @endforeach
             </tbody>
         </table>
-      <div class="pagination-wrapper"> {!! $employee->render() !!} </div> 
+      <div class="pagination-wrapper"> @if($employee){!! $employee->render() !!}@endif </div> 
     </div>
 
 </div>

@@ -767,3 +767,6 @@ input[type=checkbox]:checked + label:before { letter-spacing: 5px; } /* allow sp
     padding-bottom: 10px;
 }
 
+.glyphicon-search {
+    font-size: 20px;
+}
