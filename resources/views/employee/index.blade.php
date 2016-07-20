@@ -10,8 +10,7 @@
             </div>
             
             <div class=" col-md-7 category-filter">
-		<form action="/search" method="POST" role="search">
-			{{ csrf_field() }}
+		<form action="/search" method="get" role="search">
 			<div class="input-group">
 				<input type="text" class="form-control" name="q"
 					placeholder="Search users"> <span class="input-group-btn">

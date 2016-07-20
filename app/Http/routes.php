@@ -36,6 +36,8 @@ Route::group(array('middleware' => 'auth'), function() {
 	Route::resource('student', 'studentController');
 	Route::get('/search', 'employeeController@filter');
 	Route::post('/search', 'employeeController@filter');
+	Route::get('/search-school', 'schoolsController@filter');
+//	Route::post('/search-school', 'schoolsController@filter');
 	Route::get('/employee/create/ajax-state',function()
 {
     $state_id = session()->get('currentStateId');

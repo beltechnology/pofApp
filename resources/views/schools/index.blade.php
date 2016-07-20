@@ -1,11 +1,31 @@
 @extends('layouts.header')
 @section('content')
     <div class=" col-md-9 category">
+	         <div class=" col-md-12 top-filter">
+
+            <div class=" col-md-3 category-name">
     <h1 class="school_category">{{ trans('messages.SCHOOLS') }}</h1>
-	 
+	</div>
+            <div class=" col-md-7 category-filter">
+		<form action="/search-school" method="get" role="search">
+			<div class="input-group">
+				<input type="text" class="form-control" name="q"
+					placeholder="Search Schools"> <span class="input-group-btn">
+					<button type="submit" class="btn btn-default">
+						<span class="glyphicon glyphicon-search"></span>
+					</button>
+				</span>
+			</div>
+		</form>
+
+            
+          
+            
+            </div>
             <div class="add-emp add-school col-md-2">
             <a href="{{ url('/schools/create') }}" title="Add New school"><p>{{ trans('messages.ADD') }} <span class="glyphicon glyphicon-plus" aria-hidden="true"/></p></a>
             </div>
+		</div>
 		<div class="table">
         <table class="table table-bordered table-striped table-hover">
             <thead>

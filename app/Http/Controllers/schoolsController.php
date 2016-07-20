@@ -49,7 +49,29 @@ class schoolsController extends Controller
 						->paginate(10);
         return view('schools.index', compact('schools'));
     }
-
+	
+	public function filter()
+    {		$q = Input::get ( 'q' );
+			$schools= DB::table('schools')
+                        ->join('entitys','entitys.entityId','=','schools.entityId')
+                        ->join('addresses','addresses.entityId','=','schools.entityId')
+						->join('phones','phones.entityId','=','schools.entityId')
+						->join('emailaddresses','emailaddresses.entityId','=','schools.entityId')
+						->join('citys','citys.id','=','addresses.cityId')
+						->join('districts','districts.id','=','addresses.districtId')
+						->where('schools.deleted',0)
+						->where('addresses.stateId',session()->get('currentStateId'))
+						->where('formNo', 'like', '%'.$q.'%')
+						->orwhere('schoolName', 'like', '%'.$q.'%')
+						->orwhere('schoolcode', 'like', '%'.$q.'%')
+						->orwhere('uniqueSchoolCode', 'like', '%'.$q.'%')
+						->orwhere('cityName', 'like', '%'.$q.'%')
+						->groupBy('schools.entityId')
+						->orderBy('schools.entityId','desc')
+						->paginate(10);
+						$pagination = $schools->appends ( array ('q' => Input::get ( 'q' )));						
+        return view('schools.index', compact('schools'));
+    }
     /**
      * Show the form for creating a new resource.
      *
