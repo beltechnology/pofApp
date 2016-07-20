@@ -93,7 +93,7 @@
                 <li class="has-subnav">
                     <a href="{{ url('/schools') }}">
                         <i class="glyphicon glyphicon-book"></i>
-                         Mange Schools
+                        {{ trans('messages.MANAGE_SCHOOLS') }}
                         </span>
                     </a>
                     

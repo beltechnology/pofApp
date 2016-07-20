@@ -12,6 +12,7 @@ return [
 	'CREATED_AND_MAINTAINED' => 'Created & Maintained By Bel-Technology ',
 	'ALL_RIGHTS_RESERVED' => 'All Rights Reserved',
 	'EMPLOYEE_CREATION' => 'Employee Management',//sidebar nav
+	'MANAGE_SCHOOLS'=>'Manage Schools',
 	'SCHOOLS' => 'Schools',
 	'ADMIT_CARD' => 'Admit Card',
 	'ATTENDANCE_SHEET' => 'Attendance Sheet',
