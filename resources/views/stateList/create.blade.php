@@ -8,7 +8,7 @@
                 <div class="panel-body">
                     <form class="form-horizontal" role="form" method="POST" action="{{ url('/statelist') }}">
                         {{ csrf_field() }}
-
+	
                         <div class="form-group{{ $errors->has('state') ? ' has-error' : '' }}">
                             <label for="state" class="col-md-4 control-label">{{ trans('messages.STATE_NAME') }}</label>
 

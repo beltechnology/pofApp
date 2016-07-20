@@ -16,21 +16,21 @@
   		<div class="container-fluid">
    		
     	<ul class="nav navbar-nav">
-      <li><a href="{{ url('/schools/'.session()->get('entityId').'/edit') }}"> School Profile </a></li>
-      <li><a href="{{ url('/book-details/'.session()->get('entityId').'/edit') }}"> Book Detail </a></li>
-      <li class="active"><a href="{{ url('/student-count/'.session()->get('entityId').'/edit') }}"> No. of students from school </a></li>
-      <li><a href="{{ url('/payments/'.session()->get('entityId').'/edit') }}"> Payment Mode </a></li>
-	  <li><a href="{{ url('/fees/'.session()->get('entityId').'/edit') }}">Fees</a></li>
-	  <li><a href="{{ url('/student/') }}">Student Registration</a></li>
-	  <li><a href="{{ url('/first-level/'.session()->get('entityId').'/edit') }}">First Level Exam Time</a></li>
+       <li><a href="{{ url('/schools/'.session()->get('entityId').'/edit') }}">{{ trans('messages.TABS_SCHOOL_PROFILE') }} </a></li>
+      <li><a href="{{ url('/book-details/'.session()->get('entityId').'/edit') }}">{{ trans('messages.TABS_BOOK_DETAIL') }}</a></li>
+      <li class="active"><a href="{{ url('/student-count/'.session()->get('entityId').'/edit') }}">{{ trans('messages.TABS_NO_OF_STUDENTS_FROM_SCHOOL') }}</a></li>
+      <li ><a href="{{ url('/payments/'.session()->get('entityId').'/edit') }}">{{ trans('messages.TABS_PAYMENT_MODE') }}</a></li>
+	  <li ><a href="{{ url('/fees/'.session()->get('entityId').'/edit') }}">{{ trans('messages.TABS_FEES') }}</a></li>
+	  <li><a href="{{ url('/student/') }}">{{ trans('messages.TABS_STUDENT_REGISTRATION') }}</a></li>
+	  <li><a href="{{ url('/first-level/'.session()->get('entityId').'/edit') }}">{{ trans('messages.TABS_FIRST_LEVEL_EXAM_TIME') }}</a></li>
     </ul>
   </div>
 </nav>
 
 	</div>
      <div class="h1-two col-md-12">
-	 <h1 class="text-left col-md-4"><a href="{{ url('/book-details/'.$studentcount->entityId.'/edit') }}" class="fa fa-angle-left  fa-2x"> Book Detail </a></h1>
-      <h1 class="text-center col-md-4">Students Strength</h1>
+	 <h1 class="text-left col-md-4"><a href="{{ url('/book-details/'.$studentcount->entityId.'/edit') }}" class="fa fa-angle-left  fa-2x"> {{ trans('messages.TABS_BOOK_DETAIL') }}</a></h1>
+      <h1 class="text-center col-md-4">{{ trans('messages.STUDENTS_STRENGTH') }}</h1>
       <h1 class="text-left col-md-4"></h1>
       </div>
 	  <div class="row create-emp-list">
@@ -39,10 +39,10 @@
         <table class="table table-bordered table-striped table-hover">
             <thead>
                 <tr>
-					<th>Class</th>
-					<th>No. of Students PMO </th>
-					<th>No. of Students PSO</th>
-					<th>Handicapped</th>
+					<th>{{ trans('messages.BOOKDETAIL_CLASS') }}</th>
+					<th>{{ trans('messages.STUDENT_COUNT_NO_OF_STUDENTS_PMO') }}</th>
+					<th>{{ trans('messages.STUDENT_COUNT_NO_OF_STUDENTS_PSO') }}</th>
+					<th>{{ trans('messages.STUDENT_COUNT_HANDICAPPED') }}</th>
                 </tr>
             </thead>
 			<tbody>
@@ -56,7 +56,7 @@
                 </tr>
 			@endforeach
 				 <tr>
-					<td>Total No. of Students</td>
+					<td>{{ trans('messages.STUDENT_COUNT_TOTAL_NO_OF_STUDENTS') }}</td>
 					<td> {!! Form::number('totalnoofstudentPMO',$noofstudentPMO, ['class' => 'form-control noofstudentPMOTotal','readonly'=>'readonly']) !!} </td>
 					<td> {!! Form::number('totalnoofstudentPSO',$noofstudentPSO, ['class' => 'form-control noofstudentPSOTotal','readonly'=>'readonly']) !!}</td>
 					<td> {!! Form::number('totalhandicapped',$handicapped, ['class' => 'form-control handicappedTotal','readonly'=>'readonly']) !!}</td>
@@ -67,7 +67,7 @@
 			</div>
     <div class="form-group">
         <div class="col-sm-offset-3 col-sm-3">
-            {!! Form::submit('Update', ['class' => 'btn btn-primary form-control']) !!}
+            {!! Form::submit(trans('messages.UPDATE'), ['class' => 'btn btn-primary form-control']) !!}
         </div>
     </div>
     {!! Form::close() !!}

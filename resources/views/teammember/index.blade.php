@@ -2,7 +2,7 @@
 
 @section('content')
 <div class=" col-md-9 category">
-  <h1 class="school_category"><a href="{{ url('/team') }}" class="fa fa-angle-left  fa-2x"> {{ trans('messages.TEAM') }} List </a></h1>
+  <h1 class="school_category"><a href="{{ url('/team') }}" class="fa fa-angle-left  fa-2x"> {{ trans('messages.TEAM_LIST') }} </a></h1>
             <div class="add-emp add-school col-md-2">
             <a href="{{ url('/teammember/create') }}" title="Add New Team Member"><p>{{ trans('messages.ADD') }} <span class="glyphicon glyphicon-plus" aria-hidden="true"/></p></a>
             </div>
@@ -10,7 +10,7 @@
         <table class="table table-bordered table-striped table-hover">
             <thead>
                 <tr>
-                    <th>Member Name</th><th>Member Location</th><th>{{ trans('messages.ACTIONS') }}</th>
+                    <th>{{ trans('messages.MEMBER_NAME') }}</th><th>{{ trans('messages.MEMBER_LOCATION') }}</th><th>{{ trans('messages.ACTIONS') }}</th>
                 </tr>
             </thead>
             <tbody>

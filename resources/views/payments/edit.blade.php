@@ -13,33 +13,33 @@
   		<div class="container-fluid">
    		
     	<ul class="nav navbar-nav">
-      <li><a href="{{ url('/schools/'.session()->get('entityId').'/edit') }}"> School Profile </a></li>
-      <li><a href="{{ url('/book-details/'.session()->get('entityId').'/edit') }}"> Book Detail </a></li>
-      <li><a href="{{ url('/student-count/'.session()->get('entityId').'/edit') }}"> No. of students from school </a></li>
-      <li class="active"><a href="{{ url('/payments/'.session()->get('entityId').'/edit') }}"> Payment Mode </a></li>
-	  <li ><a href="{{ url('/fees/'.session()->get('entityId').'/edit') }}">Fees</a></li>
-	  <li><a href="{{ url('/student/') }}">Student Registration</a></li>
-	  <li><a href="{{ url('/first-level/'.session()->get('entityId').'/edit') }}">First Level Exam Time</a></li>
+       <li><a href="{{ url('/schools/'.session()->get('entityId').'/edit') }}">{{ trans('messages.TABS_SCHOOL_PROFILE') }} </a></li>
+      <li><a href="{{ url('/book-details/'.session()->get('entityId').'/edit') }}"> {{ trans('messages.TABS_BOOK_DETAIL') }}</a></li>
+      <li><a href="{{ url('/student-count/'.session()->get('entityId').'/edit') }}">{{ trans('messages.TABS_NO_OF_STUDENTS_FROM_SCHOOL') }}</a></li>
+      <li class="active"><a href="{{ url('/payments/'.session()->get('entityId').'/edit') }}">{{ trans('messages.TABS_PAYMENT_MODE') }}</a></li>
+	  <li ><a href="{{ url('/fees/'.session()->get('entityId').'/edit') }}">{{ trans('messages.TABS_FEES') }}</a></li>
+	  <li><a href="{{ url('/student/') }}">{{ trans('messages.TABS_STUDENT_REGISTRATION') }}</a></li>
+	  <li><a href="{{ url('/first-level/'.session()->get('entityId').'/edit') }}">{{ trans('messages.TABS_FIRST_LEVEL_EXAM_TIME') }}</a></li>
     </ul>
   </div>
 </nav>
  <div class="h1-two col-md-12">
-	 <h1 class="text-left col-md-4"><a href="{{ url('/student-count/'.$payment->entityId.'/edit') }}" class="fa fa-angle-left  fa-2x"> Students Strength</a></h1>
-      <h1 class="text-center col-md-4">Payment Mode</h1>
+	 <h1 class="text-left col-md-4"><a href="{{ url('/student-count/'.$payment->entityId.'/edit') }}" class="fa fa-angle-left  fa-2x"> {{ trans('messages.STUDENTS_STRENGTH') }}</a></h1>
+      <h1 class="text-center col-md-4">{{ trans('messages.TABS_PAYMENT_MODE') }}</h1>
       <h1 class="text-left col-md-4"></h1>
       </div>
 	</div>
 	  <div class="row create-emp-list">
 	<div class="col-md-6">
             <div class="form-group {{ $errors->has('examLevelId') ? 'has-error' : ''}}">
-                {!! Form::label('examLevelId', 'Exam Level', ['class' => 'col-sm-5 control-label']) !!}
+                {!! Form::label('examLevelId', trans('messages.EXAM_LEVEL'), ['class' => 'col-sm-5 control-label']) !!}
                 <div class="col-sm-7">
-                    {!! Form::select('examLevelId',(['1' => 'First Level']),null,['class' => 'form-control']) !!}
+                    {!! Form::select('examLevelId',(['1' => trans('messages.FIRST_LEVEL')]),null,['class' => 'form-control']) !!}
                     {!! $errors->first('examLevelId', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>
 			<div class="form-group {{ $errors->has('paymentDate') ? 'has-error' : ''}}">
-					{!! Form::label('paymentDate', 'Date', ['class' => 'col-sm-5 control-label']) !!}
+					{!! Form::label('paymentDate', trans('messages.DATE'), ['class' => 'col-sm-5 control-label']) !!}
 					<div class="col-sm-7   input-group date">
                     {!! Form::text('paymentDate', null, ['class' => 'form-control']) !!}
 					<span class="input-group-addon">
@@ -53,7 +53,7 @@
 			<div class="col-md-6">
 			
             <div class="form-group {{ $errors->has('paymentModeId') ? 'has-error' : ''}}">
-                {!! Form::label('paymentModeId', 'Payment Mode', ['class' => 'col-sm-5 control-label']) !!}
+                {!! Form::label('paymentModeId', trans('messages.TABS_PAYMENT_MODE'), ['class' => 'col-sm-5 control-label']) !!}
                 <div class="col-sm-7">
                     {!! Form::select('paymentModeId',$payment_modes,null,['class' => 'form-control',  'required' => 'required']) !!}
                     {!! $errors->first('paymentModeId', '<p class="help-block">:message</p>') !!}
@@ -61,7 +61,7 @@
             </div>
 			<!-- cheque div -->
 			<div class="form-group Cheque commonDiv {{ $errors->has('modeRefNo') ? 'has-error' : ''}}">
-					{!! Form::label('modeRefNo', 'Cheque No.', ['class' => 'col-sm-5 control-label']) !!}
+					{!! Form::label('modeRefNo', trans('messages.CHEQUE_NO'), ['class' => 'col-sm-5 control-label']) !!}
 					<div class="col-sm-7">
                     {!! Form::text('modeRefNo', null, ['class' => 'form-control']) !!}
                     {!! $errors->first('modeRefNo', '<p class="help-block">:message</p>') !!}
@@ -70,7 +70,7 @@
 				<!-- cheque div -->	
 				<!-- demand draft div -->
 				<div class="form-group hide DD commonDiv {{ $errors->has('modeRefNo') ? 'has-error' : ''}}">
-					{!! Form::label('modeRefNo', 'Demand Draft No.', ['class' => 'col-sm-5 control-label']) !!}
+					{!! Form::label('modeRefNo', trans('messages.DEMAND_DRAFT'), ['class' => 'col-sm-5 control-label']) !!}
 					<div class="col-sm-7">
                     {!! Form::text('modeRefNo', null, ['class' => 'form-control']) !!}
                     {!! $errors->first('modeRefNo', '<p class="help-block">:message</p>') !!}
@@ -80,7 +80,7 @@
 
 					<!-- RTGS div -->
 					<div class="form-group hide RTGS commonDiv {{ $errors->has('paymentStatus') ? 'has-error' : ''}}">
-					{!! Form::label('paymentStatus', 'Received', ['class' => 'col-sm-5 control-label']) !!}
+					{!! Form::label('paymentStatus', trans('messages.RECEIVED'), ['class' => 'col-sm-5 control-label']) !!}
 					<div class="col-sm-6">
                     {!! Form::checkbox('paymentStatus',$payment->paymentStatus, ['class' => 'form-control','id'=>'paymentStatus']) !!}
                     {!! $errors->first('paymentStatus', '<p class="help-block">:message</p>') !!}
@@ -90,7 +90,7 @@
 				
 				<!-- NEFT Div -->
 					<div class="form-group hide NEFT commonDiv{{ $errors->has('paymentStatus') ? 'has-error' : ''}}">
-					{!! Form::label('paymentStatus1', 'Received', ['class' => 'col-sm-5 control-label','id'=>'paymentStatus1'])!!}
+					{!! Form::label('paymentStatus1', trans('messages.RECEIVED'), ['class' => 'col-sm-5 control-label','id'=>'paymentStatus1'])!!}
 					<div class="col-sm-6 ">
                     {!! Form::checkbox('paymentStatus',$payment->paymentStatus, ['class' => 'form-control','id'=>'paymentStatusNeft']) !!}
                     {!! $errors->first('paymentStatus', '<p class="help-block">:message</p>') !!}
@@ -100,7 +100,7 @@
 			
 			<!-- Cash Div -->
 				<div class="form-group hide Cash commonDiv {{ $errors->has('modeRefNo') ? 'has-error' : ''}}">
-					{!! Form::label('modeRefNo', 'Amount', ['class' => 'col-sm-5 control-label']) !!}
+					{!! Form::label('modeRefNo', trans('messages.AMOUNT'), ['class' => 'col-sm-5 control-label']) !!}
 					<div class="col-sm-7">
                     {!! Form::text('modeRefNo', null, ['class' => 'form-control']) !!}
                     {!! $errors->first('modeRefNo', '<p class="help-block">:message</p>') !!}						
@@ -113,7 +113,7 @@
 				</div>
     <div class="form-group">
         <div class="col-sm-offset-3 col-sm-3">
-            {!! Form::submit('Update', ['class' => 'btn btn-primary form-control']) !!}
+            {!! Form::submit(trans('messages.UPDATE'), ['class' => 'btn btn-primary form-control']) !!}
         </div>
     </div>
     {!! Form::close() !!}

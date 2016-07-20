@@ -2,7 +2,7 @@
 
 @section('content')
 <div class=" col-md-9 category">
-    <h1>Add Team Member</h1>
+    <h1>{{ trans('messages.ADD_TEAM_MEMBER') }}</h1>
 <div class="table">
             <table class='table table-bordered table-striped table-hover'>
             <thead>

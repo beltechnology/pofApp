@@ -11,21 +11,21 @@
         <div class=" col-md-6 create-emp-list">
                 
             <div class="form-group {{ $errors->has('teamName') ? 'has-error' : ''}}">
-                {!! Form::label('teamName', 'Team Name ', ['class' => 'col-sm-4 control-label']) !!}
+                {!! Form::label('teamName', trans('messages.TEAM_NAME'), ['class' => 'col-sm-4 control-label']) !!}
                 <div class="col-sm-8">
                     {!! Form::text('teamName', null, ['class' => 'form-control']) !!}
                     {!! $errors->first('teamName', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>
             <div class="form-group {{ $errors->has('teamLeader') ? 'has-error' : ''}}">
-                {!! Form::label('teamLeader', 'Team Leader', ['class' => 'col-sm-4 control-label']) !!}
+                {!! Form::label('teamLeader', trans('messages.TEAM_LEADER'), ['class' => 'col-sm-4 control-label']) !!}
                 <div class="col-sm-8">
                     {!! Form::select('teamLeader',$employee,null, ['class' => 'form-control teamSelect','placeholder' => 'Select Team Leader','id' => 'teamSelect']) !!}
                     {!! $errors->first('teamLeader', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>
 			 <div class="form-group {{ $errors->has('teamEndDate') ? 'has-error' : ''}}">
-                {!! Form::label('teamEndDate', 'Team End Date', ['class' => 'col-sm-4 control-label']) !!}
+                {!! Form::label('teamEndDate', trans('messages.TEAM_END_DATE'), ['class' => 'col-sm-4 control-label']) !!}
                 <div class="col-sm-8 input-group date">
                     {!! Form::text('teamEndDate', null, ['class' => 'form-control', 'required' => 'required']) !!}
 					<span class="input-group-addon">
@@ -38,7 +38,7 @@
 	</div>
 	<div class=" col-md-6 create-emp-list">
 	<div class="form-group {{ $errors->has('teamLocation') ? 'has-error' : ''}}">
-                {!! Form::label('teamLocation', 'Team Location', ['class' => 'col-sm-4 control-label']) !!}
+                {!! Form::label('teamLocation', trans('messages.TEAM_LOCATION'), ['class' => 'col-sm-4 control-label']) !!}
                 <div class="col-sm-8">
                    {!! Form::select('teamLocation',\DB::table('locations')->where('locations.state_id',session()->get('currentStateId'))->where('locations.deleted',0)->lists('location','id'), "Debugging", ['class' => ' form-control teamSelect','placeholder' => 'Select location','id' => 'teamLocation']) !!}
                     {!! $errors->first('teamLocation', '<p class="help-block">:message</p>') !!}
@@ -46,7 +46,7 @@
             </div>
            
 		   <div class="form-group {{ $errors->has('teamCreationDate') ? 'has-error' : ''}}">
-                {!! Form::label('teamCreationDate', 'Team Creation Date', ['class' => 'col-sm-4 control-label']) !!}
+                {!! Form::label('teamCreationDate', trans('messages.TEAM_CREATION_DATE'), ['class' => 'col-sm-4 control-label']) !!}
                 <div class="col-sm-8 input-group date">
                     {!! Form::text('teamCreationDate', null, ['class' => 'form-control', 'required' => 'required']) !!}
 					<span class="input-group-addon">
@@ -57,7 +57,7 @@
             </div>
 			
             <div class="form-group {{ $errors->has('teamCode') ? 'has-error' : ''}}">
-                {!! Form::hidden('teamCode', 'Team Code', ['class' => 'col-sm-4 control-label']) !!}
+                {!! Form::hidden('teamCode', trans('messages.TEAM_CODE'), ['class' => 'col-sm-4 control-label']) !!}
                 <div class="col-sm-8 ">
                     {!! Form::hidden('teamCode', \DB::table('teams')->max('teamId')+1,null,['class' => 'form-control']) !!}
                     {!! $errors->first('teamCode', '<p class="help-block">:message</p>') !!}
