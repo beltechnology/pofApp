@@ -6,19 +6,30 @@
             <div class=" col-md-3 category-name">
     <h1 class="school_category">{{ trans('messages.SCHOOLS') }}</h1>
 	</div>
-            <div class=" col-md-7 category-filter">
+            <div class=" col-md-4 category-filter">
 		<form action="/search-school" method="get" role="search">
 			<div class="input-group">
 				<input type="text" class="form-control" name="q"
-					placeholder="Search Schools"> <span class="input-group-btn">
+					placeholder="Search Schools , School Code , City Name or  Principal Name "> <span class="input-group-btn">
 					<button type="submit" class="btn btn-default">
 						<span class="glyphicon glyphicon-search"></span>
 					</button>
 				</span>
 			</div>
 		</form>
+		            </div>
 
-            
+            <div class=" col-md-3 category-filter">
+		<form action="/activate-school" method="POST"  id="activateSchoolForm">
+		{{ csrf_field() }}
+			<div class="input-group">
+				<span class="input-group-btn">
+					<button type="submit" class="btn btn-default" name="activateSchool">
+						<span class="glyphicon glyphicon-ok"></span>
+					</button>
+				</span>
+			</div>
+		</form>
           
             
             </div>
@@ -46,7 +57,7 @@
             </thead>
             <tbody>
             @foreach($schools as $item)
-                <tr>
+                <tr class="">
                     <td>{{ $item->schoolName }}</td>
 					<td>{{ $item->addressLine1 }}</td>
 					<td>{{ $item->cityName }}</td>
@@ -72,7 +83,7 @@
                             ));!!}
                         {!! Form::close() !!}
                     </td>
-					<td><input type="checkbox"  /> </td>
+					<td><input type="checkbox" class="checkbox1" value='{{$item->entityId}}'  /> </td>
                 </tr>
             @endforeach
             </tbody>
@@ -81,4 +92,36 @@
     </div>
 
 </div>
+<script>
+$(document).ready(function() {
+    $('#selectall').click(function(event) {  //on click 
+        if(this.checked) { // check select status
+			$('input[type="hidden"][name="activationSchool[]"]').remove();
+            $('.checkbox1').each(function() { //loop through each checkbox
+                this.checked = true;  //select all checkboxes with class "checkbox1" 
+				var val = $(this).val();
+			$('<input>').attr({type: 'hidden', id: 'activationSchool_'+val, name: 'activationSchool[]', value:val }).appendTo('#activateSchoolForm'); 
+		});
+        }else{
+            $('.checkbox1').each(function() { //loop through each checkbox
+                this.checked = false; //deselect all checkboxes with class "checkbox1"  
+				var value = $(this).val();
+				$('input[type="hidden"][value="'+value+'"]').remove();	
+            });         
+        }
+    });
+	
+	
+	$('.checkbox1').click(function () 
+	{
+        if(this.checked) { // check select status
+				var val = $(this).val();
+			$('<input>').attr({type: 'hidden', id: 'activationSchool_'+val, name: 'activationSchool[]', value:val }).appendTo('#activateSchoolForm'); 
+        }else{
+				var value = $(this).val();
+				$('input[type="hidden"][value="'+value+'"]').remove();	
+        }
+	});   
+});
+</script>
 @endsection

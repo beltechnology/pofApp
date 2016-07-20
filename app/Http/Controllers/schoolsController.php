@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Mail;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\school;
@@ -66,10 +66,40 @@ class schoolsController extends Controller
 						->orwhere('schoolcode', 'like', '%'.$q.'%')
 						->orwhere('uniqueSchoolCode', 'like', '%'.$q.'%')
 						->orwhere('cityName', 'like', '%'.$q.'%')
+						->orwhere('principalName', 'like', '%'.$q.'%')
 						->groupBy('schools.entityId')
 						->orderBy('schools.entityId','desc')
 						->paginate(10);
 						$pagination = $schools->appends ( array ('q' => Input::get ( 'q' )));						
+        return view('schools.index', compact('schools'));
+    }
+	public function activateSchool()
+    {
+			$schools= DB::table('schools')
+                        ->join('entitys','entitys.entityId','=','schools.entityId')
+                        ->join('addresses','addresses.entityId','=','schools.entityId')
+						->join('phones','phones.entityId','=','schools.entityId')
+						->join('emailaddresses','emailaddresses.entityId','=','schools.entityId')
+						->join('citys','citys.id','=','addresses.cityId')
+						->join('districts','districts.id','=','addresses.districtId')
+						->where('schools.deleted',0)
+						->where('addresses.stateId',session()->get('currentStateId'))
+						->groupBy('schools.entityId')
+						->orderBy('schools.entityId','desc')
+						->paginate(10);
+						
+			foreach(Input::get('activationSchool') as $activationSchool)
+			{
+					 DB::table('schools')->where('entityId', $activationSchool)->update(['activationSchool' => 0]);
+					 // Mail::send('emails.demo',  function($message)
+					// {
+						// $message->to('jane@example.com', 'Jane Doe')->subject('This is a demo!');
+					// });
+
+			}
+						
+						
+						
         return view('schools.index', compact('schools'));
     }
     /**
