@@ -7,18 +7,18 @@
   		<div class="container-fluid">
    		
     	<ul class="nav navbar-nav">
-      <li><a href="{{ url('/schools/'.session()->get('entityId').'/edit') }}"> School Profile </a></li>
-      <li><a href="{{ url('/book-details/'.session()->get('entityId').'/edit') }}"> Book Detail </a></li>
-      <li ><a href="{{ url('/student-count/'.session()->get('entityId').'/edit') }}"> No. of students from school </a></li>
-      <li><a href="{{ url('/payments/'.session()->get('entityId').'/edit') }}"> Payment Mode </a></li>
-	  <li><a href="{{ url('/fees/'.session()->get('entityId').'/edit') }}">Fees</a></li>
-	  <li class="active"><a href="{{ url('/student/') }}">Student Registration</a></li>
-	  <li><a href="{{ url('/first-level/'.session()->get('entityId').'/edit') }}">First Level Exam Time</a></li>
+       <li><a href="{{ url('/schools/'.session()->get('entityId').'/edit') }}">{{ trans('messages.TABS_SCHOOL_PROFILE') }} </a></li>
+      <li><a href="{{ url('/book-details/'.session()->get('entityId').'/edit') }}"> {{ trans('messages.TABS_BOOK_DETAIL') }}</a></li>
+      <li><a href="{{ url('/student-count/'.session()->get('entityId').'/edit') }}">{{ trans('messages.TABS_NO_OF_STUDENTS_FROM_SCHOOL') }}</a></li>
+      <li><a href="{{ url('/payments/'.session()->get('entityId').'/edit') }}">{{ trans('messages.TABS_PAYMENT_MODE') }}</a></li>
+	  <li><a href="{{ url('/fees/'.session()->get('entityId').'/edit') }}">{{ trans('messages.TABS_FEES') }}</a></li>
+	  <li class="active"><a href="{{ url('/student/') }}">{{ trans('messages.TABS_STUDENT_REGISTRATION') }}</a></li>
+	  <li><a href="{{ url('/first-level/'.session()->get('entityId').'/edit') }}">{{ trans('messages.TABS_FIRST_LEVEL_EXAM_TIME') }}</a></li>
     </ul>
   </div>
 </nav>
  <div class="h1-two col-md-12">
-	 <h1 class="text-left col-md-4"><a href="{{ url('/fees/'.session()->get('entityId').'/edit') }}" class="fa fa-angle-left  fa-2x"> Fees</a></h1>
+	 <h1 class="text-left col-md-4"><a href="{{ url('/fees/'.session()->get('entityId').'/edit') }}" class="fa fa-angle-left  fa-2x"> {{ trans('messages.TABS_FEES') }}</a></h1>
       <h1 class="text-center col-md-4"></h1>
 	    <div class="add-emp add-school col-md-2">
             <a href="{{ url('/student/create') }}" title="Add New student"><p>{{ trans('messages.ADD') }} <span class="glyphicon glyphicon-plus" aria-hidden="true"/></p></a>
@@ -31,7 +31,7 @@
         <table class="table table-bordered table-striped table-hover">
             <thead>
                 <tr>
-                    <th> StudentName </th><th> Dob </th><th>Class</th><th>Roll No.</th><th>Handicapped</th><th>Actions <input type="checkbox"></th><th>Edit</th><th>Delete</th>
+                    <th>{{ trans('messages.STUDENT_NAME') }}</th><th>{{ trans('messages.DOB') }}</th><th>{{ trans('messages.BOOKDETAIL_CLASS') }}</th><th>{{ trans('messages.ROLL_NO') }}</th><th> {{ trans('messages.HANDICAPPED') }}</th><th>{{ trans('messages.ACTIONS') }}<input type="checkbox"></th><th>{{ trans('messages.EDIT') }}</th><th>{{ trans('messages.DELETE') }}</th>
                 </tr>
             </thead>
             <tbody>
