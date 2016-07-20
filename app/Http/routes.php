@@ -13,6 +13,7 @@
 use App\District;
 use App\City;
 use App\Location;
+use App\User;
 use Illuminate\Support\Facades\Input;
  
 Route::group(array('middleware' => 'auth'), function() {
@@ -33,6 +34,8 @@ Route::group(array('middleware' => 'auth'), function() {
 	Route::resource('payments', 'paymentsController');
 	Route::resource('fees', 'feesController');
 	Route::resource('student', 'studentController');
+	Route::get('/search', 'employeeController@filter');
+	Route::post('/search', 'employeeController@filter');
 	Route::get('/employee/create/ajax-state',function()
 {
     $state_id = session()->get('currentStateId');
