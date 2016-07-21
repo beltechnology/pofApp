@@ -127,9 +127,12 @@ a {
 
 .main-menu {
     margin-top: 15px;
-    padding-bottom: 123px;
 }
 
+#table-content{
+min-height:508px; /* overrides height and max-height */
+  max-height:1000px;
+}
 .col-md-3.nav-bar {
     position: fixed;
 }
