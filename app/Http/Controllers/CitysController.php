@@ -26,6 +26,7 @@ class CitysController extends Controller
     {
         $citys = \DB::table('citys')
 		->where('citys.deleted',0)
+		->where('citys.state_id',session()->get('currentStateId'))
 		->groupBy('citys.id')
 		->paginate(15);
 

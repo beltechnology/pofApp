@@ -19,7 +19,11 @@ class DistrictController extends Controller
      */
     public function index()
     {
-		$district= \DB::table('districts')->where('districts.deleted',0)->groupBy('districts.id')->paginate(15);
+		$district= \DB::table('districts')
+					->where('districts.deleted',0)
+					->where('districts.state_id',session()->get('currentStateId'))
+					->groupBy('districts.id')
+					->paginate(15);
         return view('district.index', compact('district'));
     }
 

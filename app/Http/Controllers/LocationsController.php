@@ -19,7 +19,10 @@ class LocationsController extends Controller
      */
     public function index()
     {
-        $locations = \DB::table('locations')->where('deleted',0)->paginate(15);
+        $locations = \DB::table('locations')
+			->where('locations.deleted',0)
+			->where('locations.state_id',session()->get('currentStateId'))
+			->paginate(15);
 
         return view('locations.index', compact('locations'));
     }
