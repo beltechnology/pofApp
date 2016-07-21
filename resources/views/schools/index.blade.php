@@ -20,13 +20,14 @@
 		            </div>
 
             <div class=" col-md-3 category-filter">
-		<form action="/activate-school" method="POST"  id="activateSchoolForm">
+		<form action="/activate-school" method="POST"  onsubmit="return confirm('Do you really want to activate school?');" id="activateSchoolForm">
 		{{ csrf_field() }}
 			<div class="input-group">
 				<span class="input-group-btn">
-					<button type="submit" class="btn btn-default" name="activateSchool">
-						<span class="glyphicon glyphicon-ok"></span>
-					</button>
+					<button type="submit" class="btn btn-primary" name="activateSchool" value="0">Activate</button>
+				</span>
+				<span class="input-group-btn">
+					<button type="submit" class="btn btn-primary" name="activateSchool" value="1">Deactivate</button>
 				</span>
 			</div>
 		</form>
@@ -57,7 +58,11 @@
             </thead>
             <tbody>
             @foreach($schools as $item)
-                <tr class="">
+					@if ($item->activationSchool === 1)
+						 <tr class="danger">
+					@else
+						 <tr class="">
+					@endif               
                     <td>{{ $item->schoolName }}</td>
 					<td>{{ $item->addressLine1 }}</td>
 					<td>{{ $item->cityName }}</td>

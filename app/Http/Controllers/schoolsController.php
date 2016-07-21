@@ -71,7 +71,9 @@ class schoolsController extends Controller
 						->orderBy('schools.entityId','desc')
 						->paginate(10);
 						$pagination = $schools->appends ( array ('q' => Input::get ( 'q' )));						
-        return view('schools.index', compact('schools'));
+    //    return view('schools.index', compact('schools'));
+			return redirect('schools');				
+
     }
 	public function activateSchool()
     {
@@ -87,20 +89,21 @@ class schoolsController extends Controller
 						->groupBy('schools.entityId')
 						->orderBy('schools.entityId','desc')
 						->paginate(10);
-						
-			foreach(Input::get('activationSchool') as $activationSchool)
-			{
-					 DB::table('schools')->where('entityId', $activationSchool)->update(['activationSchool' => 0]);
-					 // Mail::send('emails.demo',  function($message)
-					// {
-						// $message->to('jane@example.com', 'Jane Doe')->subject('This is a demo!');
-					// });
+			if(Input::get('activationSchool'))
+			{ 	
+				foreach(Input::get('activationSchool') as $activationSchool)
+				{
+						 DB::table('schools')->where('entityId', $activationSchool)->update(['activationSchool' => Input::get('activateSchool')]);
+						 // Mail::send('emails.demo',  function($message)
+						// {
+							// $message->to('jane@example.com', 'Jane Doe')->subject('This is a demo!');
+						// });
 
-			}
+				}
 						
-						
-						
-        return view('schools.index', compact('schools'));
+			}			
+		return redirect('schools');				
+    //    return view('schools.index', compact('schools'));
     }
     /**
      * Show the form for creating a new resource.
@@ -117,7 +120,7 @@ class schoolsController extends Controller
 						->where('addresses.stateId',session()->get('currentStateId'))
 						->lists('employees.employeeCode', 'employeeId');
        $team= DB::table('teams')
-                        ->join('locations','locations.id','=','teams.teamId')
+                        ->join('locations','locations.id','=','teams.teamLocation')
 						->where('teams.deleted',0)
 						->where('locations.state_id',session()->get('currentStateId'))
 						->lists('teams.teamCode', 'teamId');						
@@ -164,7 +167,7 @@ class schoolsController extends Controller
             'PMOExamDate' => $request['PMOExamDate'],
             'PSOExamDate' => $request['PSOExamDate'],
             'schoolcode' => $request['schoolcode'],
-            'uniqueSchoolCode' => "SCHOOL".$request['entityId'],
+            'uniqueSchoolCode' => "SCHOOL".$request['uniqueschoolCode'],
             'teamCode' => $request['teamCode'],
             'employeeCode' => $request['employeeCode'],
             'schoolTotalStrength' => $request['schoolTotalStrength'],
@@ -268,7 +271,7 @@ class schoolsController extends Controller
 						->where('addresses.stateId',session()->get('currentStateId'))
 						->lists('employees.employeeCode', 'employeeId');
        $team= DB::table('teams')
-                        ->join('locations','locations.id','=','teams.teamId')
+                        ->join('locations','locations.id','=','teams.teamLocation')
 						->where('teams.deleted',0)
 						->where('locations.state_id',session()->get('currentStateId'))
 						->lists('teams.teamCode', 'teamId');						
