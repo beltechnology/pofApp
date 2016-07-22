@@ -7,6 +7,7 @@ return [
 	'REMEMBER_ME' => 'Remember Me',
 	'FORGET_PASSWORD' => 'Forgot Your Password ?',
 	'RESET_PASSWORD' => 'Reset Password',
+	'CONFIRM_PASSWORD' => 'Confirm Password',
 	'SEND_PASSWORD_RESET_LINK' => 'Send Password Reset Link',
 	'COPYRIGHT' => 'Copyright',//footer
 	'CREATED_AND_MAINTAINED' => 'Created & Maintained By Bel-Technology ',

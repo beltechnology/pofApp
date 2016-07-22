@@ -7,7 +7,7 @@
             <table class='table table-bordered table-striped table-hover'>
             <thead>
       <tr>
-        <th>Member Name</th>
+        <th>{{ trans('messages.MEMBER_NAME') }}</th>
         <th>{{ trans('messages.DOB') }}</th>
         <th>{{ trans('messages.CONTACT_NUMBER') }}</th>
         <th>{{ trans('messages.EMAIL') }} </th>
