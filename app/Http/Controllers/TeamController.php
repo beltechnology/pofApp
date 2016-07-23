@@ -54,7 +54,7 @@ class TeamController extends Controller
 						->join('employees','employees.designation','=','entitys.entityType')
 						->where('entitys.deleted',0)
 						->where('addresses.stateId',session()->get('currentStateId'))->lists('entitys.name', 'entitys.entityId');
-			$citys = \DB::table('citys')->where('citys.deleted',0)->lists('cityName', 'id');			
+			$citys = \DB::table('citys')->where('citys.state_id',session()->get('currentStateId'))->where('citys.deleted',0)->lists('cityName', 'id');			
 			return view('team.create', compact('employee'))->with('citys',$citys);
     }
 
@@ -65,9 +65,10 @@ class TeamController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, ['teamName' => 'required', 'teamLocation' => 'required','teamLeader'=>'required', 'teamCreationDate' => 'required', 'teamEndDate' => 'required', ]);
+        $this->validate($request, ['teamName' => 'required', 'city'=>'required','teamLocation' => 'required','teamLeader'=>'required', 'teamCreationDate' => 'required', 'teamEndDate' => 'required', ]);
        team::create([
-     		'teamName' => $request['teamName'],
+     	'teamName' => $request['teamName'],
+		'cityId' => $request['city'],
 		'teamLocation' => $request['teamLocation'],
         'teamCreationDate' => $request['teamCreationDate'],
         'teamEndDate' => $request['teamEndDate'],
@@ -116,8 +117,8 @@ class TeamController extends Controller
 						->where('entitys.deleted',0)
 						->where('addresses.stateId',session()->get('currentStateId'))->lists('entitys.name', 'entitys.entityId');					
 		$locations=\DB::table('locations')->where('locations.state_id',session()->get('currentStateId'))->where('locations.deleted',0)->lists('location','id');				
-		$citys = \DB::table('citys')->where('citys.deleted',0)->lists('cityName', 'id');
-		return view('team.edit', ['team' => $team,'employee' => $employee,'citys'=>$citys]);
+		$citys = \DB::table('citys')->where('citys.state_id',session()->get('currentStateId'))->where('citys.deleted',0)->lists('cityName', 'id');
+		return view('team.edit', ['team' => $team,'employee' => $employee,'locations'=>$locations,'citys'=>$citys]);
     }
 
     /**

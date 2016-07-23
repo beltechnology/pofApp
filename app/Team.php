@@ -25,5 +25,5 @@ class Team extends Model
      *
      * @var array
      */
-    protected $fillable = ['teamId', 'teamName', 'teamLocation', 'teamLeader', 'teamCreationDate', 'teamEndDate', 'teamCode', 'description', 'deleted', 'status'];
+    protected $fillable = ['teamId', 'teamName','cityId', 'teamLocation', 'teamLeader', 'teamCreationDate', 'teamEndDate', 'teamCode', 'description', 'deleted', 'status'];
 }

@@ -49,19 +49,17 @@
             </div>
 		</div>	
 		<div class="col-md-6 create-emp-list">
-				<div class="form-group {{ $errors->has('city') ? 'has-error' : ''}}">
-                {!! Form::label('city', trans('messages.CITY'), ['class' => 'col-sm-4  control-label']) !!}
+				<div class="form-group {{ $errors->has('cityId') ? 'has-error' : ''}}">
+                {!! Form::label('cityId', trans('messages.CITY'), ['class' => 'col-sm-4  control-label']) !!}
                 <div class="col-sm-8">
-					{!! Form::select('city_id',$citys, null, ['class' => 'form-control stateSelect','id' => 'city']) !!}
-					 {!! $errors->first('city', '<p class="help-block">:message</p>') !!}
+					{!! Form::select('cityId',$citys, null, ['class' => 'form-control stateSelect','id' => 'city']) !!}
+					 {!! $errors->first('cityId', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>
 		     <div class="form-group {{ $errors->has('teamLocation') ? 'has-error' : ''}}">
                 {!! Form::label('teamLocation', trans('messages.TEAM_LOCATION'), ['class' => 'col-sm-4 control-label']) !!}
                 <div class="col-sm-8">
-                  <select id="teamLocation" class="form-control " name="teamLocation">
-					<option value=""></option>
-					</select>
+				{!! Form::select('teamLocation',$locations, null, ['class' => 'form-control stateSelect','id' => 'teamLocation']) !!}
                     {!! $errors->first('teamLocation', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>
@@ -97,23 +95,20 @@
 </div>
 </div>
 <script>
- /* $(document).ready(function(){
-	
-
-        var city = $("#city").val();
-	 $.get('{{ url('locations') }}/edit/district?dist_id=' + dist_id, function(data) {
+ $(document).ready(function(){
+        var city_id = $("#city").val();
+		var teamLocation = $("#teamLocation").val();
+	 $.get('{{ url('team') }}/edit/district?city_id=' + city_id, function(data) {
             console.log(data);
-            $('#city').empty();
+            $('#teamLocation').empty();
             $.each(data, function(index,subCatObj){
-                $('#city').append('<option value="'+subCatObj.id+'">'+subCatObj.cityName+'</option>');
+                $('#teamLocation').append('<option value="'+subCatObj.id+'">'+subCatObj.location+'</option>');
             });
-			$("#city").val(city);
+			$("#city").val(city_id);
+			$("#teamLocation").val(teamLocation);
         });
 
         });	
-
-});
-*/
 
 $('#city').on('change', function(e){
         console.log(e);
