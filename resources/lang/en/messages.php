@@ -173,8 +173,8 @@ return [
 	'SCHOOL_CLASS_3_TO_10'=>'Class 3 to 10 Strength',
 	'SCHOOL_FOLLOW_UPDATE'=>'Follow Update',
 	'SCHOOL_CALL_STATUS'=>'Call Status',
-	'SCHOOL_POSTER_DISTRIBUTED'=>'Poster Distributed',
-	'SCHOOL_KMS'=>'Kms',
+	'SCHOOL_POSTER_DISTRIBUTED'=>'No. Of Poster Distributed',
+	'SCHOOL_KMS'=>'KMS',
 	'SCHOOL_REMARKS'=>'Remarks',
 	
 	'TABS_SCHOOL_PROFILE'=>'School Profile',

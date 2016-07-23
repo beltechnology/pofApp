@@ -33,7 +33,7 @@
       <h1 class="text-center col-md-4">{{ trans('messages.STUDENTS_STRENGTH') }}</h1>
       <h1 class="text-left col-md-4"></h1>
       </div>
-	  <div class="row create-emp-list">
+	  <div class="row">
  
  <div class="table">
         <table class="table table-bordered table-striped table-hover">
@@ -50,9 +50,9 @@
                 <tr>
 					<td>{!! Form::hidden('classId[]', $item->classId, ['class' => '','readonly'=>'readonly']) !!}
 					{!! Form::label('name', $item->name, ['class' => '','readonly'=>'readonly']) !!}</td>
-					<td> {!! Form::number('noofstudentPMO[]', $item->noofstudentPMO, ['class' => 'form-control noofstudentPMO']) !!} </td>
-					<td> {!! Form::number('noofstudentPSO[]', $item->noofstudentPSO, ['class' => 'form-control noofstudentPSO']) !!}</td>
-					<td> {!! Form::number('handicapped[]', $item->handicapped, ['class' => 'form-control handicapped']) !!}</td>
+					<td> {!! Form::number('noofstudentPMO[]', $item->noofstudentPMO, ['class' => 'form-control noofstudentPMO','min'=>'0']) !!} </td>
+					<td> {!! Form::number('noofstudentPSO[]', $item->noofstudentPSO, ['class' => 'form-control noofstudentPSO','min'=>'0']) !!}</td>
+					<td> {!! Form::number('handicapped[]', $item->handicapped, ['class' => 'form-control handicapped','min'=>'0']) !!}</td>
                 </tr>
 			@endforeach
 				 <tr>

@@ -1,9 +1,12 @@
 @extends('layouts.header')
 @section('content')
     <div class=" col-md-9 category">
-    <h1>{{ trans('messages.SCHOOL_CREATE_NEW_SCHOOL') }}</h1>
-    <hr/>
-
+	
+	  <div class="h1-two col-md-12">
+	 <h1 class="text-left col-md-4"><a href="{{ url('/schools') }}" class="fa fa-angle-left  fa-2x"> {{ trans('messages.SCHOOL_LIST') }} </a></h1>
+      <h1 class="text-center col-md-4">{{ trans('messages.SCHOOL_CREATE_NEW_SCHOOL') }} </h1>
+      <h1 class="text-left col-md-4"></h1>
+      </div>
     {!! Form::open(['url' => '/schools', 'class' => 'form-horizontal']) !!}
         {!! Form::hidden('schoolCode',\DB::table('schools')->max('id')+1, null, ['class' => 'form-control','required' => 'required'],['name'=>'uniqueschoolCode']) !!}
         {!! Form::hidden('entityId',\DB::table('entitys')->max('entityId')+1, null, ['class' => 'form-control','required' => 'required'],['name'=>'entityId']) !!}

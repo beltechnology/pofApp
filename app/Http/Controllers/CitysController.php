@@ -24,11 +24,11 @@ class CitysController extends Controller
      */
     public function index()
     {
-        $citys = \DB::table('citys')
-		->where('citys.deleted',0)
-		->where('citys.state_id',session()->get('currentStateId'))
-		->groupBy('citys.id')
-		->paginate(15);
+        $citys = \DB::table('districts')
+				->join('citys','citys.district_id','=','districts.id')
+				->where('citys.deleted',0)
+				->where('citys.state_id',session()->get('currentStateId'))
+				->paginate(15);
 
         return view('citys.index', compact('citys'));
     }

@@ -26,15 +26,19 @@ class TeamController extends Controller
     public function index()
     {
 		
-		$deleted=0;
 		$team= DB::table('teams')
                         ->join('locations','locations.id','=','teams.teamLocation')
 						->where('teams.deleted',0)
 						->where('locations.state_id',session()->get('currentStateId'))
 						->orderby('teams.teamId')
 						->paginate(15);
-
-        return view('team.index', compact('team'));
+		$employees= DB::table('teams')
+						 ->join('employees','employees.teamId','=','teams.teamId')
+						 ->join('entitys','entitys.entityId','=','employees.entityId')
+						->where('teams.deleted',0)
+						->groupby('employees.teamId')
+						->get();
+        return view('team.index',['team' => $team,'employees' => $employees]);
     }
 
     /**
@@ -50,7 +54,8 @@ class TeamController extends Controller
 						->join('employees','employees.designation','=','entitys.entityType')
 						->where('entitys.deleted',0)
 						->where('addresses.stateId',session()->get('currentStateId'))->lists('entitys.name', 'entitys.entityId');
-			return view('team.create', compact('employee'));
+			$citys = \DB::table('citys')->where('citys.deleted',0)->lists('cityName', 'id');			
+			return view('team.create', compact('employee'))->with('citys',$citys);
     }
 
     /**
@@ -99,14 +104,20 @@ class TeamController extends Controller
     public function edit($id)
     {
         $team = Team::findOrFail($id);
+		
+		/*$team =DB::table('teams')
+                        ->join('locations','locations.id','=','teams.teamLocation')
+						->join('citys','citys.id','=','locations.city_id')
+						->where('teams.teamId',$id);
+		*/				
 		$employee= \DB::table('entitys')
                         ->join('addresses','addresses.entityId','=','entitys.entityId')
 						->join('employees','employees.designation','=','entitys.entityType')
 						->where('entitys.deleted',0)
-						->where('addresses.stateId',session()->get('currentStateId'))->lists('entitys.name', 'entitys.entityId');
-						
+						->where('addresses.stateId',session()->get('currentStateId'))->lists('entitys.name', 'entitys.entityId');					
 		$locations=\DB::table('locations')->where('locations.state_id',session()->get('currentStateId'))->where('locations.deleted',0)->lists('location','id');				
-		return view('team.edit', ['team' => $team,'employee' => $employee,'locations' => $locations]);
+		$citys = \DB::table('citys')->where('citys.deleted',0)->lists('cityName', 'id');
+		return view('team.edit', ['team' => $team,'employee' => $employee,'citys'=>$citys]);
     }
 
     /**
