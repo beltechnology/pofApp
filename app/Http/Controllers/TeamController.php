@@ -130,7 +130,7 @@ class TeamController extends Controller
      */
     public function update($id, Request $request)
     {
-        $this->validate($request, ['teamName' => 'required', 'teamLocation' => 'required', 'teamCreationDate' => 'required', 'teamEndDate' => 'required', ]);
+        $this->validate($request, ['teamName' => 'required','cityId'=>'required', 'teamLocation' => 'required', 'teamCreationDate' => 'required', 'teamEndDate' => 'required', ]);
         $team = Team::findOrFail($id);
         $team->update($request->all());
 

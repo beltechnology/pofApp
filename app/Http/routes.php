@@ -62,14 +62,14 @@ Route::get('/locations/create/district',function()
 Route::get('/team/create/district',function()
 {
     $city_id = Input::get('city_id');
-    $subcategories = Location::where('city_id','=',$city_id)->where('locations.state_id',session()->get('currentStateId'))->get();
+    $subcategories = Location::where('city_id','=',$city_id)->where('locations.deleted',0)->where('locations.state_id',session()->get('currentStateId'))->get();
     return $subcategories;
  
 });
 Route::get('/team/edit/district',function()
 {
     $city_id = Input::get('city_id');
-    $subcategories = Location::where('city_id','=',$city_id)->where('locations.state_id',session()->get('currentStateId'))->get();
+    $subcategories = Location::where('city_id','=',$city_id)->where('locations.deleted',0)->where('locations.state_id',session()->get('currentStateId'))->get();
     return $subcategories;
  
 });
