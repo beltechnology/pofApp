@@ -2,10 +2,16 @@
 
 @section('content')
 <div class=" col-md-10 category">
-  <h1 class="school_category"><a href="{{ url('/team') }}" class="fa fa-angle-left  fa-2x"> {{ trans('messages.TEAM_LIST') }} </a></h1>
-            <div class="add-emp add-school col-md-2">
+	<div class="h1-two col-md-12">
+  <h1 class="text-left school_category col-md-4"><a href="{{ url('/team') }}" class="fa fa-angle-left  fa-2x"> {{ trans('messages.TEAM_LIST') }} </a></h1>
+  <h1 class="text-center col-md-4">{{ trans('messages.TEAM_MEMBERS') }}</h1>
+  <h1 class="text-left col-md-4">
+            <div class="add-emp add-school col-md-12">
             <a href="{{ url('/teammember/create') }}" title="Add New Team Member"><p>{{ trans('messages.ADD') }} <span class="glyphicon glyphicon-plus" aria-hidden="true"/></p></a>
             </div>
+			</h1>
+  </div>
+	
     <div class="table">
         <table class="table table-bordered table-striped table-hover">
             <thead>

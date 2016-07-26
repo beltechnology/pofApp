@@ -73,12 +73,22 @@
             </tbody>
 			</table>
 	</div>
-
+	
+	<div class=" col-md-12 button-group">
     <div class="form-group">
+        <div class=" team_btn">
+             {!! Form::reset(trans('messages.CANCEL_BTN'), ['class' => 'btn btn-primary ']) !!}
+            {!! Form::submit(trans('messages.SUBMIT_BTN'), ['class' => 'btn btn-primary ']) !!}
+        </div>
+    </div>
+	</div>
+
+    <!--<div class="form-group">
         <div class="col-sm-offset-3 col-sm-3">
             {!! Form::submit(trans('messages.UPDATE') , ['class' => 'btn btn-primary form-control']) !!}
         </div>
-    </div>
+    </div>-->
+	
     {!! Form::close() !!}
 </div>
 <script>

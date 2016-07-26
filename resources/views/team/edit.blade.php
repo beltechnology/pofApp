@@ -74,9 +74,9 @@
 		</div> 
 
    
-	<div class=" col-md-10 button-group">
+	<div class=" col-md-12 button-group">
     <div class="form-group">
-        <div class="col-sm-offset-3 col-sm-12 team-create-btn">
+        <div class="team_btn team-edit-btn">
             {!! Form::reset(trans('messages.CANCEL_BTN'), ['class' => 'btn btn-primary ']) !!}
             {!! Form::submit(trans('messages.SUBMIT_BTN'), ['class' => 'btn btn-primary ']) !!}
         </div>

@@ -824,7 +824,7 @@ input[type=checkbox]:checked + label:before { letter-spacing: 5px; } /* allow sp
 
 .team_btn {
     text-align: right;
-    padding: 10px;
+    padding: 0px 10px;
 }
 
 .school-create-btn {
@@ -846,4 +846,12 @@ input[type=checkbox]:checked + label:before { letter-spacing: 5px; } /* allow sp
 .state-btn {
     margin: 0px;
     padding-right: 15px !important;
+}
+
+.exam-drpdwn {
+    padding-right: 0px !important;
+}
+
+.team_btn.team-edit-btn {
+    padding-right: 15px;
 }

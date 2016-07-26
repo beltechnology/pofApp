@@ -78,17 +78,20 @@
                     {!! $errors->first('teamCode', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>
+	
+           
+    </div>
+
+	
 	<div class=" col-md-12 button-group">
     <div class="form-group">
-        <div class="col-sm-offset-3 col-sm-12 ">
+        <div class=" team_btn team-edit-btn">
             {!! Form::reset(trans('messages.CANCEL_BTN'), ['class' => 'btn btn-primary ']) !!}
             {!! Form::submit(trans('messages.SUBMIT_BTN'), ['class' => 'btn btn-primary ']) !!}
         </div>
     </div>
     </div>
-           
-    </div>
-
+	
     {!! Form::close() !!}
 
     @if ($errors->any())

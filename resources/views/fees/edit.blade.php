@@ -18,7 +18,7 @@
     </ul>
 		</div>
 	</nav>
- <div class="h1-two col-md-12">
+ <div class="h1-two edit-school-border col-md-12">
 	 <h1 class="text-left col-md-4"><a href="{{ url('/payments/'.$fee->entityId.'/edit') }}" class="fa fa-angle-left  fa-2x"> {{ trans('messages.TABS_PAYMENT_MODE') }}</a></h1>
       <h1 class="text-center col-md-4">{{ trans('messages.TABS_FEES') }}</h1>
       <h1 class="text-left col-md-4"></h1>
@@ -29,7 +29,7 @@
 		<div class="col-md-6">
             <div class="form-group {{ $errors->has('examLevelId') ? 'has-error' : ''}}">
                 {!! Form::label('examLevelId', trans('messages.EXAM_LEVEL'), ['class' => 'col-sm-5 control-label']) !!}
-                <div class="col-sm-7">
+                <div class="col-sm-7 exam-drpdwn">
                     {!! Form::select('examLevelId',(['1' => trans('messages.FIRST_LEVEL')]),null,['class' => 'form-control']) !!}
                     {!! $errors->first('examLevelId', '<p class="help-block">:message</p>') !!}
                 </div>
@@ -37,7 +37,7 @@
 			</div>
 			<div class="col-md-6">
             <div class="form-group">
-                <div class="col-sm-offset-3 col-sm-3">
+                <div class="col-sm-offset-3 col-sm-3 active-btn ">
 				 {!! Form::open(['method'=>'DELETE','url' => ['/fees', $fee->entityId],'style' => 'display:inline']) !!}              
 				{!! Form::submit(trans('messages.ACTIVATE'), ['class' => 'btn btn-primary ','onclick'=>'return confirm("Confirm to school activate ?")']) !!}
 				{!! Form::close() !!}
@@ -92,12 +92,23 @@
                 </div>
             </div>
 			</div>			
-			</div>
+			
+			<div class=" col-md-12 button-group">
     <div class="form-group">
+        <div class=" team_btn small-form-btn">
+             {!! Form::reset(trans('messages.CANCEL_BTN'), ['class' => 'btn btn-primary ']) !!}
+            {!! Form::submit(trans('messages.SUBMIT_BTN'), ['class' => 'btn btn-primary ']) !!}
+        </div>
+    </div>
+	</div>
+			
+			</div>
+    
+	<!--<div class="form-group">
         <div class="col-sm-offset-3 col-sm-3">
             {!! Form::submit(trans('messages.UPDATE'), ['class' => 'btn btn-primary ']) !!}
         </div>
-    </div>
+    </div>-->
 	
     {!! Form::close() !!}
 

@@ -1,8 +1,14 @@
 @extends('layouts.header')
 
 @section('content')
+ <h1 class=""></h1>
 <div class=" col-md-10 category">
-    <h1>{{ trans('messages.ADD_TEAM_MEMBER') }}</h1>
+
+	<div class="h1-two col-md-12">
+	<h1 class="text-left school_category col-md-4"><a href="{{ url('/team') }}" class="fa fa-angle-left  fa-2x"> {{ trans('messages.TEAM_LIST') }} </a></h1>
+    <h1 class="text-center col-md-4">{{ trans('messages.ADD_TEAM_MEMBER') }}</h1>
+	<h1 class="text-left col-md-4"></h1>
+	</div>
 <div class="table">
             <table class='table table-bordered table-striped table-hover'>
             <thead>
