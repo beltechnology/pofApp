@@ -33,7 +33,7 @@
       <h1 class="text-center col-md-4">{{ trans('messages.STUDENTS_STRENGTH') }}</h1>
       <h1 class="text-left col-md-4"></h1>
       </div>
-	  <div class="row create-emp-list">
+	  <div class="row">
  
  <div class="table">
         <table class="table table-bordered table-striped table-hover">
