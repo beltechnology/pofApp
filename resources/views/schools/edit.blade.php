@@ -1,6 +1,6 @@
 @extends('layouts.header')
 @section('content')
-    <div class=" col-md-9 category">
+    <div class=" col-md-10 category">
     {!! Form::model($school->toArray()+$entity->toArray()+$address->toArray()+$emailaddress->toArray()+$phone->toArray(), [
         'method' => 'PATCH',
         'url' => ['/schools', $school->entityId],

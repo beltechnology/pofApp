@@ -1,7 +1,7 @@
 @extends('layouts.header')
 
 @section('content')
-<div class=" col-md-9 category">
+<div class=" col-md-10 category">
 
     <h1>Team {{ $team->id }}
         <a href="{{ url('team/' . $team->id . '/edit') }}" class="btn btn-primary btn-xs" title="Edit Team"><span class="glyphicon glyphicon-pencil" aria-hidden="true"/></a>

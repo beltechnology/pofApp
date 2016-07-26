@@ -19,7 +19,7 @@
 </head>
 
 <body>
-
+<div class="maincontant">
  <section id="header">
         <div class="container">
             <div class="row">
@@ -54,7 +54,10 @@
             </div>
         </div>
  </section>
+
     @yield('content')
+	 <div class="push"></div>
+</div>
 <section id="footer">
         <div class="container">
             <div class="row">

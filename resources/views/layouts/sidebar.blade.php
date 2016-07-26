@@ -1,4 +1,4 @@
-			<div class=" col-md-3 ">
+			<div class=" col-md-2 ">
              <nav class="main-menu">
             <ul class="nav nav-list">
                 
@@ -33,7 +33,7 @@
                     </a>
                 </li>-->
                  <li>
-                    <a href="{{ url('/state') }}">
+                    <a class="active" href="{{ url('/state') }}">
                        <i class="fa fa-flag-o fa-2x"></i>
                        {{ trans('messages.STATE') }}
                         </span>

@@ -7,6 +7,7 @@
 <link rel="stylesheet" type="text/css" href="../../css/bootstrap.css"/>
 <link rel="stylesheet" type="text/css" href="../../css/bootstrap-datetimepicker.min.css"/>
 <link rel="stylesheet" type="text/css" href="../../css/style.css"/>
+<link rel="stylesheet" type="text/css" href="../../../public/css/media.css" />
 <link rel="stylesheet" type="text/css" href="../../font-awesome/css/font-awesome.min.css">
 <link rel="stylesheet" type="text/css" href="../../font-awesome/css/font-awesome.css">
 <link href='//fonts.googleapis.com/css?family=RobotoDraft:regular,bold,italic,thin,light,bolditalic,black,medium&lang=en' rel='stylesheet' type='text/css'>
@@ -24,7 +25,7 @@
 </head>
 
 <body>
-
+<div class="maincontant">
  <section id="header">
         <div class="container">
             <div class="row">
@@ -70,7 +71,8 @@
 </div>
 </div>	
  </section>		
-	
+<div class="push"></div>
+</div>
  <section id="footer">
         <div class="container">
             <div class="row">

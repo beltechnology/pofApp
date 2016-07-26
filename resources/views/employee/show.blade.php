@@ -1,7 +1,7 @@
 @extends('layouts.header')
 
 @section('content')
-<div class=" col-md-9 category">
+<div class=" col-md-10 category">
     <h1>employee {{ $employee->employeeId }}
         <a href="{{ url('employee/' . $employee->employeeId . '/edit') }}" class="btn btn-primary btn-xs" title="Edit employee"><span class="glyphicon glyphicon-pencil" aria-hidden="true"/></a>
         {!! Form::open([

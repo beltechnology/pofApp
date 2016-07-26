@@ -1,6 +1,6 @@
 @extends('layouts.header')
 @section('content')
-<div class=" col-md-9 category">
+<div class=" col-md-10 category">
  <div class=" col-md-12 top-filter">
  
             <div class=" col-md-3 category-name">

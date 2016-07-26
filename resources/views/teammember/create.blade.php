@@ -1,7 +1,7 @@
 @extends('layouts.header')
 
 @section('content')
-<div class=" col-md-9 category">
+<div class=" col-md-10 category">
     <h1>{{ trans('messages.ADD_TEAM_MEMBER') }}</h1>
 <div class="table">
             <table class='table table-bordered table-striped table-hover'>

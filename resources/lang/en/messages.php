@@ -26,7 +26,7 @@ return [
 	'EMPLOYEE_NAME' => 'Employee Name',
 	'CONTACT_NUMBER' => 'Contact Number',
 	'NAME' => 'Name',
-	'DOB' => 'Dob',
+	'DOB' => 'DOB',
 	'PRIMARY_MOBILE' => 'Primary Mobile',
 	'SECONDARY_MOBILE' => 'Secondary Mobile',
 	'ADDRESS'=>'Address',

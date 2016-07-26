@@ -1,7 +1,7 @@
 @extends('layouts.header')
 
 @section('content')
-<div class=" col-md-9 category">
+<div class=" col-md-10 category">
 
     <h1 class="text-left"><a href="{{ url('/class-name') }}" class="fa fa-angle-left  fa-2x"> {{ trans('messages.CLASS_LIST') }} </a></h1>
     <hr/>

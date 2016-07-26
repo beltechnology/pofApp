@@ -1,7 +1,7 @@
 @extends('layouts.header')
 
 @section('content')
-<div class=" col-md-9 category">
+<div class=" col-md-10 category">
 <div class="edit_school">
 		
         <nav class="navbar navbar-default">

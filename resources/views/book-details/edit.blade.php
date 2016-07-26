@@ -1,6 +1,6 @@
 @extends('layouts.header')
 @section('content')
- <div class=" col-md-9 category">
+ <div class=" col-md-10 category">
     {!! Form::model($bookdetail, [
         'method' => 'PATCH',
         'url' => ['/book-details', $bookdetail->entityId],
