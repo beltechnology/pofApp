@@ -30,7 +30,7 @@
             <a href="{{ url('/employee/create') }}"><p>{{ trans('messages.ADD') }} <span class="glyphicon glyphicon-plus" aria-hidden="true"/></p></a>
             </div>
             </div>
-		 <h1 style="color:red;">  {{ session()->get('flash_message')}} </h1>	
+		 <h1 style="color:red;">  {{ session()->get('concurrency_message')}} </h1>	
         <div class="table">
             <table class="table table-bordered table-striped table-hover" >
             <thead>

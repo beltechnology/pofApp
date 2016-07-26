@@ -29,6 +29,7 @@
       <h1 class="text-center col-md-4">{{ trans('messages.TABS_BOOK_DETAIL') }}</h1>
       <h1 class="text-left col-md-4"></h1>
       </div>
+	  <h1 style="color:red;">  {{ session()->get('concurrency_message')}} </h1>
  <div class="table">
         <table class="table table-bordered table-striped table-hover">
             <thead>
@@ -45,8 +46,10 @@
             </thead>
 			<tbody>
             @foreach($bookdetails as $item)
+			{!! Form::hidden('updateCounter', null, ['class' => 'form-control'],['name'=>'updateCounter']) !!}
                 <tr>
 					<td>{!! Form::hidden('classId[]', $item->classId, ['class' => '','readonly'=>'readonly']) !!}
+							
 					{!! Form::label('name', $item->name, ['class' => '','readonly'=>'readonly']) !!}</td>
 					<td> {!! Form::number('noofBookFirstVisitPMO[]', $item->noofBookFirstVisitPMO, ['class' => 'form-control noofBookFirstVisitPMO','min'=>'0']) !!} </td>
 					<td> {!! Form::number('noofBookFirstVisitPSO[]', $item->noofBookFirstVisitPSO, ['class' => 'form-control noofBookFirstVisitPSO','min'=>'0']) !!}</td>

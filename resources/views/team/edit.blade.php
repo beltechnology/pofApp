@@ -12,7 +12,7 @@
         'class' => 'form-horizontal'
     ]) !!}
         <div class=" col-md-6 create-emp-list">
-               
+		{!! Form::hidden('updateCounter', null, ['class' => 'form-control'],['name'=>'updateCounter']) !!}
             <div class="form-group {{ $errors->has('teamName') ? 'has-error' : ''}}">
                 {!! Form::label('teamName', trans('messages.TEAM_NAME'), ['class' => 'col-sm-4 control-label']) !!}
                 <div class="col-sm-8">
@@ -71,10 +71,10 @@
                     {!! $errors->first('teamCode', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>
-		
+		</div> 
 
    
-	<div class=" col-md-12 button-group">
+	<div class=" col-md-10 button-group">
     <div class="form-group">
         <div class="col-sm-offset-3 col-sm-12 team-create-btn">
             {!! Form::reset(trans('messages.CANCEL_BTN'), ['class' => 'btn btn-primary ']) !!}
@@ -82,7 +82,7 @@
         </div>
     </div>
     </div>
-   </div>      
+        
     {!! Form::close() !!}
 
     @if ($errors->any())

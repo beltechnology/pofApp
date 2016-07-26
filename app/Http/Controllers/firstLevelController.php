@@ -88,16 +88,23 @@ class firstLevelController extends Controller
     public function update($id, Request $request)
     {
         
-        //$firstlevel = firstLevel::findOrFail($id);
-        //$firstlevel->update($request->all());
+		$updateCounters=Input::get ('updateCounter')+1;
+		$updateCounterdata = DB::table('first_levels')->where('entityId',$id)->value('updateCounter');
+		if($updateCounterdata < $updateCounters)
+		{
 			$examLevelId=$request->input('examLevelId');
 			$reportTime=$request->input('reportTime');
 			$examStartTime=$request->input('examStartTime');
 			$examEndTime=$request->input('examEndTime');
-			DB::table('first_levels')->where('entityId', $id)->update(['examLevelId' =>$examLevelId,'reportTime' =>$reportTime,'examStartTime' =>$examStartTime,'examEndTime'=>$examEndTime]);
-        Session::flash('flash_message', 'firstLevel updated!');
-
+			DB::table('first_levels')->where('entityId', $id)->update(['examLevelId' =>$examLevelId,'reportTime' =>$reportTime,'examStartTime' =>$examStartTime,'examEndTime'=>$examEndTime,'updateCounter' => $updateCounters]);
+			Session::flash('flash_message', 'firstLevel updated!');
         return redirect('first-level/'.$id.'/edit');
+		}
+		else
+	   {
+		Session::flash('concurrency_message', 'Data has been changed by some other user');
+		return redirect('first-level/'.$id.'/edit');
+	   }  
     }
 
     /**

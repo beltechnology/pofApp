@@ -95,6 +95,10 @@ class BookDetailsController extends Controller
     public function update($id, Request $request)
     {
         $this->validate($request, ['entityId' => '', ]);
+		$updateCounters=Input::get ('updateCounter')+1;
+		$updateCounterdata = DB::table('book_details')->where('entityId',$id)->value('updateCounter');
+		if($updateCounterdata < $updateCounters)
+		{
 		$i= 0;
 		foreach($request->input('classId') as $classId)
 		{
@@ -105,15 +109,19 @@ class BookDetailsController extends Controller
 			$returnBook=$request->input('returnBook')[$i];
 			$total=$request->input('total')[$i];
 			$other=$request->input('other')[$i];
-			DB::table('book_details')->where('entityId', $id)->where('classId', $classId)->update(['noofBookFirstVisitPMO' =>$noofBookFirstVisitPMO,'noofBookFirstVisitPSO' =>$noofBookFirstVisitPSO,'noofBookLastVisitPMO' =>$noofBookLastVisitPMO,'noofBookLastVisitPSO' =>$noofBookLastVisitPSO,'returnBook' =>$returnBook,'other' =>$other,'total' =>$total]);
+			DB::table('book_details')->where('entityId', $id)->where('classId', $classId)->update(['noofBookFirstVisitPMO' =>$noofBookFirstVisitPMO,'noofBookFirstVisitPSO' =>$noofBookFirstVisitPSO,'noofBookLastVisitPMO' =>$noofBookLastVisitPMO,'noofBookLastVisitPSO' =>$noofBookLastVisitPSO,'returnBook' =>$returnBook,'other' =>$other,'total' =>$total,'updateCounter' => $updateCounters]);
 			$i++;
 		}
-    //    $bookdetail = BookDetail::findOrFail($id);
-    //    $bookdetail->update($request->all());
-
+    
         Session::flash('flash_message', 'BookDetail updated!');
-
         return redirect('book-details/'.$id.'/edit');
+		
+		}
+		else
+	   {
+		Session::flash('concurrency_message', 'Data has been changed by some other user');
+		return redirect('book-details/'.$id.'/edit');
+	   }   
     }
 
     /**

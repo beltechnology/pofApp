@@ -15,6 +15,7 @@ use App\Team;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Session;
+use Illuminate\Support\Facades\Input;
 use DB;
 class TeamController extends Controller
 {
@@ -130,12 +131,22 @@ class TeamController extends Controller
     public function update($id, Request $request)
     {
         $this->validate($request, ['teamName' => 'required','cityId'=>'required', 'teamLocation' => 'required', 'teamCreationDate' => 'required', 'teamEndDate' => 'required', ]);
+		$updateCounters=Input::get ('updateCounter')+1;
+		$updateCounterdata = DB::table('teams')->where('teamId',$id)->value('updateCounter');
+		if($updateCounterdata < $updateCounters)
+		{
         $team = Team::findOrFail($id);
         $team->update($request->all());
-
+		DB::table('teams')->where('teamId',$id)->update(['updateCounter' => $updateCounters]);
+		
         Session::flash('flash_message', 'Team updated!');
-
         return redirect('team');
+		}
+		else
+	   {
+		Session::flash('concurrency_message', 'Data has been changed by some other user');
+		return redirect('team');
+	   }   
     }
 
     /**

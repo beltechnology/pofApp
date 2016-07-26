@@ -90,21 +90,29 @@ class studentCountController extends Controller
     public function update($id, Request $request)
     {
 		$this->validate($request, ['entityId' => '', ]);
+		$updateCounters=Input::get ('updateCounter')+1;
+		$updateCounterdata = DB::table('student_counts')->where('entityId',$id)->value('updateCounter');
+		if($updateCounterdata < $updateCounters)
+		{
         $i= 0;
 		foreach($request->input('classId') as $classId)
 		{
 			$noofstudentPMO=$request->input('noofstudentPMO')[$i];
 			$noofstudentPSO=$request->input('noofstudentPSO')[$i];
 			$handicapped=$request->input('handicapped')[$i];
-			DB::table('student_counts')->where('entityId', $id)->where('classId', $classId)->update(['noofstudentPMO' =>$noofstudentPMO,'noofstudentPSO' =>$noofstudentPSO,'handicapped' =>$handicapped]);
+			DB::table('student_counts')->where('entityId', $id)->where('classId', $classId)->update(['noofstudentPMO' =>$noofstudentPMO,'noofstudentPSO' =>$noofstudentPSO,'handicapped' =>$handicapped,'updateCounter' => $updateCounters]);
 			$i++;
 		}
-        //$studentcount = studentCount::findOrFail($id);
-        //$studentcount->update($request->all());
-
         Session::flash('flash_message', 'studentCount updated!');
 
         return redirect('student-count/'.$id.'/edit');
+		}
+		else
+	   {
+		Session::flash('concurrency_message', 'Data has been changed by some other user');
+		return redirect('student-count/'.$id.'/edit');
+	   }  
+		
     }
 
     /**

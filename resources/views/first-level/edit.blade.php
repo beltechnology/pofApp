@@ -30,8 +30,9 @@
       <h1 class="text-left col-md-4"></h1>
       </div>
 	</div>
-
+	<h1 style="color:red;">  {{ session()->get('concurrency_message')}} </h1>
 			<div class="row create-emp-list">
+			{!! Form::hidden('updateCounter', null, ['class' => 'form-control'],['name'=>'updateCounter']) !!}
 				<div class="col-md-6">
            
                     {!! Form::hidden('examLevelId',1, ['class' => 'form-control']) !!}
