@@ -794,10 +794,6 @@ input[type=checkbox]:checked + label:before { letter-spacing: 5px; } /* allow sp
     padding: 0px;
 }
 
-.team_btn {
-    margin: 0px;
-    padding: 0px 0px 0px 120px;
-}
 
 .create-emp-list .form-control:focus{
     outline: none !important;
@@ -808,32 +804,9 @@ input[type=checkbox]:checked + label:before { letter-spacing: 5px; } /* allow sp
 .maincontant {height: auto !important; min-height: 100%; margin:0 0 -50px;}
 #footer, .push {height: 50px; clear: both;}
 
-.team-create-btn {
-    padding: 0px 0px 0px 85px;
-}
-
-.team-create-btn {
-    padding: 0px 0px 0px 171px;
-    margin: 0px;
-}
 
 .text-left.col-md-4 {
     padding: 0px;
-}
-
-.book-details_btn {
-    margin: 0px;
-    padding: 0px 0px 0px 312px;
-}
-
-.students-school_btn {
-    margin: 0px;
-    padding: 0px 0px 0px 176px;
-}
-
-.fees_btn {
-    margin: 0px;
-    padding-left: 155px !important;
 }
 
 .active-btn {
@@ -847,4 +820,30 @@ input[type=checkbox]:checked + label:before { letter-spacing: 5px; } /* allow sp
 .col-sm-7.exam-level-drpdwn {
     padding-right: 0px;
     padding-bottom: 15px;
+}
+
+.team_btn {
+    text-align: right;
+    padding: 10px;
+}
+
+.school-create-btn {
+    padding-right: 30px;
+}
+
+.count-btn {
+    margin: 0px -20px 0px 0px;
+}
+
+.glyphicon.glyphicon-time.watch {
+    margin: 0px 6px !important;
+}
+
+.small-form-btn {
+    padding-right: 30px;
+}
+
+.state-btn {
+    margin: 0px;
+    padding-right: 15px !important;
 }

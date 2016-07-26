@@ -120,17 +120,20 @@
                 </div>
             </div>
 			
+			
+	
+            </div>
+           
 			 <div class=" col-md-12 button-group">
     <div class="form-group">
-        <div class="col-sm-offset-3 col-sm-12 ">
+        <div class=" team_btn">
             {!! Form::reset(trans('messages.CANCEL_BTN'), ['class' => 'btn btn-primary ']) !!}
             {!! Form::submit(trans('messages.SUBMIT_BTN'), ['class' => 'btn btn-primary ']) !!}
         </div>
     </div>
     </div>
 	
-            </div>
-            <!--<div class="form-group {{ $errors->has('employeeCode') ? 'has-error' : ''}}">
+		   <!--<div class="form-group {{ $errors->has('employeeCode') ? 'has-error' : ''}}">
                 {!! Form::label('employeeCode', 'Employee Code', ['class' => 'col-sm-3  control-label']) !!}
                 <div class="col-sm-8">
                     {!! Form::text('employeeCode', null, ['class' => 'form-control','required' => 'required']) !!}

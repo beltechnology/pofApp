@@ -25,7 +25,7 @@
     </ul>
   </div>
 </nav>
-  <div class="h1-two col-md-12">
+  <div class="h1-two edit-school-border col-md-12">
 	 <h1 class="text-left col-md-4"><a href="{{ url('/student/') }}" class="fa fa-angle-left  fa-2x"> {{ trans('messages.STUDENT_LIST') }}</a></h1>
       <h1 class="text-center col-md-4"></h1> 
   </div>
@@ -107,12 +107,18 @@
                 </div>
             </div>
 	</div>
-</div>
+
+			<div class=" col-md-12 button-group">
     <div class="form-group">
-        <div class="col-sm-offset-3 col-sm-3">
-            {!! Form::submit(trans('messages.UPDATE'), ['class' => 'btn btn-primary form-control']) !!}
+        <div class=" team_btn small-form-btn">
+            {!! Form::reset(trans('messages.CANCEL_BTN'), ['class' => 'btn btn-primary ']) !!}
+            {!! Form::submit(trans('messages.SUBMIT_BTN'), ['class' => 'btn btn-primary ']) !!}
         </div>
     </div>
+    </div> 
+	</div>
+	
+ 
     {!! Form::close() !!}
 
     @if ($errors->any())

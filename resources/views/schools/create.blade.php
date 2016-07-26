@@ -2,7 +2,7 @@
 @section('content')
     <div class=" col-md-10 category">
 	
-	  <div class="h1-two col-md-12">
+	  <div class="h1-two edit-school-border col-md-12">
 	 <h1 class="text-left col-md-4"><a href="{{ url('/schools') }}" class="fa fa-angle-left  fa-2x"> {{ trans('messages.SCHOOL_LIST') }} </a></h1>
       <h1 class="text-center col-md-4">{{ trans('messages.SCHOOL_CREATE_NEW_SCHOOL') }} </h1>
       <h1 class="text-left col-md-4"></h1>
@@ -151,6 +151,7 @@
             </div>
             </div>
             <div class="col-md-6">
+			
             <div class="form-group {{ $errors->has('secondCoordinator') ? 'has-error' : ''}}">
                 {!! Form::label('secondCoordinator', trans('messages.SCHOOL_SECOND_COORDINATOR_NAME'), ['class' => 'col-sm-5 control-label']) !!}
                 <div class="col-sm-7">
@@ -269,15 +270,19 @@
                 </div>
             </div>
         </div>
-    </div>
-
-
+    
+	<div class=" col-md-12 button-group">
     <div class="form-group">
-        <div class="col-sm-offset-3 col-sm-3">
+        <div class=" team_btn school-create-btn">
              {!! Form::reset(trans('messages.CANCEL_BTN'), ['class' => 'btn btn-primary ']) !!}
             {!! Form::submit(trans('messages.SUBMIT_BTN'), ['class' => 'btn btn-primary ']) !!}
         </div>
     </div>
+	</div>
+	</div>
+
+	
+	
     {!! Form::close() !!}
 
     @if ($errors->any())

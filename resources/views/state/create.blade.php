@@ -19,7 +19,7 @@
    
 	 <div class=" col-md-12 button-group">
     <div class="form-group">
-        <div class="col-sm-offset-3 col-sm-12 ">
+        <div class="col-sm-offset-3 col-sm-12 team_btn state-btn">
             {!! Form::reset(trans('messages.CANCEL_BTN'), ['class' => 'btn btn-primary ']) !!}
             {!! Form::submit(trans('messages.SUBMIT_BTN'), ['class' => 'btn btn-primary ']) !!}
         </div>
