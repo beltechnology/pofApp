@@ -95,17 +95,19 @@
                 </div>
             </div>
             <div class="form-group {{ $errors->has('rollNo') ? 'has-error' : ''}}">
-                {!! Form::label('rollNo', trans('messages.ROLL_NO'), ['class' => 'col-sm-4 control-label']) !!}
+                {!! Form::hidden('rollNo', trans('messages.ROLL_NO'), ['class' => 'col-sm-4 control-label']) !!}
                 <div class="col-sm-8">
-                    {!! Form::text('rollNo',$rollNo, ['class' => 'form-control','readonly'=>'readonly']) !!}
+                    {!! Form::hidden('rollNo',$rollNo, ['class' => 'form-control','readonly'=>'readonly']) !!}
                     {!! $errors->first('rollNo', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>
 				</div>
 				</div>
+
     <div class="form-group">
         <div class="col-sm-offset-3 col-sm-3">
-            {!! Form::submit(trans('messages.CREATE'), ['class' => 'btn btn-primary form-control']) !!}
+             {!! Form::reset(trans('messages.CANCEL_BTN'), ['class' => 'btn btn-primary ']) !!}
+            {!! Form::submit(trans('messages.SUBMIT_BTN'), ['class' => 'btn btn-primary ']) !!}
         </div>
     </div>
     {!! Form::close() !!}

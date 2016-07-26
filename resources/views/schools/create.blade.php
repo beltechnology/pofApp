@@ -1,9 +1,12 @@
 @extends('layouts.header')
 @section('content')
     <div class=" col-md-9 category">
-    <h1>{{ trans('messages.SCHOOL_CREATE_NEW_SCHOOL') }}</h1>
-    <hr/>
-
+	
+	  <div class="h1-two col-md-12">
+	 <h1 class="text-left col-md-4"><a href="{{ url('/schools') }}" class="fa fa-angle-left  fa-2x"> {{ trans('messages.SCHOOL_LIST') }} </a></h1>
+      <h1 class="text-center col-md-4">{{ trans('messages.SCHOOL_CREATE_NEW_SCHOOL') }} </h1>
+      <h1 class="text-left col-md-4"></h1>
+      </div>
     {!! Form::open(['url' => '/schools', 'class' => 'form-horizontal']) !!}
         {!! Form::hidden('schoolCode',\DB::table('schools')->max('id')+1, null, ['class' => 'form-control','required' => 'required'],['name'=>'uniqueschoolCode']) !!}
         {!! Form::hidden('entityId',\DB::table('entitys')->max('entityId')+1, null, ['class' => 'form-control','required' => 'required'],['name'=>'entityId']) !!}
@@ -202,14 +205,14 @@
             <div class="form-group {{ $errors->has('teamCode') ? 'has-error' : ''}}">
                 {!! Form::label('teamCode', trans('messages.SCHOOL_TEAM_CODE'), ['class' => 'col-sm-5 control-label']) !!}
                 <div class="col-sm-7">
-                    {!! Form::select('teamCode', $team, null, ['class' => 'form-control', 'required' => 'required']) !!}
+                    {!! Form::select('teamCode', $team, null, ['class' => 'form-control', 'placeholder' => 'Select a Team', 'required' => 'required']) !!}
                     {!! $errors->first('teamCode', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>
             <div class="form-group {{ $errors->has('employeeCode') ? 'has-error' : ''}}">
                 {!! Form::label('employeeCode', trans('messages.SCHOOL_EMPLOYEE_CODE'), ['class' => 'col-sm-5 control-label']) !!}
                 <div class="col-sm-7">
-                    {!! Form::select('employeeCode',$employee, null, ['class' => 'form-control', 'required' => 'required']) !!}
+                    {!! Form::select('employeeCode',$employee, null, ['class' => 'form-control','placeholder' => 'Select a Employee code', 'required' => 'required']) !!}
                     {!! $errors->first('employeeCode', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>
@@ -271,7 +274,8 @@
 
     <div class="form-group">
         <div class="col-sm-offset-3 col-sm-3">
-            {!! Form::submit(trans('messages.CREATE'), ['class' => 'btn btn-primary form-control']) !!}
+             {!! Form::reset(trans('messages.CANCEL_BTN'), ['class' => 'btn btn-primary ']) !!}
+            {!! Form::submit(trans('messages.SUBMIT_BTN'), ['class' => 'btn btn-primary ']) !!}
         </div>
     </div>
     {!! Form::close() !!}

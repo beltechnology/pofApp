@@ -27,6 +27,16 @@
                     {!! $errors->first('teamLeader', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>
+			 <div class="form-group {{ $errors->has('teamCreationDate') ? 'has-error' : ''}}">
+                {!! Form::label('teamCreationDate', trans('messages.TEAM_CREATION_DATE'), ['class' => 'col-sm-4 control-label']) !!}
+                <div class="col-sm-8 input-group date">
+                    {!! Form::text('teamCreationDate', null, ['class' => 'form-control', 'required' => 'required']) !!}
+					<span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                    {!! $errors->first('teamCreationDate', '<p class="help-block">:message</p>') !!}
+                </div>
+            </div>
 			 <div class="form-group {{ $errors->has('teamEndDate') ? 'has-error' : ''}}">
                 {!! Form::label('teamEndDate', trans('messages.TEAM_END_DATE'), ['class' => 'col-sm-4 control-label']) !!}
                 <div class="col-sm-8 input-group date">
@@ -39,24 +49,21 @@
             </div>
 		</div>	
 		<div class="col-md-6 create-emp-list">
-           
+				<div class="form-group {{ $errors->has('cityId') ? 'has-error' : ''}}">
+                {!! Form::label('cityId', trans('messages.CITY'), ['class' => 'col-sm-4  control-label']) !!}
+                <div class="col-sm-8">
+					{!! Form::select('cityId',$citys, null, ['class' => 'form-control stateSelect','id' => 'city']) !!}
+					 {!! $errors->first('cityId', '<p class="help-block">:message</p>') !!}
+                </div>
+            </div>
 		     <div class="form-group {{ $errors->has('teamLocation') ? 'has-error' : ''}}">
                 {!! Form::label('teamLocation', trans('messages.TEAM_LOCATION'), ['class' => 'col-sm-4 control-label']) !!}
                 <div class="col-sm-8">
-                   {!! Form::select('teamLocation',$locations,null, ['class' => ' form-control teamSelect','id' => 'teamLocation']) !!}
+				{!! Form::select('teamLocation',$locations, null, ['class' => 'form-control stateSelect','id' => 'teamLocation']) !!}
                     {!! $errors->first('teamLocation', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>
-            <div class="form-group {{ $errors->has('teamCreationDate') ? 'has-error' : ''}}">
-                {!! Form::label('teamCreationDate', trans('messages.TEAM_CREATION_DATE'), ['class' => 'col-sm-4 control-label']) !!}
-                <div class="col-sm-8 input-group date">
-                    {!! Form::text('teamCreationDate', null, ['class' => 'form-control', 'required' => 'required']) !!}
-					<span class="input-group-addon">
-                        <span class="glyphicon glyphicon-calendar"></span>
-                    </span>
-                    {!! $errors->first('teamCreationDate', '<p class="help-block">:message</p>') !!}
-                </div>
-            </div>
+           
             <div class="form-group {{ $errors->has('teamcode') ? 'has-error' : ''}}">
                 {!! Form::label('teamCode', trans('messages.TEAM_CODE'), ['class' => 'col-sm-4 control-label']) !!}
                 <div class="col-sm-8">
@@ -87,4 +94,32 @@
     @endif
 </div>
 </div>
+<script>
+ $(document).ready(function(){
+        var city_id = $("#city").val();
+		var teamLocation = $("#teamLocation").val();
+	 $.get('{{ url('team') }}/edit/district?city_id=' + city_id, function(data) {
+            console.log(data);
+            $('#teamLocation').empty();
+            $.each(data, function(index,subCatObj){
+                $('#teamLocation').append('<option value="'+subCatObj.id+'">'+subCatObj.location+'</option>');
+            });
+			$("#city").val(city_id);
+			$("#teamLocation").val(teamLocation);
+        });
+
+        });	
+
+$('#city').on('change', function(e){
+        console.log(e);
+        var city_id = e.target.value;
+        $.get('{{ url('team') }}/edit/district?city_id=' + city_id, function(data) {
+            console.log(data);
+            $('#teamLocation').empty();
+            $.each(data, function(index,subCatObj){
+                $('#teamLocation').append('<option value="'+subCatObj.id+'">'+subCatObj.location+'</option>');
+            });
+        });
+    });
+</script>
 @endsection

@@ -30,6 +30,7 @@
         <div class="row create-emp-list">
 		 <div class="col-md-6">
             <div class="form-group {{ $errors->has('posterDistributionDate') ? 'has-error' : ''}}">
+				{!! Form::hidden('updateCounter', null, ['class' => 'form-control'],['name'=>'updateCounter']) !!}
                 {!! Form::label('posterDistributionDate', trans('messages.SCHOOL_POSTER_DISTRIBUTION_DATE'), ['class' => 'col-sm-5 control-label']) !!}
                 <div class="col-sm-7   input-group date">
                     {!! Form::text('posterDistributionDate', null, ['class' => 'form-control']) !!}
@@ -296,7 +297,7 @@
 
     <div class="form-group">
         <div class="col-sm-offset-3 col-sm-3">
-            {!! Form::submit(trans('messages.UPDATE'), ['class' => 'btn btn-primary form-control']) !!}
+            {!! Form::submit(trans('messages.UPDATE'), ['class' => 'btn btn-primary ']) !!}
         </div>
     </div>
     {!! Form::close() !!}

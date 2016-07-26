@@ -71,8 +71,8 @@ class schoolsController extends Controller
 						->orderBy('schools.entityId','desc')
 						->paginate(10);
 						$pagination = $schools->appends ( array ('q' => Input::get ( 'q' )));						
-    //    return view('schools.index', compact('schools'));
-			return redirect('schools');				
+						return view('schools.index', compact('schools'));
+		//	return redirect('schools');				
 
     }
 	public function activateSchool()
@@ -292,24 +292,38 @@ class schoolsController extends Controller
     {
         $this->validate($request, ['posterDistributionDate' => 'required', 'closingDate' => 'required', 'formNo' => 'required', 'schoolName' => 'required', 'principalName' => 'required','principalMobile' => 'required', 'principalEmail' => 'required', 'firstCoordinatorName' => 'required', 'firstCoordinatorMobile' => 'required', 'firstCoordinatorEmail' => 'required', 'secondCoordinator' => 'required', 'PMOExamDate' => 'required', 'PSOExamDate' => 'required', 'schoolcode' => 'required', 'teamCode' => 'required', 'employeeCode' => 'required', 'schoolTotalStrength' => 'required', 'classStrength' => 'required', 'followUpDate' => 'required', 'callStatus' => 'required', 'posterDistributed' => 'required', 'KMS' => 'required', ]);
 
+		$updateCounters=Input::get ('updateCounter')+1;
+		$updateCounterdata = DB::table('schools')->where('entityId',$id)->value('updateCounter');
+		if($updateCounterdata < $updateCounters)
+		{
         $school = school::findOrFail($id);
         $school->update($request->all());
+		DB::table('schools')->where('entityId',$id)->update(['updateCounter' => $updateCounters]);
 		
 		$address = address::findOrFail($id);	
         $address->update($request->all());
+		DB::table('addresses')->where('entityId',$id)->update(['updateCounter' => $updateCounters]);
 		
 		$emailaddress = emailaddress::findOrFail($id);	
         $emailaddress->update($request->all());
+		DB::table('emailaddresses')->where('entityId',$id)->update(['updateCounter' => $updateCounters]);
 		
 		$phone = phone::findOrFail($id);	
         $phone->update($request->all());
+		DB::table('phones')->where('entityId',$id)->update(['updateCounter' => $updateCounters]);
 		
 		$entity = entity::findOrFail($id);	
         $entity->update($request->all());
+		DB::table('entitys')->where('entityId',$id)->update(['updateCounter' => $updateCounters]);
 
         Session::flash('flash_message', 'school updated!');
-
         return redirect('schools');
+		}
+       else
+	   {
+		Session::flash('flash_message', 'Data has been changed by some other user');
+		return redirect('schools');
+	   }   
     }
 
     /**

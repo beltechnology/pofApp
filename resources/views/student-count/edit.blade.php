@@ -50,9 +50,9 @@
                 <tr>
 					<td>{!! Form::hidden('classId[]', $item->classId, ['class' => '','readonly'=>'readonly']) !!}
 					{!! Form::label('name', $item->name, ['class' => '','readonly'=>'readonly']) !!}</td>
-					<td> {!! Form::number('noofstudentPMO[]', $item->noofstudentPMO, ['class' => 'form-control noofstudentPMO']) !!} </td>
-					<td> {!! Form::number('noofstudentPSO[]', $item->noofstudentPSO, ['class' => 'form-control noofstudentPSO']) !!}</td>
-					<td> {!! Form::number('handicapped[]', $item->handicapped, ['class' => 'form-control handicapped']) !!}</td>
+					<td> {!! Form::number('noofstudentPMO[]', $item->noofstudentPMO, ['class' => 'form-control noofstudentPMO','min'=>'0']) !!} </td>
+					<td> {!! Form::number('noofstudentPSO[]', $item->noofstudentPSO, ['class' => 'form-control noofstudentPSO','min'=>'0']) !!}</td>
+					<td> {!! Form::number('handicapped[]', $item->handicapped, ['class' => 'form-control handicapped','min'=>'0']) !!}</td>
                 </tr>
 			@endforeach
 				 <tr>

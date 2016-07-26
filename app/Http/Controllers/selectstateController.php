@@ -11,7 +11,7 @@ class selectstateController extends Controller
 {
      public function index()
     {
-        return view('statelist.create');
+        return view('stateList.create');
     }
 	 
     public function store(Request $request)

@@ -156,7 +156,7 @@ $("form input").on("change keyup mouseup", function(){
     $('.noofBookLastVisitPSO').each(function() {
        noofBookLastVisitPSOTotal += Number($(this).val());
     });
-    $(".noofBookLastVisitPMOTotal").val(noofBookLastVisitPMOTotal);
+    $(".noofBookLastVisitPSOTotal").val(noofBookLastVisitPSOTotal);
 	
 	$("form input").on("change keyup mouseup", function(){
 		var noofBookLastVisitPSOTotal = 0;

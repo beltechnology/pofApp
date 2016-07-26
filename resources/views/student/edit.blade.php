@@ -33,6 +33,7 @@
 	
 	
 <div class="row create-emp-list">
+{!! Form::hidden('updateCounter', null, ['class' => 'form-control'],['name'=>'updateCounter']) !!}
 	<div class="col-md-6">
                 <div class="form-group {{ $errors->has('studentName') ? 'has-error' : ''}}">
                 {!! Form::label('studentName', trans('messages.STUDENT_NAME'), ['class' => 'col-sm-4 control-label']) !!}

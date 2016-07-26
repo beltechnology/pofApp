@@ -10,7 +10,7 @@
             </div>
             
             <div class=" col-md-7 category-filter">
-		<form action="/search" method="get" role="search">
+		<form action="search" method="get" role="search">
 			<div class="input-group">
 				<input type="text" class="form-control" name="q"
 					placeholder="Search users"> <span class="input-group-btn">
@@ -29,8 +29,8 @@
             <div class="add-emp  col-md-2">
             <a href="{{ url('/employee/create') }}"><p>{{ trans('messages.ADD') }} <span class="glyphicon glyphicon-plus" aria-hidden="true"/></p></a>
             </div>
-            
             </div>
+		 <h1 style="color:red;">  {{ session()->get('flash_message')}} </h1>	
         <div class="table">
             <table class="table table-bordered table-striped table-hover" >
             <thead>

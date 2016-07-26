@@ -7,7 +7,7 @@
     <h1 class="school_category">{{ trans('messages.SCHOOLS') }}</h1>
 	</div>
             <div class=" col-md-4 category-filter">
-		<form action="/search-school" method="get" role="search">
+		<form action="search-school" method="get" role="search">
 			<div class="input-group">
 				<input type="text" class="form-control" name="q"
 					placeholder="Search Schools , School Code , City Name or  Principal Name "> <span class="input-group-btn">
@@ -20,7 +20,7 @@
 		            </div>
 
             <div class=" col-md-3 category-filter">
-		<form action="/activate-school" method="POST"  onsubmit="return confirm('Do you really want to activate school?');" id="activateSchoolForm">
+		<form action="activate-school" method="POST"  onsubmit="return confirm('Do you really want to activate school?');" id="activateSchoolForm">
 		{{ csrf_field() }}
 			<div class="input-group">
 				<span class="input-group-btn">
@@ -38,6 +38,7 @@
             <a href="{{ url('/schools/create') }}" title="Add New school"><p>{{ trans('messages.ADD') }} <span class="glyphicon glyphicon-plus" aria-hidden="true"/></p></a>
             </div>
 		</div>
+		<h1 style="color:red;">  {{ session()->get('flash_message')}} </h1>
 		<div class="table">
         <table class="table table-bordered table-striped table-hover">
             <thead>
@@ -58,10 +59,10 @@
             </thead>
             <tbody>
             @foreach($schools as $item)
-					@if ($item->activationSchool === 1)
+					@if ($item->activationSchool === '1')
 						 <tr class="danger">
 					@else
-						 <tr class="">
+						 <tr class="{{$item->activationSchool}}">
 					@endif               
                     <td>{{ $item->schoolName }}</td>
 					<td>{{ $item->addressLine1 }}</td>

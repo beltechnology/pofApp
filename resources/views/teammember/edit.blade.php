@@ -29,7 +29,7 @@
 					<td>{{ $employee->dob }}</td>
 					<td>{{ $phone->primaryNumber }}</td>
 					<td>{{ $emailaddress->email }}</td>
-					<td id='city'>{!! Form::select('cityId',$citys,null, ['class' => 'cityDropDown']) !!}</td>
+					<td id='city'>{!! Form::select('cityId',$citys,null, ['class' => 'cityDropDown','id'=>'cityValue']) !!}</td>
 					<td>{!! Form::select('locationId',$locations,null, ['id' => 'location']) !!}</td>
                     <td>
                        
@@ -49,7 +49,20 @@
     </div>
 </div>
 <script>
+ $(document).ready(function(){
+        var city_id = $("#cityValue").val();
+		var teamLocation = $("#location").val();
+	 $.get('{{ url('teammember') }}/edit/city?city_id=' + city_id, function(data) {
+            console.log(data);
+            $('#location').empty();
+            $.each(data, function(index,subCatObj){
+                $('#location').append('<option value="'+subCatObj.id+'">'+subCatObj.location+'</option>');
+            });
+			$("#cityValue").val(city_id);
+			$("#location").val(teamLocation);
+        });
 
+        });	
 	
 $('.cityDropDown').on('change', function(e){
         var city_id = e.target.value;
@@ -61,6 +74,6 @@ $('.cityDropDown').on('change', function(e){
             });
         });
     });
-});
+
 </script>
 @endsection

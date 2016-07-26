@@ -5,7 +5,6 @@
 <div class="row">
    <h1 class="text-left"><a href="{{ url('/employee') }}" class="fa fa-angle-left  fa-2x"> {{ trans('messages.EMPLOYEE_LIST') }}</a></h1>
     <hr/>
-
     {!! Form::model($employee->toArray()+$entity->toArray()+$address->toArray()+$emailaddress->toArray()+$phone->toArray(), [
         'method' => 'PATCH',
         'url' => ['/employee', $employee->entityId],
@@ -19,7 +18,7 @@
                     {!! Form::hidden('employeeId',null, ['class' => 'form-control'],['name'=>'employeeid']) !!}
                 
                     {!! Form::hidden('entityId', null, ['class' => 'form-control'],['name'=>'entityId']) !!}
-               
+					 {!! Form::hidden('updateCounter', null, ['class' => 'form-control'],['name'=>'updateCounter']) !!}
                      
             <div class="form-group {{ $errors->has('employeeName') ? 'has-error' : ''}}">
                 {!! Form::label('employeeName', trans('messages.NAME'), ['class' => 'col-sm-4  control-label']) !!}
@@ -106,7 +105,7 @@
               <div class="form-group {{ $errors->has('designation') ? 'has-error' : ''}}">
                 {!! Form::label('designation', trans('messages.DESIGNATION'), ['class' => 'col-sm-4  control-label']) !!}
                 <div class="col-sm-8">
-                    {!! Form::select('designation',\DB::table('designations')->lists('designation','id'), "Debugging", ['class' => 'form-control stateSelect','id' => 'designation']) !!}
+                    {!! Form::select('designation',$designation,null,['class' => 'form-control stateSelect','id' => 'designation']) !!}
                     {!! $errors->first('designation', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>

@@ -25,6 +25,6 @@ class entity extends Model
      *
      * @var array
      */
-    protected $fillable = ['entityId','name','entityType'];
+    protected $fillable = ['entityId','name','entityType',];
 
 }

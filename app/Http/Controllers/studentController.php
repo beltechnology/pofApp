@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Session;
 use DB;
+use Illuminate\Support\Facades\Input;
 class studentController extends Controller
 {
     /**
@@ -115,13 +116,27 @@ class studentController extends Controller
     public function update($id, Request $request)
     {
         $this->validate($request, ['studentName' => 'required', 'fatherName' => 'required', 'dob' => 'required', 'classId' => 'required', 'section' => 'required', 'pmo' => 'required', 'pso' => 'required', 'handicapped' => 'required', 'rollNo' => 'required', ]);
-
+		
+		$updateCounters=Input::get ('updateCounter')+1;
+		$updateCounterdata = DB::table('students')->where('entityId',$id)->value('updateCounter');
+		if($updateCounterdata < $updateCounters)
+		{
         $student = student::findOrFail($id);
         $student->update($request->all());
+		DB::table('entitys')->where('entityId',$id)->update(['updateCounter' => $updateCounters]);
+		
+		$entity = entity::findOrFail($id);	
+        $entity->update($request->all());
+		DB::table('students')->where('entityId',$id)->update(['updateCounter' => $updateCounters]);
 
         Session::flash('flash_message', 'student updated!');
-
         return redirect('student');
+		}
+       else
+	   {
+		Session::flash('flash_message', 'Data has been changed by some other user');
+		return redirect('student');
+	   }   
     }
 
     /**

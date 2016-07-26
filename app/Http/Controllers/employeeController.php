@@ -151,13 +151,14 @@ class employeeController extends Controller
 		$address = address::findOrFail($id);
 		$emailaddress = emailaddress::findOrFail($id);
 		$phone = phone::findOrFail($id);
+		$designation=DB::table('designations')->where('deleted',0)->lists('designation','id');
 		// foreach($address as $statesid)
 		// {
 			// $states_id=$statesid->stateId;
 		// }
 		$districts = DB::table('districts')->where('districts.deleted',0)->lists('name', 'id');
 		$citys = DB::table('citys')->where('citys.deleted',0)->lists('cityName', 'id');
-		return view('employee.edit', ['employee' => $employee,'entity' => $entity,'address' => $address,'emailaddress' => $emailaddress,'phone' => $phone,'districts' => $districts,'citys' => $citys]);
+		return view('employee.edit', ['employee' => $employee,'entity' => $entity,'address' => $address,'emailaddress' => $emailaddress,'phone' => $phone,'districts' => $districts,'citys' => $citys,'designation'=>$designation]);
 		
     }
 
@@ -170,25 +171,41 @@ class employeeController extends Controller
      */
     public function update($id, Request $request)
     {
-		$this->validate($request, ['name' => 'required', 'dob' => 'required', 'addressLine1' => 'required', 'stateId' => 'required', 'pincode' => 'required', 'primaryNumber' => 'required', 'email' => 'required', 'designation' => 'required', 'dateOfJoining' => 'required', ]);
+		$this->validate($request, ['name' => 'required', 'dob' => 'required', 'addressLine1' => 'required', 'stateId' => 'required', 'pincode' => 'required', 'primaryNumber' => 'required', 'email' => 'required', 'designation' => 'required', 'dateOfJoining' => 'required',]);
+		$updateCounters=Input::get ('updateCounter')+1;
+		$updateCounterdata = DB::table('employees')->where('entityId',$id)->value('updateCounter');
+		if($updateCounterdata < $updateCounters)
+		{
+		
         $employee = employee::findOrFail($id);	
         $employee->update($request->all());
+		DB::table('employees')->where('entityId',$id)->update(['updateCounter' => $updateCounters]);
 		
 		$address = address::findOrFail($id);	
         $address->update($request->all());
+		DB::table('addresses')->where('entityId',$id)->update(['updateCounter' => $updateCounters]);
 		
 		$emailaddress = emailaddress::findOrFail($id);	
         $emailaddress->update($request->all());
+		DB::table('emailaddresses')->where('entityId',$id)->update(['updateCounter' => $updateCounters]);
 		
 		$phone = phone::findOrFail($id);	
         $phone->update($request->all());
+		DB::table('phones')->where('entityId',$id)->update(['updateCounter' => $updateCounters]);
 		
 		$entity = entity::findOrFail($id);	
         $entity->update($request->all());
-		
-        Session::flash('flash_message', 'employee updated!');
+		DB::table('entitys')->where('entityId',$id)->update(['updateCounter' => $updateCounters]);
+		 Session::flash('flash_message', 'Employee updated!');
+		   return redirect('employee');
+		}
+       else
+	   {
+		    Session::flash('flash_message', 'Data has been changed by some other user');
+			  return redirect('employee');
+	   }   
 
-        return redirect('employee');
+      
     }
 
     /**

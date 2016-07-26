@@ -34,6 +34,7 @@ Route::group(array('middleware' => 'auth'), function() {
 	Route::resource('payments', 'paymentsController');
 	Route::resource('fees', 'feesController');
 	Route::resource('student', 'studentController');
+	Route::resource('first-level', 'firstLevelController');
 	Route::get('/search', 'employeeController@filter');
 	Route::post('/search', 'employeeController@filter');
 	Route::get('/search-school', 'schoolsController@filter');
@@ -56,6 +57,20 @@ Route::get('/locations/create/district',function()
 {
     $dist_id = Input::get('dist_id');
     $subcategories = City::where('district_id','=',$dist_id)->get();
+    return $subcategories;
+ 
+});
+Route::get('/team/create/district',function()
+{
+    $city_id = Input::get('city_id');
+    $subcategories = Location::where('city_id','=',$city_id)->where('locations.deleted',0)->where('locations.state_id',session()->get('currentStateId'))->get();
+    return $subcategories;
+ 
+});
+Route::get('/team/edit/district',function()
+{
+    $city_id = Input::get('city_id');
+    $subcategories = Location::where('city_id','=',$city_id)->where('locations.deleted',0)->where('locations.state_id',session()->get('currentStateId'))->get();
     return $subcategories;
  
 });
@@ -135,4 +150,3 @@ Route::auth();
 
 
 
-Route::resource('first-level', 'firstLevelController');
