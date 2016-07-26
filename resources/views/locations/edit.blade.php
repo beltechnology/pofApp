@@ -13,6 +13,8 @@
     ]) !!}
             <div class=" col-md-6 create-emp-list">
 			{!! Form::hidden('state_Id',session()->get('currentStateId'),['id' => 'state']) !!}
+			{!! Form::hidden('updateCounter', null, ['class' => 'form-control'],['name'=>'updateCounter']) !!}
+		
 			 <div class="form-group {{ $errors->has('districtId') ? 'has-error' : ''}}">
                 {!! Form::label('districtId', trans('messages.DISTRICT'), ['class' => 'col-sm-4  control-label']) !!}
                 <div class="col-sm-8">

@@ -14,6 +14,8 @@ use App\City;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Session;
+use Illuminate\Support\Facades\Input;
+use DB;
 
 class CitysController extends Controller
 {
@@ -105,11 +107,21 @@ class CitysController extends Controller
     {
 		$city = City::findOrFail($id);
         $this->validate($request, ['cityName' => 'required|unique:citys,cityName,'.$city->id.',id,deleted,0', ]);
+		$updateCounters=Input::get ('updateCounter')+1;
+		$updateCounterdata = DB::table('citys')->where('id',$id)->value('updateCounter');
+		if($updateCounterdata < $updateCounters)
+		{
         $city->update($request->all());
+		DB::table('citys')->where('id', $id)->update(['updateCounter' => $updateCounters]);
 
         Session::flash('flash_message', 'City updated!');
-
         return redirect('citys');
+		}
+		else
+	   {
+		Session::flash('concurrency_message', 'Data has been changed by some other user');
+		return redirect('citys');
+	   } 
     }
 
     /**

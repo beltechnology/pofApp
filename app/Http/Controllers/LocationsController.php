@@ -9,7 +9,8 @@ use App\Location;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Session;
-
+use Illuminate\Support\Facades\Input;
+use DB;
 class LocationsController extends Controller
 {
     /**
@@ -101,13 +102,23 @@ class LocationsController extends Controller
     public function update($id, Request $request)
     {
         $this->validate($request, ['location' => 'required', ]);
-
+		
+		$updateCounters=Input::get ('updateCounter')+1;
+		$updateCounterdata = DB::table('locations')->where('id',$id)->value('updateCounter');
+		if($updateCounterdata < $updateCounters)
+		{
         $location = Location::findOrFail($id);
         $location->update($request->all());
-
+		DB::table('locations')->where('id', $id)->update(['updateCounter' => $updateCounters]);
         Session::flash('flash_message', 'Location updated!');
 
         return redirect('locations');
+		}
+		else
+	   {
+		Session::flash('concurrency_message', 'Data has been changed by some other user');
+		return redirect('locations');
+	   } 
     }
 
     /**

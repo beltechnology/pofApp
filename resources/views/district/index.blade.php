@@ -11,7 +11,8 @@
             <div class="add-emp col-md-2" style="float:right">
             <a href="{{ url('/district/create') }}"><p>{{ trans('messages.ADD') }} <span class="glyphicon glyphicon-plus" aria-hidden="true"/></p></a>
             </div>
-	</div>  
+	</div> 
+<h1 style="color:red;">  {{ session()->get('concurrency_message')}} </h1>	
    <div class="table">
         <table class="table table-bordered table-striped table-hover">
             <thead>

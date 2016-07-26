@@ -9,7 +9,8 @@ use App\State;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Session;
-
+use Illuminate\Support\Facades\Input;
+use DB;
 class StateController extends Controller
 {
     /**
@@ -88,16 +89,24 @@ class StateController extends Controller
      * @return void
      */
     public function update($id, Request $request)
-    {
-		        $state = State::findOrFail($id);
-
+    {	 
+		$state = State::findOrFail($id);
         $this->validate($request, ['stateName' => 'required|unique:states,stateName,'.$state->id.',id,deleted,0', ]);
-
+		$updateCounters=Input::get ('updateCounter')+1;
+		$updateCounterdata = DB::table('states')->where('id',$id)->value('updateCounter');
+		if($updateCounterdata < $updateCounters)
+		{
         $state->update($request->all());
+		DB::table('states')->where('id', $id)->update(['updateCounter' => $updateCounters]);
 
         Session::flash('flash_message', 'State updated!');
-
         return redirect('state');
+		}
+		else
+	   {
+		Session::flash('concurrency_message', 'Data has been changed by some other user');
+		return redirect('state');
+	   } 
     }
 
     /**

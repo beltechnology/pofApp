@@ -9,7 +9,8 @@ use App\District;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Session;
-
+use Illuminate\Support\Facades\Input;
+use DB;
 class DistrictController extends Controller
 {
     /**
@@ -92,11 +93,21 @@ class DistrictController extends Controller
     {
 		$district = District::findOrFail($id);
         $this->validate($request, ['name' => 'required|unique:districts,name,'.$district->id.',id,deleted,0']);
+		$updateCounters=Input::get ('updateCounter')+1;
+		$updateCounterdata = DB::table('districts')->where('id',$id)->value('updateCounter');
+		if($updateCounterdata < $updateCounters)
+		{
         $district->update($request->all());
+		DB::table('districts')->where('id', $id)->update(['updateCounter' => $updateCounters]);
 
         Session::flash('flash_message', 'District updated!');
-
         return redirect('district');
+		}
+		else
+	   {
+		Session::flash('concurrency_message', 'Data has been changed by some other user');
+		return redirect('district');
+	   } 
     }
 
     /**
