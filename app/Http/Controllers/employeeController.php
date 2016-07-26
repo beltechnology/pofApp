@@ -201,7 +201,7 @@ class employeeController extends Controller
 		}
        else
 	   {
-		    Session::flash('flash_message', 'Data has been changed by some other user');
+		    Session::flash('concurrency_message', 'Data has been changed by some other user');
 			  return redirect('employee');
 	   }   
 

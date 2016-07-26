@@ -24,6 +24,7 @@
       <h1 class="text-left col-md-4"></h1>
       </div>
 	</div>
+	<h1 style="color:red;">  {{ session()->get('concurrency_message')}} </h1>
   <div class="row create-emp-list">
 		<div class="col-md-6">
             <div class="form-group {{ $errors->has('examLevelId') ? 'has-error' : ''}}">
@@ -38,7 +39,7 @@
             <div class="form-group">
                 <div class="col-sm-offset-3 col-sm-3">
 				 {!! Form::open(['method'=>'DELETE','url' => ['/fees', $fee->entityId],'style' => 'display:inline']) !!}              
-				{!! Form::submit(trans('messages.ACTIVATE'), ['class' => 'btn btn-primary form-control','onclick'=>'return confirm("Confirm to school activate ?")']) !!}
+				{!! Form::submit(trans('messages.ACTIVATE'), ['class' => 'btn btn-primary ','onclick'=>'return confirm("Confirm to school activate ?")']) !!}
 				{!! Form::close() !!}
                 </div>
             </div>
@@ -50,18 +51,26 @@
         'class' => 'form-horizontal'
     ]) !!}
 	 <div class="row create-emp-list">
+	 {!! Form::hidden('updateCounter', null, ['class' => 'form-control'],['name'=>'updateCounter']) !!}
 	<div class="col-md-6">
+			 <div class="form-group {{ $errors->has('studentsFees') ? 'has-error' : ''}}">
+                {!! Form::label('studentsFees',trans('messages.STUDENTS_FEES'), ['class' => 'col-sm-5 control-label ']) !!}
+                <div class="col-sm-7">
+                    {!! Form::number('studentsFees',null,['class' => 'form-control studentsFees','min'=>'0']) !!}
+                    {!! $errors->first('studentsFees', '<p class="help-block">:message</p>') !!}
+                </div>
+            </div>
             <div class="form-group {{ $errors->has('totalAmount') ? 'has-error' : ''}}">
                 {!! Form::label('totalAmount',trans('messages.TOTAL_AMOUNT'), ['class' => 'col-sm-5 control-label']) !!}
                 <div class="col-sm-7">
-                    {!! Form::text('totalAmount',$totalStudents*trans('messages.PER_STUDENT_FEES'),['class' => 'form-control','readonly'=>'readonly']) !!}
+                    {!! Form::number('totalAmount',null,['class' => 'form-control totalAmount','readonly'=>'readonly']) !!}
                     {!! $errors->first('totalAmount', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>
 			 <div class="form-group {{ $errors->has('restAmount') ? 'has-error' : ''}}">
                 {!! Form::label('restAmount', trans('messages.REST_AMOUNT'), ['class' => 'col-sm-5 control-label']) !!}
                 <div class="col-sm-7">
-                    {!! Form::text('restAmount',null,['class' => 'form-control','readonly'=>'readonly']) !!}
+                    {!! Form::number('restAmount',null,['class' => 'form-control','readonly'=>'readonly']) !!}
                     {!! $errors->first('restAmount', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>
@@ -71,14 +80,14 @@
             <div class="form-group {{ $errors->has('otherExpenses') ? 'has-error' : ''}}">
                 {!! Form::label('otherExpenses',trans('messages.MISCELLANEOUS_EXPENSES'), ['class' => 'col-sm-5 control-label']) !!}
                 <div class="col-sm-7">
-                    {!! Form::text('otherExpenses',null,['class' => 'form-control',  'required' => 'required']) !!}
+                    {!! Form::number('otherExpenses',null,['class' => 'form-control otherExpenses',  'required' => 'required','min'=>'0']) !!}
                     {!! $errors->first('otherExpenses', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>
 			<div class="form-group {{ $errors->has('receivedAmount') ? 'has-error' : ''}}">
                 {!! Form::label('receivedAmount', trans('messages.AMOUNT_RECEIVED'), ['class' => 'col-sm-5 control-label']) !!}
                 <div class="col-sm-7">
-                    {!! Form::text('receivedAmount',null,['class' => 'form-control',  'required' => 'required']) !!}
+                    {!! Form::number('receivedAmount',null,['class' => 'form-control',  'required' => 'required','min'=>'0']) !!}
                     {!! $errors->first('receivedAmount', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>
@@ -86,7 +95,7 @@
 			</div>
     <div class="form-group">
         <div class="col-sm-offset-3 col-sm-3">
-            {!! Form::submit(trans('messages.UPDATE'), ['class' => 'btn btn-primary form-control']) !!}
+            {!! Form::submit(trans('messages.UPDATE'), ['class' => 'btn btn-primary ']) !!}
         </div>
     </div>
 	
@@ -99,6 +108,15 @@
             @endforeach
         </ul>
     @endif
-
 </div>
+ <script type="text/javascript">
+        $(function() {
+            $(".studentsFees , .otherExpenses").on("change keyup mouseup", function(){
+               var studentsFees= $(".studentsFees").val();
+			   var otherExpenses= $(".otherExpenses").val();
+			   var totalAmout=(studentsFees+otherExpenses);
+			   $(".totalAmount").val(totalAmout);
+            });
+        });
+    </script>
 @endsection

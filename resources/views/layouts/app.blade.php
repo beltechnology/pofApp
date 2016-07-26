@@ -39,9 +39,9 @@
             <div class="col-md-3">
             </div>
             
-            <div class="logout col-md-3">
+            <!--<div class="logout col-md-3">
            <a href="{{ url('/') }}"> <i class="fa fa-sign-in  fa-2x" ></i> </a>
-            </div>
+            </div> -->
             
             <!-- <div class="logout col-md-3">
             <a href="{{ url('/register') }}"><i class="fa fa-user-plus  fa-2x"> </i></a>

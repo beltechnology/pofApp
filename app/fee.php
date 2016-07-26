@@ -25,5 +25,5 @@ class fee extends Model
      *
      * @var array
      */
-    protected $fillable = ['entityId','schoolId','sessionYear','examLevelId','totalAmount','otherExpenses','restAmount','receivedAmount','deleted','status'];
+    protected $fillable = ['entityId','schoolId','sessionYear','examLevelId','totalAmount','otherExpenses','studentsFees','restAmount','receivedAmount','deleted','status'];
 }

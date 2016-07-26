@@ -29,7 +29,9 @@
       <h1 class="text-left col-md-4"></h1>
       </div>
 	</div>
+	<h1 style="color:red;">  {{ session()->get('concurrency_message')}} </h1>
 	  <div class="row create-emp-list">
+	  	{!! Form::hidden('updateCounter', null, ['class' => 'form-control'],['name'=>'updateCounter']) !!}
 	<div class="col-md-6">
             <div class="form-group {{ $errors->has('examLevelId') ? 'has-error' : ''}}">
                 {!! Form::label('examLevelId', trans('messages.EXAM_LEVEL'), ['class' => 'col-sm-5 control-label']) !!}

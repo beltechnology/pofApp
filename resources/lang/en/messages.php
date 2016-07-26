@@ -218,6 +218,8 @@ return [
 	'EXAM_START_TIME'=>'Exam Start Time',
 	'EXAM_END_TIME'=>'Exam End Time',
 	
+	'STUDENTS_FEES'=>'Students Fees',
+	
 	
 	'PER_STUDENT_FEES'=>'100',
 ];

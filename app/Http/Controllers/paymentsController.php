@@ -85,19 +85,25 @@ class paymentsController extends Controller
      */
     public function update($id, Request $request)
     {
+		$updateCounters=Input::get ('updateCounter')+1;
+		$updateCounterdata = DB::table('payments')->where('entityId',$id)->value('updateCounter');
+		if($updateCounterdata < $updateCounters)
+		{
 			$examLevelId=$request->input('examLevelId');
 			$paymentModeId=$request->input('paymentModeId');
 			$paymentDate=$request->input('paymentDate');
 			$modeRefNo=$request->input('modeRefNo');
 			$paymentStatus=$request->input('paymentStatus');
-			DB::table('payments')->where('entityId', $id)->update(['examLevelId' =>$examLevelId,'paymentModeId' =>$paymentModeId,'paymentDate' =>$paymentDate,'modeRefNo' =>$modeRefNo,'paymentStatus'=>$paymentStatus]);
-
-        //$payment = payment::findOrFail($id);
-        //$payment->update($request->all());
-
-        Session::flash('flash_message', 'payment updated!');
-
-        return redirect('payments/'.$id.'/edit');
+			DB::table('payments')->where('entityId', $id)->update(['examLevelId' =>$examLevelId,'paymentModeId' =>$paymentModeId,'paymentDate' =>$paymentDate,'modeRefNo' =>$modeRefNo,'paymentStatus'=>$paymentStatus,'updateCounter' => $updateCounters]);
+			
+			Session::flash('flash_message', 'payment updated!');
+			return redirect('payments/'.$id.'/edit');
+		}
+		else
+	   {
+		Session::flash('concurrency_message', 'Data has been changed by some other user');
+		return redirect('payments/'.$id.'/edit');
+	   }  	
     }
 
     /**

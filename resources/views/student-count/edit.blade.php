@@ -34,7 +34,7 @@
       <h1 class="text-left col-md-4"></h1>
       </div>
 	  <div class="row">
- 
+ <h1 style="color:red;">  {{ session()->get('concurrency_message')}} </h1>
  <div class="table">
         <table class="table table-bordered table-striped table-hover">
             <thead>
@@ -47,6 +47,7 @@
             </thead>
 			<tbody>
             @foreach($studentcounts as $item)
+				{!! Form::hidden('updateCounter', null, ['class' => 'form-control'],['name'=>'updateCounter']) !!}
                 <tr>
 					<td>{!! Form::hidden('classId[]', $item->classId, ['class' => '','readonly'=>'readonly']) !!}
 					{!! Form::label('name', $item->name, ['class' => '','readonly'=>'readonly']) !!}</td>

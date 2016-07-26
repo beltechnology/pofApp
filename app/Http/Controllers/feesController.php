@@ -93,17 +93,25 @@ class feesController extends Controller
      */
     public function update($id, Request $request)
     {
-       // $this->validate($request, ['totalAmount' => 'totalAmount', ]);
-        //$fee = fee::findOrFail($id);
-        //$fee->update($request->all());
+		$updateCounters=Input::get('updateCounter')+1;
+		$updateCounterdata = DB::table('fees')->where('entityId',$id)->value('updateCounter');
+		if($updateCounterdata < $updateCounters)
+		{
 			$examLevelId=$request->input('examLevelId');
 			$totalAmount=$request->input('totalAmount');
+			$studentsFees=$request->input('studentsFees');
 			$restAmount=$request->input('restAmount');
 			$otherExpenses=$request->input('otherExpenses');
 			$receivedAmount=$request->input('receivedAmount');
-			DB::table('fees')->where('entityId', $id)->update(['examLevelId' =>$examLevelId,'totalAmount' =>$totalAmount,'otherExpenses' =>$otherExpenses,'restAmount'=>$restAmount,'receivedAmount'=>$receivedAmount]);
+			DB::table('fees')->where('entityId', $id)->update(['examLevelId' =>$examLevelId,'totalAmount' =>$totalAmount,'otherExpenses' =>$otherExpenses,'studentsFees'=>$studentsFees,'restAmount'=>$restAmount,'receivedAmount'=>$receivedAmount,'updateCounter' => $updateCounters]);
 			Session::flash('flash_message', 'fee updated!');
 			return redirect('fees/'.$id.'/edit');
+		}
+		else
+	   {
+		Session::flash('concurrency_message', 'Data has been changed by some other user');
+		return redirect('fees/'.$id.'/edit');
+	   }  		
     }
 
     /**
