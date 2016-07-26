@@ -11,6 +11,7 @@
         'class' => 'form-horizontal'
     ]) !!}
             <div class=" col-md-6 create-emp-list">
+			{!! Form::hidden('updateCounter', null, ['class' => 'form-control'],['name'=>'updateCounter']) !!}
                 <div class="form-group {{ $errors->has('state_id') ? 'has-error' : ''}}">
                 {!! Form::label('state_id', trans('messages.STATE_NAME'), ['class' => 'col-sm-4 control-label']) !!}
                 <div class="col-sm-8">
