@@ -37,11 +37,11 @@
                             'url' => ['/locations', $item->id],
                             'style' => 'display:inline'
                         ]) !!}
-                            {!! Form::button('<span class="glyphicon glyphicon-trash" aria-hidden="true" title="trans(messages.DELETE_LOCATION)" />', array(
+                            {!! Form::button('<span class="glyphicon glyphicon-trash" aria-hidden="true"  />', array(
                                     'type' => 'submit',
                                     'class' => 'btn btn-danger btn-xs',
                                     'title' => trans('messages.DELETE_LOCATION'),
-                                    'onclick'=>'return confirm("Confirm delete?")'
+                                    'onclick'=>'return confirm("Do you really  want to delete this?")'
                             ));!!}
                         {!! Form::close() !!}
                     </td>

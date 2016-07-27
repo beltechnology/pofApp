@@ -17,9 +17,8 @@
  <script type="text/javascript" src="../js/bootstrap.min.js"></script>
  <script type="text/javascript" src="../js/bootstrap.js"></script>
 </head>
-
 <body>
-
+ <div class="maincontant">
  <section id="header">
         <div class="container">
             <div class="row">
@@ -73,7 +72,7 @@
                             <label for="email" class="col-md-4 control-label">{{ trans('messages.EMAIL_ADDRESS') }}</label>
 
                             <div class="col-md-6">
-                                <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}">
+                                <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" maxlength="250">
 
                                 @if ($errors->has('email'))
                                     <span class="help-block">
@@ -97,3 +96,29 @@
     </div>
 </div>
 </div>
+</div>
+<section id="footer">
+        <div class="container">
+            <div class="row">
+            
+            <div class="main-footer col-md-12">
+            
+            <div class="copyright col-md-3">
+            <p>&copy {{ trans('messages.COPYRIGHT') }} <?php echo date('Y') ?></p>
+            </div>
+            
+            <div class="bel-techno col-md-6">
+            <p>{{ trans('messages.CREATED_AND_MAINTAINED') }}</p>
+            </div>
+            
+            <div class=" reserved col-md-3">
+            <p>{{ trans('messages.ALL_RIGHTS_RESERVED') }}</p>
+            </div>
+            
+          	</div>
+       </div>
+  </div>
+ </section>
+   
+</body>
+</html>

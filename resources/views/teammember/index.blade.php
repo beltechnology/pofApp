@@ -36,7 +36,7 @@
                                     'type' => 'submit',
                                     'class' => 'btn btn-danger btn-xs',
                                     'title' => 'Delete Team',
-                                    'onclick'=>'return confirm("Confirm delete?")'
+                                    'onclick'=>'return confirm("Do you really  want to delete this?")'
                             ));!!}
                         {!! Form::close() !!}
                     </td>

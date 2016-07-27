@@ -29,7 +29,7 @@
                 <div class="form-group {{ $errors->has('location') ? 'has-error' : ''}}">
                 {!! Form::label('location', trans('messages.NAME_LOCATION'), ['class' => 'col-sm-4 control-label']) !!}
                 <div class="col-sm-8">
-                    {!! Form::text('location', null, ['class' => 'form-control', 'required' => 'required']) !!}
+                    {!! Form::text('location', null, ['class' => 'form-control', 'required' => 'required','maxlength'=>'95']) !!}
                     {!! $errors->first('location', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>

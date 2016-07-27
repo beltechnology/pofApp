@@ -24,7 +24,7 @@
             <div class="form-group {{ $errors->has('cityName') ? 'has-error' : ''}}">
                 {!! Form::label('cityName', trans('messages.NAME_CITY'), ['class' => 'col-sm-4 control-label']) !!}
                 <div class="col-sm-8">
-                    {!! Form::text('cityName', null, ['class' => 'form-control', 'required' => 'required']) !!}
+                    {!! Form::text('cityName', null, ['class' => 'form-control', 'required' => 'required','maxlength'=>'95']) !!}
                     {!! $errors->first('cityName', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>

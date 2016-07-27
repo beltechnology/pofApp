@@ -10,7 +10,7 @@
                 <div class="form-group {{ $errors->has('stateName') ? 'has-error' : ''}}">
                 {!! Form::label('stateName',trans('messages.STATE_NAME'), ['class' => 'col-sm-4 control-label']) !!}
                 <div class="col-sm-8">
-                    {!! Form::text('stateName', null, ['class' => 'form-control', 'required' => 'required']) !!}
+                    {!! Form::text('stateName', null, ['class' => 'form-control', 'required' => 'required','maxlength'=>'95']) !!}
                     {!! $errors->first('stateName', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>
