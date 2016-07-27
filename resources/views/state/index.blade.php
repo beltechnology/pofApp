@@ -20,7 +20,7 @@
                 </tr>
             </thead>
             <tbody>
-            {{-- */$x=0;/* --}}
+				{{--*/$x=$state->firstItem()-1;/*--}}
             @foreach($state as $item)
                 {{-- */$x++;/* --}}
                 <tr>
@@ -46,7 +46,7 @@
             @endforeach
             </tbody>
         </table>
-        <div class="pagination-wrapper"> {!! $state->render() !!} </div>
+        <div class="pagination-wrapper">  {!! $state->render() !!} </div>
     </div>
 
 </div>

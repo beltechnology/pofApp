@@ -22,7 +22,7 @@ class StateController extends Controller
     {
 
         $state =\DB::table('states')->where('states.deleted',0)->groupBy('states.id')
-		->paginate(15);
+		->paginate(trans('messages.PAGINATE'));
 
         return view('state.index', compact('state'));
     }	

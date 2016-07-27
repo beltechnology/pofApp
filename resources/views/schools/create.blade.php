@@ -127,7 +127,13 @@
                     {!! $errors->first('principalEmail', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>
-
+			 <div class="form-group {{ $errors->has('principalGift') ? 'has-error' : ''}}">
+                {!! Form::label('principalGift', trans('messages.SCHOOL_PRINCIPAL_GIFT'), ['class' => 'col-sm-5 control-label']) !!}
+                <div class="col-sm-7">
+                    {!! Form::select('principalGift',['0'=>'Yes','1'=>'NO'],null,['class' => 'form-control', 'required' => 'required','placeholder'=>'Select Gift Status']) !!}
+                    {!! $errors->first('principalGift', '<p class="help-block">:message</p>') !!}
+                </div>
+            </div>
             <div class="form-group {{ $errors->has('firstCoordinatorName') ? 'has-error' : ''}}">
                 {!! Form::label('firstCoordinatorName',trans('messages.SCHOOL_FIRST_COORDINATOR_NAME'), ['class' => 'col-sm-5 control-label']) !!}
                 <div class="col-sm-7">
@@ -174,7 +180,13 @@
                     {!! $errors->first('secondCoordinatorEmail', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>
-
+			 <div class="form-group {{ $errors->has('coordinatorGift') ? 'has-error' : ''}}">
+                {!! Form::label('coordinatorGift', trans('messages.SCHOOL_COORDINATOR_GIFT'), ['class' => 'col-sm-5 control-label']) !!}
+                <div class="col-sm-7">
+                    {!! Form::select('coordinatorGift',['0'=>'Yes','1'=>'NO'],null,['class' => 'form-control', 'required' => 'required','placeholder'=>'Select Gift Status']) !!}
+                    {!! $errors->first('coordinatorGift', '<p class="help-block">:message</p>') !!}
+                </div>
+            </div>
             <div class="form-group {{ $errors->has('PMOExamDate') ? 'has-error' : ''}}">
                 {!! Form::label('PMOExamDate', trans('messages.SCHOOL_PMO_EXAM_DATE'), ['class' => 'col-sm-5 control-label']) !!}
                 <div class="col-sm-7  input-group date">
@@ -213,8 +225,17 @@
             <div class="form-group {{ $errors->has('employeeCode') ? 'has-error' : ''}}">
                 {!! Form::label('employeeCode', trans('messages.SCHOOL_EMPLOYEE_CODE'), ['class' => 'col-sm-5 control-label']) !!}
                 <div class="col-sm-7">
-                    {!! Form::select('employeeCode',$employee, null, ['class' => 'form-control','placeholder' => 'Select a Employee code', 'required' => 'required']) !!}
+                    {!! Form::select('employeeCode',$employee, null, ['class' => 'form-control','placeholder' => 'Select a Employee code', 'required' => 'required','id'=>'employeeCode']) !!}
                     {!! $errors->first('employeeCode', '<p class="help-block">:message</p>') !!}
+                </div>
+            </div>
+			 <div class="form-group {{ $errors->has('employeeMobileType') ? 'has-error' : ''}}">
+                {!! Form::label('employeeMobileType', trans('messages.SCHOOL_EMPLOYEE_MOBILE_NUMBER'), ['class' => 'col-sm-5 control-label']) !!}
+                <div class="col-sm-7">
+					<select name="employeeMobileType" id="mobileNumber" class="form-control">
+					<option>Select Mobile Number</option>
+					</select>
+                    {!! $errors->first('employeeMobileType', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>
             <div class="form-group {{ $errors->has('schoolTotalStrength') ? 'has-error' : ''}}">
@@ -307,6 +328,18 @@
                 });
             });
         });
+		$('#employeeCode').on('change', function(e){
+		        console.log(e);
+		        var emp_id = e.target.value;
+		        $.get('{{ url('schools') }}/create/schools?emp_id=' + emp_id, function(data) {
+		            console.log(data);
+		            $('#mobileNumber').empty();
+		            $.each(data, function(index,subCatObj){
+		                $('#mobileNumber').append('<option value="primary">'+subCatObj.primaryNumber+'</option>');
+		                $('#mobileNumber').append('<option value="secondary">'+subCatObj.secondaryNumber+'</option>');
+		            });
+		        });
+		    });
     </script>
 @endsection
 

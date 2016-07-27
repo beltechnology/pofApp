@@ -21,7 +21,7 @@
                 </tr>
             </thead>
             <tbody>
-            {{-- */$x=0;/* --}}
+           {{--*/$x=$district->firstItem()-1;/*--}}
             @foreach($district as $item)
                 {{-- */$x++;/* --}}
                 <tr>

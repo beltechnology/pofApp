@@ -20,7 +20,7 @@
                 </tr>
             </thead>
             <tbody>
-            {{-- */$x=0;/* --}}
+            {{--*/$x=$citys->firstItem()-1;/*--}}
             @foreach($citys as $item)
                 {{-- */$x++;/* --}}
                 <tr>

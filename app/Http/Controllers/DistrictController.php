@@ -24,7 +24,7 @@ class DistrictController extends Controller
 					->where('districts.deleted',0)
 					->where('districts.state_id',session()->get('currentStateId'))
 					->groupBy('districts.id')
-					->paginate(15);
+					->paginate(trans('messages.PAGINATE'));
         return view('district.index', compact('district'));
     }
 

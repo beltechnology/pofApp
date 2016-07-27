@@ -20,7 +20,7 @@ class ClassNameController extends Controller
      */
     public function index()
     {
-        $classname = \DB::table('class_names')->where('deleted',0)->paginate(15);
+        $classname = \DB::table('class_names')->where('deleted',0)->paginate(trans('messages.PAGINATE'));
 
         return view('class-name.index', compact('classname'));
     }

@@ -30,7 +30,7 @@ class CitysController extends Controller
 				->join('citys','citys.district_id','=','districts.id')
 				->where('citys.deleted',0)
 				->where('citys.state_id',session()->get('currentStateId'))
-				->paginate(15);
+				->paginate(trans('messages.PAGINATE'));
 
         return view('citys.index', compact('citys'));
     }

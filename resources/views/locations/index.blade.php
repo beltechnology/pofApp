@@ -22,7 +22,7 @@
                 </tr>
             </thead>
             <tbody>
-            {{-- */$x=0;/* --}}
+            {{--*/$x=$locations->firstItem()-1;/*--}}
             @foreach($locations as $item)
                 {{-- */$x++;/* --}}
                 <tr>

@@ -131,6 +131,20 @@ Route::get('/citys/edit/ajax-state',function()
     return $subcategories;
  
 });
+Route::get('/schools/create/schools',function()
+{
+    $emp_id = Input::get('emp_id');
+    $subcategories = DB::table('employees')->join('phones','phones.entityId','=','employees.entityId')->where('employees.employeeId',$emp_id)->get();
+    return $subcategories;
+ 
+});
+Route::get('/schools/edit/schools',function()
+{
+    $emp_id = Input::get('emp_id');
+    $subcategories = DB::table('employees')->join('phones','phones.entityId','=','employees.entityId')->where('employees.employeeId',$emp_id)->get();
+    return $subcategories;
+ 
+});
     });
 	
 Route::get('/', function () 

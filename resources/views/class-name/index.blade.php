@@ -22,7 +22,7 @@
                 </tr>
             </thead>
             <tbody>
-            {{-- */$x=0;/* --}}
+            {{--*/$x=$classname->firstItem()-1;/*--}}
             @foreach($classname as $item)
                 {{-- */$x++;/* --}}
                 <tr>
