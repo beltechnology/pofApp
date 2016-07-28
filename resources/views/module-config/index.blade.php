@@ -1,7 +1,6 @@
-@extends('layouts.app')
-
+@extends('layouts.header')
 @section('content')
-<div class="container">
+    <div class=" col-md-10 category">
 
     <h1>Moduleconfig <a href="{{ url('/module-config/create') }}" class="btn btn-primary btn-xs" title="Add New ModuleConfig"><span class="glyphicon glyphicon-plus" aria-hidden="true"/></a></h1>
     <div class="table">

@@ -1,7 +1,6 @@
-@extends('layouts.app')
-
+@extends('layouts.header')
 @section('content')
-<div class="container">
+    <div class=" col-md-10 category">
 
     <h1>Create New ModuleConfig</h1>
     <hr/>

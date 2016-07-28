@@ -35,12 +35,6 @@ else
 		</li>
 		@endif
         @endforeach 
-		<li>
-<?php
-$url = Request::url();
-?>
-                </li>
-
             </ul>
 
         </nav>

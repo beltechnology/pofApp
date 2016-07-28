@@ -20,7 +20,7 @@ class AppServiceProvider extends ServiceProvider
     {
         View::composer('*', function($view)
 		{
-			$designation =  DB::table('employees')->where('entityId',session()->get('entityId'))->value('designation');
+			$designation =  DB::table('employees')->where('entityId',session()->get('userEntityId'))->value('designation');
 			$articles =  DB::table('usermodule')
 							->join('module_configs','module_configs.id','=','usermodule.moduleId')
 							->where('usermodule.designationId',$designation)

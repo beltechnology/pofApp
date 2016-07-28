@@ -45,12 +45,12 @@ class AuthController extends Controller
 				$designations =  DB::table('designations')->where('id',$user->designationId)->value('designation');
 				if($designations == "superAdmin")
 				{
-					$request->session()->put('entityId',$user->entityId);
+					$request->session()->put('userEntityId',$user->entityId);
 					$request->session()->put('designationId',$user->designationId);
 					return redirect()->intended('/statelist');
 				}
 				else{
-		 		$request->session()->put('entityId',$user->entityId);
+		 		$request->session()->put('userEntityId',$user->entityId);
 		 		$request->session()->put('designationId',$user->designationId);
 					$stateId =  DB::table('addresses')->where('entityId', $user->entityId)->value('stateId');
 					$request->session()->put('currentStateId',$stateId);	

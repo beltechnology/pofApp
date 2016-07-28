@@ -1,7 +1,6 @@
-@extends('layouts.app')
-
+@extends('layouts.header')
 @section('content')
-<div class="container">
+    <div class=" col-md-10 category">
 
     <h1>ModuleConfig {{ $moduleconfig->id }}
         <a href="{{ url('module-config/' . $moduleconfig->id . '/edit') }}" class="btn btn-primary btn-xs" title="Edit ModuleConfig"><span class="glyphicon glyphicon-pencil" aria-hidden="true"/></a>

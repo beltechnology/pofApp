@@ -8,13 +8,17 @@
   		<div class="container-fluid">
    		
     	<ul class="nav navbar-nav">
-       <li><a href="{{ url('/schools/'.session()->get('entityId').'/edit') }}">{{ trans('messages.TABS_SCHOOL_PROFILE') }} </a></li>
-      <li><a href="{{ url('/book-details/'.session()->get('entityId').'/edit') }}">{{ trans('messages.TABS_BOOK_DETAIL') }}</a></li>
-      <li><a href="{{ url('/student-count/'.session()->get('entityId').'/edit') }}">{{ trans('messages.TABS_NO_OF_STUDENTS_FROM_SCHOOL') }}</a></li>
-      <li><a href="{{ url('/payments/'.session()->get('entityId').'/edit') }}">{{ trans('messages.TABS_PAYMENT_MODE') }}</a></li>
-	  <li class="active"><a href="{{ url('/fees/'.session()->get('entityId').'/edit') }}">{{ trans('messages.TABS_FEES') }}</a></li>
-	  <li><a href="{{ url('/student/') }}">{{ trans('messages.TABS_STUDENT_REGISTRATION') }}</a></li>
-	  <li><a href="{{ url('/first-level/'.session()->get('entityId').'/edit') }}">{{ trans('messages.TABS_FIRST_LEVEL_EXAM_TIME') }}</a></li>
+	@foreach ($articles as $article)
+		@if($article->moduleType === 2)	
+			@if($article->muduleLink === "/fees")
+				<li  class="active"><a  href="{{ url($article->muduleLink.'/'.session()->get('entityId').'/edit') }}">{{ $article->name }}</a></li>
+			@elseif($article->muduleLink === "/student")
+				<li><a  href="{{ url($article->muduleLink) }}">{{ $article->name }} </a></li>
+			@else
+				<li><a  href="{{ url($article->muduleLink.'/'.session()->get('entityId').'/edit') }}">{{ $article->name }} </a></li>
+			@endif
+		@endif
+    @endforeach
     </ul>
 		</div>
 	</nav>
