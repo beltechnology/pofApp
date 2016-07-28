@@ -8,7 +8,9 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
-
+use Session;
+use DB;
+use App\Http\Requests;
 class AuthController extends Controller
 {
     /*
@@ -40,7 +42,20 @@ class AuthController extends Controller
 		 // {
             // return redirect()->intended('/statelist');
         // }
-        return redirect()->intended('/statelist');
+				$designations =  DB::table('designations')->where('id',$user->designationId)->value('designation');
+				if($designations == "superAdmin")
+				{
+					$request->session()->put('entityId',$user->entityId);
+					$request->session()->put('designationId',$user->designationId);
+					return redirect()->intended('/statelist');
+				}
+				else{
+		 		$request->session()->put('entityId',$user->entityId);
+		 		$request->session()->put('designationId',$user->designationId);
+					$stateId =  DB::table('addresses')->where('entityId', $user->entityId)->value('stateId');
+					$request->session()->put('currentStateId',$stateId);	
+					return redirect()->intended('/employee');
+				}
     }
 	
 		//$redirectTo = '/statelist';

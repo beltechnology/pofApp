@@ -91,16 +91,13 @@ a {
 	color: #fff;
 }
 
-.nav > li > a:active{
- background-color: #000 !important;
-  color: #fff;
-}
 
-.nav > li > a {
+
+.nav > li > a.active {
+    text-decoration: none;
+    background-color: #0088cf;
+	color: #fff;
     position: relative;
-    display: block;
-    padding: 5px 8px;
-	background:url(../images/nav-active.png) no-repeat right;
 }
 
 .nav.nav-list {
@@ -854,4 +851,10 @@ input[type=checkbox]:checked + label:before { letter-spacing: 5px; } /* allow sp
 
 .team_btn.team-edit-btn {
     padding-right: 15px;
+}
+
+
+.col-md-2.side-menu-bar {
+    margin: 0px;
+    padding: 0px;
 }

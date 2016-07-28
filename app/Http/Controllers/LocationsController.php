@@ -26,7 +26,6 @@ class LocationsController extends Controller
 			->where('locations.deleted',0)
 			->where('locations.state_id',session()->get('currentStateId'))
 			->paginate(trans('messages.PAGINATE'));
-
         return view('locations.index', compact('locations'));
     }
 

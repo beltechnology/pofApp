@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use Session;
+use DB;
 use App\User;
 class resetpasswordController extends Controller
 {
@@ -32,7 +33,24 @@ class resetpasswordController extends Controller
     ]);
         Session::flash('flash_message', 'password updated!');
 
-        return redirect('/statelist');
+        //return redirect('/statelist');
+		
+				$designations =  DB::table('designations')->where('id',$user->designationId)->value('designation');
+				if($designations == "superAdmin")
+				{
+					$request->session()->put('entityId',$user->entityId);
+					$request->session()->put('designationId',$user->designationId);
+					return redirect()->intended('/statelist');
+				}
+				else{
+		 		$request->session()->put('entityId',$user->entityId);
+		 		$request->session()->put('designationId',$user->designationId);
+					$stateId =  DB::table('addresses')->where('entityId', $user->entityId)->value('stateId');
+						$request->session()->put('currentStateId',$stateId);	
+						return redirect()->intended('/employee');
+				}
+		
+		
     }
 
 }

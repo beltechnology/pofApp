@@ -164,3 +164,4 @@ Route::auth();
 
 
 
+Route::resource('module-config', 'ModuleConfigController');

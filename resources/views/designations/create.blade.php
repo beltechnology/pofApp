@@ -6,6 +6,7 @@
     <hr/>
 	<div class="row">
     {!! Form::open(['url' => '/designations', 'class' => 'form-horizontal']) !!}
+	                {!! Form::hidden('designationsId',\DB::table('designations')->max('id')+1, null, ['class' => 'form-control','required' => 'required'],['name'=>'designationsId']) !!}
 		<div class=" col-md-6 create-emp-list">
                 <div class="form-group {{ $errors->has('designation') ? 'has-error' : ''}}">
                 {!! Form::label('designation', trans('messages.NAME_DESIGNATION'), ['class' => 'col-sm-4 control-label']) !!}
@@ -14,8 +15,17 @@
                     {!! $errors->first('designation', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>
-
-
+			 <div class="row">
+			    @foreach ($module_configs as $module)
+			<div class="form-group>
+				<label class="col-sm-3 control-label">{{$module->name}}</label>
+                <div class="col-sm-3">
+					<input type="checkbox" name="active{{$module->id}}" value="Y" />
+                    <input type="hidden" name="id[]" value="{{$module->id}}" />
+                </div>
+                </div>
+				@endforeach
+			    </div>	
    <div class=" col-md-12 button-group">
     <div class="form-group">
         <div class="col-sm-offset-3 col-sm-12 ">

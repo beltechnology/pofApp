@@ -82,7 +82,8 @@ class employeeController extends Controller
 			'username' => $request['employeeName'],
             'email' => $request['emailAddress'],
             'password' => bcrypt('secret123#'),	
-				]);	 
+			'entityId' => $request['entityId'],
+			]);	 
 	 employee::create([
         'employeeId' => $request['employeeId'],
 		'entityId' => $request['entityId'],
