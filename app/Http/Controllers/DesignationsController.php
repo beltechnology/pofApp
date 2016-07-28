@@ -21,7 +21,7 @@ class DesignationsController extends Controller
      */
     public function index()
     {
-        $designations = \DB::table('designations')->where('deleted',0)->->paginate(trans('messages.PAGINATE'));
+        $designations = \DB::table('designations')->where('deleted',0)->paginate(trans('messages.PAGINATE'));
         return view('designations.index', compact('designations'));
     }
 

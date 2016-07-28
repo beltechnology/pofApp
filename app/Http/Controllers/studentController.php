@@ -26,6 +26,7 @@ class studentController extends Controller
                         ->join('class_names','class_names.id','=','students.classId')
 						->where('students.deleted',0)
 						->where('class_names.deleted',0)
+						->where('students.sessionYear',session()->get('activeSession'))
 						->where('students.schoolEntityId',session()->get('entityId'))
 						->paginate(trans('messages.PAGINATE'));
         return view('student.index', compact('student'));

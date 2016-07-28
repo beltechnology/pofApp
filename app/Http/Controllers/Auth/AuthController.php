@@ -47,13 +47,17 @@ class AuthController extends Controller
 				{
 					$request->session()->put('userEntityId',$user->entityId);
 					$request->session()->put('designationId',$user->designationId);
+					$sessionYear=date('Y').'-'.(date('Y')+1);
+					session()->put('activeSession',$sessionYear);
 					return redirect()->intended('/statelist');
 				}
 				else{
 		 		$request->session()->put('userEntityId',$user->entityId);
 		 		$request->session()->put('designationId',$user->designationId);
 					$stateId =  DB::table('addresses')->where('entityId', $user->entityId)->value('stateId');
-					$request->session()->put('currentStateId',$stateId);	
+					$request->session()->put('currentStateId',$stateId);
+					$sessionYear=date('Y').'-'.(date('Y')+1);
+					session()->put('activeSession',$sessionYear);
 					return redirect()->intended('/employee');
 				}
     }

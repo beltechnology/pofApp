@@ -56,7 +56,7 @@
             console.log(data);
             $('#location').empty();
             $.each(data, function(index,subCatObj){
-                $('#location').append('<option value="'+subCatObj.id+'">'+subCatObj.location+'</option>');
+                $('#location').append('<option value="'+subCatObj.locationId+'">'+subCatObj.location+'</option>');
             });
 			$("#cityValue").val(city_id);
 			$("#location").val(teamLocation);
@@ -70,7 +70,7 @@ $('.cityDropDown').on('change', function(e){
             console.log(data);
             $('#location').empty();
             $.each(data, function(index,subCatObj){
-                $('#location').append('<option value="'+subCatObj.id+'">'+subCatObj.location+'</option>');
+                $('#location').append('<option value="'+subCatObj.locationId+'">'+subCatObj.location+'</option>');
             });
         });
     });

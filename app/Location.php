@@ -18,7 +18,7 @@ class Location extends Model
     *
     * @var string
     */
-    protected $primaryKey = 'id';
+    protected $primaryKey = 'locationId';
 
     /**
      * Attributes that should be mass-assignable.

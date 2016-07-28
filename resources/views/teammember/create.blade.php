@@ -72,7 +72,7 @@ $('.cityDropDown').on('change', function(e){
             console.log(data);
             $('#location_'+newEle).empty();
             $.each(data, function(index,subCatObj){
-                $('#location_'+newEle).append('<option value="'+subCatObj.id+'">'+subCatObj.location+'</option>');
+                $('#location_'+newEle).append('<option value="'+subCatObj.locationId+'">'+subCatObj.location+'</option>');
             });
         });
     });

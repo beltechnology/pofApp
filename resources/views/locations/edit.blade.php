@@ -8,7 +8,7 @@
 
     {!! Form::model($location, [
         'method' => 'PATCH',
-        'url' => ['/locations', $location->id],
+        'url' => ['/locations', $location->locationId],
         'class' => 'form-horizontal'
     ]) !!}
             <div class=" col-md-6 create-emp-list">

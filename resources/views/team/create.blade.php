@@ -103,7 +103,7 @@ $('#city').on('change', function(e){
             console.log(data);
             $('#teamLocation').empty();
             $.each(data, function(index,subCatObj){
-                $('#teamLocation').append('<option value="'+subCatObj.id+'">'+subCatObj.location+'</option>');
+                $('#teamLocation').append('<option value="'+subCatObj.locationId+'">'+subCatObj.location+'</option>');
             });
         });
     });

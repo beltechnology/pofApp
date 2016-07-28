@@ -88,7 +88,7 @@ class TeammemberController extends Controller
         //$team = Team::findOrFail($id);
 		$team= \DB::table('employees')
                         ->join('entitys','entitys.entityId','=','employees.entityId')
-						->join('locations','locations.id','=','employees.locationId')
+						->join('locations','locations.locationId','=','employees.locationId')
 						->where('employees.deleted',0)
 						->where('locations.state_id',session()->get('currentStateId'))
 						->where('employees.teamId',$id)
@@ -112,7 +112,7 @@ class TeammemberController extends Controller
 		$emailaddress = emailaddress::findOrFail($id);
 		$phone = phone::findOrFail($id);
 		$citys = DB::table('citys')->where('citys.deleted',0)->where('citys.state_id',session()->get('currentStateId'))->lists('cityName','id');
-		$locations = DB::table('locations')->where('locations.deleted',0)->where('locations.state_id',session()->get('currentStateId'))->lists('location', 'id');		
+		$locations = DB::table('locations')->where('locations.deleted',0)->where('locations.state_id',session()->get('currentStateId'))->lists('location', 'locationId');		
 		return view('teammember.edit', ['employee' => $employee,'entity' => $entity,'address' => $address,'emailaddress' => $emailaddress,'phone' => $phone,'citys' => $citys,'locations'=>$locations]);
     }
 

@@ -44,7 +44,7 @@
             <div class="form-group {{ $errors->has('reportTime') ? 'has-error' : ''}}">
                 {!! Form::label('reportTime', trans('messages.REPORTING_TIME'), ['class' => 'col-sm-5 control-label']) !!}
                 <div class="col-sm-7 input-group datetime" >
-                    {!! Form::text('reportTime', null, ['class' => 'form-control']) !!}
+                    {!! Form::text('reportTime', null, ['class' => 'form-control','required'=>'required','maxlength'=>'8']) !!}
 					<span class="input-group-addon">
                         <span class="glyphicon glyphicon-time watch"></span>
                     </span>
@@ -54,7 +54,7 @@
             <div class="form-group {{ $errors->has('examStartTime') ? 'has-error' : ''}}">
                 {!! Form::label('examStartTime', trans('messages.EXAM_START_TIME'), ['class' => 'col-sm-5 control-label']) !!}
                 <div class="col-sm-7 input-group datetime" >
-                    {!! Form::text('examStartTime', null, ['class' => 'form-control']) !!}
+                    {!! Form::text('examStartTime', null, ['class' => 'form-control','required'=>'required','maxlength'=>'8']) !!}
 					<span class="input-group-addon">
                         <span class="glyphicon glyphicon-time watch"></span>
                     </span>
@@ -75,7 +75,7 @@
             <div class="form-group {{ $errors->has('examEndTime') ? 'has-error' : ''}}">
                 {!! Form::label('examEndTime', trans('messages.EXAM_END_TIME'), ['class' => 'col-sm-5 control-label']) !!}
                 <div class="col-sm-7 input-group datetime" >
-                    {!! Form::text('examEndTime', null, ['class' => 'form-control']) !!}
+                    {!! Form::text('examEndTime', null, ['class' => 'form-control','required'=>'required','maxlength'=>'8']) !!}
 					<span class="input-group-addon">
                         <span class="glyphicon glyphicon-time watch"></span>
                     </span>

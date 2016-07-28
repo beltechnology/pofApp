@@ -28,7 +28,7 @@ class TeamController extends Controller
     {
 		
 		$team= DB::table('teams')
-                        ->join('locations','locations.id','=','teams.teamLocation')
+                        ->join('locations','locations.locationId','=','teams.teamLocation')
 						->where('teams.deleted',0)
 						->where('locations.state_id',session()->get('currentStateId'))
 						->orderby('teams.teamId')
@@ -106,17 +106,14 @@ class TeamController extends Controller
     {
         $team = Team::findOrFail($id);
 		
-		/*$team =DB::table('teams')
-                        ->join('locations','locations.id','=','teams.teamLocation')
-						->join('citys','citys.id','=','locations.city_id')
-						->where('teams.teamId',$id);
-		*/				
 		$employee= \DB::table('entitys')
                         ->join('addresses','addresses.entityId','=','entitys.entityId')
 						->join('employees','employees.designation','=','entitys.entityType')
 						->where('entitys.deleted',0)
-						->where('addresses.stateId',session()->get('currentStateId'))->lists('entitys.name', 'entitys.entityId');					
-		$locations=\DB::table('locations')->where('locations.state_id',session()->get('currentStateId'))->where('locations.deleted',0)->lists('location','id');				
+						->where('addresses.stateId',session()->get('currentStateId'))->lists('entitys.name', 'entitys.entityId');
+						
+		$locations=\DB::table('locations')->where('locations.state_id',session()->get('currentStateId'))->where('locations.deleted',0)->lists('location','locationId');				
+		
 		$citys = \DB::table('citys')->where('citys.state_id',session()->get('currentStateId'))->where('citys.deleted',0)->lists('cityName', 'id');
 		return view('team.edit', ['team' => $team,'employee' => $employee,'locations'=>$locations,'citys'=>$citys]);
     }

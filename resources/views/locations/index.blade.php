@@ -31,7 +31,7 @@
 					 <td>{{ $item->cityName }}</td>
 					 <td>{{ $item->name }}</td>
                     <td class="text-right" style="padding-right:50px">
-                         <a href="{{ url('/locations/' . $item->id . '/edit') }}" class="btn btn-primary btn-xs" title="{{trans('messages.EDIT_LOCATION')}}"><span class="glyphicon glyphicon-pencil" aria-hidden="true"/></a>
+                         <a href="{{ url('/locations/' . $item->locationId . '/edit') }}" class="btn btn-primary btn-xs" title="{{trans('messages.EDIT_LOCATION')}}"><span class="glyphicon glyphicon-pencil" aria-hidden="true"/></a>
                         {!! Form::open([
                             'method'=>'DELETE',
                             'url' => ['/locations', $item->id],
