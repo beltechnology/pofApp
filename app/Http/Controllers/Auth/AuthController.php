@@ -32,16 +32,14 @@ class AuthController extends Controller
      *
      * @var string
      */
+	 
+	 
 	 protected function authenticated($request, $user)
     {
         if($user->remember_token=='') 
 		{
             return redirect('/resetPassword/'. $user->id.'/edit');
         }
-		// elseif($user->role =='employee')
-		 // {
-            // return redirect()->intended('/statelist');
-        // }
 				$designations =  DB::table('designations')->where('id',$user->designationId)->value('designation');
 				if($designations == "superAdmin")
 				{
