@@ -1,14 +1,6 @@
 			<div class=" col-md-2 side-menu-bar">
              <nav class="main-menu">
             <ul class="nav nav-list">
-<?php
-$url = Request::url();
-if (Request::is('citys/*'))
-{
-    echo $url;
-}
-?>
-
         @foreach ($articles as $article)
 <?php
 $url = Request::url();
