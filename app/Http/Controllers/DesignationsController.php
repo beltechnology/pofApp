@@ -21,7 +21,7 @@ class DesignationsController extends Controller
      */
     public function index()
     {
-        $designations = \DB::table('designations')->where('deleted',0)->paginate(15);
+        $designations = \DB::table('designations')->where('deleted',0)->->paginate(trans('messages.PAGINATE'));
         return view('designations.index', compact('designations'));
     }
 
@@ -126,7 +126,12 @@ class DesignationsController extends Controller
 
         $designation = Designation::findOrFail($id);
 		$this->validate($request, ['designation' => 'required|unique:designations,designation,'.$designation->id.',id,deleted,0']);
+		$updateCounters=Input::get ('updateCounter')+1;
+		$updateCounterdata = DB::table('designations')->where('id',$id)->value('updateCounter');
+		if($updateCounterdata < $updateCounters)
+		{
         $designation->update($request->all());
+		DB::table('designations')->where('id',$id)->update(['updateCounter' => $updateCounters]);
 		$i = 0;
 		if(isset($request['id']))
 		{
@@ -173,6 +178,13 @@ class DesignationsController extends Controller
         Session::flash('flash_message', 'Designation updated!');
 
         return redirect('designations');
+		
+		}
+       else
+	   {
+		    Session::flash('concurrency_message', 'Data has been changed by some other user');
+			  return redirect('designations');
+	   }  
     }
 
     /**

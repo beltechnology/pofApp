@@ -47,7 +47,7 @@
 			<div class="form-group {{ $errors->has('paymentDate') ? 'has-error' : ''}}">
 					{!! Form::label('paymentDate', trans('messages.DATE'), ['class' => 'col-sm-5 control-label']) !!}
 					<div class="col-sm-7   input-group date">
-                    {!! Form::text('paymentDate', null, ['class' => 'form-control']) !!}
+                    {!! Form::text('paymentDate', null, ['class' => 'form-control','required'=>'required','maxlength'=>'10']) !!}
 					<span class="input-group-addon">
                         <span class="glyphicon glyphicon-calendar"></span>
                     </span>
@@ -69,7 +69,7 @@
 			<div class="form-group Cheque commonDiv {{ $errors->has('modeRefNo') ? 'has-error' : ''}}">
 					{!! Form::label('modeRefNo', trans('messages.CHEQUE_NO'), ['class' => 'col-sm-5 control-label']) !!}
 					<div class="col-sm-7">
-                    {!! Form::text('modeRefNo', null, ['class' => 'form-control']) !!}
+                    {!! Form::text('modeRefNo', null, ['class' => 'form-control','maxlength'=>'20']) !!}
                     {!! $errors->first('modeRefNo', '<p class="help-block">:message</p>') !!}
 							</div>
 						</div>
@@ -78,7 +78,7 @@
 				<div class="form-group hide DD commonDiv {{ $errors->has('modeRefNo') ? 'has-error' : ''}}">
 					{!! Form::label('modeRefNo', trans('messages.DEMAND_DRAFT'), ['class' => 'col-sm-5 control-label']) !!}
 					<div class="col-sm-7">
-                    {!! Form::text('modeRefNo', null, ['class' => 'form-control']) !!}
+                    {!! Form::text('modeRefNo', null, ['class' => 'form-control','maxlength'=>'20']) !!}
                     {!! $errors->first('modeRefNo', '<p class="help-block">:message</p>') !!}
 							</div>
 						</div>

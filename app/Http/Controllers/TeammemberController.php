@@ -49,7 +49,7 @@ class TeammemberController extends Controller
 						->where('employees.locationId',0)
 						->where('addresses.stateId',session()->get('currentStateId'))
 						->groupBy('employees.entityId')
-						->paginate(5);
+						->paginate(trans('messages.PAGINATE'));
 		$cities = DB::table('citys')->where('citys.deleted',0)->where('citys.state_id',session()->get('currentStateId'))->lists('cityName', 'id');			
         return view('teammember.create',['employee' => $employee,'cities' => $cities]);
     }

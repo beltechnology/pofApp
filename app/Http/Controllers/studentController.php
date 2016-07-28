@@ -27,7 +27,7 @@ class studentController extends Controller
 						->where('students.deleted',0)
 						->where('class_names.deleted',0)
 						->where('students.schoolEntityId',session()->get('entityId'))
-						->paginate(10);
+						->paginate(trans('messages.PAGINATE'));
         return view('student.index', compact('student'));
     }
 
@@ -52,7 +52,7 @@ class studentController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, ['studentName' => 'required', 'fatherName' => 'required', 'dob' => 'required', 'classId' => 'required', 'section' => 'required', 'pmo' => 'required', 'pso' => 'required', 'handicapped' => 'required', ]);
+        $this->validate($request, ['studentName' => 'required', 'fatherName' => 'required', 'dob' => 'required', 'classId' => 'required', 'pmo' => 'required', 'pso' => 'required', 'handicapped' => 'required', ]);
 		entity::create([
 		'entityId' => $request['entityId'],
 		'name' => $request['studentName'],
@@ -115,7 +115,7 @@ class studentController extends Controller
      */
     public function update($id, Request $request)
     {
-        $this->validate($request, ['studentName' => 'required', 'fatherName' => 'required', 'dob' => 'required', 'classId' => 'required', 'section' => 'required', 'pmo' => 'required', 'pso' => 'required', 'handicapped' => 'required', 'rollNo' => 'required', ]);
+        $this->validate($request, ['studentName' => 'required', 'fatherName' => 'required', 'dob' => 'required', 'classId' => 'required','pmo' => 'required', 'pso' => 'required', 'handicapped' => 'required', 'rollNo' => 'required', ]);
 		
 		$updateCounters=Input::get ('updateCounter')+1;
 		$updateCounterdata = DB::table('students')->where('entityId',$id)->value('updateCounter');

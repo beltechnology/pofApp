@@ -13,7 +13,7 @@
             <div class="form-group {{ $errors->has('teamName') ? 'has-error' : ''}}">
                 {!! Form::label('teamName', trans('messages.TEAM_NAME'), ['class' => 'col-sm-4 control-label']) !!}
                 <div class="col-sm-8">
-                    {!! Form::text('teamName', null, ['class' => 'form-control']) !!}
+                    {!! Form::text('teamName', null, ['class' => 'form-control','required' => 'required','maxlength'=>'190']) !!}
                     {!! $errors->first('teamName', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>
@@ -28,7 +28,7 @@
 			 <div class="form-group {{ $errors->has('teamCreationDate') ? 'has-error' : ''}}">
                 {!! Form::label('teamCreationDate', trans('messages.TEAM_CREATION_DATE'), ['class' => 'col-sm-4 control-label']) !!}
                 <div class="col-sm-8 input-group date">
-                    {!! Form::text('teamCreationDate', null, ['class' => 'form-control', 'required' => 'required']) !!}
+                    {!! Form::text('teamCreationDate', null, ['class' => 'form-control', 'required' => 'required','maxlength'=>'10']) !!}
 					<span class="input-group-addon">
                         <span class="glyphicon glyphicon-calendar"></span>
                     </span>
@@ -43,7 +43,7 @@
 	 <div class="form-group {{ $errors->has('teamEndDate') ? 'has-error' : ''}}">
                 {!! Form::label('teamEndDate', trans('messages.TEAM_END_DATE'), ['class' => 'col-sm-4 control-label']) !!}
                 <div class="col-sm-8 input-group date">
-                    {!! Form::text('teamEndDate', null, ['class' => 'form-control', 'required' => 'required']) !!}
+                    {!! Form::text('teamEndDate', null, ['class' => 'form-control','maxlength'=>'10']) !!}
 					<span class="input-group-addon">
                         <span class="glyphicon glyphicon-calendar"></span>
                     </span>
@@ -93,14 +93,6 @@
     </div>
 	
     {!! Form::close() !!}
-
-    @if ($errors->any())
-        <ul class="alert alert-danger">
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    @endif
 </div>
 </div>
 <script>

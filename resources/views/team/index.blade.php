@@ -17,14 +17,15 @@
         <table class="table table-bordered table-striped table-hover">
             <thead>
                 <tr>
-                    <th >{{ trans('messages.TEAM_NAME') }}</th><th >{{ trans('messages.TEAM_CODE') }}</th><th>{{ trans('messages.TEAM_LOCATION') }}</th><th style="padding-left:30px">{{ trans('messages.TEAM_MEMBERS') }}</th><th style="padding-left:70px">{{ trans('messages.ACTIONS') }}</th>
+                   <th>{{trans('messages.S_NO')}} <th>{{ trans('messages.TEAM_NAME') }}</th><th >{{ trans('messages.TEAM_CODE') }}</th><th>{{ trans('messages.TEAM_LOCATION') }}</th><th style="padding-left:30px">{{ trans('messages.TEAM_MEMBERS') }}</th><th style="padding-left:70px">{{ trans('messages.ACTIONS') }}</th>
                 </tr>
             </thead>
             <tbody>
-            {{-- */$x=0;/* --}}
+            {{--*/$x=$team->firstItem()-1;/*--}}
             @foreach($team as $item)
                 {{-- */$x++;/* --}}
                 <tr>
+					<td>{{ $x }}</td>
                     <td>{{ $item->teamName }}</td>
                     <td>{{ $item->teamCode }}</td><td>{{ $item->location }}</td>					
 					<td style="padding-left:27px">					@foreach($employees as $employee)						@if ( $item->teamId === $employee->teamId)							{{ $employee->name }} , 						@else													@endif					@endforeach <a href="{{ url('/teammember/'. $item->teamId. '/') }}" class="btn  btn-xs" title="View Team"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"/></a></td>

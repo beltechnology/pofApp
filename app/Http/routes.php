@@ -149,18 +149,12 @@ Route::get('/schools/edit/schools',function()
 	
 Route::get('/', function () 
 {
-	return view('login');
+	return view('auth.login');
 });
 
 Route::resource('resetPassword','resetpasswordController');
 
 Route::auth();
-
-
-
-
-
-
 
 
 

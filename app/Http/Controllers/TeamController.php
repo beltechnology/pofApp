@@ -32,7 +32,7 @@ class TeamController extends Controller
 						->where('teams.deleted',0)
 						->where('locations.state_id',session()->get('currentStateId'))
 						->orderby('teams.teamId')
-						->paginate(15);
+						->paginate(trans('messages.PAGINATE'));
 		$employees= DB::table('teams')
 						 ->join('employees','employees.teamId','=','teams.teamId')
 						 ->join('entitys','entitys.entityId','=','employees.entityId')
@@ -65,7 +65,7 @@ class TeamController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, ['teamName' => 'required', 'city'=>'required','teamLocation' => 'required','teamLeader'=>'required', 'teamCreationDate' => 'required', 'teamEndDate' => 'required', ]);
+        $this->validate($request, ['teamName' => 'required', 'city'=>'required','teamLocation' => 'required', 'teamCreationDate' => 'required',  ]);
        team::create([
      	'teamName' => $request['teamName'],
 		'cityId' => $request['city'],
@@ -130,7 +130,7 @@ class TeamController extends Controller
      */
     public function update($id, Request $request)
     {
-        $this->validate($request, ['teamName' => 'required','cityId'=>'required', 'teamLocation' => 'required', 'teamCreationDate' => 'required', 'teamEndDate' => 'required', ]);
+        $this->validate($request, ['teamName' => 'required','cityId'=>'required', 'teamLocation' => 'required', 'teamCreationDate' => 'required', ]);
 		$updateCounters=Input::get ('updateCounter')+1;
 		$updateCounterdata = DB::table('teams')->where('teamId',$id)->value('updateCounter');
 		if($updateCounterdata < $updateCounters)

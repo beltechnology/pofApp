@@ -16,14 +16,15 @@
         <table class="table table-bordered table-striped table-hover">
             <thead>
                 <tr>
-                    <th>{{ trans('messages.MEMBER_NAME') }}</th><th>{{ trans('messages.MEMBER_LOCATION') }}</th><th>{{ trans('messages.ACTIONS') }}</th>
+                   <th>{{trans('messages.S_NO')}}</th> <th>{{ trans('messages.MEMBER_NAME') }}</th><th>{{ trans('messages.MEMBER_LOCATION') }}</th><th>{{ trans('messages.ACTIONS') }}</th>
                 </tr>
             </thead>
             <tbody>
-            {{-- */$x=0;/* --}}
+           {{--*/$x=$team->firstItem()-1;/*--}}
             @foreach($team as $item)
                 {{-- */$x++;/* --}}
                 <tr>
+					 <td>{{ $x }}</td>
                     <td>{{ $item->name }}</td>
                     <td>{{ $item->location }}</td>
                     <td><a href="{{ url('/teammember/' . $item->entityId. '/edit') }}" class="btn  btn-xs" title="Edit Team"><span class="glyphicon glyphicon-pencil" aria-hidden="true"/></a>

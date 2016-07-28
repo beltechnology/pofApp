@@ -40,21 +40,21 @@
                 <div class="form-group {{ $errors->has('studentName') ? 'has-error' : ''}}">
                 {!! Form::label('studentName', trans('messages.STUDENT_NAME'), ['class' => 'col-sm-4 control-label']) !!}
                 <div class="col-sm-8">
-                    {!! Form::text('studentName', null, ['class' => 'form-control', 'required' => 'required']) !!}
+                    {!! Form::text('studentName', null, ['class' => 'form-control', 'required' => 'required','maxlength'=>'190']) !!}
                     {!! $errors->first('studentName', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>
             <div class="form-group {{ $errors->has('fatherName') ? 'has-error' : ''}}">
                 {!! Form::label('fatherName', trans('messages.FATHER_NAME'), ['class' => 'col-sm-4 control-label']) !!}
                 <div class="col-sm-8">
-                    {!! Form::text('fatherName', null, ['class' => 'form-control', 'required' => 'required']) !!}
+                    {!! Form::text('fatherName', null, ['class' => 'form-control', 'required' => 'required','maxlength'=>'190']) !!}
                     {!! $errors->first('fatherName', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>
             <div class="form-group {{ $errors->has('dob') ? 'has-error' : ''}}">
                 {!! Form::label('dob', trans('messages.DOB'), ['class' => 'col-sm-4 control-label']) !!}
                <div class="col-sm-8   input-group date">
-                    {!! Form::text('dob', null, ['class' => 'form-control']) !!}
+                    {!! Form::text('dob', null, ['class' => 'form-control','required'=>'required','maxlength'=>'10']) !!}
 					<span class="input-group-addon">
                         <span class="glyphicon glyphicon-calendar"></span>
                     </span>
@@ -71,7 +71,7 @@
             <div class="form-group {{ $errors->has('section') ? 'has-error' : ''}}">
                 {!! Form::label('section', trans('messages.SECTION'), ['class' => 'col-sm-4 control-label']) !!}
                 <div class="col-sm-8">
-                    {!! Form::select('section',['1'=>'A','2'=>'B','3'=>'C'],null,['class' => 'form-control', 'required' => 'required']) !!}
+                    {!! Form::select('section',['1'=>'A','2'=>'B','3'=>'C'],null,['class' => 'form-control','placeholder'=>'Select Section']) !!}
                     {!! $errors->first('section', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>
@@ -123,13 +123,7 @@
  
     {!! Form::close() !!}
 
-    @if ($errors->any())
-        <ul class="alert alert-danger">
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    @endif
+   
 
 </div>
 @endsection

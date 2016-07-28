@@ -35,6 +35,7 @@
             <table class="table table-bordered table-striped table-hover" >
             <thead>
       <tr>
+		<th>{{trans('messages.S_NO')}}</th>
         <th>{{ trans('messages.EMPLOYEE_NAME') }}</th>
         <th>{{ trans('messages.EMPLOYEE_CODE') }}</th>
         <th>{{ trans('messages.DOB') }}</th>
@@ -45,12 +46,12 @@
       </tr>
     </thead>
             <tbody>
-            {{-- */$x=0;/* --}}
+            {{--*/$x=$employee->firstItem()-1;/*--}}
             @foreach($employee as $item)
                 {{-- */$x++;/* --}}
                 <tr>
-                    <td>
-					{{ $item->name }}</td>
+					<td>{{ $x }}</td>
+                    <td>{{ $item->name }}</td>
                     <td>{{ $item->employeeCode }}</td>
 					<td>{{ $item->dob }}</td>
 					<td>{{ $item->primaryNumber }}</td>

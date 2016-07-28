@@ -46,7 +46,7 @@ class schoolsController extends Controller
 						->where('addresses.stateId',session()->get('currentStateId'))
 						->groupBy('schools.entityId')
 						->orderBy('schools.entityId','desc')
-						->paginate(10);
+						->paginate(trans('messages.PAGINATE'));
         return view('schools.index', compact('schools'));
     }
 	

@@ -60,7 +60,7 @@
 			 <div class="form-group {{ $errors->has('studentsFees') ? 'has-error' : ''}}">
                 {!! Form::label('studentsFees',trans('messages.STUDENTS_FEES'), ['class' => 'col-sm-5 control-label ']) !!}
                 <div class="col-sm-7">
-                    {!! Form::number('studentsFees',null,['class' => 'form-control studentsFees','min'=>'0']) !!}
+                    {!! Form::number('studentsFees',null,['class' => 'form-control studentsFees','min'=>'0','maxlength'=>'10']) !!}
                     {!! $errors->first('studentsFees', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>
@@ -116,13 +116,7 @@
 	
     {!! Form::close() !!}
 
-    @if ($errors->any())
-        <ul class="alert alert-danger">
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    @endif
+   
 </div>
  <script type="text/javascript">
         $(function() {

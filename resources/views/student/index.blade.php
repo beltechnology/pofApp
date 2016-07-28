@@ -33,14 +33,15 @@
         <table class="table table-bordered table-striped table-hover">
             <thead>
                 <tr>
-                    <th>{{ trans('messages.STUDENT_NAME') }}</th><th>{{ trans('messages.DOB') }}</th><th>{{ trans('messages.BOOKDETAIL_CLASS') }}</th><th>{{ trans('messages.ROLL_NO') }}</th><th> {{ trans('messages.HANDICAPPED') }}</th><th>{{ trans('messages.ACTIONS') }}<input type="checkbox"></th><th>{{ trans('messages.EDIT') }}</th><th>{{ trans('messages.DELETE') }}</th>
+                   <th>{{trans('messages.S_NO')}}</th> <th>{{ trans('messages.STUDENT_NAME') }}</th><th>{{ trans('messages.DOB') }}</th><th>{{ trans('messages.BOOKDETAIL_CLASS') }}</th><th>{{ trans('messages.ROLL_NO') }}</th><th> {{ trans('messages.HANDICAPPED') }}</th><th>{{ trans('messages.ACTIONS') }}<input type="checkbox"></th><th>{{ trans('messages.EDIT') }}</th><th>{{ trans('messages.DELETE') }}</th>
                 </tr>
             </thead>
             <tbody>
-            {{-- */$x=0;/* --}}
+           {{--*/$x=$student->firstItem()-1;/*--}}
             @foreach($student as $item)
                 {{-- */$x++;/* --}}
                 <tr>
+					<td>{{ $x }}</td>
                     <td>{{ $item->studentName }}</td>
 					<td>{{ $item->dob }}</td>
 					<td>{{ $item->name }}</td>

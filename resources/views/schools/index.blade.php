@@ -43,6 +43,7 @@
         <table class="table table-bordered table-striped table-hover">
             <thead>
                 <tr>
+					<th>{{trans('messages.S_NO')}}</th>
 					<th> {{ trans('messages.SCHOOL_NAME') }} </th>
 					<th>{{ trans('messages.SCHOOL_ADDRESS') }} </th>
 					<th>{{ trans('messages.SCHOOL_CITY') }} </th>
@@ -58,12 +59,15 @@
                 </tr>
             </thead>
             <tbody>
+			 {{--*/$x=$schools->firstItem()-1;/*--}}
             @foreach($schools as $item)
+			{{-- */$x++;/* --}}
 					@if ($item->activationSchool === '1')
 						 <tr class="danger">
 					@else
 						 <tr class="{{$item->activationSchool}}">
-					@endif               
+					@endif  
+					<td>{{ $x }}</td>
                     <td>{{ $item->schoolName }}</td>
 					<td>{{ $item->addressLine1 }}</td>
 					<td>{{ $item->cityName }}</td>

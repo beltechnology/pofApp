@@ -13,6 +13,7 @@
             <table class='table table-bordered table-striped table-hover'>
             <thead>
       <tr>
+		<th>{{trans('messages.S_NO')}}</th>
         <th>{{ trans('messages.MEMBER_NAME') }}</th>
         <th>{{ trans('messages.DOB') }}</th>
         <th>{{ trans('messages.CONTACT_NUMBER') }}</th>
@@ -23,7 +24,7 @@
       </tr>
     </thead>
             <tbody>
-            {{-- */$x=0;/* --}}
+            {{--*/$x=$employee->firstItem()-1;/*--}}
             @foreach($employee as $item)
                 {{-- */$x++;/* --}}
                 <tr>
@@ -32,6 +33,7 @@
                             'action' => ['TeammemberController@update', $item->entityId],
                             'style' => 'display:inline'
                         ]) !!}
+					 <td>{{ $x }}</td>	
                     <td>{{ $item->name }}</td>
 					<td>{{ $item->dob }}</td>
 					<td>{{ $item->primaryNumber }}</td>
