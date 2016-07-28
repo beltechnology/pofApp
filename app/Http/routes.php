@@ -42,21 +42,21 @@ Route::group(array('middleware' => 'auth'), function() {
 	Route::get('/employee/create/ajax-state',function()
 {
     $state_id = session()->get('currentStateId');
-    $subcategories = District::where('state_id','=',$state_id)->get();
+    $subcategories = District::where('state_id','=',$state_id)->where('districts.deleted',0)->get();
     return $subcategories;
  
 });
 Route::get('/employee/create/district',function()
 {
     $dist_id = Input::get('dist_id');
-    $subcategories = City::where('district_id','=',$dist_id)->get();
+    $subcategories = City::where('district_id','=',$dist_id)->where('citys.deleted',0)->get();
     return $subcategories;
  
 });
 Route::get('/locations/create/district',function()
 {
     $dist_id = Input::get('dist_id');
-    $subcategories = City::where('district_id','=',$dist_id)->get();
+    $subcategories = City::where('district_id','=',$dist_id)->where('districts.deleted',0)->get();
     return $subcategories;
  
 });
@@ -77,42 +77,42 @@ Route::get('/team/edit/district',function()
 Route::get('/teammember/create/city',function()
 {
     $city_id = Input::get('city_id');
-    $subcategories = Location::where('city_id','=',$city_id)->get();
+    $subcategories = Location::where('city_id','=',$city_id)->where('locations.deleted',0)->get();
     return $subcategories;
  
 });
 Route::get('/teammember/edit/city',function()
 {
     $city_id = Input::get('city_id');
-    $subcategories = Location::where('city_id','=',$city_id)->get();
+    $subcategories = Location::where('city_id','=',$city_id)->where('locations.deleted',0)->get();
     return $subcategories;
  
 });
 Route::get('/employee/edit/district',function()
 {
     $dist_id = Input::get('dist_id');
-    $subcategories = City::where('district_id','=',$dist_id)->get();
+    $subcategories = City::where('district_id','=',$dist_id)->where('citys.deleted',0)->get();
     return $subcategories;
  
 });
 Route::get('/employee/edit/ajax-state',function()
 {
     $state_id =session()->get('currentStateId');
-    $subcategories = District::where('state_id','=',$state_id)->get();
+    $subcategories = District::where('state_id','=',$state_id)->where('districts.deleted',0)->get();
     return $subcategories;
  
 });
 Route::get('/locations/edit/ajax-state',function()
 {
     $state_id =session()->get('currentStateId');
-    $subcategories = District::where('state_id','=',$state_id)->get();
+    $subcategories = District::where('state_id','=',$state_id)->where('districts.deleted',0)->get();
     return $subcategories;
  
 });
 Route::get('/locations/edit/district',function()
 {
     $dist_id = Input::get('dist_id');
-    $subcategories = City::where('district_id','=',$dist_id)->get();
+    $subcategories = City::where('district_id','=',$dist_id)->where('citys.deleted',0)->get();
     return $subcategories;
  
 });
@@ -120,28 +120,28 @@ Route::get('/locations/edit/district',function()
 Route::get('/citys/create/ajax-state',function()
 {
     $state_id =session()->get('currentStateId');
-    $subcategories = District::where('state_id','=',$state_id)->get();
+    $subcategories = District::where('state_id','=',$state_id)->where('districts.deleted',0)->get();
     return $subcategories;
  
 });
 Route::get('/citys/edit/ajax-state',function()
 {
     $state_id =  session()->get('currentStateId');
-    $subcategories = District::where('state_id','=',$state_id)->get();
+    $subcategories = District::where('state_id','=',$state_id)->where('districts.deleted',0)->get();
     return $subcategories;
  
 });
 Route::get('/schools/create/schools',function()
 {
     $emp_id = Input::get('emp_id');
-    $subcategories = DB::table('employees')->join('phones','phones.entityId','=','employees.entityId')->where('employees.employeeId',$emp_id)->get();
+    $subcategories = DB::table('employees')->join('phones','phones.entityId','=','employees.entityId')->where('employees.employeeId',$emp_id)->where('employees.deleted',0)->get();
     return $subcategories;
  
 });
 Route::get('/schools/edit/schools',function()
 {
     $emp_id = Input::get('emp_id');
-    $subcategories = DB::table('employees')->join('phones','phones.entityId','=','employees.entityId')->where('employees.employeeId',$emp_id)->get();
+    $subcategories = DB::table('employees')->join('phones','phones.entityId','=','employees.entityId')->where('employees.employeeId',$emp_id)->where('employees.deleted',0)->get();
     return $subcategories;
  
 });
