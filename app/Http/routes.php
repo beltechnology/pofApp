@@ -56,7 +56,7 @@ Route::get('/employee/create/district',function()
 Route::get('/locations/create/district',function()
 {
     $dist_id = Input::get('dist_id');
-    $subcategories = City::where('district_id','=',$dist_id)->where('districts.deleted',0)->get();
+    $subcategories = City::where('district_id','=',$dist_id)->where('citys.deleted',0)->get();
     return $subcategories;
  
 });

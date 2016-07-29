@@ -29,7 +29,7 @@
 					<td>{{ $employee->dob }}</td>
 					<td>{{ $phone->primaryNumber }}</td>
 					<td>{{ $emailaddress->email }}</td>
-					<td id='city'>{!! Form::select('cityId',$citys,null, ['class' => 'cityDropDown','id'=>'cityValue']) !!}</td>
+					<td id='city'>{!! Form::select('cityId',['0'=>'Select a City']+$citys,null, ['class' => 'cityDropDown','id'=>'cityValue']) !!}</td>
 					<td>{!! Form::select('locationId',$locations,null, ['id' => 'location']) !!}</td>
                     <td>
                        
@@ -55,6 +55,7 @@
 	 $.get('{{ url('teammember') }}/edit/city?city_id=' + city_id, function(data) {
             console.log(data);
             $('#location').empty();
+			$('#location').append('<option value="">'+'Select Location'+'</option>');
             $.each(data, function(index,subCatObj){
                 $('#location').append('<option value="'+subCatObj.locationId+'">'+subCatObj.location+'</option>');
             });
