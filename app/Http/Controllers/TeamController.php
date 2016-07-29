@@ -27,12 +27,16 @@ class TeamController extends Controller
     public function index()
     {
 		
-		$team= DB::table('teams')
-                        ->join('locations','locations.locationId','=','teams.teamLocation')
+		$team = DB::table('teams')
+                        ->leftjoin('locations','locations.locationId','=','teams.teamLocation')
 						->where('teams.deleted',0)
-						->where('locations.state_id',session()->get('currentStateId'))
+						->Where(function ($query) {
+						$query->orwhere('locations.state_id', '=', session()->get('currentStateId'))
+                      ->orwhere('teams.teamLocation', '=', 0);
+            })
 						->orderby('teams.teamId')
 						->paginate(trans('messages.PAGINATE'));
+						
 		$employees= DB::table('teams')
 						 ->join('employees','employees.teamId','=','teams.teamId')
 						 ->join('entitys','entitys.entityId','=','employees.entityId')
@@ -65,7 +69,7 @@ class TeamController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, ['teamName' => 'required', 'city'=>'required','teamLocation' => 'required', 'teamCreationDate' => 'required',  ]);
+        $this->validate($request, ['teamName' => 'required', 'teamCreationDate' => 'required',  ]);
        team::create([
      	'teamName' => $request['teamName'],
 		'cityId' => $request['city'],
@@ -127,7 +131,8 @@ class TeamController extends Controller
      */
     public function update($id, Request $request)
     {
-        $this->validate($request, ['teamName' => 'required','cityId'=>'required', 'teamLocation' => 'required', 'teamCreationDate' => 'required', ]);
+        $this->validate($request, ['teamName' => 'required', 'teamCreationDate' => 'required', ]);
+		
 		$updateCounters=Input::get ('updateCounter')+1;
 		$updateCounterdata = DB::table('teams')->where('teamId',$id)->value('updateCounter');
 		if($updateCounterdata < $updateCounters)
@@ -155,7 +160,7 @@ class TeamController extends Controller
      */
     public function destroy($id)
     {
-        Team::destroy($id);
+       \DB::table('teams')->where('teamId', $id)->update(['deleted' => 1]);
 
         Session::flash('flash_message', 'Team deleted!');
 

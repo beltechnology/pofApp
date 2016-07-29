@@ -93,6 +93,7 @@
 	 $.get('{{ url('team') }}/edit/district?city_id=' + city_id, function(data) {
             console.log(data);
             $('#teamLocation').empty();
+			$('#teamLocation').append('<option value="0" >Select a Location </option>');
             $.each(data, function(index,subCatObj){
                 $('#teamLocation').append('<option value="'+subCatObj.locationId+'">'+subCatObj.location+'</option>');
             });
@@ -108,6 +109,7 @@ $('#city').on('change', function(e){
         $.get('{{ url('team') }}/edit/district?city_id=' + city_id, function(data) {
             console.log(data);
             $('#teamLocation').empty();
+			$('#teamLocation').append('<option value="0" >Select a Location </option>');
             $.each(data, function(index,subCatObj){
                 $('#teamLocation').append('<option value="'+subCatObj.locationId+'">'+subCatObj.location+'</option>');
             });

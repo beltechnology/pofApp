@@ -62,7 +62,7 @@
                 {!! Form::label('teamLocation', trans('messages.TEAM_LOCATION'), ['class' => 'col-sm-4 control-label']) !!}
                   <div class="col-sm-8">
 					<select id="teamLocation" class="form-control " name="teamLocation">
-					 <option >Select a Location </option>
+					 <option value="0">Select a Location </option>
 					<option value=""></option>
 					</select>
                     {!! $errors->first('teamLocation', '<p class="help-block">:message</p>') !!}
@@ -102,6 +102,7 @@ $('#city').on('change', function(e){
         $.get('{{ url('team') }}/create/district?city_id=' + city_id, function(data) {
             console.log(data);
             $('#teamLocation').empty();
+			$('#teamLocation').append('<option value="0" >Select a Location </option>');
             $.each(data, function(index,subCatObj){
                 $('#teamLocation').append('<option value="'+subCatObj.locationId+'">'+subCatObj.location+'</option>');
             });
