@@ -159,11 +159,14 @@ class TeamController extends Controller
      * @return void
      */
     public function destroy($id)
-    {
-       \DB::table('teams')->where('teamId', $id)->update(['deleted' => 1]);
+		{
+		$employeesTeamId = DB::table('employees')->where('teamId',$id)->value('teamId');
+       DB::table('teams')->where('teamId', $id)->update(['deleted' => 1]);
+	   DB::table('employees')->where('teamId', $id)->update(['teamId' => 0]);
+	   DB::table('schools')->where('teamCode', $id)->update(['teamCode' => 0]);
 
         Session::flash('flash_message', 'Team deleted!');
 
         return redirect('team');
-    }
+		}
 }

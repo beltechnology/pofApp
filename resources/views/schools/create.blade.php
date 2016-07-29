@@ -8,7 +8,7 @@
       <h1 class="text-left col-md-4"></h1>
       </div>
     {!! Form::open(['url' => '/schools', 'class' => 'form-horizontal']) !!}
-        {!! Form::hidden('schoolCode',\DB::table('schools')->max('id')+1, null, ['class' => 'form-control','required' => 'required'],['name'=>'uniqueschoolCode']) !!}
+        {!! Form::hidden('schoolCode',\DB::table('schools')->max('id')+1, null, ['class' => 'form-control','required' => 'required']) !!}
         {!! Form::hidden('entityId',\DB::table('entitys')->max('entityId')+1, null, ['class' => 'form-control','required' => 'required'],['name'=>'entityId']) !!}
         <div class="row create-emp-list">
             <div class="col-md-6">

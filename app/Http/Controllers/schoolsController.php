@@ -170,7 +170,7 @@ class schoolsController extends Controller
             'PMOExamDate' => $request['PMOExamDate'],
             'PSOExamDate' => $request['PSOExamDate'],
             'schoolcode' => $request['schoolcode'],
-            'uniqueSchoolCode' => "SCHOOL".$request['uniqueschoolCode'],
+            'uniqueSchoolCode' => "SCHOOL".$request['schoolCode'],
             'teamCode' => $request['teamCode'],
             'employeeCode' => $request['employeeCode'],
             'schoolTotalStrength' => $request['schoolTotalStrength'],
@@ -346,8 +346,13 @@ class schoolsController extends Controller
 		DB::table('entitys')->where('entityId', $id)->update(['deleted' => 1]);
 		DB::table('emailaddresses')->where('entityId', $id)->update(['deleted' => 1]);
 		DB::table('phones')->where('entityId', $id)->update(['deleted' => 1]);
+		DB::table('students')->where('schoolEntityId', $id)->update(['deleted' => 1]);
+		DB::table('book_details')->where('entityId', $id)->update(['deleted' => 1]);
+		DB::table('first_levels')->where('entityId', $id)->update(['deleted' => 1]);
+		DB::table('fees')->where('entityId', $id)->update(['deleted' => 1]);
+		DB::table('payments')->where('entityId', $id)->update(['deleted' => 1]);
+		DB::table('student_counts')->where('entityId', $id)->update(['deleted' => 1]);
         Session::flash('flash_message', 'school deleted!');
-
-        return redirect('schools');
+		return redirect('schools');
     }
 }

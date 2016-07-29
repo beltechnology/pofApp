@@ -76,17 +76,17 @@
                     {!! $errors->first('pinCode', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>
-            
-             </div>
-            <div class=" col-md-6 create-emp-list">
-            
-             <div class="form-group {{ $errors->has('primaryNumber') ? 'has-error' : ''}}">
+				 <div class="form-group {{ $errors->has('primaryNumber') ? 'has-error' : ''}}">
                 {!! Form::label('primaryNumber', trans('messages.PRIMARY_MOBILE'), ['class' => 'col-sm-4  control-label']) !!}
                 <div class="col-sm-8">
                     {!! Form::text('primaryNumber', null, ['class' => 'form-control','required' => 'required','maxlength'=>'13']) !!}
                     {!! $errors->first('primaryNumber', '<p class="help-block">:message</p>') !!}
                 </div>
-            </div>
+				</div>
+             </div>
+            <div class=" col-md-6 create-emp-list">
+            
+           
              <div class="form-group {{ $errors->has('secondaryNumber') ? 'has-error' : ''}}">
                 {!! Form::label('secondaryNumber', trans('messages.SECONDARY_MOBILE'), ['class' => 'col-sm-4  control-label']) !!}
                 <div class="col-sm-8">
@@ -126,7 +126,15 @@
                     {!! $errors->first('employeeCode', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>
-			
+			@if ($employee->teamId != '0')
+			  <div class="form-group {{ $errors->has('employeeCode') ? 'has-error' : ''}}">
+                {!! Form::label('employeeCode', trans('messages.TEAM_CODE'), ['class' => 'col-sm-4  control-label']) !!}
+                <div class="col-sm-8">
+                    {!! Form::text('teamId', null, ['class' => 'form-control','required' => 'required','readonly'=>'readonly']) !!}
+                    {!! $errors->first('employeeCode', '<p class="help-block">:message</p>') !!}
+                </div>
+            </div>
+			@endif 
 		
 	
             </div>

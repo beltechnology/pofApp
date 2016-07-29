@@ -36,7 +36,7 @@ class employeeController extends Controller
 						->where('employees.deleted',0)
 						->where('addresses.stateId',session()->get('currentStateId'))
 						->groupBy('employees.entityId')
-						->paginate(10);
+						->paginate(trans('messages.PAGINATE'));
 						return view('employee.index', compact('employee'));
     }
 	
@@ -51,7 +51,7 @@ class employeeController extends Controller
 						->where('addresses.stateId',session()->get('currentStateId'))
 						->where('name', 'like', '%'.$q.'%')
 						->groupBy('employees.entityId')
-						->paginate(10);
+						->paginate(trans('messages.PAGINATE'));
 						$pagination = $employee->appends ( array ('q' => Input::get ( 'q' )));						
 						return view('employee.index', compact('employee'));
     }
@@ -218,24 +218,15 @@ class employeeController extends Controller
      */
     public function destroy($id)
     {
+		$employeesCode = DB::table('employees')->where('entityId',$id)->value('employeeId');
         DB::table('employees')->where('entityId', $id)->update(['deleted' => 1]);
 		DB::table('addresses')->where('entityId', $id)->update(['deleted' => 1]);
 		DB::table('entitys')->where('entityId', $id)->update(['deleted' => 1]);
 		DB::table('emailaddresses')->where('entityId', $id)->update(['deleted' => 1]);
 		DB::table('phones')->where('entityId', $id)->update(['deleted' => 1]);
-		
+		DB::table('schools')->where('employeeCode', $employeesCode)->update(['employeeCode' =>0]);		
         Session::flash('flash_message', 'employee deleted!');
         return redirect('employee');
-    }
-	public function dropdown()
-	{
-
-	//$input = Input::get('option');
-	//$districts = DB::table('districts')
-	//->where('state_id', $input)
-	//->orderBy('name', 'desc')
-	//->lists('district','selectCity');
-
-	//return Response::json($numbers);
-	}
+		}
+	
 }
