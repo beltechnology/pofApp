@@ -43,7 +43,7 @@ class schoolsController extends Controller
 						->join('citys','citys.id','=','addresses.cityId')
 						->join('districts','districts.id','=','addresses.districtId')
 						->where('schools.deleted',0)
-						//->where('schools.sessionYear',session()->get('activeSession'))
+						->where('schools.sessionYear',session()->get('activeSession'))
 						->where('addresses.stateId',session()->get('currentStateId'))
 						->groupBy('schools.entityId')
 						->orderBy('schools.entityId','desc')

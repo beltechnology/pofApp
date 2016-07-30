@@ -41,11 +41,11 @@ class AuthController extends Controller
             return redirect('/resetPassword/'. $user->id.'/edit');
         }
 				$designations =  DB::table('designations')->where('id',$user->designationId)->value('designation');
+				$sessionYear =  DB::table('session_years')->where('status',0)->value('id');
 				if($designations == "superAdmin")
 				{
 					$request->session()->put('userEntityId',$user->entityId);
 					$request->session()->put('designationId',$user->designationId);
-					$sessionYear=date('Y').'-'.(date('Y')+1);
 					session()->put('activeSession',$sessionYear);
 					return redirect()->intended('/statelist');
 				}
@@ -54,7 +54,6 @@ class AuthController extends Controller
 		 		$request->session()->put('designationId',$user->designationId);
 					$stateId =  DB::table('addresses')->where('entityId', $user->entityId)->value('stateId');
 					$request->session()->put('currentStateId',$stateId);
-					$sessionYear=date('Y').'-'.(date('Y')+1);
 					session()->put('activeSession',$sessionYear);
 					return redirect()->intended('/employee');
 				}
