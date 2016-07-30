@@ -32,6 +32,13 @@
                     {!! $errors->first('closingDate', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>
+			<div class="form-group {{ $errors->has('sessionYear') ? 'has-error' : ''}}">
+                {!! Form::label('sessionYear',  trans('messages.SESSION_YEAR'), ['class' => 'col-sm-5 control-label']) !!}
+                <div class="col-sm-7">
+                    {!! Form::select('sessionYear',['0'=>'Select Session Year']+$sessionYear, null, ['class' => 'form-control', 'required' => 'required']) !!}
+                    {!! $errors->first('forsessionYearmNo', '<p class="help-block">:message</p>') !!}
+                </div>
+            </div>
             <div class="form-group {{ $errors->has('formNo') ? 'has-error' : ''}}">
                 {!! Form::label('formNo', trans('messages.SCHOOL_FORM_NO'), ['class' => 'col-sm-5 control-label']) !!}
                 <div class="col-sm-7">

@@ -43,7 +43,7 @@ class schoolsController extends Controller
 						->join('citys','citys.id','=','addresses.cityId')
 						->join('districts','districts.id','=','addresses.districtId')
 						->where('schools.deleted',0)
-						->where('schools.sessionYear',session()->get('activeSession'))
+						//->where('schools.sessionYear',session()->get('activeSession'))
 						->where('addresses.stateId',session()->get('currentStateId'))
 						->groupBy('schools.entityId')
 						->orderBy('schools.entityId','desc')
@@ -126,8 +126,9 @@ class schoolsController extends Controller
                         ->join('locations','locations.locationId','=','teams.teamLocation')
 						->where('teams.deleted',0)
 						->where('locations.state_id',session()->get('currentStateId'))
-						->lists('teams.teamCode', 'teamId');						
-						return view('schools.create',['employee' => $employee,'districts'=>$districts,'team'=>$team]);
+						->lists('teams.teamCode', 'teamId');	
+		 $sessionYear= DB::table('session_years')->where('session_years.deleted',0)->lists('session_years.sessionYear', 'id');	
+						return view('schools.create',['employee' => $employee,'districts'=>$districts,'team'=>$team,'sessionYear'=>$sessionYear]);
     }
 
     /**
@@ -139,7 +140,6 @@ class schoolsController extends Controller
     {
         $this->validate($request, ['posterDistributionDate' => 'required', 'closingDate' => 'required', 'formNo' => 'required', 'schoolName' => 'required', 'principalName' => 'required', 'principalMobile' => 'required', 'principalEmail' => 'required','principalGift'=>'required', 'firstCoordinatorName' => 'required', 'firstCoordinatorMobile' => 'required', 'firstCoordinatorEmail' => 'required', 'coordinatorGift' => 'required', 'PMOExamDate' => 'required', 'PSOExamDate' => 'required', 'schoolcode' => 'required', 'teamCode' => 'required', 'employeeCode' => 'required', 'employeeMobileType' => 'required', 'schoolTotalStrength' => 'required', 'classStrength' => 'required', 'followUpDate' => 'required', 'callStatus' => 'required', 'posterDistributed' => 'required', 'KMS' => 'required', ]);
 
-    //    school::create($request->all());
         User::create([
             'designationId' => "",
             'name' => $request['schoolName'],
@@ -183,19 +183,19 @@ class schoolsController extends Controller
 			'principalGift' => $request['principalGift'],
 			'coordinatorGift' => $request['coordinatorGift'],
 			'employeeMobileType' => $request['employeeMobileType'],
-            'sessionYear' => date('Y').'-'.(date('Y')+1),
+            'sessionYear' => $request['sessionYear'],
         ]);
 		payment::create(['entityId' => $request['entityId'],
 		'schoolId' => $request['schoolCode'],
-		'sessionYear' => date('Y').'-'.(date('Y')+1),
+		'sessionYear' => $request['sessionYear'],
 		]);
 		fee::create(['entityId' => $request['entityId'],
 		'schoolId' => $request['schoolCode'],
-		'sessionYear' => date('Y').'-'.(date('Y')+1),
+		'sessionYear' => $request['sessionYear'],
 		]);
 		firstLevel::create(['entityId' => $request['entityId'],
 		'schoolId' => $request['schoolCode'],
-		'sessionYear' => date('Y').'-'.(date('Y')+1),
+		'sessionYear' => $request['sessionYear'],
 		]);
 		$classId = DB::table('class_names')->where('class_names.deleted',0)->where('class_names.status',0)->get();
 		foreach($classId as $class_Id)
@@ -204,12 +204,12 @@ class schoolsController extends Controller
 		BookDetail::create(['entityId' => $request['entityId'],
 		'classId' => $classid,
 		'schoolId' => $request['schoolCode'],
-		'sessionYear' => date('Y').'-'.(date('Y')+1),
+		'sessionYear' => $request['sessionYear'],
 		]);
 		studentCount::create(['entityId' => $request['entityId'],
 		'classId' => $classid,
 		'schoolId' => $request['schoolCode'],
-		'sessionYear' => date('Y').'-'.(date('Y')+1),
+		'sessionYear' => $request['sessionYear'],
 		]);
 		}
         address::create([
@@ -229,9 +229,6 @@ class schoolsController extends Controller
             'primaryNumber' => $request['primaryNumber'],
             'secondaryNumber' => $request['secondaryNumber'],
         ]);
-
-
-
 
         Session::flash('flash_message', 'school added!');
 
@@ -281,9 +278,8 @@ class schoolsController extends Controller
 						->where('teams.deleted',0)
 						->where('locations.state_id',session()->get('currentStateId'))
 						->lists('teams.teamCode', 'teamId');						
-			//			return view('schools.create',['employee' => $employee,'districts'=>$districts,'team'=>$team]);
-		
-		return view('schools.edit', ['school' => $school,'entity' => $entity,'address' => $address,'emailaddress' => $emailaddress,'phone' => $phone,'districts' => $districts,'citys' => $citys,'employee' => $employee,'team'=>$team]);
+		 $sessionYear= DB::table('session_years')->where('session_years.deleted',0)->lists('session_years.sessionYear', 'id');
+		return view('schools.edit', ['school' => $school,'entity' => $entity,'address' => $address,'emailaddress' => $emailaddress,'phone' => $phone,'districts' => $districts,'citys' => $citys,'employee' => $employee,'team'=>$team,'sessionYear'=>$sessionYear]);
     
 	}
 

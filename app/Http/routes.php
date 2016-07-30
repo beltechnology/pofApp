@@ -35,6 +35,8 @@ Route::group(array('middleware' => 'auth'), function() {
 	Route::resource('fees', 'feesController');
 	Route::resource('student', 'studentController');
 	Route::resource('first-level', 'firstLevelController');
+	Route::resource('session-year', 'SessionYearController');
+	Route::resource('class-section', 'ClassSectionController');
 	Route::get('/search', 'employeeController@filter');
 	Route::post('/search', 'employeeController@filter');
 	Route::get('/search-school', 'schoolsController@filter');

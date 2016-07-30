@@ -26,7 +26,7 @@ class studentController extends Controller
                         ->join('class_names','class_names.id','=','students.classId')
 						->where('students.deleted',0)
 						->where('class_names.deleted',0)
-						->where('students.sessionYear',session()->get('activeSession'))
+				//		->where('students.sessionYear',session()->get('activeSession'))
 						->where('students.schoolEntityId',session()->get('entityId'))
 						->paginate(trans('messages.PAGINATE'));
         return view('student.index', compact('student'));
@@ -39,11 +39,13 @@ class studentController extends Controller
      */
     public function create()
     {
-		$schoolId = DB::table('schools')->where('schools.deleted',0)->where('schools.entityId',session()->get('entityId'))->lists('id', 'id');
+		
+		$schoolSessionYear = DB::table('schools')->where('schools.deleted',0)->where('schools.entityId',session()->get('entityId'))->value('sessionYear');
 		$classes = DB::table('class_names')->where('class_names.deleted',0)->lists('name', 'id');
 		$rollNo = DB::table('students')->max('id')+1;
 		$rollNo='POFST'.$rollNo;
-        return view('student.create',['classes' => $classes,'rollNo' => $rollNo,'schoolId' => $schoolId]);
+		$classSections= DB::table('class_sections')->where('class_sections.deleted',0)->lists('class_sections.name', 'id');
+        return view('student.create',['classes' => $classes,'rollNo' => $rollNo,'schoolSessionYear' => $schoolSessionYear,'classSections'=>$classSections]);
     }
 
     /**
@@ -62,7 +64,7 @@ class studentController extends Controller
         student::create([
 		'entityId'=>$request['entityId'],
 		'schoolEntityId'=>session()->get('entityId'),
-		'sessionYear'=> date('Y').'-'.(date('Y')+1),
+		'sessionYear'=> $request['sessionYear'],
 		'studentName'=>$request['studentName'],
 		'fatherName'=>$request['fatherName'],
 		'dob'=>$request['dob'],
@@ -104,7 +106,8 @@ class studentController extends Controller
     {
         $student = student::findOrFail($id);
 		$classes = DB::table('class_names')->where('class_names.deleted',0)->lists('name', 'id');
-        return view('student.edit', compact('student'))->with('classes', $classes);
+		$classSections= DB::table('class_sections')->where('class_sections.deleted',0)->lists('class_sections.name', 'id');
+        return view('student.edit',['student'=>$student,'classes'=>$classes,'classSections'=>$classSections]);
     }
 
     /**

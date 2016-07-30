@@ -64,14 +64,14 @@
             <div class="form-group {{ $errors->has('classId') ? 'has-error' : ''}}">
                 {!! Form::label('class', trans('messages.BOOKDETAIL_CLASS'), ['class' => 'col-sm-4 control-label']) !!}
                 <div class="col-sm-8">
-                    {!! Form::select('classId',$classes,null, ['class' => 'form-control', 'required' => 'required']) !!}
+                    {!! Form::select('classId',$classes,null, ['class' => 'form-control', 'required' => 'required','placeholder'=>'Select Class']) !!}
                     {!! $errors->first('classId', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>
             <div class="form-group {{ $errors->has('section') ? 'has-error' : ''}}">
                 {!! Form::label('section', trans('messages.SECTION'), ['class' => 'col-sm-4 control-label']) !!}
                 <div class="col-sm-8">
-                    {!! Form::select('section',['1'=>'A','2'=>'B','3'=>'C'],null,['class' => 'form-control','placeholder'=>'Select Section']) !!}
+                    {!! Form::select('section',$classSections,null,['class' => 'form-control','placeholder'=>'Select Section']) !!}
                     {!! $errors->first('section', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>

@@ -27,7 +27,7 @@
     {!! Form::open(['url' => '/student', 'class' => 'form-horizontal']) !!}
 	
      {!! Form::hidden('entityId',\DB::table('entitys')->max('entityId')+1, null, ['class' => 'form-control','required' => 'required'],['name'=>'entityId']) !!}
-	  {!! Form::select('schoolId',$schoolId,null,['class' => 'form-control','style'=>'display:none','required' => 'required'],['name'=>'schoolId']) !!}
+	  {!! Form::hidden('sessionYear',$schoolSessionYear,null,['class' => 'form-control']) !!}
 
 	<div class="row create-emp-list">
 	<div class="col-md-6">
@@ -65,7 +65,7 @@
             <div class="form-group {{ $errors->has('section') ? 'has-error' : ''}}">
                 {!! Form::label('section', trans('messages.SECTION'), ['class' => 'col-sm-4 control-label']) !!}
                 <div class="col-sm-8">
-                    {!! Form::select('section',['1'=>'A','2'=>'B','3'=>'C'],null,['class' => 'form-control','placeholder'=>'Select Section']) !!}
+                    {!! Form::select('section',$classSections,null,['class' => 'form-control','placeholder'=>'Select Section']) !!}
                     {!! $errors->first('section', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>
