@@ -82,6 +82,20 @@ class employeeController extends Controller
     public function store(Request $request)
     {
 		 $this->validate($request, ['employeeName' => 'required', 'dob' => 'required', 'address' => 'required', 'state' => 'required', 'district' => 'required', 'city' => 'required', 'pinCode' => 'required', 'primaryNumber' => 'required', 'emailAddress' => 'required |unique:emailaddresses,email,null,id,deleted,0', 'designation' => 'required', 'dateOfJoining' => 'required', ]);	
+		 $employee_code='';
+		$employeeCode=$request['employeeCode'];
+		if($employeeCode<10)
+		{	
+		$employee_code='POFE00'.$employeeCode;
+		}
+		else if($employeeCode<100)
+		{
+		$employee_code ='POFE0'.$employeeCode;
+		}	
+		else
+		{
+		$employee_code ='POFE'.$employeeCode;
+		}	
 	 User::create([
 			'designationId' => $request['designation'],
             'name' => $request['employeeName'],
@@ -93,7 +107,7 @@ class employeeController extends Controller
 	 employee::create([
         'employeeId' => $request['employeeId'],
 		'entityId' => $request['entityId'],
-		'employeeCode' => 'EMP'.$request['employeeCode'],
+		'employeeCode' =>$employee_code,
         'dateOfJoining' => $request['dateOfJoining'],
 		'designation' => $request['designation'],
 		'dob' => $request['dob'],

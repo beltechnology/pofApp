@@ -139,6 +139,26 @@ class schoolsController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, ['posterDistributionDate' => 'required', 'closingDate' => 'required', 'formNo' => 'required', 'schoolName' => 'required', 'principalName' => 'required', 'principalMobile' => 'required', 'principalEmail' => 'required','principalGift'=>'required', 'firstCoordinatorName' => 'required', 'firstCoordinatorMobile' => 'required', 'firstCoordinatorEmail' => 'required', 'coordinatorGift' => 'required', 'PMOExamDate' => 'required', 'PSOExamDate' => 'required', 'schoolcode' => 'required', 'teamCode' => 'required', 'employeeCode' => 'required', 'employeeMobileType' => 'required', 'schoolTotalStrength' => 'required', 'classStrength' => 'required', 'followUpDate' => 'required', 'callStatus' => 'required', 'posterDistributed' => 'required', 'KMS' => 'required', ]);
+		$stateSymbol =  DB::table('states')->where('id',session()->get('currentStateId'))->value('stateName');
+		$stateSymbol=explode('(',$stateSymbol);
+		$stateSymbol=$stateSymbol[1];
+		$stateSymbol=explode(')',$stateSymbol);
+		$stateSymbol=$stateSymbol[0];
+		$school_code='';
+		$schoolCode=$request['schoolCode'];
+		
+		if($schoolCode<10)
+		{	
+		$school_code=$stateSymbol.'POF00'.$schoolCode;
+		}
+		else if($schoolCode<100)
+		{
+		$school_code =$stateSymbol.'POF0'.$schoolCode;
+		}	
+		else
+		{
+		$school_code =$stateSymbol.'POF'.$schoolCode;
+		}	
 
         User::create([
             'designationId' => "",
@@ -170,7 +190,7 @@ class schoolsController extends Controller
             'PMOExamDate' => $request['PMOExamDate'],
             'PSOExamDate' => $request['PSOExamDate'],
             'schoolcode' => $request['schoolcode'],
-            'uniqueSchoolCode' => "SCHOOL".$request['schoolCode'],
+            'uniqueSchoolCode' => $school_code,
             'teamCode' => $request['teamCode'],
             'employeeCode' => $request['employeeCode'],
             'schoolTotalStrength' => $request['schoolTotalStrength'],

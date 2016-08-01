@@ -70,6 +70,20 @@ class TeamController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, ['teamName' => 'required', 'teamCreationDate' => 'required',  ]);
+		$team_code='';
+		$teamCode=$request['teamCode'];
+		if($teamCode<10)
+		{	
+		$team_code='POFT00'.$teamCode;
+		}
+		else if($teamCode<100)
+		{
+		$team_code ='POFT0'.$teamCode;
+		}	
+		else
+		{
+		$team_code ='POFT'.$teamCode;
+		}	
        team::create([
      	'teamName' => $request['teamName'],
 		'cityId' => $request['city'],
@@ -77,7 +91,7 @@ class TeamController extends Controller
         'teamCreationDate' => $request['teamCreationDate'],
         'teamEndDate' => $request['teamEndDate'],
 		'teamLeader' => $request['teamLeader'],
-		'teamCode' => 'TEAM'.$request['teamCode'],
+		'teamCode'=>$team_code
 					]);
 
         Session::flash('flash_message', 'Team added!');
