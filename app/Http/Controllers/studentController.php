@@ -42,10 +42,8 @@ class studentController extends Controller
 		
 		$schoolSessionYear = DB::table('schools')->where('schools.deleted',0)->where('schools.entityId',session()->get('entityId'))->value('sessionYear');
 		$classes = DB::table('class_names')->where('class_names.deleted',0)->lists('name', 'id');
-		$rollNo = DB::table('students')->max('id')+1;
-		$rollNo='POFST'.$rollNo;
 		$classSections= DB::table('class_sections')->where('class_sections.deleted',0)->lists('class_sections.name', 'id');
-        return view('student.create',['classes' => $classes,'rollNo' => $rollNo,'schoolSessionYear' => $schoolSessionYear,'classSections'=>$classSections]);
+        return view('student.create',['classes' => $classes,'schoolSessionYear' => $schoolSessionYear,'classSections'=>$classSections]);
     }
 
     /**
@@ -56,6 +54,36 @@ class studentController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, ['studentName' => 'required', 'fatherName' => 'required', 'dob' => 'required', 'classId' => 'required', 'pmo' => 'required', 'pso' => 'required', 'handicapped' => 'required', ]);
+		
+		$stateSymbol =  DB::table('states')->where('id',session()->get('currentStateId'))->value('stateName');
+		$stateSymbol=explode('(',$stateSymbol);
+		$stateSymbol=$stateSymbol[1];
+		$stateSymbol=explode(')',$stateSymbol);
+		$stateSymbol=$stateSymbol[0];
+		$classId = DB::table('class_names')->where('id',$request['classId'])->where('class_names.deleted',0)->value('name');
+		$schoolId = DB::table('schools')->where('entityId',session()->get('entityId'))->where('schools.deleted',0)->value('id');
+		$maxRollNo = DB::table('students')->where('schoolEntityId',session()->get('entityId'))->where('classId',$request['classId'])->count()+1;
+		$school_id="";$roll_id="";$class_id="";
+		if($schoolId<10)
+		{	$school_id='00'.$schoolId;}
+		else if($schoolId<100)
+		{ $school_id ='0'.$schoolId; }	
+		else
+		{ $school_id =$schoolId; }
+	
+		if($maxRollNo<10)
+		{	$roll_id='00'.$maxRollNo; }
+		else if($maxRollNo<100)
+		{ $roll_id ='0'.$maxRollNo; }	
+		else
+		{ $roll_id =$maxRollNo; }	
+	
+	if($classId<10)
+		{$class_id='0'.$classId; }
+		else
+		{ $class_id =$classId; }	
+		
+		$rollNo=$stateSymbol.$school_id.'-'.$class_id.'-'.$roll_id;
 		entity::create([
 		'entityId' => $request['entityId'],
 		'name' => $request['studentName'],
@@ -73,7 +101,7 @@ class studentController extends Controller
 		'pmo'=>$request['pmo'],
 		'pso'=>$request['pso'],
 		'handicapped'=>$request['handicapped'],
-		'rollNo'=>$request['rollNo'],
+		'rollNo'=>$rollNo,
 	]);
 
         Session::flash('flash_message', 'student added!');
