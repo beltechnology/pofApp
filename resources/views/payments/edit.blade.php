@@ -88,7 +88,7 @@
 					<div class="form-group hide RTGS commonDiv {{ $errors->has('paymentStatus') ? 'has-error' : ''}}">
 					{!! Form::label('paymentStatus', trans('messages.RECEIVED'), ['class' => 'col-sm-5 control-label']) !!}
 					<div class="col-sm-6">
-                    {!! Form::checkbox('paymentStatus',$payment->paymentStatus, ['class' => 'form-control','id'=>'paymentStatus']) !!}
+                     <input type="checkbox" id="paymentStatus" name="paymentStatus" class ="" />
                     {!! $errors->first('paymentStatus', '<p class="help-block">:message</p>') !!}
 							</div>
 						</div>
@@ -96,9 +96,9 @@
 				
 				<!-- NEFT Div -->
 					<div class="form-group hide NEFT commonDiv{{ $errors->has('paymentStatus') ? 'has-error' : ''}}">
-					{!! Form::label('paymentStatus1', trans('messages.RECEIVED'), ['class' => 'col-sm-5 control-label','id'=>'paymentStatus1'])!!}
+					{!! Form::label('paymentStatusNeft', trans('messages.RECEIVED'), ['class' => 'col-sm-5 control-label','id'=>'paymentStatusNeftLabel'])!!}
 					<div class="col-sm-6 ">
-                    {!! Form::checkbox('paymentStatus',$payment->paymentStatus, ['class' => 'form-control','id'=>'paymentStatusNeft']) !!}
+                    <input type="checkbox" id="paymentStatusNeft" name="paymentStatus" class ="" />
                     {!! $errors->first('paymentStatus', '<p class="help-block">:message</p>') !!}
 					</div>
 				</div>
@@ -137,31 +137,47 @@
     {!! Form::close() !!}
 </div>
 <script>
-      if($('#paymentStatus').val() == 1){
+
+ if($('#paymentModeId').val() == 3)
+ {
+      if({{$payment->paymentStatus}} == 1){
           $( "#paymentStatus" ).prop( "checked", true );
+		  $('#paymentStatus').val(1);
      }else if($('#paymentStatus').val() ==  0){
 		   $( "#paymentStatus" ).prop( "checked", false );
+		   $('#paymentStatus').val(0);
      }
+ }
 
 $('#paymentStatus').change(function(){
-      if($(this).attr('checked')){
-          $(this).val('1');
+      if($(this).val()== 1){
+          $(this).val(0);
+		  
      }else{
-          $(this).val('0');
+          $(this).val(1);
      }
  });
-  if($('#paymentStatus1 #paymentStatus').val() == 1){
-          $('#paymentStatus').prop( "checked", true );
-     }else if($('#paymentStatus1 #paymentStatus').val() ==  0){
-		   $('#paymentStatus').prop( "checked", false );
+ if($('#paymentModeId').val() == 4)
+ {
+  if({{$payment->paymentStatus}} == 1){
+          $('#paymentStatusNeft').prop( "checked", true );
+		  $('#paymentStatusNeft').val(1);
+     }else if($('#paymentStatusNeft').val() ==  0)
+	 {
+		   $('#paymentStatusNeft').prop( "checked", false );
+		   $('#paymentStatusNeft').val(0);
      }
-$('#paymentStatusNeft').change(function(){
-      if($(this).attr('checked')){
-          $(this).val('1');
+	
+ }
+$('#paymentStatusNeft').click(function(){
+      if($(this).val()== 1){
+          $(this).val(0);
+		  
      }else{
-          $(this).val('0');
+          $(this).val(1);
      }
  });
+ 
            var textCode = $("#paymentModeId option:selected").text();
 		   checkCurrentForm(textCode);
 		   $('#paymentModeId').on('change', function(e){

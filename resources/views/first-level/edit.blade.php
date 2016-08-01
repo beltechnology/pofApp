@@ -29,7 +29,7 @@
   </div>
 </nav>
  <div class="h1-two edit-school-border col-md-12">
-	 <h1 class="text-left col-md-4"><a href="{{ url('/student/'.$firstlevel->entityId.'/edit') }}" class="fa fa-angle-left  fa-2x"> {{ trans('messages.TABS_STUDENT_REGISTRATION') }}</a></h1>
+	 <h1 class="text-left col-md-4"><a href="{{ url('/student') }}" class="fa fa-angle-left  fa-2x"> {{ trans('messages.TABS_STUDENT_REGISTRATION') }}</a></h1>
       <h1 class="text-center col-md-4"> {{ trans('messages.EXAM_SCHEDULE') }}</h1>
       <h1 class="text-left col-md-4"></h1>
       </div>
@@ -88,7 +88,7 @@
     <div class="form-group">
         <div class=" team_btn small-form-btn">
              {!! Form::reset(trans('messages.CANCEL_BTN'), ['class' => 'btn btn-primary ']) !!}
-            {!! Form::submit(trans('messages.SUBMIT_BTN'), ['class' => 'btn btn-primary ']) !!}
+			 {!! Form::submit(trans('messages.SUBMIT_BTN'), ['class' => 'btn btn-primary ']) !!}
         </div>
     </div>
 	</div>

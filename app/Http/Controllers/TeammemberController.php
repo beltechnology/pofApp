@@ -28,7 +28,6 @@ class TeammemberController extends Controller
      */
     public function index()
     {
-		
         return view('teammember.index');
     }
 
@@ -50,6 +49,7 @@ class TeammemberController extends Controller
 						->where('addresses.stateId',session()->get('currentStateId'))
 						->groupBy('employees.entityId')
 						->paginate(trans('messages.PAGINATE'));
+						
 		$cities = DB::table('citys')->where('citys.deleted',0)->where('citys.state_id',session()->get('currentStateId'))->lists('cityName', 'id');			
         return view('teammember.create',['employee' => $employee,'cities' => $cities]);
     }
@@ -88,9 +88,12 @@ class TeammemberController extends Controller
         //$team = Team::findOrFail($id);
 		$team= \DB::table('employees')
                         ->join('entitys','entitys.entityId','=','employees.entityId')
-						->join('locations','locations.locationId','=','employees.locationId')
+						->leftjoin('locations','locations.locationId','=','employees.locationId')
 						->where('employees.deleted',0)
-						->where('locations.state_id',session()->get('currentStateId'))
+						->Where(function ($query) {
+						$query->orwhere('locations.state_id', '=', session()->get('currentStateId'))->orwhere('employees.locationId', '=', 0);
+						})
+					//	->where('locations.state_id',session()->get('currentStateId'))
 						->where('employees.teamId',$id)
 						->paginate(10);
 		session()->put('teamId',$id);				

@@ -123,9 +123,18 @@
             $(".studentsFees , .otherExpenses").on("change keyup mouseup", function(){
                var studentsFees= $(".studentsFees").val();
 			   var otherExpenses= $(".otherExpenses").val();
-			   var totalAmout=(studentsFees+otherExpenses);
+			   var totalAmout=Number(studentsFees)+Number(otherExpenses);
+			   
 			   $(".totalAmount").val(totalAmout);
             });
-        });
+			
+		$("#receivedAmount").on("change keyup mouseup", function(){
+		var totalAmout = $(".totalAmount").val();	
+		var receivedAmount = $("#receivedAmount").val();
+		var restAmount = Number(totalAmout)- Number(receivedAmount);
+		$("#restAmount").val(restAmount);
+		
+		});	
+    });
     </script>
 @endsection

@@ -19,6 +19,7 @@ use Carbon\Carbon;
 use Session;
 use Illuminate\Support\Facades\Input;
 use DB;
+use Illuminate\Support\Facades\Mail;
 class employeeController extends Controller
 {
     /**
@@ -37,7 +38,12 @@ class employeeController extends Controller
 						->where('addresses.stateId',session()->get('currentStateId'))
 						->groupBy('employees.entityId')
 						->paginate(trans('messages.PAGINATE'));
-						return view('employee.index', compact('employee'));
+						if(session()->get('currentStateId')){
+							return view('employee.index', compact('employee'));
+						}else
+						{
+							return redirect('/logout');
+						}
     }
 	
 	public function filter()
@@ -117,7 +123,7 @@ class employeeController extends Controller
 		'secondaryNumber' => $request['secondaryNumber'],
     ]);
 	
-        //employee::create($request->all());
+       		Mail::send('emails.welcome', ['name'=>$request['employeeName'],], function ($message)use ($request) {		$message->to($request['emailAddress']);	});
 
         Session::flash('flash_message', 'employee added!');
 
