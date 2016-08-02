@@ -4,19 +4,19 @@
     <div class="row">
         <div class="col-md-8">
             <div class="panel panel-default">
-                <div class="panel-heading">{{ trans('messages.SELECT_STATE_NAME') }}</div>
+                <div class="panel-heading">Session year</div>
                 <div class="panel-body">
-                    <form class="form-horizontal" role="form" method="POST" action="{{ url('/statelist') }}">
+                    <form class="form-horizontal" role="form" method="POST" action="{{ url('/archiveData') }}">
                         {{ csrf_field() }}
 	
-                        <div class="form-group{{ $errors->has('state') ? ' has-error' : '' }}">
-                            <label for="state" class="col-md-4 control-label">{{ trans('messages.STATE_NAME') }}</label>
+                        <div class="form-group{{ $errors->has('sessionYear') ? ' has-error' : '' }}">
+                            <label for="sessionYear" class="col-md-4 control-label">Session year</label>
 
                             <div class="col-md-6">
-                               {!! Form::select('state',\DB::table('states')->where('states.deleted',0)->lists('stateName','id'), "Debugging", ['class' => 'form-control stateSelect','placeholder' => 'Select a State','id' => 'state','required'=>'required']) !!}
-                                @if ($errors->has('state'))
+                               {!! Form::select('sessionYear',\DB::table('session_years')->where('session_years.deleted',0)->lists('sessionYear','id'), "Debugging", ['class' => 'form-control sessionYear','placeholder' => 'Select a Session Year','id' => 'sessionYear','required'=>'required']) !!}
+                                @if ($errors->has('sessionYear'))
                                     <span class="help-block">
-                                        <strong>{{ $errors->first('state') }}</strong>
+                                        <strong>{{ $errors->first('sessionYear') }}</strong>
                                     </span>
                                 @endif
                             </div>
@@ -37,7 +37,7 @@
 <script>
 $(document).ready(function(){
 	$(".main-menu").remove(); 
-	$("#state").val({{session()->get('currentStateId')}});     
+	$("#sessionYear").val({{session()->get('activeSession')}});     
 });
 </script>
 @endsection

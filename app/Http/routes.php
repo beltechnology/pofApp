@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Input;
 Route::group(array('middleware' => 'auth'), function() {
     Route::get('/home', 'HomeController@index');
 	Route::resource('statelist','selectstateController');
+	Route::resource('archiveData','archiveController');
 	Route::resource('employee','employeeController');
 	Route::resource('team', 'TeamController');
 	Route::resource('state', 'StateController');

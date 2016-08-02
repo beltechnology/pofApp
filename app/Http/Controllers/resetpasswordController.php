@@ -36,18 +36,21 @@ class resetpasswordController extends Controller
         //return redirect('/statelist');
 		
 				$designations =  DB::table('designations')->where('id',$user->designationId)->value('designation');
+				$sessionYear =  DB::table('session_years')->where('status',0)->value('id');
 				if($designations == "superAdmin")
 				{
 					$request->session()->put('userEntityId',$user->entityId);
 					$request->session()->put('designationId',$user->designationId);
+					session()->put('activeSession',$sessionYear);
 					return redirect()->intended('/statelist');
 				}
 				else{
 		 		$request->session()->put('userEntityId',$user->entityId);
 		 		$request->session()->put('designationId',$user->designationId);
 					$stateId =  DB::table('addresses')->where('entityId', $user->entityId)->value('stateId');
-						$request->session()->put('currentStateId',$stateId);	
-						return redirect()->intended('/employee');
+					$request->session()->put('currentStateId',$stateId);
+					session()->put('activeSession',$sessionYear);
+					return redirect()->intended('/employee');
 				}
 		
 		

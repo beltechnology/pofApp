@@ -25,6 +25,7 @@ class AppServiceProvider extends ServiceProvider
 							->join('module_configs','module_configs.id','=','usermodule.moduleId')
 							->where('usermodule.designationId',$designation)
 							->where('usermodule.active','Y')
+							->orderBy('module_configs.title','asc')
 							->get();
 			$view->with('articles', $articles);
 		});
