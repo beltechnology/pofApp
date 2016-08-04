@@ -1,10 +1,8 @@
-@extends('layouts.header')
-
-@section('content')
-<div class=" col-md-10 category">
-
-   <h1 class="text-left"><a href="{{ url('/team') }}" class="fa fa-angle-left  fa-2x"> {{ trans('messages.TEAM_LIST') }} </a></h1>
-    <hr/>
+@extends('layouts.header')
+@section('content')
+<div class=" col-md-10 category">
+   <h1 class="text-left"><a href="{{ url('/team') }}" class="fa fa-angle-left  fa-2x"> {{ trans('messages.TEAM_LIST') }} </a></h1>
+    <hr/>
 <div class="row">
     {!! Form::model($team, [
         'method' => 'PATCH',
@@ -94,7 +92,7 @@
             console.log(data);
             $('#teamLocation').empty();
 			$('#teamLocation').append('<option value="0" >Select a Location </option>');
-            $.each(data, function(index,subCatObj){				$('#teamLocation').append('<option value="0" >Select a Location </option>');
+            $.each(data, function(index,subCatObj){
                 $('#teamLocation').append('<option value="'+subCatObj.locationId+'">'+subCatObj.location+'</option>');
             });
 			$("#city").val(city_id);
