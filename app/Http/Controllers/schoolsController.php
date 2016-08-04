@@ -268,10 +268,15 @@ class schoolsController extends Controller
 		$routeid = trans('messages.ROUTEID');
 		$api_url = "http://www.logonutility.in/app/smsapi/index.php?key=".$api_key."&campaign=1&routeid=".$routeid."&type=text&contacts=".$contacts."&senderid=".$from."&msg=".$sms_text;
 		$response = file_get_contents( $api_url);
-		
-		
-
+		$emails="";
+		if($request['secondCoordinatorEmail']=="")
+		{
+		$emails = [$request['principalEmail'],$request['firstCoordinatorEmail'],trans('messages.OFFICEEMAILID')];
+		}
+		else
+		{
 		$emails = [$request['principalEmail'],$request['firstCoordinatorEmail'],$request['secondCoordinatorEmail'],trans('messages.OFFICEEMAILID')];
+		}	
 		
 		Mail::send('emails.schoolCreation', ['schoolName'=>$request['schoolName'],], function ($message)use ($emails) {$message->to($emails);	});
 		
