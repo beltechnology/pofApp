@@ -130,7 +130,7 @@
 			  <div class="form-group {{ $errors->has('employeeCode') ? 'has-error' : ''}}">
                 {!! Form::label('employeeCode', trans('messages.TEAM_CODE'), ['class' => 'col-sm-4  control-label']) !!}
                 <div class="col-sm-8">
-                    {!! Form::text('teamId', null, ['class' => 'form-control','required' => 'required','readonly'=>'readonly']) !!}
+                    {!! Form::text('teamId', $teamCode, ['class' => 'form-control','required' => 'required','readonly'=>'readonly']) !!}
                     {!! $errors->first('employeeCode', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>

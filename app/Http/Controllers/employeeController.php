@@ -185,13 +185,12 @@ class employeeController extends Controller
 		$emailaddress = emailaddress::findOrFail($id);
 		$phone = phone::findOrFail($id);
 		$designation=DB::table('designations')->where('designation','!=','superAdmin')->where('deleted',0)->lists('designation','id');
-		// foreach($address as $statesid)
-		// {
-			// $states_id=$statesid->stateId;
-		// }
+		$teamId=$employee->teamId;
+		$teamCode = DB::table('teams')->where('teamId',$teamId)->value('teamCode');
+		
 		$districts = DB::table('districts')->where('districts.deleted',0)->lists('name', 'id');
 		$citys = DB::table('citys')->where('citys.deleted',0)->lists('cityName', 'id');
-		return view('employee.edit', ['employee' => $employee,'entity' => $entity,'address' => $address,'emailaddress' => $emailaddress,'phone' => $phone,'districts' => $districts,'citys' => $citys,'designation'=>$designation]);
+		return view('employee.edit', ['employee' => $employee,'entity' => $entity,'address' => $address,'emailaddress' => $emailaddress,'phone' => $phone,'districts' => $districts,'citys' => $citys,'designation'=>$designation,'teamCode'=>$teamCode]);
 		
     }
 
