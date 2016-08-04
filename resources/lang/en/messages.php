@@ -235,4 +235,16 @@ return [
 	
 	'PAGINATE'=>'10',
 	'PER_STUDENT_FEES'=>'100',
+	'ZERO'=>'0',
+	'ONE'=>'1',
+	'TWO'=>'2',
+	'THREE'=>'3',
+	'FOUR'=>'4',
+	'API_KEY'=>'2571B038ECFE1E',
+	'FROM'=>'DEMO',
+	'SMS_TEXT_EMPLOYEE'=>'Welcome to POF You have been registered on the system',
+	'SMS_TEXT_TEAM'=>'Welcome to POF You have been registered on the system',
+	'ROUTEID'=>'20',
+	'COORDINATOR'=>'Welcome to POF, we are delighted to inform you that your school has been registered with us. for any query you can get in touch with our resresentative.',
+	'OFFICEEMAILID'=>'pofoffice2016@gmail.com',
 ];

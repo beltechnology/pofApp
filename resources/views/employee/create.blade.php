@@ -104,7 +104,7 @@
               <div class="form-group {{ $errors->has('designation') ? 'has-error' : ''}}">
                 {!! Form::label('designation', trans('messages.DESIGNATION'), ['class' => 'col-sm-4 control-label']) !!}
                 <div class="col-sm-8">
-                     {!! Form::select('designation',\DB::table('designations')->lists('designation','id'), "Debugging", ['class' => 'form-control stateSelect','id' => 'designation','placeholder' => trans('messages.SELECT_DESIGNATION'),]) !!}
+                     {!! Form::select('designation',\DB::table('designations')->where('designation','!=','superAdmin')->lists('designation','id'), "Debugging", ['class' => 'form-control stateSelect','id' => 'designation','placeholder' => trans('messages.SELECT_DESIGNATION'),]) !!}
                     {!! $errors->first('designation', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>

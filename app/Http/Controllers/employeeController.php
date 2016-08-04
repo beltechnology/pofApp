@@ -83,7 +83,8 @@ class employeeController extends Controller
     {
 		 $this->validate($request, ['employeeName' => 'required', 'dob' => 'required', 'address' => 'required', 'state' => 'required', 'district' => 'required', 'city' => 'required', 'pinCode' => 'required', 'primaryNumber' => 'required', 'emailAddress' => 'required |unique:emailaddresses,email,null,id,deleted,0', 'designation' => 'required', 'dateOfJoining' => 'required', ]);	
 		 $employee_code='';
-		$employeeCode=$request['employeeCode'];
+		 $entityId = DB::table('entitys')->max('entityId')+1;
+		$employeeCode = DB::table('employees')->max('employeeId')+1;
 		if($employeeCode<10)
 		{	
 		$employee_code='POFE00'.$employeeCode;
@@ -96,17 +97,19 @@ class employeeController extends Controller
 		{
 		$employee_code ='POFE'.$employeeCode;
 		}	
+
+				
 	 User::create([
 			'designationId' => $request['designation'],
             'name' => $request['employeeName'],
 			'username' => $request['employeeName'],
             'email' => $request['emailAddress'],
             'password' => bcrypt('secret123#'),	
-			'entityId' => $request['entityId'],
+			'entityId' => $entityId,
 			]);	 
 	 employee::create([
-        'employeeId' => $request['employeeId'],
-		'entityId' => $request['entityId'],
+        'employeeId' => $employeeCode,
+		'entityId' => $entityId,
 		'employeeCode' =>$employee_code,
         'dateOfJoining' => $request['dateOfJoining'],
 		'designation' => $request['designation'],
@@ -115,12 +118,12 @@ class employeeController extends Controller
 					]);
 	
 	entity::create([
-		'entityId' => $request['entityId'],
+		'entityId' => $entityId,
 		'name' => $request['employeeName'],
 		'entityType' => $request['designation'],
     ]);
 	address::create([
-		'entityId' => $request['entityId'],
+		'entityId' => $entityId,
 		'stateId' => $request['state'],
 		'districtId' => $request['district'],
 		'cityId' => $request['city'],
@@ -128,15 +131,24 @@ class employeeController extends Controller
 		'pincode' => $request['pinCode'],
     ]);
 	emailaddress::create([
-		'entityId' => $request['entityId'],
+		'entityId' => $entityId,
 		'email' => $request['emailAddress'],
     ]);
 	phone::create([
-		'entityId' => $request['entityId'],
+		'entityId' => $entityId,
 		'primaryNumber' => $request['primaryNumber'],
 		'secondaryNumber' => $request['secondaryNumber'],
     ]);
 	
+	
+	 $api_key = trans('messages.API_KEY');
+	 $contacts = $request['primaryNumber'];
+	 $from = trans('messages.FROM');
+	 $sms_text = urlencode(trans('messages.SMS_TEXT_EMPLOYEE'));
+	 $routeid = trans('messages.ROUTEID');
+	 $api_url = "http://www.logonutility.in/app/smsapi/index.php?key=".$api_key."&campaign=1&routeid=".$routeid."&type=text&contacts=".$contacts."&senderid=".$from."&msg=".$sms_text;
+//Submit to server
+	$response = file_get_contents( $api_url);
        		Mail::send('emails.welcome', ['name'=>$request['employeeName'],], function ($message)use ($request) {		$message->to($request['emailAddress']);	});
 
         Session::flash('flash_message', 'employee added!');
@@ -172,7 +184,7 @@ class employeeController extends Controller
 		$address = address::findOrFail($id);
 		$emailaddress = emailaddress::findOrFail($id);
 		$phone = phone::findOrFail($id);
-		$designation=DB::table('designations')->where('deleted',0)->lists('designation','id');
+		$designation=DB::table('designations')->where('designation','!=','superAdmin')->where('deleted',0)->lists('designation','id');
 		// foreach($address as $statesid)
 		// {
 			// $states_id=$statesid->stateId;

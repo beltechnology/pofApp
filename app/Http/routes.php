@@ -137,14 +137,14 @@ Route::get('/citys/edit/ajax-state',function()
 Route::get('/schools/create/schools',function()
 {
     $emp_id = Input::get('emp_id');
-    $subcategories = DB::table('employees')->join('phones','phones.entityId','=','employees.entityId')->where('employees.employeeId',$emp_id)->where('employees.deleted',0)->get();
+    $subcategories = DB::table('phones')->where('phones.entityId',$emp_id)->where('phones.deleted',0)->get();
     return $subcategories;
  
 });
 Route::get('/schools/edit/schools',function()
 {
     $emp_id = Input::get('emp_id');
-    $subcategories = DB::table('employees')->join('phones','phones.entityId','=','employees.entityId')->where('employees.employeeId',$emp_id)->where('employees.deleted',0)->get();
+    $subcategories = DB::table('phones')->where('phones.entityId',$emp_id)->where('phones.deleted',0)->get();
     return $subcategories;
  
 });

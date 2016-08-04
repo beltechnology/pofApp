@@ -1,0 +1,1 @@
+<p>Welcome to POF, we are delighted to inform you that your school has been registered with us. for any query you can get in touch with our respesentative.</p>

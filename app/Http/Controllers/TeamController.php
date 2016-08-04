@@ -17,6 +17,8 @@ use Carbon\Carbon;
 use Session;
 use Illuminate\Support\Facades\Input;
 use DB;
+use Illuminate\Support\Facades\Mail;
+
 class TeamController extends Controller
 {
     /**
@@ -70,8 +72,7 @@ class TeamController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, ['teamName' => 'required', 'teamCreationDate' => 'required',  ]);
-		$team_code='';
-		$teamCode=$request['teamCode'];
+		$team_code='';		$teamCode = DB::table('teams')->max('teamId')+1;
 		if($teamCode<10)
 		{	
 		$team_code='POFT00'.$teamCode;
@@ -93,7 +94,23 @@ class TeamController extends Controller
 		'teamLeader' => $request['teamLeader'],
 		'teamCode'=>$team_code
 					]);
+		$teamName = Input::get ( 'teamName' );
+		if($request['teamLeader'] != ""){
+	//	$entityId = DB::table('employees')->where('employeeId',$request['teamLeader'])->value('entityId');
+		$phones = DB::table('phones')->where('entityId',$request['teamLeader'])->value('primaryNumber');
+		$api_key = trans('messages.API_KEY');
+		$contacts = $phones;
+		$from = trans('messages.FROM');
+		$sms_text = urlencode("Team ".$teamName." has been created and you have been allocated the same . Please get in touch with your manager for details ");
+		$routeid = trans('messages.ROUTEID');
+		$api_url = "http://www.logonutility.in/app/smsapi/index.php?key=".$api_key."&campaign=1&routeid=".$routeid."&type=text&contacts=".$contacts."&senderid=".$from."&msg=".$sms_text;
+//Submit to server
+		$response = file_get_contents( $api_url);
 
+	$email = DB::table('emailaddresses')->where('entityId',$request['teamLeader'])->value('email');
+		
+		Mail::send('emails.teamCreation', ['teamName'=>$teamName,], function ($message)use ($email) {$message->to($email);	});
+		}
         Session::flash('flash_message', 'Team added!');
 
         return redirect('team');
@@ -151,11 +168,31 @@ class TeamController extends Controller
 		$updateCounterdata = DB::table('teams')->where('teamId',$id)->value('updateCounter');
 		if($updateCounterdata < $updateCounters)
 		{
+		$teamLeaderId = DB::table('teams')->where('teamId',$id)->value('teamLeader');
         $team = Team::findOrFail($id);
         $team->update($request->all());
 		DB::table('teams')->where('teamId',$id)->update(['updateCounter' => $updateCounters]);
 		
         Session::flash('flash_message', 'Team updated!');
+		
+		$teamName = Input::get ( 'teamName' );
+		if($request['teamLeader'] != "" && $teamLeaderId != $request['teamLeader'] ){
+	//	$entityId = DB::table('employees')->where('employeeId',$request['teamLeader'])->value('entityId');
+		$emailAddress = DB::table('emailaddresses')->where('entityId',$request['teamLeader'])->value('email');
+		$phones = DB::table('phones')->where('entityId',$request['teamLeader'])->value('primaryNumber');
+		$api_key = trans('messages.API_KEY');
+		$contacts = $phones;
+		$from = trans('messages.FROM');
+		$sms_text = urlencode("Team ".$teamName." has been created and you have been allocated the same . Please get in touch with your manager for details ");
+		$routeid = trans('messages.ROUTEID');
+		$api_url = "http://www.logonutility.in/app/smsapi/index.php?key=".$api_key."&campaign=1&routeid=".$routeid."&type=text&contacts=".$contacts."&senderid=".$from."&msg=".$sms_text;
+//Submit to server
+		$response = file_get_contents( $api_url);
+
+		Mail::send('emails.teamCreation', ['teamName'=>$teamName,], function ($message)use ($emailAddress) {$message->to($emailAddress);	});
+		}
+
+		
         return redirect('team');
 		}
 		else

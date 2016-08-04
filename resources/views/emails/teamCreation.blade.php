@@ -1,0 +1,1 @@
+<p>Team  <b>{{$teamName}}</b>,	has been created and you have been allocated the same . Please get in touch with your manager for details </p>

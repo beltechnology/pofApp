@@ -97,11 +97,19 @@ class schoolsController extends Controller
 				foreach(Input::get('activationSchool') as $activationSchool)
 				{
 						 DB::table('schools')->where('entityId', $activationSchool)->update(['activationSchool' => Input::get('activateSchool')]);
-						 // Mail::send('emails.demo',  function($message)
-						// {
-							// $message->to('jane@example.com', 'Jane Doe')->subject('This is a demo!');
-						// });
-
+						 if(Input::get('activateSchool') === trans('messages.ZERO')){
+							// school
+							$email = DB::table('schools')->where('entityId',$activationSchool)->value('principalEmail');
+							Mail::send('emails.schoolActivation', ['school'=>'school',], function ($message)use ($email) {$message->to($email);	});
+							$api_key = trans('messages.API_KEY');
+							$phones = DB::table('schools')->where('entityId',$activationSchool)->value('principalMobile');
+							$contacts = $phones;
+							$from = trans('messages.FROM');
+							$routeid = trans('messages.ROUTEID');
+							$sms_text = urlencode("Hi , fee for first leavel POF exam has been received. you will receive details by mail . thanks for your interest & support.");
+							$api_url = "http://www.logonutility.in/app/smsapi/index.php?key=".$api_key."&campaign=1&routeid=".$routeid."&type=text&contacts=".$contacts."&senderid=".$from."&msg=".$sms_text;
+							$response = file_get_contents( $api_url);
+						 }
 				}
 						
 			}			
@@ -121,7 +129,7 @@ class schoolsController extends Controller
                         ->join('addresses','addresses.entityId','=','employees.entityId')
 						->where('employees.deleted',0)
 						->where('addresses.stateId',session()->get('currentStateId'))
-						->lists('employees.employeeCode', 'employeeId');
+						->lists('employees.employeeCode', 'employees.entityId');
        $team= DB::table('teams')
                         ->join('locations','locations.locationId','=','teams.teamLocation')
 						->where('teams.deleted',0)
@@ -145,7 +153,7 @@ class schoolsController extends Controller
 		$stateSymbol=explode(')',$stateSymbol);
 		$stateSymbol=$stateSymbol[0];
 		$school_code='';
-		$schoolCode=$request['schoolCode'];
+	$entityId = DB::table('entitys')->max('entityId')+1;	$schoolCode = DB::table('schools')->max('id')+1;
 		
 		if($schoolCode<10)
 		{	
@@ -159,7 +167,7 @@ class schoolsController extends Controller
 		{
 		$school_code =$stateSymbol.'POF'.$schoolCode;
 		}	
-
+	
         User::create([
             'designationId' => "",
             'name' => $request['schoolName'],
@@ -168,12 +176,12 @@ class schoolsController extends Controller
             'password' => bcrypt('secret123#'),
         ]);
 		 entity::create([
-            'entityId' => $request['entityId'],
+            'entityId' => $entityId,
             'name' => $request['schoolName'],
             'entityType' => '',
         ]);
         school::create([
-			'entityId' => $request['entityId'],
+			'entityId' => $entityId,
             'posterDistributionDate' => $request['posterDistributionDate'],
             'closingDate' => $request['closingDate'],
             'formNo' => $request['formNo'],
@@ -205,35 +213,35 @@ class schoolsController extends Controller
 			'employeeMobileType' => $request['employeeMobileType'],
             'sessionYear' => $request['sessionYear'],
         ]);
-		payment::create(['entityId' => $request['entityId'],
-		'schoolId' => $request['schoolCode'],
+		payment::create(['entityId' => $entityId,
+		'schoolId' => $schoolCode,
 		'sessionYear' => $request['sessionYear'],
 		]);
-		fee::create(['entityId' => $request['entityId'],
-		'schoolId' => $request['schoolCode'],
+		fee::create(['entityId' => $entityId,
+		'schoolId' => $schoolCode,
 		'sessionYear' => $request['sessionYear'],
 		]);
-		firstLevel::create(['entityId' => $request['entityId'],
-		'schoolId' => $request['schoolCode'],
+		firstLevel::create(['entityId' => $entityId,
+		'schoolId' => $schoolCode,
 		'sessionYear' => $request['sessionYear'],
 		]);
 		$classId = DB::table('class_names')->where('class_names.deleted',0)->where('class_names.status',0)->get();
 		foreach($classId as $class_Id)
 		{
 		$classid=$class_Id->id;
-		BookDetail::create(['entityId' => $request['entityId'],
+		BookDetail::create(['entityId' => $entityId,
 		'classId' => $classid,
-		'schoolId' => $request['schoolCode'],
+		'schoolId' => $schoolCode,
 		'sessionYear' => $request['sessionYear'],
 		]);
-		studentCount::create(['entityId' => $request['entityId'],
+		studentCount::create(['entityId' => $entityId,
 		'classId' => $classid,
-		'schoolId' => $request['schoolCode'],
+		'schoolId' => $schoolCode,
 		'sessionYear' => $request['sessionYear'],
 		]);
 		}
         address::create([
-            'entityId' => $request['entityId'],
+            'entityId' => $entityId,
             'stateId' => $request['state'],
             'districtId' => $request['district'],
             'cityId' => $request['city'],
@@ -241,15 +249,43 @@ class schoolsController extends Controller
             'pincode' => $request['pinCode'],
         ]);
         emailaddress::create([
-            'entityId' => $request['entityId'],
+            'entityId' => $entityId,
             'email' => $request['emailAddress'],
         ]);
         phone::create([
-            'entityId' => $request['entityId'],
+            'entityId' => $entityId,
             'primaryNumber' => $request['primaryNumber'],
             'secondaryNumber' => $request['secondaryNumber'],
         ]);
+		
+		
+		
+		$phones = DB::table('phones')->where('entityId',$request['teamLeader'])->value('primaryNumber');
+		$api_key = trans('messages.API_KEY');
+		$contacts = "'".$request['principalMobile'].",".$request['firstCoordinatorMobile'].",".$request['secondCoordinatorMobile']."'";
+		$from = trans('messages.FROM');
+		$sms_text = urlencode(trans('messages.COORDINATOR'));
+		$routeid = trans('messages.ROUTEID');
+		$api_url = "http://www.logonutility.in/app/smsapi/index.php?key=".$api_key."&campaign=1&routeid=".$routeid."&type=text&contacts=".$contacts."&senderid=".$from."&msg=".$sms_text;
+		$response = file_get_contents( $api_url);
+		
+		
 
+		$emails = [$request['principalEmail'],$request['firstCoordinatorEmail'],$request['secondCoordinatorEmail'],trans('messages.OFFICEEMAILID')];
+		
+		Mail::send('emails.schoolCreation', ['schoolName'=>$request['schoolName'],], function ($message)use ($emails) {$message->to($emails);	});
+		
+		// employee
+		$email = DB::table('emailaddresses')->where('entityId',$request['employeeCode'])->value('email');
+		Mail::send('emails.schoolCreationEmp', ['schoolName'=>$request['schoolName'],], function ($message)use ($email) {$message->to($email);	});
+		
+		$phones = DB::table('phones')->where('entityId',$request['employeeCode'])->value('primaryNumber');
+		$contacts = $phones;
+		$sms_text = urlencode("Your lead school ".$request['schoolName']." has been added to our system . to will be updated with next task by message");
+		$api_url = "http://www.logonutility.in/app/smsapi/index.php?key=".$api_key."&campaign=1&routeid=".$routeid."&type=text&contacts=".$contacts."&senderid=".$from."&msg=".$sms_text;
+		$response = file_get_contents( $api_url);
+
+		
         Session::flash('flash_message', 'school added!');
 
         return redirect('schools');
@@ -292,7 +328,7 @@ class schoolsController extends Controller
                         ->join('addresses','addresses.entityId','=','employees.entityId')
 						->where('employees.deleted',0)
 						->where('addresses.stateId',session()->get('currentStateId'))
-						->lists('employees.employeeCode', 'employeeId');
+						->lists('employees.employeeCode', 'employees.entityId');
        $team= DB::table('teams')
                         ->join('locations','locations.locationId','=','teams.teamLocation')
 						->where('teams.deleted',0)
@@ -337,6 +373,8 @@ class schoolsController extends Controller
 		$entity = entity::findOrFail($id);	
         $entity->update($request->all());
 		DB::table('entitys')->where('entityId',$id)->update(['updateCounter' => $updateCounters]);
+
+		
 
         Session::flash('flash_message', 'school updated!');
         return redirect('schools');

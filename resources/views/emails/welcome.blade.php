@@ -1,3 +1,2 @@
-Hi {{$name}},
-
-<p>your password sucessfully created.</p>
+<p>Welcome to POF ,<br>
+	You have been registered on the system</p>
