@@ -215,7 +215,7 @@ return [
 	'STUDENT_COUNT_TOTAL_NO_OF_STUDENTS'=>'Total No. Of Students',
 	
 	'TOTAL_AMOUNT'=>'Total Amount',
-	'MISCELLANEOUS_EXPENSES'=>'Miscellanceous Expenses',
+	'MISCELLANEOUS_EXPENSES'=>'Miscellaneous Expenses',
 	'REST_AMOUNT'=>'Rest Amount',
 	'AMOUNT_RECEIVED'=>'Amount Received',
 	

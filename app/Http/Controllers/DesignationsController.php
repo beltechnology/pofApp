@@ -32,7 +32,7 @@ class DesignationsController extends Controller
      */
     public function create()
     {
-		$module_configs = DB::table('module_configs')->where('deleted',0)->get();
+		$module_configs = DB::table('module_configs')->where('deleted',0)->where('name','!=','Add Designation')->get();
         return view('designations.create', compact('module_configs'));
     }
 
@@ -104,7 +104,7 @@ class DesignationsController extends Controller
         $designation = Designation::findOrFail($id);
 		
 		$module_configs = DB::table('module_configs')
-		->where('deleted',0)->get();
+		->where('deleted',0)->where('name','!=','Add Designation')->get();
 		
 		$usermodule = DB::table('usermodule')
 		->join('module_configs','module_configs.id','=','usermodule.moduleId')

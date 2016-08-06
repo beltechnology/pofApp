@@ -54,7 +54,7 @@ class studentController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, ['studentName' => 'required', 'fatherName' => 'required', 'dob' => 'required', 'classId' => 'required', 'pmo' => 'required', 'pso' => 'required', 'handicapped' => 'required', ]);
-		
+		$entityId = DB::table('entitys')->max('entityId')+1;
 		$stateSymbol =  DB::table('states')->where('id',session()->get('currentStateId'))->value('stateName');
 		$stateSymbol=explode('(',$stateSymbol);
 		$stateSymbol=$stateSymbol[1];
@@ -83,14 +83,14 @@ class studentController extends Controller
 		else
 		{ $class_id =$classId; }	
 		
-		$rollNo=$stateSymbol.$school_id.'-'.$class_id.'-'.$roll_id;
+		$rollNo=$stateSymbol.'POF'.$school_id.'-'.$class_id.'-'.$roll_id;
 		entity::create([
-		'entityId' => $request['entityId'],
+		'entityId' => $entityId,
 		'name' => $request['studentName'],
 		'entityType' => 'student',
     ]);
         student::create([
-		'entityId'=>$request['entityId'],
+		'entityId'=>$entityId,
 		'schoolEntityId'=>session()->get('entityId'),
 		'sessionYear'=> $request['sessionYear'],
 		'studentName'=>$request['studentName'],
