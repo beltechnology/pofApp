@@ -7,6 +7,7 @@ return [
 	'REMEMBER_ME' => 'Remember Me',
 	'FORGET_PASSWORD' => 'Forgot Your Password ?',
 	'RESET_PASSWORD' => 'Reset Password',
+	'CHANGE_PASSWORD' => 'Change Password',
 	'CONFIRM_PASSWORD' => 'Confirm Password',
 	'SEND_PASSWORD_RESET_LINK' => 'Send Password Reset Link',
 	'COPYRIGHT' => 'Copyright',//footer
@@ -232,6 +233,7 @@ return [
 	'EXAM_END_TIME'=>'Exam End Time',
 	
 	'STUDENTS_FEES'=>'Students Fees',
+	'WELCOME_MESSAGE'=>'Welcome To The POF',
 	
 	'PAGINATE'=>'10',
 	'PER_STUDENT_FEES'=>'100',
@@ -245,6 +247,6 @@ return [
 	'SMS_TEXT_EMPLOYEE'=>'Welcome to POF You have been registered on the system',
 	'SMS_TEXT_TEAM'=>'Welcome to POF You have been registered on the system',
 	'ROUTEID'=>'20',
-	'COORDINATOR'=>'Welcome to POF, we are delighted to inform you that your school has been registered with us. for any query you can get in touch with our resresentative.',
+	'COORDINATOR'=>'Welcome to POF, we are delighted to inform you that your school has been registered with us. for any query you can get in touch with our representative.',
 	'OFFICEEMAILID'=>'pofoffice2016@gmail.com',
 ];

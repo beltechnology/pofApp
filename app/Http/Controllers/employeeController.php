@@ -146,9 +146,11 @@ class employeeController extends Controller
 	 $from = trans('messages.FROM');
 	 $sms_text = urlencode(trans('messages.SMS_TEXT_EMPLOYEE'));
 	 $routeid = trans('messages.ROUTEID');
-	 $api_url = "http://www.logonutility.in/app/smsapi/index.php?key=".$api_key."&campaign=1&routeid=".$routeid."&type=text&contacts=".$contacts."&senderid=".$from."&msg=".$sms_text;
+	 $api_url="http://smsw.co.in/API/WebSMS/Http/v1.0a/index.php?username=POFIND&password=pof123&sender=POFCOM&to=".$contacts."&message=".$sms_text."&reqid=#&format={json|text}&route_id=28callback=#&unique=1";
+	 @json_decode(file_get_contents($api_url));
+	 //$api_url = "http://www.logonutility.in/app/smsapi/index.php?key=".$api_key."&campaign=1&routeid=".$routeid."&type=text&contacts=".$contacts."&senderid=".$from."&msg=".$sms_text;
 //Submit to server
-	$response = file_get_contents( $api_url);
+	//$response = file_get_contents( $api_url);
        		Mail::send('emails.welcome', ['name'=>$request['employeeName'],], function ($message)use ($request) {		$message->to($request['emailAddress']);	});
 
         Session::flash('flash_message', 'employee added!');

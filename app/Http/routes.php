@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Input;
  
 Route::group(array('middleware' => 'auth'), function() {
     Route::get('/home', 'HomeController@index');
+	Route::resource('dashboard','dashboardController');
 	Route::resource('statelist','selectstateController');
 	Route::resource('archiveData','archiveController');
 	Route::resource('employee','employeeController');
@@ -38,6 +39,8 @@ Route::group(array('middleware' => 'auth'), function() {
 	Route::resource('first-level', 'firstLevelController');
 	Route::resource('session-year', 'SessionYearController');
 	Route::resource('class-section', 'ClassSectionController');
+	Route::resource('changePassword','changepasswordController');
+	Route::get('/changePassword','changepasswordController@index');
 	Route::get('/search', 'employeeController@filter');
 	Route::post('/search', 'employeeController@filter');
 	Route::get('/search-school', 'schoolsController@filter');

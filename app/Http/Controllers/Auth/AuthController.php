@@ -38,7 +38,7 @@ class AuthController extends Controller
     {
         if($user->remember_token=='') 
 		{
-            return redirect('/resetPassword/'. $user->id.'/edit');
+            return redirect('/resetPassword/'. $user->entityId.'/edit');
         }
 				$designations =  DB::table('designations')->where('id',$user->designationId)->value('designation');
 				$sessionYear =  DB::table('session_years')->where('status',0)->value('id');
@@ -55,7 +55,7 @@ class AuthController extends Controller
 					$stateId =  DB::table('addresses')->where('entityId', $user->entityId)->value('stateId');
 					$request->session()->put('currentStateId',$stateId);
 					session()->put('activeSession',$sessionYear);
-					return redirect()->intended('/employee');
+					return redirect()->intended('/dashboard');
 				}
     }
 	

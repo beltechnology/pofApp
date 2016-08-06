@@ -19,6 +19,6 @@ class selectstateController extends Controller
 		$state_id=$request['state'];
 		$request->session()->put('currentStateId',$state_id);	
         Session::flash('flash_message', 'Team added!');
-		return redirect('employee');
+		return redirect('dashboard');
     }
 }

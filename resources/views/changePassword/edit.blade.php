@@ -4,16 +4,17 @@
     <div class="row">
         <div class="col-md-8">
             <div class="panel panel-default">
-                <div class="panel-heading">{{ trans('messages.RESET_PASSWORD')}}</div>
+                <div class="panel-heading">{{ trans('messages.CHANGE_PASSWORD')}}</div>
 
                 <div class="panel-body">
                     {!! Form::model($user->toArray(), [
         'method' => 'PATCH',
-        'url' => ['/resetPassword', $user->entityId],
+        'url' => ['/changePassword', $user->entityId],
         'class' => 'form-horizontal'
     ]) !!}
                         {{ csrf_field() }}
                        
+					    
                         <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
                             <label for="password" class="col-md-4 control-label">{{ trans('messages.PASSWORD')}}</label>
 
@@ -44,7 +45,7 @@
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
                                 <button type="submit" class="btn btn-primary">
-                                    <i class="fa fa-btn fa-refresh"></i> {{ trans('messages.RESET_PASSWORD')}}
+                                    <i class="fa fa-btn fa-refresh"></i> {{ trans('messages.CHANGE_PASSWORD')}}
                                 </button>
                             </div>
                         </div>
