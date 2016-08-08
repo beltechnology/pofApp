@@ -8,14 +8,13 @@
       <h1 class="text-left col-md-4"></h1>
       </div>
     {!! Form::open(['url' => '/schools', 'class' => 'form-horizontal']) !!}
-        {!! Form::hidden('schoolCode',\DB::table('schools')->max('id')+1, null, ['class' => 'form-control','required' => 'required']) !!}
-        {!! Form::hidden('entityId',\DB::table('entitys')->max('entityId')+1, null, ['class' => 'form-control','required' => 'required'],['name'=>'entityId']) !!}
+       
         <div class="row create-emp-list">
             <div class="col-md-6">
             <div class="form-group {{ $errors->has('posterDistributionDate') ? 'has-error' : ''}}">
                 {!! Form::label('posterDistributionDate', trans('messages.SCHOOL_POSTER_DISTRIBUTION_DATE'), ['class' => 'col-sm-5 control-label']) !!}
                 <div class="col-sm-7  input-group date">
-                    {!! Form::text('posterDistributionDate', null, ['class' => 'form-control', 'required' => 'required','maxlength'=>'10']) !!}
+                    {!! Form::text('posterDistributionDate', null, ['class' => 'form-control','maxlength'=>'10']) !!}
 					<span class="input-group-addon">
                         <span class="glyphicon glyphicon-calendar"></span>
                     </span>
@@ -25,7 +24,7 @@
             <div class="form-group  {{ $errors->has('closingDate') ? 'has-error' : ''}}">
                 {!! Form::label('closingDate',trans('messages.SCHOOL_CLOSING_DATE') , ['class' => 'col-sm-5 control-label']) !!}
                 <div class="col-sm-7  input-group date">
-                    {!! Form::text('closingDate', null, ['class' => 'form-control', 'required' => 'required','maxlength'=>'10']) !!}
+                    {!! Form::text('closingDate', null, ['class' => 'form-control','maxlength'=>'10']) !!}
 					<span class="input-group-addon">
                         <span class="glyphicon glyphicon-calendar"></span>
                     </span>
@@ -35,7 +34,7 @@
 			<div class="form-group {{ $errors->has('sessionYear') ? 'has-error' : ''}}">
                 {!! Form::label('sessionYear',  trans('messages.SESSION_YEAR'), ['class' => 'col-sm-5 control-label']) !!}
                 <div class="col-sm-7">
-                    {!! Form::select('sessionYear',['0'=>'Select Session Year']+$sessionYear, null, ['class' => 'form-control', 'required' => 'required']) !!}
+                    {!! Form::select('sessionYear',$sessionYear, null, ['class' => 'form-control', 'placeholder'=>'Select Session Year', 'required' => 'required']) !!}
                     {!! $errors->first('forsessionYearmNo', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>
@@ -144,21 +143,21 @@
             <div class="form-group {{ $errors->has('firstCoordinatorName') ? 'has-error' : ''}}">
                 {!! Form::label('firstCoordinatorName',trans('messages.SCHOOL_FIRST_COORDINATOR_NAME'), ['class' => 'col-sm-5 control-label']) !!}
                 <div class="col-sm-7">
-                    {!! Form::text('firstCoordinatorName', null, ['class' => 'form-control', 'required' => 'required','maxlength'=>'190']) !!}
+                    {!! Form::text('firstCoordinatorName', null, ['class' => 'form-control','maxlength'=>'190']) !!}
                     {!! $errors->first('firstCoordinatorName', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>
             <div class="form-group {{ $errors->has('firstCoordinatorMobile') ? 'has-error' : ''}}">
                 {!! Form::label('firstCoordinatorMobile', trans('messages.SCHOOL_FIRST_COORDINATOR_MOBILE'), ['class' => 'col-sm-5 control-label']) !!}
                 <div class="col-sm-7">
-                    {!! Form::text('firstCoordinatorMobile', null, ['class' => 'form-control', 'required' => 'required','maxlength'=>'13']) !!}
+                    {!! Form::text('firstCoordinatorMobile', null, ['class' => 'form-control','maxlength'=>'13']) !!}
                     {!! $errors->first('firstCoordinatorMobile', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>
             <div class="form-group {{ $errors->has('firstCoordinatorEmail') ? 'has-error' : ''}}">
                 {!! Form::label('firstCoordinatorEmail', trans('messages.SCHOOL_FIRST_COORDINATOR_EMAIL'), ['class' => 'col-sm-5 control-label']) !!}
                 <div class="col-sm-7">
-                    {!! Form::text('firstCoordinatorEmail', null, ['class' => 'form-control', 'required' => 'required','maxlength'=>'190']) !!}
+                    {!! Form::text('firstCoordinatorEmail', null, ['class' => 'form-control','maxlength'=>'190']) !!}
                     {!! $errors->first('firstCoordinatorEmail', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>
@@ -190,14 +189,14 @@
 			 <div class="form-group {{ $errors->has('coordinatorGift') ? 'has-error' : ''}}">
                 {!! Form::label('coordinatorGift', trans('messages.SCHOOL_COORDINATOR_GIFT'), ['class' => 'col-sm-5 control-label']) !!}
                 <div class="col-sm-7">
-                    {!! Form::select('coordinatorGift',['0'=>'Yes','1'=>'NO'],null,['class' => 'form-control', 'required' => 'required','placeholder'=>'Select Gift Status']) !!}
+                    {!! Form::select('coordinatorGift',['0'=>'Yes','1'=>'NO'],null,['class' => 'form-control','placeholder'=>'Select Gift Status']) !!}
                     {!! $errors->first('coordinatorGift', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>
             <div class="form-group {{ $errors->has('PMOExamDate') ? 'has-error' : ''}}">
                 {!! Form::label('PMOExamDate', trans('messages.SCHOOL_PMO_EXAM_DATE'), ['class' => 'col-sm-5 control-label']) !!}
                 <div class="col-sm-7  input-group date">
-                    {!! Form::text('PMOExamDate', null, ['class' => 'form-control', 'required' => 'required','maxlength'=>'10']) !!}
+                    {!! Form::text('PMOExamDate', null, ['class' => 'form-control','maxlength'=>'10']) !!}
 					<span class="input-group-addon">
                         <span class="glyphicon glyphicon-calendar"></span>
                     </span>
@@ -207,7 +206,7 @@
             <div class="form-group {{ $errors->has('PSOExamDate') ? 'has-error' : ''}}">
                 {!! Form::label('PSOExamDate', trans('messages.SCHOOL_PSO_EXAM_DATE'), ['class' => 'col-sm-5 control-label']) !!}
                 <div class="col-sm-7  input-group date">
-                    {!! Form::text('PSOExamDate', null, ['class' => 'form-control', 'required' => 'required','maxlength'=>'10']) !!}
+                    {!! Form::text('PSOExamDate', null, ['class' => 'form-control','maxlength'=>'10']) !!}
 					<span class="input-group-addon">
                         <span class="glyphicon glyphicon-calendar"></span>
                     </span>
@@ -217,7 +216,7 @@
             <div class="form-group {{ $errors->has('schoolcode') ? 'has-error' : ''}}">
                 {!! Form::label('schoolcode', trans('messages.SCHOOL_SCHOOL_CODE'), ['class' => 'col-sm-5 control-label']) !!}
                 <div class="col-sm-7">
-                    {!! Form::text('schoolcode', null, ['class' => 'form-control', 'required' => 'required','maxlength'=>'190']) !!}
+                    {!! Form::text('schoolcode', null, ['class' => 'form-control','maxlength'=>'190']) !!}
                     {!! $errors->first('schoolcode', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>
@@ -225,7 +224,7 @@
             <div class="form-group {{ $errors->has('teamCode') ? 'has-error' : ''}}">
                 {!! Form::label('teamCode', trans('messages.SCHOOL_TEAM_CODE'), ['class' => 'col-sm-5 control-label']) !!}
                 <div class="col-sm-7">
-                    {!! Form::select('teamCode', $team, null, ['class' => 'form-control', 'placeholder' => 'Select a Team', 'required' => 'required']) !!}
+                    {!! Form::select('teamCode', $team, null, ['class' => 'form-control', 'placeholder' => 'Select a Team Code', 'required' => 'required']) !!}
                     {!! $errors->first('teamCode', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>
@@ -248,21 +247,21 @@
             <div class="form-group {{ $errors->has('schoolTotalStrength') ? 'has-error' : ''}}">
                 {!! Form::label('schoolTotalStrength', trans('messages.SCHOOL_TOTAL_STRENGTH'), ['class' => 'col-sm-5 control-label']) !!}
                 <div class="col-sm-7">
-                    {!! Form::text('schoolTotalStrength', null, ['class' => 'form-control', 'required' => 'required','maxlength'=>'10']) !!}
+                    {!! Form::text('schoolTotalStrength', null, ['class' => 'form-control','maxlength'=>'10']) !!}
                     {!! $errors->first('schoolTotalStrength', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>
             <div class="form-group {{ $errors->has('classStrength') ? 'has-error' : ''}}">
                 {!! Form::label('classStrength', trans('messages.SCHOOL_CLASS_3_TO_10'), ['class' => 'col-sm-5 control-label']) !!}
                 <div class="col-sm-7">
-                    {!! Form::text('classStrength', null, ['class' => 'form-control', 'required' => 'required','maxlength'=>'10']) !!}
+                    {!! Form::text('classStrength', null, ['class' => 'form-control','maxlength'=>'10']) !!}
                     {!! $errors->first('classStrength', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>
             <div class="form-group {{ $errors->has('followUpDate') ? 'has-error' : ''}}">
                 {!! Form::label('followUpDate', trans('messages.SCHOOL_FOLLOW_UPDATE'), ['class' => 'col-sm-5 control-label']) !!}
                 <div class="col-sm-7  input-group date">
-                    {!! Form::text('followUpDate', null, ['class' => 'form-control', 'required' => 'required','maxlength'=>'10']) !!}
+                    {!! Form::text('followUpDate', null, ['class' => 'form-control','maxlength'=>'10']) !!}
 					<span class="input-group-addon">
                         <span class="glyphicon glyphicon-calendar"></span>
                     </span>
@@ -279,14 +278,14 @@
             <div class="form-group {{ $errors->has('posterDistributed') ? 'has-error' : ''}}">
                 {!! Form::label('posterDistributed', trans('messages.SCHOOL_POSTER_DISTRIBUTED'), ['class' => 'col-sm-5 control-label']) !!}
                 <div class="col-sm-7">
-                    {!! Form::text('posterDistributed', null, ['class' => 'form-control', 'required' => 'required','maxlength'=>'10']) !!}
+                    {!! Form::text('posterDistributed', null, ['class' => 'form-control','maxlength'=>'10']) !!}
                     {!! $errors->first('posterDistributed', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>
             <div class="form-group {{ $errors->has('KMS') ? 'has-error' : ''}}">
                 {!! Form::label('KMS', trans('messages.SCHOOL_KMS'), ['class' => 'col-sm-5 control-label']) !!}
                 <div class="col-sm-7">
-                    {!! Form::text('KMS', null, ['class' => 'form-control', 'required' => 'required','maxlength'=>'10']) !!}
+                    {!! Form::text('KMS', null, ['class' => 'form-control','maxlength'=>'10']) !!}
                     {!! $errors->first('KMS', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>

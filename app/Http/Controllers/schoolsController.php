@@ -63,12 +63,12 @@ class schoolsController extends Controller
 						->where('schools.deleted',0)
 						->where('schools.sessionYear',session()->get('activeSession'))
 						->where('addresses.stateId',session()->get('currentStateId'))
-						->where('formNo', 'like', '%'.$q.'%')
-						->orwhere('schoolName', 'like', '%'.$q.'%')
-						->orwhere('schoolcode', 'like', '%'.$q.'%')
-						->orwhere('uniqueSchoolCode', 'like', '%'.$q.'%')
-						->orwhere('cityName', 'like', '%'.$q.'%')
-						->orwhere('principalName', 'like', '%'.$q.'%')
+						->where('schools.formNo', 'like', '%'.$q.'%')
+						->orwhere('schools.schoolName', 'like', '%'.$q.'%')
+						->orwhere('schools.schoolcode', 'like', '%'.$q.'%')
+						->orwhere('schools.uniqueSchoolCode', 'like', '%'.$q.'%')
+						->orwhere('citys.cityName', 'like', '%'.$q.'%')
+						->orwhere('schools.principalName', 'like', '%'.$q.'%')
 						->groupBy('schools.entityId')
 						->orderBy('schools.entityId','desc')
 						->paginate(trans('messages.PAGINATE'));
@@ -100,12 +100,14 @@ class schoolsController extends Controller
 						 if(Input::get('activateSchool') === trans('messages.ZERO')){
 							// school
 							$email = DB::table('schools')->where('entityId',$activationSchool)->value('principalEmail');
+							$subject=trans('messages.SCHOOL_MAIL_SUBJECT_ACTIVATION');
 							Mail::send('emails.schoolActivation', ['school'=>'school',], function ($message)use ($email) {$message->to($email);	});
 							$api_key = trans('messages.API_KEY');
 							$phones = DB::table('schools')->where('entityId',$activationSchool)->value('principalMobile');
 							$contacts = $phones;
 							$from = trans('messages.FROM');
 							$routeid = trans('messages.ROUTEID');
+							
 							$sms_text = urlencode("Hi , fee for first leavel POF exam has been received. you will receive details by mail . thanks for your interest & support.");
 							$api_url = "http://www.logonutility.in/app/smsapi/index.php?key=".$api_key."&campaign=1&routeid=".$routeid."&type=text&contacts=".$contacts."&senderid=".$from."&msg=".$sms_text;
 							$response = file_get_contents( $api_url);
@@ -146,7 +148,7 @@ class schoolsController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, ['posterDistributionDate' => 'required', 'closingDate' => 'required', 'formNo' => 'required', 'schoolName' => 'required', 'principalName' => 'required', 'principalMobile' => 'required', 'principalEmail' => 'required','principalGift'=>'required', 'firstCoordinatorName' => 'required', 'firstCoordinatorMobile' => 'required', 'firstCoordinatorEmail' => 'required', 'coordinatorGift' => 'required', 'PMOExamDate' => 'required', 'PSOExamDate' => 'required', 'schoolcode' => 'required', 'teamCode' => 'required', 'employeeCode' => 'required', 'employeeMobileType' => 'required', 'schoolTotalStrength' => 'required', 'classStrength' => 'required', 'followUpDate' => 'required', 'callStatus' => 'required', 'posterDistributed' => 'required', 'KMS' => 'required', ]);
+        $this->validate($request, ['formNo' => 'required', 'schoolName' => 'required', 'principalName' => 'required', 'principalMobile' => 'required', 'principalEmail' => 'required','principalGift'=>'required','teamCode' => 'required', 'employeeCode' => 'required', 'employeeMobileType' => 'required','callStatus' => 'required',]);
 		$stateSymbol =  DB::table('states')->where('id',session()->get('currentStateId'))->value('stateName');
 		$stateSymbol=explode('(',$stateSymbol);
 		$stateSymbol=$stateSymbol[1];
@@ -269,19 +271,29 @@ class schoolsController extends Controller
 		$api_url = "http://www.logonutility.in/app/smsapi/index.php?key=".$api_key."&campaign=1&routeid=".$routeid."&type=text&contacts=".$contacts."&senderid=".$from."&msg=".$sms_text;
 		$response = file_get_contents( $api_url);
 		$emails="";
+		
 		if($request['secondCoordinatorEmail']=="")
 		{
 		$emails = [$request['principalEmail'],$request['firstCoordinatorEmail'],trans('messages.OFFICEEMAILID')];
+		}
+		elseif($request['firstCoordinatorEmail']=="")
+		{
+		$emails = [$request['principalEmail'],$request['secondCoordinatorEmail'],trans('messages.OFFICEEMAILID')];	
+		}
+		elseif($request['firstCoordinatorEmail']=="" && $request['secondCoordinatorEmail']=="")
+		{
+		$emails = [$request['principalEmail'],trans('messages.OFFICEEMAILID')];	
 		}
 		else
 		{
 		$emails = [$request['principalEmail'],$request['firstCoordinatorEmail'],$request['secondCoordinatorEmail'],trans('messages.OFFICEEMAILID')];
 		}	
-		
-		Mail::send('emails.schoolCreation', ['schoolName'=>$request['schoolName'],], function ($message)use ($emails) {$message->to($emails);	});
+		$subject=trans('messages.SCHOOL_MAIL_SUBJECT_CREATE_SCHOOL');
+		Mail::send('emails.schoolCreation', ['schoolName'=>$request['schoolName'],], function ($message)use ($emails,$subject) {$message->to($emails);	});
 		
 		// employee
 		$email = DB::table('emailaddresses')->where('entityId',$request['employeeCode'])->value('email');
+		$subject=trans('messages.SCHOOL_MAIL_SUBJECT_CREATE_EMPLOYEE');
 		Mail::send('emails.schoolCreationEmp', ['schoolName'=>$request['schoolName'],], function ($message)use ($email) {$message->to($email);	});
 		
 		$phones = DB::table('phones')->where('entityId',$request['employeeCode'])->value('primaryNumber');
@@ -353,7 +365,7 @@ class schoolsController extends Controller
      */
     public function update($id, Request $request)
     {
-         $this->validate($request, ['posterDistributionDate' => 'required', 'closingDate' => 'required', 'formNo' => 'required', 'schoolName' => 'required', 'principalName' => 'required', 'principalMobile' => 'required', 'principalEmail' => 'required','principalGift'=>'required', 'firstCoordinatorName' => 'required', 'firstCoordinatorMobile' => 'required', 'firstCoordinatorEmail' => 'required', 'coordinatorGift' => 'required', 'PMOExamDate' => 'required', 'PSOExamDate' => 'required', 'schoolcode' => 'required', 'teamCode' => 'required', 'employeeCode' => 'required', 'employeeMobileType' => 'required', 'schoolTotalStrength' => 'required', 'classStrength' => 'required', 'followUpDate' => 'required', 'callStatus' => 'required', 'posterDistributed' => 'required', 'KMS' => 'required', ]);
+         $this->validate($request, [ 'formNo' => 'required', 'schoolName' => 'required', 'principalName' => 'required', 'principalMobile' => 'required', 'principalEmail' => 'required','principalGift'=>'required',  'teamCode' => 'required', 'employeeCode' => 'required', 'employeeMobileType' => 'required',  'callStatus' => 'required', ]);
 
 		$updateCounters=Input::get ('updateCounter')+1;
 		$updateCounterdata = DB::table('schools')->where('entityId',$id)->value('updateCounter');

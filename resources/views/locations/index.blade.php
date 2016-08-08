@@ -34,7 +34,7 @@
                          <a href="{{ url('/locations/' . $item->locationId . '/edit') }}" class="btn btn-primary btn-xs" title="{{trans('messages.EDIT_LOCATION')}}"><span class="glyphicon glyphicon-pencil" aria-hidden="true"/></a>
                         {!! Form::open([
                             'method'=>'DELETE',
-                            'url' => ['/locations', $item->id],
+                            'url' => ['/locations', $item->locationId],
                             'style' => 'display:inline'
                         ]) !!}
                             {!! Form::button('<span class="glyphicon glyphicon-trash" aria-hidden="true"  />', array(

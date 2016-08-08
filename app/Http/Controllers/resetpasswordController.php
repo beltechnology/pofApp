@@ -50,7 +50,7 @@ class resetpasswordController extends Controller
 					$stateId =  DB::table('addresses')->where('entityId', $user->entityId)->value('stateId');
 					$request->session()->put('currentStateId',$stateId);
 					session()->put('activeSession',$sessionYear);
-					return redirect()->intended('/employee');
+					return redirect()->intended('/dashboard');
 				}
 		
 		
