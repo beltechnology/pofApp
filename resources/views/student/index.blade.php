@@ -20,8 +20,8 @@
   </div>
 </nav>
  <div class="h1-two col-md-12">
-	 <h1 class="text-left col-md-2"><a href="{{ url('/fees/'.session()->get('entityId').'/edit') }}" class="fa fa-angle-left  fa-2x"> {{ trans('messages.TABS_FEES') }}</a></h1>
-      <h1 class="text-center col-md-8">
+	 <h1 class="text-left col-md-2"><a href="{{ url('/fees/'.session()->get('entityId').'/edit') }}" class="fa fa-angle-left  fa-2x"> {{ trans('messages.TABS_FEES') }}</a> </h1>
+      <h1 class="text-center col-md-8"> 
 	  <form id="searchFilter" name="searchFilter" action="searchFilter" method="get">
 	  <select name="filterClass" id="filterName">
 	  <option value="0"> All Class</option>

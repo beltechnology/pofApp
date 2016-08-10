@@ -40,8 +40,8 @@
         <th>{{ trans('messages.EMPLOYEE_CODE') }}</th>
         <th>{{ trans('messages.DOB') }}</th>
         <th>{{ trans('messages.CONTACT_NUMBER') }}</th>
-        <th>{{ trans('messages.ADDRESS') }}</th>
-        <th>{{ trans('messages.EMAIL') }} </th>
+        <th>{{ trans('messages.EMPLOYEE_LOCATION') }}</th>
+        <th>{{ trans('messages.TEAM_NAME') }} </th>
         <th>{{ trans('messages.ACTIONS') }}</th>
       </tr>
     </thead>
@@ -55,8 +55,8 @@
                     <td>{{ $item->employeeCode }}</td>
 					<td>{{ $item->dob }}</td>
 					<td>{{ $item->primaryNumber }}</td>
-					<td>{{ $item->addressLine1 }}</td>
-					<td>{{ $item->email }}</td>
+					<td>@if($item->location=='')  -  @else {{ $item->location }} @endif</td>
+					<td>@if($item->teamName=='')  -  @else {{ $item->teamName }} @endif</td>
                     <td>
                         <!--<a href="{{ url('/employee/' . $item->employeeId) }}" class="btn  btn-xs" title="View employee"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"/></a>-->
                         <a href="{{ url('/employee/' . $item->entityId . '/edit') }}" class="btn  btn-xs" title="Edit employee"><span class="glyphicon glyphicon-pencil" aria-hidden="true"/></a>

@@ -21,7 +21,7 @@
 </nav>
  <div class="h1-two edit-school-border  col-md-12">
 	 <h1 class="text-left col-md-4"><a href="{{ url('/student/') }}" class="fa fa-angle-left  fa-2x"> {{ trans('messages.STUDENT_LIST') }}</a></h1>
-      <h1 class="text-center col-md-4"></h1> 
+      <h1 class="text-center col-md-4">{{ trans('messages.TABS_STUDENT_REGISTRATION') }}</h1> 
   </div>
 	</div>
     {!! Form::open(['url' => '/student', 'class' => 'form-horizontal']) !!}

@@ -44,10 +44,10 @@
                     {!! $errors->first('examLevelId', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>
-			<div class="form-group {{ $errors->has('paymentDate') ? 'has-error' : ''}}">
-					{!! Form::label('paymentDate', trans('messages.DATE'), ['class' => 'col-sm-5 control-label']) !!}
+			<div class="form-group paymentDiv {{ $errors->has('paymentDate') ? 'has-error' : ''}}">
+					{!! Form::label ('paymentDate', trans('messages.DATE'), ['class' => 'col-sm-5 control-label']) !!}
 					<div class="col-sm-7   input-group date">
-                    {!! Form::text('paymentDate', null, ['class' => 'form-control','required'=>'required','maxlength'=>'10']) !!}
+                    {!! Form::text('paymentDate', null, ['class' => 'form-control paymentDate','required'=>'required','maxlength'=>'10']) !!}
 					<span class="input-group-addon">
                         <span class="glyphicon glyphicon-calendar"></span>
                     </span>
@@ -106,9 +106,9 @@
 			
 			<!-- Cash Div -->
 				<div class="form-group hide Cash commonDiv {{ $errors->has('modeRefNo') ? 'has-error' : ''}}">
-					{!! Form::label('modeRefNo', trans('messages.AMOUNT'), ['class' => 'col-sm-5 control-label']) !!}
+					{!! Form::label('modeRefNo', trans('messages.AMOUNT'), ['class' => 'col-sm-5 control-label cash']) !!}
 					<div class="col-sm-7">
-                    {!! Form::text('modeRefNo', null, ['class' => 'form-control']) !!}
+                    {!! Form::text('modeRefNo', null, ['class' => 'form-control cash']) !!}
                     {!! $errors->first('modeRefNo', '<p class="help-block">:message</p>') !!}						
 						</div>
 					</div>
@@ -188,6 +188,9 @@ $('#paymentStatusNeft').click(function(){
 		{
 			$(".commonDiv").addClass('hide');
 			$(".commonDiv").find('input').attr('disabled','disabled');
+			$(".commonDiv").find('label.cash').addClass('hide');
+			$(".commonDiv").find('input.cash').addClass('hide');
+			//$(".paymentDiv").find('input.paymentDate').attr('value','');
 			$("."+textCode).find('input').removeAttr('disabled');
 			$("."+textCode).removeClass('hide');
 		}

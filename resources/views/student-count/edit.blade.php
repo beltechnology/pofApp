@@ -37,7 +37,7 @@
       <h1 class="text-center col-md-4">{{ trans('messages.STUDENTS_STRENGTH') }}</h1>
       <h1 class="text-left col-md-4"></h1>
       </div>
-	  <div class="row">
+	 
  <h1 style="color:red;">  {{ session()->get('concurrency_message')}} </h1>
  <div class="table">
         <table class="table table-bordered table-striped table-hover">
@@ -69,7 +69,7 @@
             </body>
 			</table>
 	</div>
-			</div>
+			
 			
 	<div class=" col-md-12 button-group">
     <div class="form-group">

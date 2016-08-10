@@ -128,14 +128,22 @@
             </div>
 			@if ($employee->teamId != '0')
 			  <div class="form-group {{ $errors->has('employeeCode') ? 'has-error' : ''}}">
-                {!! Form::label('employeeCode', trans('messages.TEAM_CODE'), ['class' => 'col-sm-4  control-label']) !!}
+                {!! Form::label('employeeCode', trans('messages.TEAM_NAME'), ['class' => 'col-sm-4  control-label']) !!}
                 <div class="col-sm-8">
-                    {!! Form::text('t', $teamCode, ['class' => 'form-control','required' => 'required','readonly'=>'readonly']) !!}
+                    {!! Form::text('t', $teamName, ['class' => 'form-control','required' => 'required','readonly'=>'readonly']) !!}
                     {!! $errors->first('employeeCode', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>
 			@endif 
-		
+			@if ($employee->locationId != '0')
+			  <div class="form-group {{ $errors->has('employeeCode') ? 'has-error' : ''}}">
+                {!! Form::label('employeeCode', trans('messages.EMPLOYEE_LOCATION'), ['class' => 'col-sm-4  control-label']) !!}
+                <div class="col-sm-8">
+                    {!! Form::text('t', $employeeLocation, ['class' => 'form-control','required' => 'required','readonly'=>'readonly']) !!}
+                    {!! $errors->first('employeeCode', '<p class="help-block">:message</p>') !!}
+                </div>
+            </div>
+			@endif 
 	
             </div>
            

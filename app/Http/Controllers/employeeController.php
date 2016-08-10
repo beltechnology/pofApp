@@ -34,6 +34,8 @@ class employeeController extends Controller
                         ->join('addresses','addresses.entityId','=','employees.entityId')
 						->join('phones','phones.entityId','=','employees.entityId')
 						->join('emailaddresses','emailaddresses.entityId','=','employees.entityId')
+						->leftjoin('locations','locations.locationId','=','employees.locationId')
+						->leftjoin('teams','teams.teamId','=','employees.teamId')
 						->where('employees.deleted',0)
 						->where('addresses.stateId',session()->get('currentStateId'))
 						->groupBy('employees.entityId')
@@ -173,11 +175,12 @@ class employeeController extends Controller
 		$phone = phone::findOrFail($id);
 		$designation=DB::table('designations')->where('designation','!=','superAdmin')->where('deleted',0)->lists('designation','id');
 		$teamId=$employee->teamId;
-		$teamCode = DB::table('teams')->where('teamId',$teamId)->value('teamCode');
-		
+		$locationId=$employee->locationId;
+		$teamName = DB::table('teams')->where('teamId',$teamId)->value('teamName');
+		$employeeLocation = DB::table('locations')->where('locationId',$locationId)->value('location');
 		$districts = DB::table('districts')->where('districts.deleted',0)->lists('name', 'id');
 		$citys = DB::table('citys')->where('citys.deleted',0)->lists('cityName', 'id');
-		return view('employee.edit', ['employee' => $employee,'entity' => $entity,'address' => $address,'emailaddress' => $emailaddress,'phone' => $phone,'districts' => $districts,'citys' => $citys,'designation'=>$designation,'teamCode'=>$teamCode]);
+		return view('employee.edit', ['employee' => $employee,'entity' => $entity,'address' => $address,'emailaddress' => $emailaddress,'phone' => $phone,'districts' => $districts,'citys' => $citys,'designation'=>$designation,'teamName'=>$teamName,'employeeLocation'=>$employeeLocation]);
 		
     }
 
