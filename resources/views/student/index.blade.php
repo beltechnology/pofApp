@@ -8,7 +8,7 @@
    		
     	<ul class="nav navbar-nav">
 	@foreach ($articles as $article)
-		@if($article->moduleType === 2)	
+		@if($article->moduleType === trans('messages.TWO'))	
 			@if($article->muduleLink === "/student")
 				<li   class="active" ><a  href="{{ url($article->muduleLink) }}">{{ $article->name }} </a></li>
 			@else
@@ -20,8 +20,43 @@
   </div>
 </nav>
  <div class="h1-two col-md-12">
-	 <h1 class="text-left col-md-4"><a href="{{ url('/fees/'.session()->get('entityId').'/edit') }}" class="fa fa-angle-left  fa-2x"> {{ trans('messages.TABS_FEES') }}</a></h1>
-      <h1 class="text-center col-md-4"></h1>
+	 <h1 class="text-left col-md-2"><a href="{{ url('/fees/'.session()->get('entityId').'/edit') }}" class="fa fa-angle-left  fa-2x"> {{ trans('messages.TABS_FEES') }}</a></h1>
+      <h1 class="text-center col-md-8">
+	  <form id="searchFilter" name="searchFilter" action="searchFilter" method="get">
+	  <select name="filterClass" id="filterName">
+	  <option value="0"> All Class</option>
+	  @foreach ($studentClass as $studentDropDown)
+		<?php if(isset($_GET['filterClass']))
+		{
+			if($studentDropDown->id == $_GET['filterClass'])
+			{?>
+	  	  <option  selected ="selected" value="{{$studentDropDown->id}}">{{$studentDropDown->name}}</option>
+			<?php
+				
+			}
+			else{ ?>
+	  	  <option value="{{$studentDropDown->id}}">{{$studentDropDown->name}}</option>
+			<?php
+			}
+		}
+		else{?>
+	  	  <option value="{{$studentDropDown->id}}">{{$studentDropDown->name}}</option>
+	<?php	}
+	?>
+	  @endforeach
+	   </select>
+	   
+	  <select name="subject" id="subject">
+		  <option value="ALL"> All</option>
+	  	  <option value="pmo">PMO</option>
+	  	  <option value="pso">PSO</option>
+	   </select>
+	   		  <button id="GetPDF">GetPDF</button>
+	   		  <button id="admitCard">Admit Card</button>
+
+	</form>
+
+	   </h1>
 	    <div class="add-emp add-school col-md-2">
             <a href="{{ url('/student/create') }}" title="Add New student"><p>{{ trans('messages.ADD') }} <span class="glyphicon glyphicon-plus" aria-hidden="true"/></p></a>
             </div>
@@ -73,4 +108,68 @@
     </div>
 
 </div>
+
+
+<script>
+$(document).ready(function(){
+	$("#filterName").change(function(){
+		$("#searchFilter").removeAttr("target");
+		$("#searchFilter").attr("action","searchFilter");
+		$("#searchFilter").submit();
+	});
+	
+	$("#subject").change(function(){
+		$("#searchFilter").removeAttr("target");
+		$("#searchFilter").attr("action","searchFilter");
+		$("#searchFilter").submit();
+	});
+	
+	$("#GetPDF").click(function(){
+			$("#searchFilter").removeAttr("target");
+
+	if($("#subject").val()== "ALL")
+		{
+			alert("Please select the exam type.");
+		}
+		else if($("#filterName").val()!= 0)
+		{
+			alert("Please select the all class option.");
+		}
+		else{
+			
+			$("#searchFilter").attr("action","getPDF");
+			$("#searchFilter").attr("target","_blank");
+			$("#searchFilter").submit();
+			window.reload();
+		}
+	});
+
+	$("#admitCard").click(function(){
+		$("#searchFilter").removeAttr("target");
+		if($("#subject").val()== "ALL")
+		{
+			alert("Please select the exam type.");
+		}
+		else if($("#filterName").val()!= 0)
+		{
+			alert("Please select the all class option.");
+		}
+		else{
+			
+			$("#searchFilter").attr("action","getAdmitPDF");
+			$("#searchFilter").attr("target","_blank");
+			$("#searchFilter").submit();
+			window.reload();
+		}
+	});
+	
+	<?php 
+	if(isset($_GET['subject']))
+	{
+		?>
+	$("#subject").val("<?php echo $_GET['subject']?>");
+		<?php
+	}?>
+});
+</script>
 @endsection

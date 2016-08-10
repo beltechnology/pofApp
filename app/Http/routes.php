@@ -45,6 +45,10 @@ Route::group(array('middleware' => 'auth'), function() {
 	Route::post('/search', 'employeeController@filter');
 	Route::get('/search-school', 'schoolsController@filter');
 	Route::post('/activate-school', 'schoolsController@activateSchool');
+	Route::get('/getPDF', 'PDFController@getPDF');
+	Route::get('/getAdmitPDF', 'PDFController@getAdmitPDF');
+	Route::get('/searchFilter', 'studentController@searchFilter');
+	
 	Route::get('/employee/create/ajax-state',function()
 {
     $state_id = session()->get('currentStateId');

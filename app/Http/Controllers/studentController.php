@@ -22,14 +22,89 @@ class studentController extends Controller
     public function index()
     {
        // $student = student::paginate(15);
+	   $studentClass = DB::table('class_names')->where('deleted',0)->get();
 	   $student= DB::table('students')
                         ->join('class_names','class_names.id','=','students.classId')
 						->where('students.deleted',0)
 						->where('class_names.deleted',0)
 						->where('students.sessionYear',session()->get('activeSession'))
 						->where('students.schoolEntityId',session()->get('entityId'))
+						->orderBy('students.rollNo','asc')
 						->paginate(trans('messages.PAGINATE'));
-        return view('student.index', compact('student'));
+        return view('student.index', compact('student'))->with('studentClass',$studentClass);
+    }
+
+    public function searchFilter()
+    {
+		if(Input::get('filterClass') == 0 && Input::get('subject') == "ALL" )
+		{
+				   $student= DB::table('students')
+                        ->join('class_names','class_names.id','=','students.classId')
+						->where('students.deleted',0)
+						->where('class_names.deleted',0)
+						->where('students.sessionYear',session()->get('activeSession'))
+						->where('students.schoolEntityId',session()->get('entityId'))
+						->orderBy('students.rollNo','asc')
+						->paginate(trans('messages.PAGINATE'));
+		}
+		elseif(Input::get('filterClass') != 0 && Input::get('subject') == "ALL" )
+		{
+					$student= DB::table('students')
+                        ->join('class_names','class_names.id','=','students.classId')
+						->where('students.deleted',0)
+						->where('class_names.deleted',0)
+						->where('students.sessionYear',session()->get('activeSession'))
+						->where('students.schoolEntityId',session()->get('entityId'))
+						->where('students.classId','=',Input::get('filterClass'))
+						->orderBy('students.rollNo','asc')
+						->paginate(trans('messages.PAGINATE'));
+
+		}
+		elseif(Input::get('filterClass') != 0 && Input::get('subject') != "ALL" )
+		{
+					$student= DB::table('students')
+                        ->join('class_names','class_names.id','=','students.classId')
+						->where('students.deleted',0)
+						->where('class_names.deleted',0)
+						->where('students.sessionYear',session()->get('activeSession'))
+						->where('students.schoolEntityId',session()->get('entityId'))
+						->where('students.classId','=',Input::get('filterClass'))
+						->where('students.'.Input::get('subject'),'=',1)
+						->orderBy('students.rollNo','asc')
+						->paginate(trans('messages.PAGINATE'));
+
+		}
+		elseif(Input::get('filterClass') == 0 && Input::get('subject') != "ALL" )
+		{
+					$student= DB::table('students')
+                        ->join('class_names','class_names.id','=','students.classId')
+						->where('students.deleted',0)
+						->where('class_names.deleted',0)
+						->where('students.sessionYear',session()->get('activeSession'))
+						->where('students.schoolEntityId',session()->get('entityId'))
+						->where('students.'.Input::get('subject'),'=',1)
+						->orderBy('students.rollNo','asc')
+						->paginate(trans('messages.PAGINATE'));
+
+		}
+		else{
+					$student= DB::table('students')
+                        ->join('class_names','class_names.id','=','students.classId')
+						->where('students.deleted',0)
+						->where('class_names.deleted',0)
+						->where('students.sessionYear',session()->get('activeSession'))
+						->where('students.schoolEntityId',session()->get('entityId'))
+						->orderBy('students.rollNo','asc')
+						->paginate(trans('messages.PAGINATE'));
+		}
+		
+	   $studentClass = DB::table('class_names')->where('deleted',0)->get();
+						
+					$student->appends(array(
+						'filterClass' => Input::get('filterClass'),
+						'subject'   => Input::get('subject'),
+					));	
+        return view('student.index', compact('student'))->with('studentClass',$studentClass);
     }
 
     /**

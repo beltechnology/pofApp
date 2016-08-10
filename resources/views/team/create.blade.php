@@ -17,6 +17,15 @@
                     {!! $errors->first('teamName', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>
+            <div class="form-group {{ $errors->has('teamCode') ? 'has-error' : ''}}">
+                {!! Form::label('teamCode', trans('messages.TEAM_CODE'), ['class' => 'col-sm-4 control-label']) !!}
+                <div class="col-sm-8">
+                    {!! Form::text('teamCode', null, ['class' => 'form-control','required' => 'required','maxlength'=>'190']) !!}
+                    {!! $errors->first('teamCode', '<p class="help-block">:message</p>') !!}
+                </div>
+            </div>
+
+
             <div class="form-group {{ $errors->has('teamLeader') ? 'has-error' : ''}}">
                 {!! Form::label('teamLeader', trans('messages.TEAM_LEADER'), ['class' => 'col-sm-4 control-label']) !!}
                 <div class="col-sm-8">
@@ -68,17 +77,7 @@
                     {!! $errors->first('teamLocation', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>
-           
-		  
-			
-            <div class="form-group {{ $errors->has('teamCode') ? 'has-error' : ''}}">
-                {!! Form::hidden('teamCode', trans('messages.TEAM_CODE'), ['class' => 'col-sm-4 control-label']) !!}
-                <div class="col-sm-8 ">
-                    {!! Form::hidden('teamCode', \DB::table('teams')->max('teamId')+1,null,['class' => 'form-control']) !!}
-                    {!! $errors->first('teamCode', '<p class="help-block">:message</p>') !!}
-                </div>
-            </div>
-	
+
            
     </div>
 

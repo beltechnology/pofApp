@@ -71,20 +71,8 @@ class TeamController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, ['teamName' => 'required', 'teamCreationDate' => 'required',  ]);
-		$team_code='';		$teamCode = DB::table('teams')->max('teamId')+1;
-		if($teamCode<10)
-		{	
-		$team_code='POFT00'.$teamCode;
-		}
-		else if($teamCode<100)
-		{
-		$team_code ='POFT0'.$teamCode;
-		}	
-		else
-		{
-		$team_code ='POFT'.$teamCode;
-		}	
+        $this->validate($request, ['teamName' => 'required','teamCode' => 'required|unique:teams,teamCode,null,teamId,deleted,0', 'teamCreationDate' => 'required',  ]);
+
        team::create([
      	'teamName' => $request['teamName'],
 		'cityId' => $request['city'],
@@ -92,7 +80,7 @@ class TeamController extends Controller
         'teamCreationDate' => $request['teamCreationDate'],
         'teamEndDate' => $request['teamEndDate'],
 		'teamLeader' => $request['teamLeader'],
-		'teamCode'=>$team_code
+		'teamCode'=>$request['teamCode']
 					]);
 		$teamName = Input::get ( 'teamName' );
 		if($request['teamLeader'] != ""){
@@ -103,9 +91,8 @@ class TeamController extends Controller
 		$from = trans('messages.FROM');
 		$sms_text = urlencode("Team ".$teamName." has been created and you have been allocated the same . Please get in touch with your manager for details ");
 		$routeid = trans('messages.ROUTEID');
-		$api_url = "http://www.logonutility.in/app/smsapi/index.php?key=".$api_key."&campaign=1&routeid=".$routeid."&type=text&contacts=".$contacts."&senderid=".$from."&msg=".$sms_text;
-//Submit to server
-		$response = file_get_contents( $api_url);
+		$api_url= "http://smsw.co.in/API/WebSMS/Http/v1.0a/index.php?username=POFIND&password=pof123&sender=POFCOM&to=".$contacts."&message=".$sms_text."&reqid=#&format={json|text}&route_id=28callback=#&unique=1";
+		$response=@json_encode(file_get_contents($api_url));
 
 	$email = DB::table('emailaddresses')->where('entityId',$request['teamLeader'])->value('email');
 		
@@ -185,11 +172,10 @@ class TeamController extends Controller
 		$from = trans('messages.FROM');
 		$sms_text = urlencode("Team ".$teamName." has been created and you have been allocated the same . Please get in touch with your manager for details ");
 		$routeid = trans('messages.ROUTEID');
-		$api_url = "http://www.logonutility.in/app/smsapi/index.php?key=".$api_key."&campaign=1&routeid=".$routeid."&type=text&contacts=".$contacts."&senderid=".$from."&msg=".$sms_text;
-//Submit to server
-		$response = file_get_contents( $api_url);
+		$api_url= "http://smsw.co.in/API/WebSMS/Http/v1.0a/index.php?username=POFIND&password=pof123&sender=POFCOM&to=".$contacts."&message=".$sms_text."&reqid=#&format={json|text}&route_id=28callback=#&unique=1";
+		$response=@json_encode(file_get_contents($api_url));
 
-		Mail::send('emails.teamCreation', ['teamName'=>$teamName,], function ($message)use ($emailAddress) {$message->to($emailAddress);	});
+		Mail::send('emails.teamCreation', ['teamName'=>$teamName,], function ($message)use ($emailAddress) {$message->to($emailAddress)->subject("Pof india");	});
 		}
 
 		

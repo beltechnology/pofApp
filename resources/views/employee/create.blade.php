@@ -6,9 +6,6 @@
 <div class="row">
     {!! Form::open(['url' => '/employee', 'class' => 'form-horizontal']) !!}
     			<div class=" col-md-6 create-emp-list">
-                {!! Form::hidden('employeeId',\DB::table('employees')->max('employeeId')+1, null, ['class' => 'form-control','required' => 'required'],['name'=>'employeeid']) !!}
-                {!! Form::hidden('employeeCode',\DB::table('employees')->max('employeeId')+1, null, ['class' => 'form-control','required' => 'required'],['name'=>'employeeid']) !!}
-
                     {!! Form::hidden('entityId',\DB::table('entitys')->max('entityId')+1, null, ['class' => 'form-control','required' => 'required'],['name'=>'entityId']) !!}
                
                      
@@ -98,6 +95,14 @@
                 <div class="col-sm-8">
                     {!! Form::text('emailAddress', null, ['class' => 'form-control','required' => 'required','maxlength'=>'190']) !!}
                     {!! $errors->first('emailAddress', '<p class="help-block">:message</p>') !!}
+                </div>
+            </div>
+            
+            <div class="form-group {{ $errors->has('employeeCode') ? 'has-error' : ''}}">
+                {!! Form::label('employeeCode', trans('messages.EMPLOYEE_CODE'), ['class' => 'col-sm-4  control-label']) !!}
+                <div class="col-sm-8">
+                    {!! Form::text('employeeCode', null, ['class' => 'form-control','required' => 'required','maxlength'=>'190']) !!}
+                    {!! $errors->first('employeeCode', '<p class="help-block">:message</p>') !!}
                 </div>
             </div>
             

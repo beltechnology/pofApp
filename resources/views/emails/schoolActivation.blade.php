@@ -1,1 +1,1 @@
-<p>Hi , fee for first leavel POF exam has been received. you will receive details by mail . thanks for your interest & support.</p>
+<p>Hi , fee for first level POF exam has been received. you will receive details by mail . thanks for your interest & support.</p>

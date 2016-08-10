@@ -81,22 +81,9 @@ class employeeController extends Controller
      */
     public function store(Request $request)
     {
-		 $this->validate($request, ['employeeName' => 'required', 'dob' => 'required', 'address' => 'required', 'state' => 'required', 'district' => 'required', 'city' => 'required', 'pinCode' => 'required', 'primaryNumber' => 'required', 'emailAddress' => 'required |unique:emailaddresses,email,null,id,deleted,0', 'designation' => 'required', 'dateOfJoining' => 'required', ]);	
+		 $this->validate($request, ['employeeName' => 'required', 'dob' => 'required','employeeCode' => 'required|unique:employees,employeeCode,null,employeeId,deleted,0', 'address' => 'required', 'state' => 'required', 'district' => 'required', 'city' => 'required', 'pinCode' => 'required', 'primaryNumber' => 'required', 'emailAddress' => 'required |unique:emailaddresses,email,null,id,deleted,0', 'designation' => 'required', 'dateOfJoining' => 'required', ]);	
 		 $employee_code='';
 		 $entityId = DB::table('entitys')->max('entityId')+1;
-		$employeeCode = DB::table('employees')->max('employeeId')+1;
-		if($employeeCode<10)
-		{	
-		$employee_code='POFE00'.$employeeCode;
-		}
-		else if($employeeCode<100)
-		{
-		$employee_code ='POFE0'.$employeeCode;
-		}	
-		else
-		{
-		$employee_code ='POFE'.$employeeCode;
-		}	
 
 				
 	 User::create([
@@ -108,9 +95,8 @@ class employeeController extends Controller
 			'entityId' => $entityId,
 			]);	 
 	 employee::create([
-        'employeeId' => $employeeCode,
 		'entityId' => $entityId,
-		'employeeCode' =>$employee_code,
+		'employeeCode' =>$request['employeeCode'],
         'dateOfJoining' => $request['dateOfJoining'],
 		'designation' => $request['designation'],
 		'dob' => $request['dob'],
@@ -151,7 +137,8 @@ class employeeController extends Controller
 	 //$api_url = "http://www.logonutility.in/app/smsapi/index.php?key=".$api_key."&campaign=1&routeid=".$routeid."&type=text&contacts=".$contacts."&senderid=".$from."&msg=".$sms_text;
 //Submit to server
 	//$response = file_get_contents( $api_url);
-       		Mail::send('emails.welcome', ['name'=>$request['employeeName'],], function ($message)use ($request) {		$message->to($request['emailAddress']);	});
+		$subject=trans('messages.SCHOOL_MAIL_SUBJECT_ACTIVATION');
+       	Mail::send('emails.welcome', ['name'=>$request['employeeName'],], function ($message)use ($request) {		$message->to($request['emailAddress'])->subject($subject);	});
         Session::flash('flash_message', 'employee added!');
         return redirect('employee');
     }

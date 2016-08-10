@@ -62,14 +62,16 @@ class schoolsController extends Controller
 						->join('districts','districts.id','=','addresses.districtId')
 						->where('schools.deleted',0)
 						->where('schools.sessionYear',session()->get('activeSession'))
-						->where('addresses.stateId',session()->get('currentStateId'))
-						->where('schools.formNo', 'like', '%'.$q.'%')
-						->orwhere('schools.schoolName', 'like', '%'.$q.'%')
-						->orwhere('schools.schoolcode', 'like', '%'.$q.'%')
-						->orwhere('schools.uniqueSchoolCode', 'like', '%'.$q.'%')
-						->orwhere('citys.cityName', 'like', '%'.$q.'%')
-						->orwhere('schools.principalName', 'like', '%'.$q.'%')
+						->where('addresses.stateId','=',session()->get('currentStateId'))
 						->groupBy('schools.entityId')
+						->where(function ($query) use ($q) {
+							return $query->orWhere('schools.formNo', 'like', '%'.$q.'%')
+							->orwhere('schools.schoolName', 'like', '%'.$q.'%')
+							->orwhere('schools.schoolcode', 'like', '%'.$q.'%')
+							->orwhere('schools.uniqueSchoolCode', 'like', '%'.$q.'%')
+							->orwhere('citys.cityName', 'like', '%'.$q.'%')
+							->orwhere('schools.principalName', 'like', '%'.$q.'%');
+						})
 						->orderBy('schools.entityId','desc')
 						->paginate(trans('messages.PAGINATE'));
 						$pagination = $schools->appends ( array ('q' => Input::get ( 'q' )));						
@@ -101,17 +103,18 @@ class schoolsController extends Controller
 							// school
 							$email = DB::table('schools')->where('entityId',$activationSchool)->value('principalEmail');
 							$subject=trans('messages.SCHOOL_MAIL_SUBJECT_ACTIVATION');
-							Mail::send('emails.schoolActivation', ['school'=>'school',], function ($message)use ($email) {$message->to($email);	});
+							Mail::send('emails.schoolActivation', ['school'=>'school',], function ($message)use ($email,$subject) {$message->to($email)->subject($subject);	});
 							$api_key = trans('messages.API_KEY');
 							$phones = DB::table('schools')->where('entityId',$activationSchool)->value('principalMobile');
 							$contacts = $phones;
 							$from = trans('messages.FROM');
 							$routeid = trans('messages.ROUTEID');
 							
-							$sms_text = urlencode("Hi , fee for first leavel POF exam has been received. you will receive details by mail . thanks for your interest & support.");
-							$api_url = "http://www.logonutility.in/app/smsapi/index.php?key=".$api_key."&campaign=1&routeid=".$routeid."&type=text&contacts=".$contacts."&senderid=".$from."&msg=".$sms_text;
-							$response = file_get_contents( $api_url);
-						 }
+							$sms_text = urlencode("Hi , fee for first level POF exam has been received. you will receive details by mail . thanks for your interest & support.");
+							 $api_url= "http://smsw.co.in/API/WebSMS/Http/v1.0a/index.php?username=POFIND&password=pof123&sender=POFCOM&to=".$contacts."&message=".$sms_text."&reqid=#&format={json|text}&route_id=28callback=#&unique=1";
+							 $response=@json_encode(file_get_contents($api_url));
+
+	 }
 				}
 						
 			}			
@@ -268,8 +271,8 @@ class schoolsController extends Controller
 		$from = trans('messages.FROM');
 		$sms_text = urlencode(trans('messages.COORDINATOR'));
 		$routeid = trans('messages.ROUTEID');
-		$api_url = "http://www.logonutility.in/app/smsapi/index.php?key=".$api_key."&campaign=1&routeid=".$routeid."&type=text&contacts=".$contacts."&senderid=".$from."&msg=".$sms_text;
-		$response = file_get_contents( $api_url);
+		$api_url= "http://smsw.co.in/API/WebSMS/Http/v1.0a/index.php?username=POFIND&password=pof123&sender=POFCOM&to=".$contacts."&message=".$sms_text."&reqid=#&format={json|text}&route_id=28callback=#&unique=1";
+		$response=@json_encode(file_get_contents($api_url));
 		$emails="";
 		
 		if($request['secondCoordinatorEmail']=="")
@@ -289,18 +292,18 @@ class schoolsController extends Controller
 		$emails = [$request['principalEmail'],$request['firstCoordinatorEmail'],$request['secondCoordinatorEmail'],trans('messages.OFFICEEMAILID')];
 		}	
 		$subject=trans('messages.SCHOOL_MAIL_SUBJECT_CREATE_SCHOOL');
-		Mail::send('emails.schoolCreation', ['schoolName'=>$request['schoolName'],], function ($message)use ($emails,$subject) {$message->to($emails);	});
+		Mail::send('emails.schoolCreation', ['schoolName'=>$request['schoolName'],], function ($message)use ($emails,$subject) {$message->to($emails)->subject($subject);	});
 		
 		// employee
 		$email = DB::table('emailaddresses')->where('entityId',$request['employeeCode'])->value('email');
 		$subject=trans('messages.SCHOOL_MAIL_SUBJECT_CREATE_EMPLOYEE');
-		Mail::send('emails.schoolCreationEmp', ['schoolName'=>$request['schoolName'],], function ($message)use ($email) {$message->to($email);	});
+		Mail::send('emails.schoolCreationEmp', ['schoolName'=>$request['schoolName'],], function ($message)use ($email,$subject) {$message->to($email)->subject($subject);	});
 		
 		$phones = DB::table('phones')->where('entityId',$request['employeeCode'])->value('primaryNumber');
 		$contacts = $phones;
 		$sms_text = urlencode("Your lead school ".$request['schoolName']." has been added to our system . to will be updated with next task by message");
-		$api_url = "http://www.logonutility.in/app/smsapi/index.php?key=".$api_key."&campaign=1&routeid=".$routeid."&type=text&contacts=".$contacts."&senderid=".$from."&msg=".$sms_text;
-		$response = file_get_contents( $api_url);
+		$api_url= "http://smsw.co.in/API/WebSMS/Http/v1.0a/index.php?username=POFIND&password=pof123&sender=POFCOM&to=".$contacts."&message=".$sms_text."&reqid=#&format={json|text}&route_id=28callback=#&unique=1";
+		$response=@json_encode(file_get_contents($api_url));
 
 		
         Session::flash('flash_message', 'school added!');

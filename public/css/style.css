@@ -864,3 +864,13 @@ input[type=checkbox]:checked + label:before { letter-spacing: 5px; } /* allow sp
     margin: 0px;
     padding: 0px;
 }
+
+#searchFilter {
+    font-size: 14px;
+}
+
+#searchFilter select {
+	width: 100px;
+	background-color: #fff;
+}
+
