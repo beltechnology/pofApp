@@ -66,7 +66,9 @@ a {
   font-weight: 400;;
   font-size:20px;
   text-align:center;
-  color:#018fd7;;
+  color:#018fd7;
+  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif !important;
+  
   }
 
 #header {
@@ -874,3 +876,8 @@ input[type=checkbox]:checked + label:before { letter-spacing: 5px; } /* allow sp
 	background-color: #fff;
 }
 
+.fa {
+
+    font: normal normal normal 14px/1 FontAwesome;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif ,FontAwesome;
+}

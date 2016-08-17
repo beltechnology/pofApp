@@ -49,15 +49,22 @@ class employeeController extends Controller
     }
 	
 	public function filter()
-    {		$q = Input::get ( 'q' );
+    {		$q = Input::get ('q');
 			$employee= DB::table('employees')
                         ->join('entitys','entitys.entityId','=','employees.entityId')
                         ->join('addresses','addresses.entityId','=','employees.entityId')
 						->join('phones','phones.entityId','=','employees.entityId')
 						->join('emailaddresses','emailaddresses.entityId','=','employees.entityId')
+						->leftjoin('schools','schools.employeeCode','=','employees.entityId')
+						->leftjoin('locations','locations.locationId','=','employees.locationId')
+						->leftjoin('teams','teams.teamId','=','employees.teamId')
 						->where('employees.deleted',0)
 						->where('addresses.stateId',session()->get('currentStateId'))
-						->where('name', 'like', '%'.$q.'%')
+						->where(function ($query) use ($q) {
+							return $query->orWhere('schools.schoolName', 'like', '%'.$q.'%')
+							->orwhere('entitys.name', 'like', '%'.$q.'%')
+							->orwhere('locations.location', 'like', '%'.$q.'%');
+						})
 						->groupBy('employees.entityId')
 						->paginate(trans('messages.PAGINATE'));
 						$pagination = $employee->appends ( array ('q' => Input::get ( 'q' )));						
@@ -140,7 +147,7 @@ class employeeController extends Controller
 //Submit to server
 	//$response = file_get_contents( $api_url);
 		$subject=trans('messages.SCHOOL_MAIL_SUBJECT_ACTIVATION');
-       	Mail::send('emails.welcome', ['name'=>$request['employeeName'],], function ($message)use ($request) {		$message->to($request['emailAddress'])->subject($subject);	});
+       	Mail::send('emails.welcome', ['name'=>$request['employeeName'],], function ($message)use ($request,$subject) {		$message->to($request['emailAddress'])->subject($subject);	});
         Session::flash('flash_message', 'employee added!');
         return redirect('employee');
     }

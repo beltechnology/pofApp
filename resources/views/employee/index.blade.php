@@ -13,7 +13,7 @@
 		<form action="search" method="get" role="search">
 			<div class="input-group">
 				<input type="text" class="form-control" name="q"
-					placeholder="Search users"> <span class="input-group-btn">
+					placeholder="Search by Employee Name, School Name and Employee Location" required> <span class="input-group-btn">
 					<button type="submit" class="btn btn-default">
 						<span class="glyphicon glyphicon-search"></span>
 					</button>
