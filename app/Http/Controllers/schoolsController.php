@@ -162,15 +162,19 @@ class schoolsController extends Controller
 		
 		if($schoolCode<10)
 		{	
-		$school_code=$stateSymbol.'POF00'.$schoolCode;
+		$school_code=$stateSymbol.'000'.$schoolCode;
 		}
 		else if($schoolCode<100)
 		{
-		$school_code =$stateSymbol.'POF0'.$schoolCode;
+		$school_code =$stateSymbol.'00'.$schoolCode;
+		}	
+		else if($schoolCode<1000)
+		{
+		$school_code =$stateSymbol.'0'.$schoolCode;
 		}	
 		else
 		{
-		$school_code =$stateSymbol.'POF'.$schoolCode;
+		$school_code =$stateSymbol.$schoolCode;
 		}	
 	
         User::create([

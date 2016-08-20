@@ -25,7 +25,7 @@
                 {{-- */$x++;/* --}}
                 <tr>
 					 <td>{{ $x }}</td>
-                    <td>{{ $item->name }}</td>
+                    <td><a href="{{ url('/employee/'.$item->entityId.'/edit') }}">{{ $item->name }}</td>
                     <td>{{ $item->location }}</td>
                     <td><a href="{{ url('/teammember/' . $item->entityId. '/edit') }}" class="btn  btn-xs" title="Edit Team"><span class="glyphicon glyphicon-pencil" aria-hidden="true"/></a>
                         {!! Form::open([

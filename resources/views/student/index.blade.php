@@ -20,8 +20,8 @@
   </div>
 </nav>
  <div class="h1-two col-md-12">
-	 <h1 class="text-left col-md-2"><a href="{{ url('/fees/'.session()->get('entityId').'/edit') }}" class="fa fa-angle-left  fa-2x"> {{ trans('messages.TABS_FEES') }}</a> </h1>
-      <h1 class="text-center col-md-8"> 
+	 <h1 class="text-left col-md-3"><a href="{{ url('/fees/'.session()->get('entityId').'/edit') }}" class="fa fa-angle-left  fa-2x"> {{ trans('messages.TABS_FEES') }}</a> </h1>
+	  <h1 class="text-center col-md-6"> 
 	  <form id="searchFilter" name="searchFilter" action="searchFilter" method="get">
 	  <select name="filterClass" id="filterName">
 	  <option value="0"> All Class</option>
@@ -60,6 +60,20 @@
 	    <div class="add-emp add-school col-md-2">
             <a href="{{ url('/student/create') }}" title="Add New student"><p>{{ trans('messages.ADD') }} <span class="glyphicon glyphicon-plus" aria-hidden="true"/></p></a>
             </div>
+			<div class=" col-md-3 category-filter">
+			</div>
+			<div class=" col-md-6 category-filter">
+		<form action="search-student" method="get" role="search">
+			<div class="input-group">
+				<input type="text" class="form-control" name="q"
+					placeholder="Search by Student Name,Class,Student Roll No." required> <span class="input-group-btn">
+					<button type="submit" class="btn btn-default">
+						<span class="glyphicon glyphicon-search"></span>
+					</button>
+				</span>
+			</div>
+		</form>
+            </div>
   </div>
 	 
 	</div>
@@ -81,7 +95,7 @@
 					<td>{{ $item->dob }}</td>
 					<td>{{ $item->name }}</td>
 					<td>{{ $item->rollNo }}</td>
-					<td>@if($item->handicapped === 0)  NO @else  Yes @endif</td>
+					<td>@if($item->handicapped === trans('messages.ZERO'))  NO @else  Yes @endif</td>
 					<td><input type="checkbox"></td>
                     <td>
                         <a href="{{ url('/student/' . $item->entityId . '/edit') }}" class="btn btn-primary btn-xs" title="Edit student"><span class="glyphicon glyphicon-pencil" aria-hidden="true"/></a>

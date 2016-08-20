@@ -881,3 +881,19 @@ input[type=checkbox]:checked + label:before { letter-spacing: 5px; } /* allow sp
     font: normal normal normal 14px/1 FontAwesome;
     font-family: "Helvetica Neue",Helvetica,Arial,sans-serif ,FontAwesome;
 }
+.col-sm-8.input-group.dob input {
+    width: 95%;
+}
+.col-sm-8.input-group.dob .input-group-addon {
+    padding: 6px 6px 6px 22px;
+    font-size: 12px;
+    font-weight: normal;
+    line-height: 1;
+    color: #555;
+    text-align: center;
+    background-color: #eee;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    position: relative;
+    right: 14px;
+}

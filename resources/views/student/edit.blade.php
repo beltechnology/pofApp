@@ -53,7 +53,7 @@
             </div>
             <div class="form-group {{ $errors->has('dob') ? 'has-error' : ''}}">
                 {!! Form::label('dob', trans('messages.DOB'), ['class' => 'col-sm-4 control-label']) !!}
-               <div class="col-sm-8   input-group date">
+               <div class="col-sm-8   input-group dob">
                     {!! Form::text('dob', null, ['class' => 'form-control','required'=>'required','maxlength'=>'10']) !!}
 					<span class="input-group-addon">
                         <span class="glyphicon glyphicon-calendar"></span>

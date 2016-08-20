@@ -33,7 +33,26 @@ class studentController extends Controller
 						->paginate(trans('messages.PAGINATE'));
         return view('student.index', compact('student'))->with('studentClass',$studentClass);
     }
+public function filter()
+    {		$q = Input::get ('q');
+	 $studentClass = DB::table('class_names')->where('deleted',0)->get();
+	   $student= DB::table('students')
+                        ->join('class_names','class_names.id','=','students.classId')
+						->where('students.deleted',0)
+						->where('class_names.deleted',0)
+						->where('students.sessionYear',session()->get('activeSession'))
+						->where('students.schoolEntityId',session()->get('entityId'))
+						->where(function ($query) use ($q) {
+							return $query->orWhere('class_names.name', 'like', '%'.$q.'%')
+							->orwhere('students.studentName', 'like', '%'.$q.'%')
+							->orwhere('students.rollNo', 'like', '%'.$q.'%');
+						})
+						->orderBy('students.rollNo','asc')
+						->paginate(trans('messages.PAGINATE'));
+						$pagination = $student->appends ( array ('q' => Input::get ( 'q' )));	
 
+        return view('student.index', compact('student'))->with('studentClass',$studentClass);
+    }
     public function searchFilter()
     {
 		if(Input::get('filterClass') == 0 && Input::get('subject') == "ALL" )
@@ -136,15 +155,9 @@ class studentController extends Controller
 		$stateSymbol=explode(')',$stateSymbol);
 		$stateSymbol=$stateSymbol[0];
 		$classId = DB::table('class_names')->where('id',$request['classId'])->where('class_names.deleted',0)->value('name');
-		$schoolId = DB::table('schools')->where('entityId',session()->get('entityId'))->where('schools.deleted',0)->value('id');
+		$schoolId = DB::table('schools')->where('entityId',session()->get('entityId'))->where('schools.deleted',0)->value('uniqueSchoolCode');
 		$maxRollNo = DB::table('students')->where('schoolEntityId',session()->get('entityId'))->where('classId',$request['classId'])->count()+1;
-		$school_id="";$roll_id="";$class_id="";
-		if($schoolId<10)
-		{	$school_id='00'.$schoolId;}
-		else if($schoolId<100)
-		{ $school_id ='0'.$schoolId; }	
-		else
-		{ $school_id =$schoolId; }
+
 	
 		if($maxRollNo<10)
 		{	$roll_id='00'.$maxRollNo; }
@@ -158,7 +171,7 @@ class studentController extends Controller
 		else
 		{ $class_id =$classId; }	
 		
-		$rollNo=$stateSymbol.'POF'.$school_id.'-'.$class_id.'-'.$roll_id;
+		$rollNo= $schoolId.'-'.$class_id.'-'.$roll_id;
 		entity::create([
 		'entityId' => $entityId,
 		'name' => $request['studentName'],

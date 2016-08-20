@@ -47,6 +47,33 @@ class TeamController extends Controller
         return view('team.index',['team' => $team,'employees' => $employees]);
     }
 
+	public function filter()
+    {		$q = Input::get ('q');
+			$team = DB::table('teams')
+                        ->leftjoin('locations','locations.locationId','=','teams.teamLocation')
+						->where('teams.deleted',0)
+						->Where(function ($query) {
+						$query->orwhere('locations.state_id', '=', session()->get('currentStateId'))
+						->orwhere('teams.teamLocation', '=', 0);
+						})
+						->where(function ($query) use ($q) {
+							return $query->orWhere('teams.teamName', 'like', '%'.$q.'%')
+							->orwhere('teams.teamCode', 'like', '%'.$q.'%')
+							->orwhere('locations.location', 'like', '%'.$q.'%');
+						})
+						->orderby('teams.teamId')
+						->paginate(trans('messages.PAGINATE'));
+						$pagination = $team->appends ( array ('q' => Input::get ( 'q' )));	
+
+							$employees= DB::table('teams')
+						 ->join('employees','employees.teamId','=','teams.teamId')
+						 ->join('entitys','entitys.entityId','=','employees.entityId')
+						->where('employees.deleted',0)
+						->get();
+						        return view('team.index',['team' => $team,'employees' => $employees]);
+
+    }
+
     /**
      * Show the form for creating a new resource.
      *

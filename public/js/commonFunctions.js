@@ -19,6 +19,12 @@
                     format: "DD/MM/YYYY",
 					pickTime: false
                 });
+		$('.dob').datetimepicker({
+                    format: "DD/MM/YYYY",
+					 maxDate: new Date(),
+					pickTime: false
+                });
+		
 
 	});
 	
