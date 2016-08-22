@@ -14,7 +14,7 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
          Commands\Inspire::class,
-		 Commands\SendBirthdayEmail::class,
+		 Commands\DemoCron::class,
     ];
 
     /**
@@ -25,7 +25,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
-		 $schedule->command('email:birthday')->everyMinute();
+    //    $schedule->command('inspire')->hourly();
+        $schedule->command('demo:cron')->everyMinute();
     }
 }

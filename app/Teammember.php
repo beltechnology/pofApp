@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Teammember extends Model
+class Team extends Model
 {
     /**
      * The database table used by the model.

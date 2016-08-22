@@ -277,24 +277,21 @@ class schoolsController extends Controller
 		$routeid = trans('messages.ROUTEID');
 		$api_url= "http://smsw.co.in/API/WebSMS/Http/v1.0a/index.php?username=POFIND&password=pof123&sender=POFCOM&to=".$contacts."&message=".$sms_text."&reqid=#&format={json|text}&route_id=28callback=#&unique=1";
 		$response=@json_encode(file_get_contents($api_url));
-		$emails="";
+		$emails= array(trans('messages.OFFICEEMAILID'));
 		
-		if($request['secondCoordinatorEmail']=="")
+		if($request['secondCoordinatorEmail']!="")
 		{
-		$emails = [$request['principalEmail'],$request['firstCoordinatorEmail'],trans('messages.OFFICEEMAILID')];
+			array_push($emails,$request['secondCoordinatorEmail']);
 		}
-		elseif($request['firstCoordinatorEmail']=="")
+		if($request['firstCoordinatorEmail']!="")
 		{
-		$emails = [$request['principalEmail'],$request['secondCoordinatorEmail'],trans('messages.OFFICEEMAILID')];	
+			array_push($emails,$request['firstCoordinatorEmail']);
 		}
-		elseif($request['firstCoordinatorEmail']=="" && $request['secondCoordinatorEmail']=="")
+		if($request['principalEmail']!="")
 		{
-		$emails = [$request['principalEmail'],trans('messages.OFFICEEMAILID')];	
+		array_push($emails,$request['principalEmail']);
 		}
-		else
-		{
-		$emails = [$request['principalEmail'],$request['firstCoordinatorEmail'],$request['secondCoordinatorEmail'],trans('messages.OFFICEEMAILID')];
-		}	
+
 		$subject=trans('messages.SCHOOL_MAIL_SUBJECT_CREATE_SCHOOL');
 		Mail::send('emails.schoolCreation', ['schoolName'=>$request['schoolName'],], function ($message)use ($emails,$subject) {$message->to($emails)->subject($subject);	});
 		

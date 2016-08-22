@@ -3,23 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>POF India</title>
-<link rel="stylesheet" type="text/css" href="../../css/bootstrap.min.css"/>
-<link rel="stylesheet" type="text/css" href="../../css/bootstrap.css"/>
-<link rel="stylesheet" type="text/css" href="../../css/bootstrap-datetimepicker.min.css"/>
-<link rel="stylesheet" type="text/css" href="../../css/style.css"/>
-<link rel="stylesheet" type="text/css" href="../../../public/css/media.css" />
-<link rel="stylesheet" type="text/css" href="../../font-awesome/css/font-awesome.min.css">
-<link rel="stylesheet" type="text/css" href="../../font-awesome/css/font-awesome.css">
 
-<!-- jQuery library -->
-<script src="../../js/jquery.min.js"></script>
-<!-- Latest compiled JavaScript -->
-<script src="../../js/bootstrap.min.js"></script>
- <script type="text/javascript" src="../../js/bootstrap.min.js"></script>
- <script type="text/javascript" src="../../js/bootstrap.js"></script>
-<script type="text/javascript" src="../../js/moment.js"></script>
-<script type="text/javascript" src="../../js/bootstrap-datetimepicker.min.js"></script>
-   <script type="text/javascript" src="../../js/commonFunctions.js"></script>
 <style>
 .olympiad-foundation p{text-align:center;}
 
@@ -61,7 +45,7 @@ else{
 }
   ?>
 
-<p align="center"><strong>PLANET OLYMPIAD FOUNDATION <br>1st POF NATIONAL {{$subType}} OLYMPIAD <br>( ATTENDANCE - SHEET )</strong></p>
+<p align="center"><strong>PLANET OLYMPIAD FOUNDATION <br>PLANET {{$subType}} OLYMPIAD <br>( ATTENDANCE - SHEET )</strong></p>
 
 
 </div>
@@ -93,7 +77,7 @@ else{
 
 </div>
 
-<div style=" height:594px;">
+<div style=" height:590px;">
 <table border="" class="table table-striped pdf-table" style="width:100%;">
   <thead  style="border:1px solid #000;">
     <tr class="pdf-tr">
@@ -140,7 +124,7 @@ else{
 @foreach($schools as $school)
 
 
-<p align="center"><strong>PLANET OLYMPIAD FOUNDATION <br>1st POF NATIONAL {{$subType}}  OLYMPIAD <br>( ATTENDANCE - SHEET )</strong></p>
+<p align="center"><strong>PLANET OLYMPIAD FOUNDATION <br>PLANET {{$subType}}  OLYMPIAD <br>( ATTENDANCE - SHEET )</strong></p>
 
 
 </div>
@@ -214,7 +198,7 @@ else{
 @foreach($schools as $school)
 
 
-<p align="center"><strong>PLANET OLYMPIAD FOUNDATION <br>1st POF NATIONAL {{$subType}}  OLYMPIAD</strong></p>
+<p align="center"><strong>PLANET OLYMPIAD FOUNDATION <br>PLANET {{$subType}}  OLYMPIAD</strong></p>
 
 
 </div>
@@ -248,7 +232,7 @@ else{
 </div>
 </div>
 
-<div style=" height:580px;">
+<div style=" height:570px;">
 <table border="" class="table table-striped pdf-table" style="width:100%;">
   <thead style="border:1px solid #000;">
     <tr class="pdf-tr" style="border:1px solid #000;">

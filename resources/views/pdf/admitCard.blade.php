@@ -3,23 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>POF India</title>
-<link rel="stylesheet" type="text/css" href="../../css/bootstrap.min.css"/>
-<link rel="stylesheet" type="text/css" href="../../css/bootstrap.css"/>
-<link rel="stylesheet" type="text/css" href="../../css/bootstrap-datetimepicker.min.css"/>
-<link rel="stylesheet" type="text/css" href="../../css/style.css"/>
-<link rel="stylesheet" type="text/css" href="../../../public/css/media.css" />
-<link rel="stylesheet" type="text/css" href="../../font-awesome/css/font-awesome.min.css">
-<link rel="stylesheet" type="text/css" href="../../font-awesome/css/font-awesome.css">
 
-<!-- jQuery library -->
-<script src="../../js/jquery.min.js"></script>
-<!-- Latest compiled JavaScript -->
-<script src="../../js/bootstrap.min.js"></script>
- <script type="text/javascript" src="../../js/bootstrap.min.js"></script>
- <script type="text/javascript" src="../../js/bootstrap.js"></script>
-<script type="text/javascript" src="../../js/moment.js"></script>
-<script type="text/javascript" src="../../js/bootstrap-datetimepicker.min.js"></script>
-   <script type="text/javascript" src="../../js/commonFunctions.js"></script>
 <style>
 .olympiad-foundation p{text-align:center;}
 
@@ -59,17 +43,41 @@ $j = 0;
 			<table>
 				<tr>
 					<td>Name :</td>
-					<td colspan="3">{{$studentDetail->studentName}}</td>
+					<td>{{$studentDetail->studentName}}</td>
+					<td>Exam date :</td>
+					<td><?php
+					$examType = "";
+					$examDate = "";
+					
+					if(isset($_GET['subject']))
+					{
+						if($_GET['subject'] == 'pmo')
+						{
+							$examType = "PMO";
+							$examDate = $schools[0]->PMOExamDate;	
+						}
+						elseif($_GET['subject'] == 'pso')
+						{
+							$examType = "PSO";
+							$examDate = $schools[0]->PSOExamDate;
+						}
+					}
+						
+						echo $examDate;
+					?>
+					</td>
 				</tr>
 				<tr>
 					<td>Class : </td>
-					<td colspan="3">
+					<td>
 					@foreach($classess as $studentClass)
 					@if($studentClass->id === $studentDetail->classId)
 					{{$studentClass->name}}
 					@endif	
 					@endforeach
 					</td>
+					<td>Exam type :</td>
+					<td>{{$examType}}</td>
 				</tr>
 				<tr>
 					<td>Parent's Name :</td>

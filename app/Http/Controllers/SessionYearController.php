@@ -11,6 +11,7 @@ use Carbon\Carbon;
 use Session;
 use Illuminate\Support\Facades\Input;
 use DB;
+
 class SessionYearController extends Controller
 {
     /**
@@ -23,6 +24,14 @@ class SessionYearController extends Controller
         $sessionyear = \DB::table('session_years')->where('deleted',0)->paginate(trans('messages.PAGINATE'));
 
         return view('session-year.index', compact('sessionyear'));
+    }
+    public function changeYear()
+    {
+        $sessionyear = DB::table('session_years')->where('deleted',0)->get();
+		if(isset($_POST['sessionYear'])){
+		Session()->put('activeSession',$_POST['sessionYear']);
+		}
+        return view('session-year.changeYear', compact('sessionyear'));
     }
 
     /**

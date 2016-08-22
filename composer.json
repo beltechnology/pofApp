@@ -25,7 +25,10 @@
         "psr-4": {
             "App\\": "app/"
         }
-    },
+
+		"app/library/myFunctions.php"
+        ]
+	},
     "autoload-dev": {
         "classmap": [
             "tests/TestCase.php"
