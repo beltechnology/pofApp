@@ -17,8 +17,10 @@ class paymentsController extends Controller
      */
     public function index()
     {
-        $payments = payment::paginate(15);
+		$validUser = $this->CheckUser();
+		if($validUser) return	view('errors.404');
 
+        $payments = payment::paginate(15);
         return view('payments.index', compact('payments'));
     }
 
@@ -29,6 +31,9 @@ class paymentsController extends Controller
      */
     public function create()
     {
+		$validUser = $this->CheckUser();
+		if($validUser) return	view('errors.404');
+
         return view('payments.create');
     }
 
@@ -39,6 +44,9 @@ class paymentsController extends Controller
      */
     public function store(Request $request)
     {
+		$validUser = $this->CheckUser();
+		if($validUser) return	view('errors.404');
+
         $this->validate($request, ['teamId' => 'required', ]);
 
         payment::create($request->all());
@@ -57,8 +65,10 @@ class paymentsController extends Controller
      */
     public function show($id)
     {
-        $payment = payment::findOrFail($id);
+		$validUser = $this->CheckUser();
+		if($validUser) return	view('errors.404');
 
+        $payment = payment::findOrFail($id);
         return view('payments.show', compact('payment'));
     }
 
@@ -71,6 +81,9 @@ class paymentsController extends Controller
      */
     public function edit($id)
     {
+		$validUser = $this->CheckUser();
+		if($validUser) return	view('errors.404');
+
         $payment = payment::findOrFail($id);
 		$payment_modes = DB::table('payment_modes')->where('payment_modes.deleted',0)->lists('paymentMode','id');
         return view('payments.edit', compact('payment'))->with('payment_modes',$payment_modes);
@@ -85,6 +98,9 @@ class paymentsController extends Controller
      */
     public function update($id, Request $request)
     {
+		$validUser = $this->CheckUser();
+		if($validUser) return	view('errors.404');
+
 		$updateCounters=Input::get ('updateCounter')+1;
 		$updateCounterdata = DB::table('payments')->where('entityId',$id)->value('updateCounter');
 		if($updateCounterdata < $updateCounters)
@@ -115,10 +131,28 @@ class paymentsController extends Controller
      */
     public function destroy($id)
     {
+		$validUser = $this->CheckUser();
+		if($validUser) return	view('errors.404');
+
         payment::destroy($id);
 
         Session::flash('flash_message', 'payment deleted!');
 
         return redirect('payments');
     }
+	
+	public function CheckUser()
+	{
+		$userRole = new \App\library\myFunctions;
+		$is_ok = ($userRole->is_ok(12));
+		if($is_ok)
+		{
+			return true;   
+		}
+		else{
+			return false; 
+		}
+
+	}
+	
 }

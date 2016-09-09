@@ -20,8 +20,10 @@ class ClassNameController extends Controller
      */
     public function index()
     {
-        $classname = \DB::table('class_names')->where('deleted',0)->paginate(trans('messages.PAGINATE'));
+		$validUser = $this->CheckUser();
+		if($validUser) return	view('errors.404');
 
+        $classname = \DB::table('class_names')->where('deleted',0)->paginate(trans('messages.PAGINATE'));
         return view('class-name.index', compact('classname'));
     }
 
@@ -32,6 +34,9 @@ class ClassNameController extends Controller
      */
     public function create()
     {
+		$validUser = $this->CheckUser();
+		if($validUser) return	view('errors.404');
+
         return view('class-name.create');
     }
 
@@ -42,11 +47,12 @@ class ClassNameController extends Controller
      */
     public function store(Request $request)
     {
+		$validUser = $this->CheckUser();
+		if($validUser) return	view('errors.404');
+		
         $this->validate($request, ['name' => 'required|unique:class_names',]);
         ClassName::create($request->all());
-
         Session::flash('flash_message', 'ClassName added!');
-
         return redirect('class-name');
     }
 
@@ -59,8 +65,10 @@ class ClassNameController extends Controller
      */
     public function show($id)
     {
-        $classname = ClassName::findOrFail($id);
+		$validUser = $this->CheckUser();
+		if($validUser) return	view('errors.404');
 
+        $classname = ClassName::findOrFail($id);
         return view('class-name.show', compact('classname'));
     }
 
@@ -73,6 +81,9 @@ class ClassNameController extends Controller
      */
     public function edit($id)
     {
+		$validUser = $this->CheckUser();
+		if($validUser) return	view('errors.404');
+
         $classname = ClassName::findOrFail($id);
 
         return view('class-name.edit', compact('classname'));
@@ -87,7 +98,9 @@ class ClassNameController extends Controller
      */
     public function update($id, Request $request)
     {
-        
+		$validUser = $this->CheckUser();
+		if($validUser) return	view('errors.404');
+
 		$updateCounters=Input::get ('updateCounter')+1;
 		$updateCounterdata = DB::table('class_names')->where('id',$id)->value('updateCounter');
 		if($updateCounterdata < $updateCounters)
@@ -116,10 +129,28 @@ class ClassNameController extends Controller
      */
     public function destroy($id)
     {
+		$validUser = $this->CheckUser();
+		if($validUser) return	view('errors.404');
+
         \DB::table('class_names')->where('id',$id)->update(['deleted'=>1]);
 
         Session::flash('flash_message', 'ClassName deleted!');
 
         return redirect('class-name');
     }
+	
+	public function CheckUser()
+	{
+		$userRole = new \App\library\myFunctions;
+		$is_ok = ($userRole->is_ok(12));
+		if($is_ok)
+		{
+			return true;   
+		}
+		else{
+			return false; 
+		}
+
+	}
+	
 }

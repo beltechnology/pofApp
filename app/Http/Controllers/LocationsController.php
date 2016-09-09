@@ -19,8 +19,7 @@ class LocationsController extends Controller
      * @return void
      */
     public function index()
-    {
-        $locations = \DB::table('locations')
+    {		$validUser = $this->CheckUser();		if($validUser) return	view('errors.404');        $locations = \DB::table('locations')
 				->join('districts','districts.id','=','locations.district_id')
 				->join('citys','citys.id','=','locations.city_id')
 			->where('locations.deleted',0)
@@ -35,8 +34,7 @@ class LocationsController extends Controller
      * @return void
      */
     public function create()
-    {
-		$districts = \DB::table('districts')->where('districts.deleted',0)->where('districts.state_id',session()->get('currentStateId'))->lists('name', 'id');
+    {		$validUser = $this->CheckUser();		if($validUser) return	view('errors.404');		$districts = \DB::table('districts')->where('districts.deleted',0)->where('districts.state_id',session()->get('currentStateId'))->lists('name', 'id');
     return view('locations.create', compact('districts'));
 		
     }
@@ -47,8 +45,7 @@ class LocationsController extends Controller
      * @return void
      */
     public function store(Request $request)
-    {
-        $this->validate($request, [ 'district' => 'required', 'city' => 'required','location' => 'required|unique:locations', ]);
+    {		$validUser = $this->CheckUser();		if($validUser) return	view('errors.404');        $this->validate($request, [ 'district' => 'required', 'city' => 'required','location' => 'required|unique:locations', ]);
 
 		Location::create([
 			'state_id' => $request['state'],
@@ -70,10 +67,7 @@ class LocationsController extends Controller
      * @return void
      */
     public function show($id)
-    {
-        $location = Location::findOrFail($id);
-
-        return view('locations.show', compact('location'));
+    {		$validUser = $this->CheckUser();		if($validUser) return	view('errors.404');        $location = Location::findOrFail($id);        return view('locations.show', compact('location'));
     }
 
     /**
@@ -83,9 +77,7 @@ class LocationsController extends Controller
      *
      * @return void
      */
-    public function edit($id)
-    {
-        $location = Location::findOrFail($id);	
+    public function edit($id)    {		$validUser = $this->CheckUser();		if($validUser) return	view('errors.404');        $location = Location::findOrFail($id);	
 		$districts = \DB::table('districts')->where('districts.deleted',0)->lists('name', 'id');
 		$citys = \DB::table('citys')->where('citys.deleted',0)->lists('cityName', 'id');
 		return view('locations.edit', ['location' => $location,'districts' => $districts,'citys' => $citys]);
@@ -98,11 +90,7 @@ class LocationsController extends Controller
      *
      * @return void
      */
-    public function update($id, Request $request)
-    {
-        $this->validate($request, ['location' => 'required', ]);
-		
-		$updateCounters=Input::get ('updateCounter')+1;
+    public function update($id, Request $request)    {		$validUser = $this->CheckUser();		if($validUser) return	view('errors.404');        $this->validate($request, ['location' => 'required', ]);		$updateCounters=Input::get ('updateCounter')+1;
 		$updateCounterdata = DB::table('locations')->where('locationId',$id)->value('updateCounter');
 		if($updateCounterdata < $updateCounters)
 		{
@@ -128,11 +116,10 @@ class LocationsController extends Controller
      * @return void
      */
     public function destroy($id)
-    {
-        \DB:: table('locations')->where('locationId',$id)->update(['deleted'=>1]);
+    {		$validUser = $this->CheckUser();		if($validUser) return	view('errors.404');        \DB:: table('locations')->where('locationId',$id)->update(['deleted'=>1]);
 
         Session::flash('flash_message', 'Location deleted!');
 
         return redirect('locations');
-    }
+    }		public function CheckUser()	{		$userRole = new \App\library\myFunctions;		$is_ok = ($userRole->is_ok(12));		if($is_ok)		{			return true;   		}		else{			return false; 		}	}	
 }

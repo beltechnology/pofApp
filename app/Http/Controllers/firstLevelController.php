@@ -20,8 +20,10 @@ class firstLevelController extends Controller
      */
     public function index()
     {
+		$validUser = $this->CheckUser();
+		if($validUser) return	view('errors.404');
+		
         $firstlevel = firstLevel::paginate(15);
-
         return view('first-level.index', compact('firstlevel'));
     }
 
@@ -32,6 +34,9 @@ class firstLevelController extends Controller
      */
     public function create()
     {
+		$validUser = $this->CheckUser();
+		if($validUser) return	view('errors.404');
+
         return view('first-level.create');
     }
 
@@ -42,7 +47,9 @@ class firstLevelController extends Controller
      */
     public function store(Request $request)
     {
-        
+		$validUser = $this->CheckUser();
+		if($validUser) return	view('errors.404');
+
         firstLevel::create($request->all());
 
         Session::flash('flash_message', 'firstLevel added!');
@@ -59,8 +66,10 @@ class firstLevelController extends Controller
      */
     public function show($id)
     {
-        $firstlevel = firstLevel::findOrFail($id);
+		$validUser = $this->CheckUser();
+		if($validUser) return	view('errors.404');
 
+        $firstlevel = firstLevel::findOrFail($id);
         return view('first-level.show', compact('firstlevel'));
     }
 
@@ -73,8 +82,10 @@ class firstLevelController extends Controller
      */
     public function edit($id)
     {
-        $firstlevel = firstLevel::findOrFail($id);
+		$validUser = $this->CheckUser();
+		if($validUser) return	view('errors.404');
 
+        $firstlevel = firstLevel::findOrFail($id);
         return view('first-level.edit', compact('firstlevel'));
     }
 
@@ -87,7 +98,9 @@ class firstLevelController extends Controller
      */
     public function update($id, Request $request)
     {
-        
+		$validUser = $this->CheckUser();
+		if($validUser) return	view('errors.404');
+
 		$updateCounters=Input::get ('updateCounter')+1;
 		$updateCounterdata = DB::table('first_levels')->where('entityId',$id)->value('updateCounter');
 		if($updateCounterdata < $updateCounters)
@@ -116,10 +129,26 @@ class firstLevelController extends Controller
      */
     public function destroy($id)
     {
+		$validUser = $this->CheckUser();
+		if($validUser) return	view('errors.404');
+
         firstLevel::destroy($id);
-
         Session::flash('flash_message', 'firstLevel deleted!');
-
         return redirect('first-level');
     }
+	
+	public function CheckUser()
+	{
+		$userRole = new \App\library\myFunctions;
+		$is_ok = ($userRole->is_ok(12));
+		if($is_ok)
+		{
+			return true;   
+		}
+		else{
+			return false; 
+		}
+
+	}
+	
 }

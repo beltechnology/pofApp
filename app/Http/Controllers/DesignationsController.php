@@ -21,6 +21,9 @@ class DesignationsController extends Controller
      */
     public function index()
     {
+		$validUser = $this->CheckUser();
+		if($validUser) return	view('errors.404');
+
         $designations = \DB::table('designations')->where('deleted',0)->paginate(trans('messages.PAGINATE'));
         return view('designations.index', compact('designations'));
     }
@@ -32,6 +35,9 @@ class DesignationsController extends Controller
      */
     public function create()
     {
+		$validUser = $this->CheckUser();
+		if($validUser) return	view('errors.404');
+
 		$module_configs = DB::table('module_configs')->where('deleted',0)->where('name','!=','Add Designation')->get();
         return view('designations.create', compact('module_configs'));
     }
@@ -45,7 +51,9 @@ class DesignationsController extends Controller
     {
         $this->validate($request, ['designation' => 'required|unique:designations']);
 
-    //    Designation::create($request->all());
+		$validUser = $this->CheckUser();
+		if($validUser) return	view('errors.404');
+		   
 	 Designation::create([
         'designation' => $request['designation'],
 		]);
@@ -101,6 +109,10 @@ class DesignationsController extends Controller
      */
     public function edit($id)
     {
+			$validUser = $this->CheckUser();
+			if($validUser) return	view('errors.404');
+		   
+		
         $designation = Designation::findOrFail($id);
 		
 		$module_configs = DB::table('module_configs')
@@ -122,7 +134,9 @@ class DesignationsController extends Controller
      */
     public function update($id, Request $request)
     {
-     //   $this->validate($request, ['designation' => 'required', ]);
+			$validUser = $this->CheckUser();
+			if($validUser) return	view('errors.404');
+		   
 
         $designation = Designation::findOrFail($id);
 		$this->validate($request, ['designation' => 'required|unique:designations,designation,'.$designation->id.',id,deleted,0']);
@@ -196,9 +210,27 @@ class DesignationsController extends Controller
      */
     public function destroy($id)
     {
+		$validUser = $this->CheckUser();
+		if($validUser) return	view('errors.404');
+		
        \DB::table('designations')->where('id',$id)->update(['deleted'=>1]);
         Session::flash('flash_message', 'Designation deleted!');
 
         return redirect('designations');
     }
+	
+	public function CheckUser()
+	{
+		$userRole = new \App\library\myFunctions;
+		$is_ok = ($userRole->is_ok(12));
+		if($is_ok)
+		{
+			return true;   
+		}
+		else{
+			return false; 
+		}
+
+	}
+	
 }

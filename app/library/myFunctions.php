@@ -16,8 +16,9 @@ use DB;
 					{
 						$moduleCheck = true;
 					}
+			//		echo $module->moduleId."<br>";
 				}
-				
+			//	echo session()->get('designationId');
 				if(!session()->get('currentStateId') ||(!session()->get('designationId')) ||(!session()->get('userEntityId')) ||(empty($userModule)) || ($moduleCheck == false)){
 				return true;
 			}

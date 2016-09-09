@@ -5,6 +5,9 @@
 <title>POF India</title>
 
 <style>
+@page { margin: 0px; }
+body { margin: 15px 0px 0px 35px;  }
+
 .olympiad-foundation p{text-align:center;}
 
 .exam-date p{text-align:right;}
@@ -18,7 +21,7 @@
 table{width:100%; font-size:11px;}
 
 td span{color:red;}
-td{line-height:15px;}
+td{line-height:16px;}
 </style>
 </head>
 
@@ -28,18 +31,36 @@ $j = 0;
 ?>
 
 @foreach($student as $studentDetail)
-<table style="height:320px; border-bottom:1px dashed #000">
+
+<?php 
+$i++;
+
+if($i< 1 )
+{
+	?>
+<table style="height:359px;margin-top:20px;">
+	<?php
+}
+else{
+	?>
+<table style="height:359px;">
+	<?php
+}
+if($i== 3){
+	$i = 0;
+}
+?>
 <tr align="center">
-	<td style="width:25%;">&nbsp;</td>
-	<td style="width:50%;">
+	<td style="width:20%;">&nbsp;</td>
+	<td style="width:60%;">
 		<h4>ROLL NUMBER CUM ADMIT CARD</h4>
 		<h6>MAY BE USED FOR LEVEL 1</h6>
 	</td>
-	<td style="width:25%;">&nbsp;</td>
+	<td style="width:20%;">&nbsp;</td>
 </tr>
 <tr align="center">
-	<td style="width:25%;">&nbsp;</td>
-	<td style="width:50%;">
+	<td style="width:20%;">&nbsp;</td>
+	<td style="width:60%;">
 			<table>
 				<tr>
 					<td>Name :</td>
@@ -98,29 +119,29 @@ $j = 0;
 			</table>
 	</td>
 	
-	<td style="width:25%;">&nbsp;</td>
+	<td style="width:20%;">&nbsp;</td>
 </tr>
 <tr>
-	<td style="width:25%;">&nbsp;</td>
-	<td style="width:50%;">&nbsp;</td>
-	<td style="width:25%;">&nbsp;</td>
+	<td style="width:20%;">&nbsp;</td>
+	<td style="width:60%;">&nbsp;</td>
+	<td style="width:20%;">&nbsp;</td>
 
 </tr>
 <tr>
-	<td style="width:25%;">&nbsp;</td>
-	<td style="width:50%;"><span>*</span> This admit card may be used for level 1 - exams.</td>
-	<td style="width:25%;">&nbsp;</td>
+	<td style="width:20%;">&nbsp;</td>
+	<td style="width:60%;"><span>*</span> This admit card may be used for level 1 - exams.</td>
+	<td style="width:20%;">&nbsp;</td>
 
 </tr>
 <tr>
-	<td style="width:25%;">&nbsp;</td>
-	<td style="width:50%;">Level one exam/s</td>
-	<td style="width:25%;">&nbsp;</td>
+	<td style="width:20%;">&nbsp;</td>
+	<td style="width:60%;">Level one exam/s</td>
+	<td style="width:20%;">&nbsp;</td>
 
 </tr>
 <tr>
-	<td style="width:25%;">&nbsp;</td>
-	<td style="width:50%;">
+	<td style="width:20%;">&nbsp;</td>
+	<td style="width:60%;">
 		 <table>
 				<tr>
 					<td><span>*</span> Date mentioned above.</td>
@@ -129,7 +150,7 @@ $j = 0;
 				</tr>
 		 </table>
 	</td>
-	<td style="width:25%;">&nbsp;</td>
+	<td style="width:20%;">&nbsp;</td>
 
 </tr>
 </table>

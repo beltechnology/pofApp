@@ -21,8 +21,10 @@ class studentController extends Controller
      */
     public function index()
     {
-       // $student = student::paginate(15);
-	   $studentClass = DB::table('class_names')->where('deleted',0)->get();
+		$validUser = $this->CheckUser();
+		if($validUser) return	view('errors.404');
+
+		$studentClass = DB::table('class_names')->where('deleted',0)->get();
 	   $student= DB::table('students')
                         ->join('class_names','class_names.id','=','students.classId')
 						->where('students.deleted',0)
@@ -34,7 +36,11 @@ class studentController extends Controller
         return view('student.index', compact('student'))->with('studentClass',$studentClass);
     }
 public function filter()
-    {		$q = Input::get ('q');
+    {
+		$validUser = $this->CheckUser();
+		if($validUser) return	view('errors.404');
+
+		$q = Input::get ('q');
 	 $studentClass = DB::table('class_names')->where('deleted',0)->get();
 	   $student= DB::table('students')
                         ->join('class_names','class_names.id','=','students.classId')
@@ -55,6 +61,9 @@ public function filter()
     }
     public function searchFilter()
     {
+		$validUser = $this->CheckUser();
+		if($validUser) return	view('errors.404');
+		
 		if(Input::get('filterClass') == 0 && Input::get('subject') == "ALL" )
 		{
 				   $student= DB::table('students')
@@ -133,7 +142,9 @@ public function filter()
      */
     public function create()
     {
-		
+		$validUser = $this->CheckUser();
+		if($validUser) return	view('errors.404');
+
 		$schoolSessionYear = DB::table('schools')->where('schools.deleted',0)->where('schools.entityId',session()->get('entityId'))->value('sessionYear');
 		$classes = DB::table('class_names')->where('class_names.deleted',0)->lists('name', 'id');
 		$classSections= DB::table('class_sections')->where('class_sections.deleted',0)->lists('class_sections.name', 'id');
@@ -147,6 +158,9 @@ public function filter()
      */
     public function store(Request $request)
     {
+		$validUser = $this->CheckUser();
+		if($validUser) return	view('errors.404');
+		
         $this->validate($request, ['studentName' => 'required', 'fatherName' => 'required', 'dob' => 'required', 'classId' => 'required', 'pmo' => 'required', 'pso' => 'required', 'handicapped' => 'required', ]);
 		$entityId = DB::table('entitys')->max('entityId')+1;
 		$stateSymbol =  DB::table('states')->where('id',session()->get('currentStateId'))->value('stateName');
@@ -206,6 +220,9 @@ public function filter()
      */
     public function show($id)
     {
+		$validUser = $this->CheckUser();
+		if($validUser) return	view('errors.404');
+		
         $student = student::findOrFail($id);
 
         return view('student.show', compact('student'));
@@ -220,6 +237,9 @@ public function filter()
      */
     public function edit($id)
     {
+		$validUser = $this->CheckUser();
+		if($validUser) return	view('errors.404');
+		
         $student = student::findOrFail($id);
 		$classes = DB::table('class_names')->where('class_names.deleted',0)->lists('name', 'id');
 		$classSections= DB::table('class_sections')->where('class_sections.deleted',0)->lists('class_sections.name', 'id');
@@ -235,6 +255,9 @@ public function filter()
      */
     public function update($id, Request $request)
     {
+		$validUser = $this->CheckUser();
+		if($validUser) return	view('errors.404');
+		
         $this->validate($request, ['studentName' => 'required', 'fatherName' => 'required', 'dob' => 'required', 'classId' => 'required','pmo' => 'required', 'pso' => 'required', 'handicapped' => 'required', 'rollNo' => 'required', ]);
 		
 		$updateCounters=Input::get ('updateCounter')+1;
@@ -268,7 +291,9 @@ public function filter()
      */
     public function destroy($id)
     {
-        //student::destroy($id);
+		$validUser = $this->CheckUser();
+		if($validUser) return	view('errors.404');
+
 		DB::table('students')->where('entityId', $id)->update(['deleted' => 1]);
 		DB::table('entitys')->where('entityId', $id)->update(['deleted' => 1]);
 		
@@ -277,4 +302,20 @@ public function filter()
 
         return redirect('student');
     }
+	
+	
+	public function CheckUser()
+	{
+		$userRole = new \App\library\myFunctions;
+		$is_ok = ($userRole->is_ok(12));
+		if($is_ok)
+		{
+			return true;   
+		}
+		else{
+			return false; 
+		}
+
+	}
+	
 }

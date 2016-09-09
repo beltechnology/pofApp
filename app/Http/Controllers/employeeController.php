@@ -40,34 +40,29 @@ class employeeController extends Controller
 						->where('addresses.stateId',session()->get('currentStateId'))
 						->groupBy('employees.entityId')
 						->paginate(trans('messages.PAGINATE'));
-						if(session()->get('currentStateId')){
-							return view('employee.index', compact('employee'));
-						}else
-						{
-							return redirect('/logout');
-						}
+						$validUser = $this->CheckUser();
+						if($validUser) return	view('errors.404');
+
+						return view('employee.index', compact('employee'));
     }
 	
 	public function filter()
-    {		$q = Input::get ('q');
+    {		$q = Input::get ( 'q' );
 			$employee= DB::table('employees')
                         ->join('entitys','entitys.entityId','=','employees.entityId')
                         ->join('addresses','addresses.entityId','=','employees.entityId')
 						->join('phones','phones.entityId','=','employees.entityId')
 						->join('emailaddresses','emailaddresses.entityId','=','employees.entityId')
-						->leftjoin('schools','schools.employeeCode','=','employees.entityId')
 						->leftjoin('locations','locations.locationId','=','employees.locationId')
 						->leftjoin('teams','teams.teamId','=','employees.teamId')
 						->where('employees.deleted',0)
 						->where('addresses.stateId',session()->get('currentStateId'))
-						->where(function ($query) use ($q) {
-							return $query->orWhere('schools.schoolName', 'like', '%'.$q.'%')
-							->orwhere('entitys.name', 'like', '%'.$q.'%')
-							->orwhere('locations.location', 'like', '%'.$q.'%');
-						})
+						->where('name', 'like', '%'.$q.'%')
 						->groupBy('employees.entityId')
 						->paginate(trans('messages.PAGINATE'));
-						$pagination = $employee->appends ( array ('q' => Input::get ( 'q' )));						
+						$pagination = $employee->appends ( array ('q' => Input::get ( 'q' )));
+						$validUser = $this->CheckUser();
+						if($validUser) return	view('errors.404');
 						return view('employee.index', compact('employee'));
     }
 
@@ -79,6 +74,9 @@ class employeeController extends Controller
      */
     public function create()
     {
+						$validUser = $this->CheckUser();
+						if($validUser) return	view('errors.404');
+
 		$districts = DB::table('districts')->where('districts.deleted',0)->where('districts.state_id',session()->get('currentStateId'))->lists('name', 'id');
     return view('employee.create', compact('districts'));
     }
@@ -90,6 +88,9 @@ class employeeController extends Controller
      */
     public function store(Request $request)
     {
+		$validUser = $this->CheckUser();
+		if($validUser) return	view('errors.404');
+		
 		 $this->validate($request, ['employeeName' => 'required', 'dob' => 'required','employeeCode' => 'required|unique:employees,employeeCode,null,employeeId,deleted,0', 'address' => 'required', 'state' => 'required', 'district' => 'required', 'city' => 'required', 'pinCode' => 'required', 'primaryNumber' => 'required', 'emailAddress' => 'required |unique:emailaddresses,email,null,id,deleted,0', 'designation' => 'required', 'dateOfJoining' => 'required', ]);	
 		 $employee_code='';
 		 $entityId = DB::table('entitys')->max('entityId')+1;
@@ -161,6 +162,9 @@ class employeeController extends Controller
      */
     public function show($id)
     {
+		$validUser = $this->CheckUser();
+		if($validUser) return	view('errors.404');
+		
         $employee = employee::findOrFail($id);
 
         return view('employee.show', compact('employee'));
@@ -175,6 +179,9 @@ class employeeController extends Controller
      */
     public function edit($id)
     {
+		$validUser = $this->CheckUser();
+		if($validUser) return	view('errors.404');
+		
 		$employee = employee::findOrFail($id);
 		$entity = entity::findOrFail($id);
 		$address = address::findOrFail($id);
@@ -200,6 +207,14 @@ class employeeController extends Controller
      */
     public function update($id, Request $request)
     {
+		
+		$FmyFunctions1 = new \App\library\myFunctions;
+		$is_ok = ($FmyFunctions1->is_ok(7));
+		if($is_ok)
+		{
+		return view('errors.404');   
+		}
+		
 		$this->validate($request, ['name' => 'required', 'dob' => 'required', 'addressLine1' => 'required', 'stateId' => 'required', 'pincode' => 'required', 'primaryNumber' => 'required', 'email' => 'required', 'designation' => 'required', 'dateOfJoining' => 'required',]);
 		$updateCounters=Input::get ('updateCounter')+1;
 		$updateCounterdata = DB::table('employees')->where('entityId',$id)->value('updateCounter');
@@ -246,6 +261,9 @@ class employeeController extends Controller
      */
     public function destroy($id)
     {
+		$validUser = $this->CheckUser();
+		if($validUser) return	view('errors.404');
+		
 		$employeesCode = DB::table('employees')->where('entityId',$id)->value('employeeId');
         DB::table('employees')->where('entityId', $id)->update(['deleted' => 1]);
 		DB::table('addresses')->where('entityId', $id)->update(['deleted' => 1]);
@@ -255,6 +273,23 @@ class employeeController extends Controller
 		DB::table('schools')->where('employeeCode', $employeesCode)->update(['employeeCode' =>0]);		
         Session::flash('flash_message', 'employee deleted!');
         return redirect('employee');
+	}
+	
+	public function CheckUser()
+	{
+		
+		$userRole = new \App\library\myFunctions;
+		$is_ok = ($userRole->is_ok(7));
+		if($is_ok)
+		{
+			return true;   
 		}
+		else{
+			return false; 
+		}
+
+	}
+	
+	
 	
 }

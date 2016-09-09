@@ -20,6 +20,8 @@ class StateController extends Controller
      */
     public function index()
     {
+		$validUser = $this->CheckUser();
+		if($validUser) return	view('errors.404');
 
         $state =\DB::table('states')->where('states.deleted',0)->groupBy('states.id')
 		->paginate(trans('messages.PAGINATE'));
@@ -34,6 +36,9 @@ class StateController extends Controller
      */
     public function create()
     {
+		$validUser = $this->CheckUser();
+		if($validUser) return	view('errors.404');
+
         return view('state.create');
     }
 
@@ -44,6 +49,9 @@ class StateController extends Controller
      */
     public function store(Request $request)
     {
+		$validUser = $this->CheckUser();
+		if($validUser) return	view('errors.404');
+
         $this->validate($request, ['stateName' => 'required|unique:states,stateName,null,id,deleted,0', ]);
 
         State::create($request->all());
@@ -62,6 +70,9 @@ class StateController extends Controller
      */
     public function show($id)
     {
+		$validUser = $this->CheckUser();
+		if($validUser) return	view('errors.404');
+
         $state = State::findOrFail($id);
 
         return view('state.show', compact('state'));
@@ -76,6 +87,9 @@ class StateController extends Controller
      */
     public function edit($id)
     {
+		$validUser = $this->CheckUser();
+		if($validUser) return	view('errors.404');
+
         $state = State::findOrFail($id);
 
         return view('state.edit', compact('state'));
@@ -90,6 +104,9 @@ class StateController extends Controller
      */
     public function update($id, Request $request)
     {	 
+		$validUser = $this->CheckUser();
+		if($validUser) return	view('errors.404');
+
 		$state = State::findOrFail($id);
         $this->validate($request, ['stateName' => 'required|unique:states,stateName,'.$state->id.',id,deleted,0', ]);
 		$updateCounters=Input::get ('updateCounter')+1;
@@ -118,10 +135,29 @@ class StateController extends Controller
      */
     public function destroy($id)
     {
+		$validUser = $this->CheckUser();
+		if($validUser) return	view('errors.404');
+
         \DB::table('states')->where('id', $id)->update(['deleted' => 1]);
 
         Session::flash('flash_message', 'State deleted!');
 
         return redirect('state');
     }
+	
+	public function CheckUser()
+	{
+
+		$userRole = new \App\library\myFunctions;
+		$is_ok = ($userRole->is_ok(1));
+		if($is_ok)
+		{
+			return true;   
+		}
+		else{
+			return false; 
+		}
+
+	}
+	
 }

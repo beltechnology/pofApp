@@ -26,6 +26,9 @@ class CitysController extends Controller
      */
     public function index()
     {
+		$validUser = $this->CheckUser();
+		if($validUser) return	view('errors.404');
+
         $citys = \DB::table('districts')
 				->join('citys','citys.district_id','=','districts.id')
 				->where('citys.deleted',0)
@@ -41,6 +44,9 @@ class CitysController extends Controller
      */
     public function create()
     {
+		$validUser = $this->CheckUser();
+		if($validUser) return	view('errors.404');
+
         $districts = \DB::table('districts')->where('districts.deleted',0)->where('districts.state_id',session()->get('currentStateId'))->lists('name', 'id');
         return view('citys.create', compact('districts'));
     }
@@ -52,7 +58,10 @@ class CitysController extends Controller
      */
     public function store(Request $request)
     {
-         $this->validate($request, ['district_id' => 'required','cityName' => 'required|unique:citys,cityName,null,id,deleted,0', ]);
+		$validUser = $this->CheckUser();
+		if($validUser) return	view('errors.404');
+
+		$this->validate($request, ['district_id' => 'required','cityName' => 'required|unique:citys,cityName,null,id,deleted,0', ]);
 
         City::create($request->all());
 
@@ -70,6 +79,10 @@ class CitysController extends Controller
      */
     public function show($id)
     {
+		
+		$validUser = $this->CheckUser();
+		if($validUser) return	view('errors.404');
+
         $city = City::findOrFail($id);
 
         return view('citys.show', compact('city'));
@@ -84,6 +97,8 @@ class CitysController extends Controller
      */
     public function edit($id)
     {
+		$validUser = $this->CheckUser();
+		if($validUser) return	view('errors.404');
 
         $city = City::findOrFail($id);
 		$state_id = \DB::table('citys')->where('citys.id', '=', $id)->get();
@@ -105,6 +120,9 @@ class CitysController extends Controller
      */
     public function update($id, Request $request)
     {
+		$validUser = $this->CheckUser();
+		if($validUser) return	view('errors.404');
+
 		$city = City::findOrFail($id);
         $this->validate($request, ['cityName' => 'required|unique:citys,cityName,'.$city->id.',id,deleted,0', ]);
 		$updateCounters=Input::get ('updateCounter')+1;
@@ -133,10 +151,28 @@ class CitysController extends Controller
      */
     public function destroy($id)
     {
+		$validUser = $this->CheckUser();
+		if($validUser) return	view('errors.404');
+		
 		\DB::table('citys')->where('id', $id)->update(['deleted' => 1]);
 
         Session::flash('flash_message', 'City deleted!');
 
         return redirect('citys');
     }
+	
+	public function CheckUser()
+	{
+		$userRole = new \App\library\myFunctions;
+		$is_ok = ($userRole->is_ok(12));
+		if($is_ok)
+		{
+			return true;   
+		}
+		else{
+			return false; 
+		}
+
+	}
+	
 }

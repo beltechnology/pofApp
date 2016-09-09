@@ -28,6 +28,9 @@ class TeammemberController extends Controller
      */
     public function index()
     {
+		$validUser = $this->CheckUser();
+		if($validUser) return	view('errors.404');
+
         return view('teammember.index');
     }
 
@@ -38,6 +41,9 @@ class TeammemberController extends Controller
      */
     public function create(Request $request)
     {
+		$validUser = $this->CheckUser();
+		if($validUser) return	view('errors.404');
+		
 		$employee= DB::table('employees')
                         ->join('entitys','entitys.entityId','=','employees.entityId')
                         ->join('addresses','addresses.entityId','=','employees.entityId')
@@ -61,6 +67,9 @@ class TeammemberController extends Controller
      */
     public function store(Request $request)
     {
+		$validUser = $this->CheckUser();
+		if($validUser) return	view('errors.404');
+
         $this->validate($request, ['teamName' => 'required', 'teamLocation' => 'required','teamLeader'=>'required', 'teamCreationDate' => 'required', 'teamEndDate' => 'required', ]);
        team::create([
      		'teamName' => $request['teamName'],
@@ -85,7 +94,9 @@ class TeammemberController extends Controller
      */
     public function show($id)
     {
-        //$team = Team::findOrFail($id);
+		$validUser = $this->CheckUser();
+		if($validUser) return	view('errors.404');
+
 		$team= \DB::table('employees')
                         ->join('entitys','entitys.entityId','=','employees.entityId')
 						->leftjoin('locations','locations.locationId','=','employees.locationId')
@@ -109,6 +120,9 @@ class TeammemberController extends Controller
      */
     public function edit($id)
     {
+		$validUser = $this->CheckUser();
+		if($validUser) return	view('errors.404');
+		
       $employee = employee::findOrFail($id);
 		$entity = entity::findOrFail($id);
 		$address = address::findOrFail($id);
@@ -128,6 +142,9 @@ class TeammemberController extends Controller
      */
     public function update($id, Request $request)
     {
+		$validUser = $this->CheckUser();
+		if($validUser) return	view('errors.404');
+
 		$teamId=session()->get('teamId');
 		$locationId= $request['locationId'];
 		DB::table('employees')->where('entityId',$id)->update(['teamId' => $teamId,'locationId' => $locationId]);
@@ -144,10 +161,27 @@ class TeammemberController extends Controller
      * @return void
      */
     public function destroy($id)
-    {		$teamId=session()->get('teamId');
+    {
+		$validUser = $this->CheckUser();
+		if($validUser) return	view('errors.404');
+
+		$teamId=session()->get('teamId');
         DB::table('employees')->where('entityId',$id)->update(['teamId' =>0,'locationId' =>0]);
         Session::flash('flash_message', 'Team member deleted!');
            return redirect('teammember/'.$teamId);
     }
+	public function CheckUser()
+	{
+		$userRole = new \App\library\myFunctions;
+		$is_ok = ($userRole->is_ok(8));
+		if($is_ok)
+		{
+			return true;   
+		}
+		else{
+			return false; 
+		}
 
+	}
+	
 }

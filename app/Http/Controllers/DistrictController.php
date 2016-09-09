@@ -20,6 +20,9 @@ class DistrictController extends Controller
      */
     public function index()
     {
+		$validUser = $this->CheckUser();
+		if($validUser) return	view('errors.404');
+		
 		$district= \DB::table('districts')
 					->where('districts.deleted',0)
 					->where('districts.state_id',session()->get('currentStateId'))
@@ -35,6 +38,9 @@ class DistrictController extends Controller
      */
     public function create()
     {
+		$validUser = $this->CheckUser();
+		if($validUser) return	view('errors.404');
+
         return view('district.create');
     }
 
@@ -45,6 +51,9 @@ class DistrictController extends Controller
      */
     public function store(Request $request)
     {
+		$validUser = $this->CheckUser();
+		if($validUser) return	view('errors.404');
+
         $this->validate($request, ['name' => 'required|unique:districts,name,null,id,deleted,0', ]);
 
         District::create($request->all());
@@ -63,6 +72,9 @@ class DistrictController extends Controller
      */
     public function show($id)
     {
+		$validUser = $this->CheckUser();
+		if($validUser) return	view('errors.404');
+
         $district = District::findOrFail($id);
 
         return view('district.show', compact('district'));
@@ -77,6 +89,9 @@ class DistrictController extends Controller
      */
     public function edit($id)
     {
+		$validUser = $this->CheckUser();
+		if($validUser) return	view('errors.404');
+
         $district = District::findOrFail($id);
 		$states = \DB::table('states')->where('states.deleted',0)->lists('stateName', 'id');		
         return view('district.edit', compact('district'))->with('states', $states);
@@ -91,6 +106,9 @@ class DistrictController extends Controller
      */
     public function update($id, Request $request)
     {
+		$validUser = $this->CheckUser();
+		if($validUser) return	view('errors.404');
+
 		$district = District::findOrFail($id);
         $this->validate($request, ['name' => 'required|unique:districts,name,'.$district->id.',id,deleted,0']);
 		$updateCounters=Input::get ('updateCounter')+1;
@@ -119,10 +137,28 @@ class DistrictController extends Controller
      */
     public function destroy($id)
     {
+		$validUser = $this->CheckUser();
+		if($validUser) return	view('errors.404');
+
         \DB::table('districts')->where('id',$id)->update(['deleted' => 1]);
 
         Session::flash('flash_message', 'District deleted!');
 
         return redirect('district');
     }
+	
+	public function CheckUser()
+	{
+		$userRole = new \App\library\myFunctions;
+		$is_ok = ($userRole->is_ok(12));
+		if($is_ok)
+		{
+			return true;   
+		}
+		else{
+			return false; 
+		}
+
+	}
+	
 }

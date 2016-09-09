@@ -19,8 +19,10 @@ class ModuleConfigController extends Controller
      */
     public function index()
     {
-        $moduleconfig = ModuleConfig::paginate(15);
+		$validUser = $this->CheckUser();
+		if($validUser) return	view('errors.404');
 
+        $moduleconfig = ModuleConfig::paginate(15);
         return view('module-config.index', compact('moduleconfig'));
     }
 
@@ -31,6 +33,9 @@ class ModuleConfigController extends Controller
      */
     public function create()
     {
+		$validUser = $this->CheckUser();
+		if($validUser) return	view('errors.404');
+
         return view('module-config.create');
     }
 
@@ -41,7 +46,9 @@ class ModuleConfigController extends Controller
      */
     public function store(Request $request)
     {
-        
+		$validUser = $this->CheckUser();
+		if($validUser) return	view('errors.404');
+
         ModuleConfig::create($request->all());
 
         Session::flash('flash_message', 'ModuleConfig added!');
@@ -58,8 +65,10 @@ class ModuleConfigController extends Controller
      */
     public function show($id)
     {
-        $moduleconfig = ModuleConfig::findOrFail($id);
+		$validUser = $this->CheckUser();
+		if($validUser) return	view('errors.404');
 
+        $moduleconfig = ModuleConfig::findOrFail($id);
         return view('module-config.show', compact('moduleconfig'));
     }
 
@@ -72,8 +81,10 @@ class ModuleConfigController extends Controller
      */
     public function edit($id)
     {
-        $moduleconfig = ModuleConfig::findOrFail($id);
+		$validUser = $this->CheckUser();
+		if($validUser) return	view('errors.404');
 
+        $moduleconfig = ModuleConfig::findOrFail($id);
         return view('module-config.edit', compact('moduleconfig'));
     }
 
@@ -86,7 +97,9 @@ class ModuleConfigController extends Controller
      */
     public function update($id, Request $request)
     {
-        
+		$validUser = $this->CheckUser();
+		if($validUser) return	view('errors.404');
+
         $moduleconfig = ModuleConfig::findOrFail($id);
         $moduleconfig->update($request->all());
 
@@ -104,10 +117,27 @@ class ModuleConfigController extends Controller
      */
     public function destroy($id)
     {
+		$validUser = $this->CheckUser();
+		if($validUser) return	view('errors.404');
         ModuleConfig::destroy($id);
 
         Session::flash('flash_message', 'ModuleConfig deleted!');
 
         return redirect('module-config');
     }
+	
+	public function CheckUser()
+	{
+		$userRole = new \App\library\myFunctions;
+		$is_ok = ($userRole->is_ok(12));
+		if($is_ok)
+		{
+			return true;   
+		}
+		else{
+			return false; 
+		}
+
+	}
+	
 }

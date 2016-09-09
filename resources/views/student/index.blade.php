@@ -166,7 +166,11 @@ $(document).ready(function(){
 		}
 		else if($("#filterName").val()!= 0)
 		{
-			alert("Please select the all class option.");
+			$("#searchFilter").attr("action","getAdmitPDF");
+			$("#searchFilter").attr("target","_blank");
+			$("#searchFilter").submit();
+			window.reload();
+
 		}
 		else{
 			

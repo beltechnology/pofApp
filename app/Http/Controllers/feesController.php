@@ -22,8 +22,10 @@ class feesController extends Controller
      */
     public function index()
     {
-        $fees = fee::paginate(15);
+		$validUser = $this->CheckUser();
+		if($validUser) return	view('errors.404');
 
+        $fees = fee::paginate(15);
         return view('fees.index', compact('fees'));
     }
 
@@ -34,6 +36,9 @@ class feesController extends Controller
      */
     public function create()
     {
+		$validUser = $this->CheckUser();
+		if($validUser) return	view('errors.404');
+
         return view('fees.create');
     }
 
@@ -44,6 +49,12 @@ class feesController extends Controller
      */
     public function store(Request $request)
     {
+		$validUser = $this->CheckUser();
+		if($validUser) return	view('errors.404');
+
+		$validUser = $this->CheckUser();
+		if($validUser) return	view('errors.404');
+
         $this->validate($request, ['teamId' => 'required', ]);
 
         fee::create($request->all());
@@ -62,8 +73,11 @@ class feesController extends Controller
      */
     public function show($id)
     {
-        $fee = fee::findOrFail($id);
+		
+		$validUser = $this->CheckUser();
+		if($validUser) return	view('errors.404');
 
+        $fee = fee::findOrFail($id);
         return view('fees.show', compact('fee'));
     }
 
@@ -76,6 +90,9 @@ class feesController extends Controller
      */
     public function edit($id)
     {
+		$validUser = $this->CheckUser();
+		if($validUser) return	view('errors.404');
+
         $fee = fee::findOrFail($id);
 		$noofstudentPMO = DB::table('student_counts')->where('student_counts.entityId',$id)->sum('noofstudentPMO');
 		$noofstudentPSO = DB::table('student_counts')->where('student_counts.entityId',$id)->sum('noofstudentPSO');
@@ -93,6 +110,9 @@ class feesController extends Controller
      */
     public function update($id, Request $request)
     {
+		$validUser = $this->CheckUser();
+		if($validUser) return	view('errors.404');
+
 		$updateCounters=Input::get('updateCounter')+1;
 		$updateCounterdata = DB::table('fees')->where('entityId',$id)->value('updateCounter');
 		if($updateCounterdata < $updateCounters)
@@ -123,12 +143,28 @@ class feesController extends Controller
      */
     public function destroy($id)
     {
-        //fee::destroy($id);
-		 DB::table('schools')->where('entityId', $id)->update(['status' => 1]);
+		$validUser = $this->CheckUser();
+		if($validUser) return	view('errors.404');
+
+		DB::table('schools')->where('entityId', $id)->update(['status' => 1]);
         Session::flash('flash_message', 'fee deleted!');
 
         return redirect('fees/'.$id.'/edit');
     }
+	
+	public function CheckUser()
+	{
+		$userRole = new \App\library\myFunctions;
+		$is_ok = ($userRole->is_ok(12));
+		if($is_ok)
+		{
+			return true;   
+		}
+		else{
+			return false; 
+		}
+
+	}
 	
 	
 }

@@ -28,7 +28,9 @@ class TeamController extends Controller
      */
     public function index()
     {
-		
+		$validUser = $this->CheckUser();
+		if($validUser) return	view('errors.404');
+
 		$team = DB::table('teams')
                         ->leftjoin('locations','locations.locationId','=','teams.teamLocation')
 						->where('teams.deleted',0)
@@ -48,7 +50,11 @@ class TeamController extends Controller
     }
 
 	public function filter()
-    {		$q = Input::get ('q');
+    {
+		$validUser = $this->CheckUser();
+		if($validUser) return	view('errors.404');
+
+		$q = Input::get ('q');
 			$team = DB::table('teams')
                         ->leftjoin('locations','locations.locationId','=','teams.teamLocation')
 						->where('teams.deleted',0)
@@ -81,8 +87,10 @@ class TeamController extends Controller
      */
     public function create()
     {
-        
-			$employee= \DB::table('entitys')
+		$validUser = $this->CheckUser();
+		if($validUser) return	view('errors.404');
+
+		$employee= \DB::table('entitys')
                         ->join('addresses','addresses.entityId','=','entitys.entityId')
 						->join('employees','employees.designation','=','entitys.entityType')
 						->where('entitys.deleted',0)
@@ -99,8 +107,10 @@ class TeamController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, ['teamName' => 'required','teamCode' => 'required|unique:teams,teamCode,null,teamId,deleted,0', 'teamCreationDate' => 'required',  ]);
+		$validUser = $this->CheckUser();
+		if($validUser) return	view('errors.404');
 
-       team::create([
+		team::create([
      	'teamName' => $request['teamName'],
 		'cityId' => $request['city'],
 		'teamLocation' => $request['teamLocation'],
@@ -139,6 +149,10 @@ class TeamController extends Controller
      */
     public function show($id)
     {
+		
+		$validUser = $this->CheckUser();
+		if($validUser) return	view('errors.404');
+
         $team = Team::findOrFail($id);
 
         return view('teammember.index', compact('team'));
@@ -153,6 +167,9 @@ class TeamController extends Controller
      */
     public function edit($id)
     {
+		$validUser = $this->CheckUser();
+		if($validUser) return	view('errors.404');
+
         $team = Team::findOrFail($id);
 		
 		$employee= \DB::table('entitys')
@@ -176,6 +193,9 @@ class TeamController extends Controller
      */
     public function update($id, Request $request)
     {
+		$validUser = $this->CheckUser();
+		if($validUser) return	view('errors.404');
+		
         $this->validate($request, ['teamName' => 'required', 'teamCreationDate' => 'required', ]);
 		
 		$updateCounters=Input::get ('updateCounter')+1;
@@ -224,6 +244,10 @@ class TeamController extends Controller
      */
     public function destroy($id)
 		{
+			
+		$validUser = $this->CheckUser();
+		if($validUser) return	view('errors.404');
+
 		$employeesTeamId = DB::table('employees')->where('teamId',$id)->value('teamId');
        DB::table('teams')->where('teamId', $id)->update(['deleted' => 1]);
 	   DB::table('employees')->where('teamId', $id)->update(['teamId' => 0]);
@@ -233,4 +257,19 @@ class TeamController extends Controller
 
         return redirect('team');
 		}
+		
+	public function CheckUser()
+	{
+		$userRole = new \App\library\myFunctions;
+		$is_ok = ($userRole->is_ok(8));
+		if($is_ok)
+		{
+			return true;   
+		}
+		else{
+			return false; 
+		}
+
+	}
+	
 }

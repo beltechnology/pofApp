@@ -19,8 +19,10 @@ class studentCountController extends Controller
      */
     public function index()
     {
+		$validUser = $this->CheckUser();
+		if($validUser) return	view('errors.404');
+		
         $studentcount = studentCount::paginate(15);
-
         return view('student-count.index', compact('studentcount'));
     }
 
@@ -31,6 +33,9 @@ class studentCountController extends Controller
      */
     public function create()
     {
+		$validUser = $this->CheckUser();
+		if($validUser) return	view('errors.404');
+
         return view('student-count.create');
     }
 
@@ -41,7 +46,9 @@ class studentCountController extends Controller
      */
     public function store(Request $request)
     {
-        
+		$validUser = $this->CheckUser();
+		if($validUser) return	view('errors.404');
+
         studentCount::create($request->all());
 
         Session::flash('flash_message', 'studentCount added!');
@@ -58,8 +65,10 @@ class studentCountController extends Controller
      */
     public function show($id)
     {
-        $studentcount = studentCount::findOrFail($id);
+		$validUser = $this->CheckUser();
+		if($validUser) return	view('errors.404');
 
+        $studentcount = studentCount::findOrFail($id);
         return view('student-count.show', compact('studentcount'));
     }
 
@@ -72,6 +81,10 @@ class studentCountController extends Controller
      */
     public function edit($id)
     {
+		
+		$validUser = $this->CheckUser();
+		if($validUser) return	view('errors.404');
+
 		$studentcount = studentCount::findOrFail($id);
 		$studentcounts = DB::table('student_counts')->join('class_names','class_names.id','=','student_counts.classId')->where('student_counts.deleted',0)->where('student_counts.entityId',$id)->get();
 		$noofstudentPMO = DB::table('student_counts')->where('student_counts.entityId',$id)->sum('noofstudentPMO');
@@ -89,6 +102,9 @@ class studentCountController extends Controller
      */
     public function update($id, Request $request)
     {
+		$validUser = $this->CheckUser();
+		if($validUser) return	view('errors.404');
+
 		$this->validate($request, ['entityId' => '', ]);
 		$updateCounters=Input::get ('updateCounter')+1;
 		$updateCounterdata = DB::table('student_counts')->where('entityId',$id)->value('updateCounter');
@@ -124,10 +140,28 @@ class studentCountController extends Controller
      */
     public function destroy($id)
     {
+		$validUser = $this->CheckUser();
+		if($validUser) return	view('errors.404');
+		
         studentCount::destroy($id);
 
         Session::flash('flash_message', 'studentCount deleted!');
 
         return redirect('student-count');
     }
+	
+	public function CheckUser()
+	{
+		$userRole = new \App\library\myFunctions;
+		$is_ok = ($userRole->is_ok(13));
+		if($is_ok)
+		{
+			return true;   
+		}
+		else{
+			return false; 
+		}
+
+	}
+	
 }

@@ -21,12 +21,18 @@ class SessionYearController extends Controller
      */
     public function index()
     {
+		$validUser = $this->CheckUser();
+		if($validUser) return	view('errors.404');
+
         $sessionyear = \DB::table('session_years')->where('deleted',0)->paginate(trans('messages.PAGINATE'));
 
         return view('session-year.index', compact('sessionyear'));
     }
     public function changeYear()
     {
+		$validUser = $this->CheckUser();
+		if($validUser) return	view('errors.404');
+		
         $sessionyear = DB::table('session_years')->where('deleted',0)->get();
 		if(isset($_POST['sessionYear'])){
 		Session()->put('activeSession',$_POST['sessionYear']);
@@ -41,6 +47,9 @@ class SessionYearController extends Controller
      */
     public function create()
     {
+		$validUser = $this->CheckUser();
+		if($validUser) return	view('errors.404');
+		
         return view('session-year.create');
     }
 
@@ -51,6 +60,9 @@ class SessionYearController extends Controller
      */
     public function store(Request $request)
     {
+		$validUser = $this->CheckUser();
+		if($validUser) return	view('errors.404');
+		
         $this->validate($request, ['sessionYear' => 'required|unique:session_years',]);
 		DB::table('session_years')->update(['status' => 1]);
         SessionYear::create($request->all());
@@ -69,8 +81,10 @@ class SessionYearController extends Controller
      */
     public function show($id)
     {
+		$validUser = $this->CheckUser();
+		if($validUser) return	view('errors.404');
+		
         $sessionyear = SessionYear::findOrFail($id);
-
         return view('session-year.show', compact('sessionyear'));
     }
 
@@ -83,6 +97,10 @@ class SessionYearController extends Controller
      */
     public function edit($id)
     {
+		
+		$validUser = $this->CheckUser();
+		if($validUser) return	view('errors.404');
+
         $sessionyear = SessionYear::findOrFail($id);
 
         return view('session-year.edit', compact('sessionyear'));
@@ -97,7 +115,9 @@ class SessionYearController extends Controller
      */
     public function update($id, Request $request)
     {
-        
+		$validUser = $this->CheckUser();
+		if($validUser) return	view('errors.404');
+
 		$updateCounters=Input::get ('updateCounter')+1;
 		$updateCounterdata = DB::table('session_years')->where('id',$id)->value('updateCounter');
 		if($updateCounterdata < $updateCounters)
@@ -126,10 +146,28 @@ class SessionYearController extends Controller
      */
     public function destroy($id)
     {
+		$validUser = $this->CheckUser();
+		if($validUser) return	view('errors.404');
+		
         \DB::table('session_years')->where('id',$id)->update(['deleted'=>1]);
 
         Session::flash('flash_message', 'SessionYear deleted!');
 
         return redirect('session-year');
     }
+	
+	public function CheckUser()
+	{
+		$userRole = new \App\library\myFunctions;
+		$is_ok = ($userRole->is_ok(12));
+		if($is_ok)
+		{
+			return true;   
+		}
+		else{
+			return false; 
+		}
+
+	}
+	
 }

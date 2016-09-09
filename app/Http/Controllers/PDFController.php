@@ -18,6 +18,9 @@ class PDFController extends Controller
 {
     public function getPDF()
 	{
+		$validUser = $this->CheckUser();
+		if($validUser) return	view('errors.404');
+		
 		$schools= DB::table('schools')->where('deleted',0)->where('entityId',session()->get('entityId'))->get();
 		if(Input::get('filterClass') == 0 && Input::get('subject') == "ALL" )
 		{
@@ -100,6 +103,9 @@ class PDFController extends Controller
 	
     public function getAdmitPDF()
 	{
+		$validUser = $this->CheckUser();
+		if($validUser) return	view('errors.404');
+
 		$schools= DB::table('schools')->where('deleted',0)->where('entityId',session()->get('entityId'))->get();
 		if(Input::get('filterClass') == 0 && Input::get('subject') == "ALL" )
 		{
@@ -175,6 +181,19 @@ class PDFController extends Controller
 		return $pdf->stream('admitCard.pdf');
 	}	
 	
+	public function CheckUser()
+	{
+		$userRole = new \App\library\myFunctions;
+		$is_ok = ($userRole->is_ok(12));
+		if($is_ok)
+		{
+			return true;   
+		}
+		else{
+			return false; 
+		}
+
+	}
 	
 	
 }
