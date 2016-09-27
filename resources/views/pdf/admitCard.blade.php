@@ -6,7 +6,7 @@
 
 <style>
 @page { margin: 0px; }
-body { margin: 15px 0px 0px 35px;  }
+body { margin: 10px 0px 0px 35px;  }
 
 .olympiad-foundation p{text-align:center;}
 
@@ -35,15 +35,49 @@ $j = 0;
 <?php 
 $i++;
 
-if($i< 1 )
+if($i!= '1' )
 {
 	?>
-<table style="height:359px;margin-top:20px;">
+<table style="height:359px;">
+<tr>
+	<td style="width:20%;">&nbsp;</td>
+	<td style="width:60%;">&nbsp;</td>
+	<td style="width:20%;">&nbsp;</td>
+
+</tr><tr>
+	<td style="width:20%;">&nbsp;</td>
+	<td style="width:60%;">&nbsp;</td>
+	<td style="width:20%;">&nbsp;</td>
+
+</tr><tr>
+	<td style="width:20%;">&nbsp;</td>
+	<td style="width:60%;">&nbsp;</td>
+	<td style="width:20%;">&nbsp;</td>
+
+</tr>
+	<?php
+}
+else if($i!= '2' )
+{
+	?>
+<table style="height:359px;">
+<tr>
+	<td style="width:20%;">&nbsp;</td>
+	<td style="width:60%;">&nbsp;</td>
+	<td style="width:20%;">&nbsp;</td>
+
+</tr><tr>
+	<td style="width:20%;">&nbsp;</td>
+	<td style="width:60%;">&nbsp;</td>
+	<td style="width:20%;">&nbsp;</td>
+
+</tr>
 	<?php
 }
 else{
 	?>
 <table style="height:359px;">
+
 	<?php
 }
 if($i== 3){
@@ -54,7 +88,7 @@ if($i== 3){
 	<td style="width:20%;">&nbsp;</td>
 	<td style="width:60%;">
 		<h4>ROLL NUMBER CUM ADMIT CARD</h4>
-		<h6>MAY BE USED FOR LEVEL 1</h6>
+		<h6>MAY BE USED FOR LEVEL 1 & LEVEL 2 </h6>
 	</td>
 	<td style="width:20%;">&nbsp;</td>
 </tr>
@@ -129,7 +163,7 @@ if($i== 3){
 </tr>
 <tr>
 	<td style="width:20%;">&nbsp;</td>
-	<td style="width:60%;"><span>*</span> This admit card may be used for level 1 - exams.</td>
+	<td style="width:60%;"><span>*</span> This admit card may be used for level 1 & level  2 - exams.</td>
 	<td style="width:20%;">&nbsp;</td>
 
 </tr>

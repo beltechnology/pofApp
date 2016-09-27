@@ -20,8 +20,8 @@
   </div>
 </nav>
  <div class="h1-two col-md-12">
-	 <h1 class="text-left col-md-3"><a href="{{ url('/fees/'.session()->get('entityId').'/edit') }}" class="fa fa-angle-left  fa-2x"> {{ trans('messages.TABS_FEES') }}</a> </h1>
-	  <h1 class="text-center col-md-6"> 
+	 <h1 class="text-left col-md-2"><a href="{{ url('/fees/'.session()->get('entityId').'/edit') }}" class="fa fa-angle-left  fa-2x"> {{ trans('messages.TABS_FEES') }}</a> </h1>
+      <h1 class="text-center col-md-8"> 
 	  <form id="searchFilter" name="searchFilter" action="searchFilter" method="get">
 	  <select name="filterClass" id="filterName">
 	  <option value="0"> All Class</option>
@@ -55,24 +55,13 @@
 	   		  <button id="admitCard">Admit Card</button>
 
 	</form>
-
+	<form method="get" id="attendanceForm" action="studentAttendance" class="pull-right">
+	   		  <button id="present" class="attendanceBtn" type="submit" name="attendanceBtn" value="1" disabled>Present</button>
+	   		  <button id="absent "  class="attendanceBtn" type="submit"  name="attendanceBtn" value="0" disabled>Absent </button>
+	</form>
 	   </h1>
 	    <div class="add-emp add-school col-md-2">
             <a href="{{ url('/student/create') }}" title="Add New student"><p>{{ trans('messages.ADD') }} <span class="glyphicon glyphicon-plus" aria-hidden="true"/></p></a>
-            </div>
-			<div class=" col-md-3 category-filter">
-			</div>
-			<div class=" col-md-6 category-filter">
-		<form action="search-student" method="get" role="search">
-			<div class="input-group">
-				<input type="text" class="form-control" name="q"
-					placeholder="Search by Student Name,Class,Student Roll No." required> <span class="input-group-btn">
-					<button type="submit" class="btn btn-default">
-						<span class="glyphicon glyphicon-search"></span>
-					</button>
-				</span>
-			</div>
-		</form>
             </div>
   </div>
 	 
@@ -82,21 +71,29 @@
         <table class="table table-bordered table-striped table-hover">
             <thead>
                 <tr>
-                   <th>{{trans('messages.S_NO')}}</th> <th>{{ trans('messages.STUDENT_NAME') }}</th><th>{{ trans('messages.DOB') }}</th><th>{{ trans('messages.BOOKDETAIL_CLASS') }}</th><th>{{ trans('messages.ROLL_NO') }}</th><th> {{ trans('messages.HANDICAPPED') }}</th><th>{{ trans('messages.ACTIONS') }}<input type="checkbox"></th><th>{{ trans('messages.EDIT') }}</th><th>{{ trans('messages.DELETE') }}</th>
+                   <th>{{trans('messages.S_NO')}}</th> <th>{{ trans('messages.STUDENT_NAME') }}</th><th>{{ trans('messages.DOB') }}</th><th>{{ trans('messages.BOOKDETAIL_CLASS') }}</th><th>{{ trans('messages.ROLL_NO') }}</th><th> {{ trans('messages.HANDICAPPED') }}</th><th>{{ trans('messages.ACTIONS') }}<input type="checkbox" id="checkAll"></th><th>{{ trans('messages.EDIT') }}</th><th>{{ trans('messages.DELETE') }}</th>
                 </tr>
             </thead>
             <tbody>
            {{--*/$x=$student->firstItem()-1;/*--}}
             @foreach($student as $item)
                 {{-- */$x++;/* --}}
-                <tr>
+				<?php
+					if($item->attendance == trans('messages.ZERO')){
+						$class = "danger";
+					}
+					else{
+						$class = "";
+					}
+				?>
+                <tr class="{{$class}}">
 					<td>{{ $x }}</td>
                     <td>{{ $item->studentName }}</td>
 					<td>{{ $item->dob }}</td>
 					<td>{{ $item->name }}</td>
 					<td>{{ $item->rollNo }}</td>
 					<td>@if($item->handicapped === trans('messages.ZERO'))  NO @else  Yes @endif</td>
-					<td><input type="checkbox"></td>
+					<td><input type="checkbox" class="attendance" name="attendance[]" value="{{$item->entityId}}"></td>
                     <td>
                         <a href="{{ url('/student/' . $item->entityId . '/edit') }}" class="btn btn-primary btn-xs" title="Edit student"><span class="glyphicon glyphicon-pencil" aria-hidden="true"/></a>
 					</td>
@@ -129,12 +126,14 @@ $(document).ready(function(){
 	$("#filterName").change(function(){
 		$("#searchFilter").removeAttr("target");
 		$("#searchFilter").attr("action","searchFilter");
+		$("#page").remove();
 		$("#searchFilter").submit();
 	});
 	
 	$("#subject").change(function(){
 		$("#searchFilter").removeAttr("target");
 		$("#searchFilter").attr("action","searchFilter");
+		$("#page").remove();
 		$("#searchFilter").submit();
 	});
 	
@@ -150,7 +149,7 @@ $(document).ready(function(){
 			alert("Please select the all class option.");
 		}
 		else{
-			
+			$("#page").remove();
 			$("#searchFilter").attr("action","getPDF");
 			$("#searchFilter").attr("target","_blank");
 			$("#searchFilter").submit();
@@ -168,11 +167,27 @@ $(document).ready(function(){
 		{
 			$("#searchFilter").attr("action","getAdmitPDF");
 			$("#searchFilter").attr("target","_blank");
+			<?php
+			if(isset($_GET['page']))
+			{?>
+			$("#page").remove();
+			$("#searchFilter").append('<input type="hidden" id="page" name="page" value="<?php echo $_GET["page"] ?>"/>');
+			<?php
+			}
+			?>
+
 			$("#searchFilter").submit();
 			window.reload();
-
 		}
 		else{
+			<?php
+			if(isset($_GET['page']))
+			{?>
+			$("#page").remove();
+			$("#searchFilter").append('<input type="hidden" id="page" name="page" value="<?php echo $_GET["page"] ?>"/>');
+			<?php
+			}
+			?>
 			
 			$("#searchFilter").attr("action","getAdmitPDF");
 			$("#searchFilter").attr("target","_blank");
@@ -188,6 +203,59 @@ $(document).ready(function(){
 	$("#subject").val("<?php echo $_GET['subject']?>");
 		<?php
 	}?>
+	
+	$("#checkAll").change(function () {
+		$("input:checkbox").prop('checked', $(this).prop("checked"));
+		if($(this).prop("checked") == true){
+			checkBoxCheckValue(true);
+		}
+		else{
+			checkBoxCheckValue(false);
+		}
+		
+	});
+
+		$(".attendance").change(function(){
+			var attendanceForm = $("#attendanceForm");
+			if($(this).prop("checked") == true){
+			attendanceForm.append("<input type='hidden' name='attendance[]' id='attendance_"+$(this).val()+"' value='"+$(this).val()+"'>");
+			}
+			else if($(this).prop("checked") == false){
+			attendanceForm.find("#attendance_"+$(this).val()).remove();
+			}
+			checkLength();
+		});
+
+		
 });
+
+function checkBoxCheckValue(response){
+	var attendanceForm = $("#attendanceForm");
+	if(response == true)
+	{
+		attendanceForm.find(".attendance").remove();
+		$(".attendance").each(function() {
+			if($(this).prop("checked") == true){
+			attendanceForm.append("<input type='hidden' name='attendance[]'  id='attendance_"+$(this).val()+"' value='"+$(this).val()+"'>");
+			}
+		});
+	}
+	else{
+		attendanceForm.find("input[type='hidden']").remove();
+	}
+	checkLength();
+}
+
+function checkLength()
+{			var attendanceForm = $("#attendanceForm");
+			if(attendanceForm.find("input[type='hidden']").length > 0)
+			{
+				$(".attendanceBtn").removeAttr('disabled');
+			}
+			else{
+				$(".attendanceBtn").attr('disabled','disabled');
+			}
+
+}
 </script>
 @endsection

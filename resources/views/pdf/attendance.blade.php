@@ -15,7 +15,7 @@
 
 .pdf-tr{border-bottom:1px solid #000 !important;}
 
-table{width:100%;}
+table{width:100%; font-size:13px;}
 
 </style>
 </head>
@@ -82,7 +82,7 @@ else{
   <thead  style="border:1px solid #000;">
     <tr class="pdf-tr">
       <th style="border:1px solid #000;">S.NO.</th>
-      <th style="border:1px solid #000;">ROLL NO</th>
+      <th style="border:1px solid #000;"> &nbsp; &nbsp;  ROLL NO &nbsp; &nbsp; </th>
       <th style="border:1px solid #000;"> NAME OF THE STUDENT</th>
       <th style="border:1px solid #000;">PARENT'S NAME</th>
       <th style="border:1px solid #000;">SIGNATURE</th>
@@ -102,7 +102,7 @@ else{
 	<td style="border:1px solid #000;">&nbsp;</td>
 </tr>
 @endif
-<?php if($j > 19)
+<?php if($j > 21)
 {
 	$j = 0;
 	?>
@@ -162,7 +162,7 @@ else{
   <thead style="margin-top:-400px"  style="border:1px solid #000;">
     <tr class="pdf-tr" style="border:1px solid #000;">
       <th  style="border:1px solid #000;">S.NO.</th>
-      <th  style="border:1px solid #000;">ROLL NO</th>
+      <th  style="border:1px solid #000;"> &nbsp; &nbsp;  ROLL NO &nbsp; &nbsp; </th>
       <th  style="border:1px solid #000;"> NAME OF THE STUDENT</th>
       <th  style="border:1px solid #000;">PARENT'S NAME</th>
       <th  style="border:1px solid #000;">SIGNATURE</th>

@@ -9,7 +9,7 @@
         "laravel/framework": "5.2.*",
         "appzcoder/crud-generator": "^1.1",
         "laravelcollective/html": "5.2.*",
-        "barryvdh/laravel-dompdf": "^0.6.1"
+        "barryvdh/laravel-dompdf": "0.6.*"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
