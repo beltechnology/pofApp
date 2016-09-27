@@ -340,6 +340,7 @@ class schoolsController extends Controller
 		if($validUser) return	view('errors.404');
 
         $school = school::findOrFail($id);
+
         return view('schools.show', compact('school'));
     }
 

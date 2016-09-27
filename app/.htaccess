@@ -1,0 +1,5 @@
+# BEGIN custom php.ini PHP54
+<IfModule mod_suphp.c>
+    suPHP_ConfigPath /home/pofindia/public_html/beta-ver1/app
+</IfModule>
+# END custom php.ini

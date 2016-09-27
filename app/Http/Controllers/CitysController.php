@@ -164,7 +164,7 @@ class CitysController extends Controller
 	public function CheckUser()
 	{
 		$userRole = new \App\library\myFunctions;
-		$is_ok = ($userRole->is_ok(12));
+		$is_ok = ($userRole->is_ok(2));
 		if($is_ok)
 		{
 			return true;   

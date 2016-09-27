@@ -110,7 +110,7 @@ class TeamController extends Controller
 		$validUser = $this->CheckUser();
 		if($validUser) return	view('errors.404');
 
-		team::create([
+       team::create([
      	'teamName' => $request['teamName'],
 		'cityId' => $request['city'],
 		'teamLocation' => $request['teamLocation'],

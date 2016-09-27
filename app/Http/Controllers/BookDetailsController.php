@@ -22,10 +22,8 @@ class BookDetailsController extends Controller
      */
     public function index()
     {
-		$validUser = $this->CheckUser();
-		if($validUser) return	view('errors.404');
-
         $bookdetails = BookDetail::paginate(15);
+
         return view('book-details.index', compact('bookdetails'));
     }
 
@@ -36,11 +34,7 @@ class BookDetailsController extends Controller
      */
     public function create()
     {
-		
-		$validUser = $this->CheckUser();
-		if($validUser) return	view('errors.404');
-     
-		return view('book-details.create');
+        return view('book-details.create');
     }
 
     /**
@@ -50,10 +44,6 @@ class BookDetailsController extends Controller
      */
     public function store(Request $request)
     {
-		
-		$validUser = $this->CheckUser();
-		if($validUser) return	view('errors.404');
-
         $this->validate($request, ['entityId' => '', ]);
 
         BookDetail::create($request->all());
@@ -72,11 +62,8 @@ class BookDetailsController extends Controller
      */
     public function show($id)
     {
-		
-		$validUser = $this->CheckUser();
-		if($validUser) return	view('errors.404');
-
         $bookdetail = BookDetail::findOrFail($id);
+
         return view('book-details.show', compact('bookdetail'));
     }
 
@@ -89,9 +76,6 @@ class BookDetailsController extends Controller
      */
     public function edit($id)
     {
-		$validUser = $this->CheckUser();
-		if($validUser) return	view('errors.404');
-		
         $bookdetail = BookDetail::findOrFail($id);
 		$bookdetails = DB::table('book_details')
 						->join('class_names','class_names.id','=','book_details.classId')
@@ -110,10 +94,6 @@ class BookDetailsController extends Controller
      */
     public function update($id, Request $request)
     {
-		
-		$validUser = $this->CheckUser();
-		if($validUser) return	view('errors.404');
-
         $this->validate($request, ['entityId' => '', ]);
 		$updateCounters=Input::get ('updateCounter')+1;
 		$updateCounterdata = DB::table('book_details')->where('entityId',$id)->value('updateCounter');
@@ -153,27 +133,10 @@ class BookDetailsController extends Controller
      */
     public function destroy($id)
     {
-		
-		$validUser = $this->CheckUser();
-		if($validUser) return	view('errors.404');
-
         BookDetail::destroy($id);
+
         Session::flash('flash_message', 'BookDetail deleted!');
+
         return redirect('book-details');
     }
-	
-	public function CheckUser()
-	{
-		
-		$userRole = new \App\library\myFunctions;
-		$is_ok = ($userRole->is_ok(12));
-		if($is_ok)
-		{
-			return true;   
-		}
-		else{
-			return false; 
-		}
-
-	}
 }

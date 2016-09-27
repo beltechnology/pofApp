@@ -43,17 +43,14 @@ Route::group(array('middleware' => 'auth'), function() {
 	Route::get('/changePassword','changepasswordController@index');
 	Route::get('/search', 'employeeController@filter');
 	Route::post('/search', 'employeeController@filter');
-	Route::get('/search-team', 'TeamController@filter');
-	Route::post('/search-team', 'TeamController@filter');
-	Route::get('/search-student', 'studentController@filter');
-	Route::post('/search-student', 'studentController@filter');
 	Route::get('/search-school', 'schoolsController@filter');
 	Route::post('/activate-school', 'schoolsController@activateSchool');
 	Route::get('/getPDF', 'PDFController@getPDF');
 	Route::get('/getAdmitPDF', 'PDFController@getAdmitPDF');
 	Route::get('/searchFilter', 'studentController@searchFilter');
 	Route::resource('/changeYear', 'SessionYearController@changeYear');
-	
+	Route::get('/studentAttendance', 'studentController@attendanceScreen');
+	Route::resource('module-config', 'ModuleConfigController');
 	Route::get('/employee/create/ajax-state',function()
 {
     $state_id = session()->get('currentStateId');
@@ -173,4 +170,3 @@ Route::auth();
 
 
 
-Route::resource('module-config', 'ModuleConfigController');

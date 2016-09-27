@@ -26,6 +26,7 @@ class feesController extends Controller
 		if($validUser) return	view('errors.404');
 
         $fees = fee::paginate(15);
+
         return view('fees.index', compact('fees'));
     }
 
@@ -52,8 +53,7 @@ class feesController extends Controller
 		$validUser = $this->CheckUser();
 		if($validUser) return	view('errors.404');
 
-		$validUser = $this->CheckUser();
-		if($validUser) return	view('errors.404');
+
 
         $this->validate($request, ['teamId' => 'required', ]);
 
@@ -155,7 +155,7 @@ class feesController extends Controller
 	public function CheckUser()
 	{
 		$userRole = new \App\library\myFunctions;
-		$is_ok = ($userRole->is_ok(12));
+		$is_ok = ($userRole->is_ok(15));
 		if($is_ok)
 		{
 			return true;   

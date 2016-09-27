@@ -152,8 +152,7 @@ return [
         Illuminate\View\ViewServiceProvider::class,
 		Appzcoder\CrudGenerator\CrudGeneratorServiceProvider::class,
 		Collective\Html\HtmlServiceProvider::class,
-		Barryvdh\DomPDF\serviceProvider::class,
-
+		Barryvdh\DomPDF\ServiceProvider::class,
         /*
          * Application Service Providers...
          */
@@ -161,6 +160,7 @@ return [
         App\Providers\AuthServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+
 
     ],
 

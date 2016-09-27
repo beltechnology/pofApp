@@ -47,17 +47,22 @@ class employeeController extends Controller
     }
 	
 	public function filter()
-    {		$q = Input::get ( 'q' );
+    {		$q = Input::get ('q');
 			$employee= DB::table('employees')
                         ->join('entitys','entitys.entityId','=','employees.entityId')
                         ->join('addresses','addresses.entityId','=','employees.entityId')
 						->join('phones','phones.entityId','=','employees.entityId')
 						->join('emailaddresses','emailaddresses.entityId','=','employees.entityId')
+						->leftjoin('schools','schools.employeeCode','=','employees.entityId')
 						->leftjoin('locations','locations.locationId','=','employees.locationId')
 						->leftjoin('teams','teams.teamId','=','employees.teamId')
 						->where('employees.deleted',0)
 						->where('addresses.stateId',session()->get('currentStateId'))
-						->where('name', 'like', '%'.$q.'%')
+						->where(function ($query) use ($q) {
+							return $query->orWhere('schools.schoolName', 'like', '%'.$q.'%')
+							->orwhere('entitys.name', 'like', '%'.$q.'%')
+							->orwhere('locations.location', 'like', '%'.$q.'%');
+						})
 						->groupBy('employees.entityId')
 						->paginate(trans('messages.PAGINATE'));
 						$pagination = $employee->appends ( array ('q' => Input::get ( 'q' )));
@@ -208,18 +213,17 @@ class employeeController extends Controller
     public function update($id, Request $request)
     {
 		
-		$FmyFunctions1 = new \App\library\myFunctions;
-		$is_ok = ($FmyFunctions1->is_ok(7));
-		if($is_ok)
-		{
-		return view('errors.404');   
-		}
+		$validUser = $this->CheckUser();
+		if($validUser) return	view('errors.404');
+
 		
 		$this->validate($request, ['name' => 'required', 'dob' => 'required', 'addressLine1' => 'required', 'stateId' => 'required', 'pincode' => 'required', 'primaryNumber' => 'required', 'email' => 'required', 'designation' => 'required', 'dateOfJoining' => 'required',]);
 		$updateCounters=Input::get ('updateCounter')+1;
 		$updateCounterdata = DB::table('employees')->where('entityId',$id)->value('updateCounter');
 		if($updateCounterdata < $updateCounters)
 		{
+		
+		DB::table('users')->where('entityId',$id)->update(['designationId' => Input::get ('designation')]);
 		
         $employee = employee::findOrFail($id);	
         $employee->update($request->all());

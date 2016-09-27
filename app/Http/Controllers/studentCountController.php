@@ -23,6 +23,7 @@ class studentCountController extends Controller
 		if($validUser) return	view('errors.404');
 		
         $studentcount = studentCount::paginate(15);
+
         return view('student-count.index', compact('studentcount'));
     }
 
@@ -69,6 +70,7 @@ class studentCountController extends Controller
 		if($validUser) return	view('errors.404');
 
         $studentcount = studentCount::findOrFail($id);
+
         return view('student-count.show', compact('studentcount'));
     }
 

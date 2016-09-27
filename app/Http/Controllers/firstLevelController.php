@@ -24,6 +24,7 @@ class firstLevelController extends Controller
 		if($validUser) return	view('errors.404');
 		
         $firstlevel = firstLevel::paginate(15);
+
         return view('first-level.index', compact('firstlevel'));
     }
 
@@ -70,6 +71,7 @@ class firstLevelController extends Controller
 		if($validUser) return	view('errors.404');
 
         $firstlevel = firstLevel::findOrFail($id);
+
         return view('first-level.show', compact('firstlevel'));
     }
 
@@ -86,6 +88,7 @@ class firstLevelController extends Controller
 		if($validUser) return	view('errors.404');
 
         $firstlevel = firstLevel::findOrFail($id);
+
         return view('first-level.edit', compact('firstlevel'));
     }
 
@@ -133,14 +136,16 @@ class firstLevelController extends Controller
 		if($validUser) return	view('errors.404');
 
         firstLevel::destroy($id);
+
         Session::flash('flash_message', 'firstLevel deleted!');
+
         return redirect('first-level');
     }
 	
 	public function CheckUser()
 	{
 		$userRole = new \App\library\myFunctions;
-		$is_ok = ($userRole->is_ok(12));
+		$is_ok = ($userRole->is_ok(17));
 		if($is_ok)
 		{
 			return true;   

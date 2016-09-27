@@ -150,7 +150,7 @@ class DistrictController extends Controller
 	public function CheckUser()
 	{
 		$userRole = new \App\library\myFunctions;
-		$is_ok = ($userRole->is_ok(12));
+		$is_ok = ($userRole->is_ok(4));
 		if($is_ok)
 		{
 			return true;   

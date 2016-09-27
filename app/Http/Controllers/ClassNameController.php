@@ -24,6 +24,7 @@ class ClassNameController extends Controller
 		if($validUser) return	view('errors.404');
 
         $classname = \DB::table('class_names')->where('deleted',0)->paginate(trans('messages.PAGINATE'));
+
         return view('class-name.index', compact('classname'));
     }
 
@@ -52,7 +53,9 @@ class ClassNameController extends Controller
 		
         $this->validate($request, ['name' => 'required|unique:class_names',]);
         ClassName::create($request->all());
+
         Session::flash('flash_message', 'ClassName added!');
+
         return redirect('class-name');
     }
 
@@ -69,6 +72,7 @@ class ClassNameController extends Controller
 		if($validUser) return	view('errors.404');
 
         $classname = ClassName::findOrFail($id);
+
         return view('class-name.show', compact('classname'));
     }
 
@@ -142,7 +146,7 @@ class ClassNameController extends Controller
 	public function CheckUser()
 	{
 		$userRole = new \App\library\myFunctions;
-		$is_ok = ($userRole->is_ok(12));
+		$is_ok = ($userRole->is_ok(3));
 		if($is_ok)
 		{
 			return true;   

@@ -72,6 +72,7 @@ class ClassSectionController extends Controller
 		if($validUser) return	view('errors.404');
 
         $classSection = ClassSection::findOrFail($id);
+
         return view('class-section.show', compact('classSection'));
     }
 
@@ -88,6 +89,7 @@ class ClassSectionController extends Controller
 		if($validUser) return	view('errors.404');
 		
         $classSection = ClassSection::findOrFail($id);
+
         return view('class-section.edit', compact('classSection'));
     }
 
@@ -135,14 +137,16 @@ class ClassSectionController extends Controller
 		if($validUser) return	view('errors.404');
 		
         \DB::table('class_sections')->where('id',$id)->update(['deleted'=>1]);
+
         Session::flash('flash_message', 'ClassSection deleted!');
+
         return redirect('class-section');
     }
 	
 	public function CheckUser()
 	{
 		$userRole = new \App\library\myFunctions;
-		$is_ok = ($userRole->is_ok(12));
+		$is_ok = ($userRole->is_ok(19));
 		if($is_ok)
 		{
 			return true;   

@@ -85,6 +85,7 @@ class SessionYearController extends Controller
 		if($validUser) return	view('errors.404');
 		
         $sessionyear = SessionYear::findOrFail($id);
+
         return view('session-year.show', compact('sessionyear'));
     }
 
@@ -159,7 +160,7 @@ class SessionYearController extends Controller
 	public function CheckUser()
 	{
 		$userRole = new \App\library\myFunctions;
-		$is_ok = ($userRole->is_ok(12));
+		$is_ok = ($userRole->is_ok(18));
 		if($is_ok)
 		{
 			return true;   

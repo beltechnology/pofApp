@@ -143,8 +143,8 @@ class PDFController extends Controller
 						->where('students.classId','=',Input::get('filterClass'))
 						->where('students.'.Input::get('subject'),'=',1)
 						->orderBy('students.rollNo','asc')
+						->paginate(30);
 						
-						->get();
 
 		}
 		elseif(Input::get('filterClass') == 0 && Input::get('subject') != "ALL" )
@@ -157,7 +157,8 @@ class PDFController extends Controller
 						->where('students.schoolEntityId',session()->get('entityId'))
 						->where('students.'.Input::get('subject'),'=',1)
 						->orderBy('students.rollNo','asc')
-						->get();
+						->paginate(30);
+						
 
 		}
 		else{
@@ -168,7 +169,8 @@ class PDFController extends Controller
 						->where('students.sessionYear',session()->get('activeSession'))
 						->where('students.schoolEntityId',session()->get('entityId'))
 						->orderBy('students.rollNo','asc')
-						->get();
+						->paginate(30);
+						
 		}
 //var_dump($schools);
 		$address = DB::table('addresses')->where('deleted',0)->where('entityId',session()->get('entityId'))->get();
@@ -184,7 +186,7 @@ class PDFController extends Controller
 	public function CheckUser()
 	{
 		$userRole = new \App\library\myFunctions;
-		$is_ok = ($userRole->is_ok(12));
+		$is_ok = ($userRole->is_ok(16));
 		if($is_ok)
 		{
 			return true;   

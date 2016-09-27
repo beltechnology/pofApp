@@ -21,6 +21,7 @@ class paymentsController extends Controller
 		if($validUser) return	view('errors.404');
 
         $payments = payment::paginate(15);
+
         return view('payments.index', compact('payments'));
     }
 
@@ -69,6 +70,7 @@ class paymentsController extends Controller
 		if($validUser) return	view('errors.404');
 
         $payment = payment::findOrFail($id);
+
         return view('payments.show', compact('payment'));
     }
 
@@ -144,7 +146,7 @@ class paymentsController extends Controller
 	public function CheckUser()
 	{
 		$userRole = new \App\library\myFunctions;
-		$is_ok = ($userRole->is_ok(12));
+		$is_ok = ($userRole->is_ok(14));
 		if($is_ok)
 		{
 			return true;   

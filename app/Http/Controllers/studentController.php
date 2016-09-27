@@ -32,38 +32,15 @@ class studentController extends Controller
 						->where('students.sessionYear',session()->get('activeSession'))
 						->where('students.schoolEntityId',session()->get('entityId'))
 						->orderBy('students.rollNo','asc')
-						->paginate(trans('messages.PAGINATE'));
+						->paginate(30);
         return view('student.index', compact('student'))->with('studentClass',$studentClass);
     }
-public function filter()
-    {
-		$validUser = $this->CheckUser();
-		if($validUser) return	view('errors.404');
 
-		$q = Input::get ('q');
-	 $studentClass = DB::table('class_names')->where('deleted',0)->get();
-	   $student= DB::table('students')
-                        ->join('class_names','class_names.id','=','students.classId')
-						->where('students.deleted',0)
-						->where('class_names.deleted',0)
-						->where('students.sessionYear',session()->get('activeSession'))
-						->where('students.schoolEntityId',session()->get('entityId'))
-						->where(function ($query) use ($q) {
-							return $query->orWhere('class_names.name', 'like', '%'.$q.'%')
-							->orwhere('students.studentName', 'like', '%'.$q.'%')
-							->orwhere('students.rollNo', 'like', '%'.$q.'%');
-						})
-						->orderBy('students.rollNo','asc')
-						->paginate(trans('messages.PAGINATE'));
-						$pagination = $student->appends ( array ('q' => Input::get ( 'q' )));	
-
-        return view('student.index', compact('student'))->with('studentClass',$studentClass);
-    }
     public function searchFilter()
     {
 		$validUser = $this->CheckUser();
 		if($validUser) return	view('errors.404');
-		
+
 		if(Input::get('filterClass') == 0 && Input::get('subject') == "ALL" )
 		{
 				   $student= DB::table('students')
@@ -73,7 +50,7 @@ public function filter()
 						->where('students.sessionYear',session()->get('activeSession'))
 						->where('students.schoolEntityId',session()->get('entityId'))
 						->orderBy('students.rollNo','asc')
-						->paginate(trans('messages.PAGINATE'));
+						->paginate(30);
 		}
 		elseif(Input::get('filterClass') != 0 && Input::get('subject') == "ALL" )
 		{
@@ -85,7 +62,7 @@ public function filter()
 						->where('students.schoolEntityId',session()->get('entityId'))
 						->where('students.classId','=',Input::get('filterClass'))
 						->orderBy('students.rollNo','asc')
-						->paginate(trans('messages.PAGINATE'));
+						->paginate(30);
 
 		}
 		elseif(Input::get('filterClass') != 0 && Input::get('subject') != "ALL" )
@@ -99,7 +76,7 @@ public function filter()
 						->where('students.classId','=',Input::get('filterClass'))
 						->where('students.'.Input::get('subject'),'=',1)
 						->orderBy('students.rollNo','asc')
-						->paginate(trans('messages.PAGINATE'));
+						->paginate(30);
 
 		}
 		elseif(Input::get('filterClass') == 0 && Input::get('subject') != "ALL" )
@@ -112,7 +89,7 @@ public function filter()
 						->where('students.schoolEntityId',session()->get('entityId'))
 						->where('students.'.Input::get('subject'),'=',1)
 						->orderBy('students.rollNo','asc')
-						->paginate(trans('messages.PAGINATE'));
+						->paginate(30);
 
 		}
 		else{
@@ -123,7 +100,7 @@ public function filter()
 						->where('students.sessionYear',session()->get('activeSession'))
 						->where('students.schoolEntityId',session()->get('entityId'))
 						->orderBy('students.rollNo','asc')
-						->paginate(trans('messages.PAGINATE'));
+						->paginate(30);
 		}
 		
 	   $studentClass = DB::table('class_names')->where('deleted',0)->get();
@@ -144,7 +121,7 @@ public function filter()
     {
 		$validUser = $this->CheckUser();
 		if($validUser) return	view('errors.404');
-
+		
 		$schoolSessionYear = DB::table('schools')->where('schools.deleted',0)->where('schools.entityId',session()->get('entityId'))->value('sessionYear');
 		$classes = DB::table('class_names')->where('class_names.deleted',0)->lists('name', 'id');
 		$classSections= DB::table('class_sections')->where('class_sections.deleted',0)->lists('class_sections.name', 'id');
@@ -222,7 +199,7 @@ public function filter()
     {
 		$validUser = $this->CheckUser();
 		if($validUser) return	view('errors.404');
-		
+
         $student = student::findOrFail($id);
 
         return view('student.show', compact('student'));
@@ -239,7 +216,7 @@ public function filter()
     {
 		$validUser = $this->CheckUser();
 		if($validUser) return	view('errors.404');
-		
+
         $student = student::findOrFail($id);
 		$classes = DB::table('class_names')->where('class_names.deleted',0)->lists('name', 'id');
 		$classSections= DB::table('class_sections')->where('class_sections.deleted',0)->lists('class_sections.name', 'id');
@@ -257,7 +234,7 @@ public function filter()
     {
 		$validUser = $this->CheckUser();
 		if($validUser) return	view('errors.404');
-		
+
         $this->validate($request, ['studentName' => 'required', 'fatherName' => 'required', 'dob' => 'required', 'classId' => 'required','pmo' => 'required', 'pso' => 'required', 'handicapped' => 'required', 'rollNo' => 'required', ]);
 		
 		$updateCounters=Input::get ('updateCounter')+1;
@@ -303,11 +280,23 @@ public function filter()
         return redirect('student');
     }
 	
+    public function attendanceScreen()
+    {
+		$validUser = $this->CheckUser();
+		if($validUser) return	view('errors.404');
+
+		foreach(Input::get('attendance') as $attendance){
+		 DB::table('students')->where('entityId', $attendance)->update(['attendance' => Input::get('attendanceBtn')]);
+		}
+		return redirect('student');
+    }
+	
+	
 	
 	public function CheckUser()
 	{
 		$userRole = new \App\library\myFunctions;
-		$is_ok = ($userRole->is_ok(12));
+		$is_ok = ($userRole->is_ok(16));
 		if($is_ok)
 		{
 			return true;   
@@ -317,5 +306,4 @@ public function filter()
 		}
 
 	}
-	
 }
