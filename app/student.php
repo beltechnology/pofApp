@@ -25,5 +25,5 @@ class student extends Model
      *
      * @var array
      */
-    protected $fillable = ['entityId','schoolEntityId','sessionYear','studentName', 'fatherName', 'dob', 'classId', 'section', 'pmo', 'pso', 'handicapped', 'rollNo','deleted','status'];
+    protected $fillable = ['entityId','schoolEntityId','sessionYear','studentName', 'fatherName', 'dob', 'classId', 'section', 'pmo', 'pso', 'handicapped', 'rollNo','deleted','status','totalMarksPmo','totalMarksPso'];
 }

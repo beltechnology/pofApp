@@ -33,17 +33,17 @@
                 {{-- */$x++;/* --}}
                 <tr>
                     <td>{{ $x }}</td>
-                    <td>{{ $item->text }}</td>
-                    <td>{{ $item->section }}</td>
+                    <td>{{ $item->questionId }}</td>
+                    <td>{{ $item->questionId }}</td>
                     <td>{{ $item->stream }}</td>
-                    <td>{{ $item->marks }}</td>
-                    <td>{{ $item->questionType }}</td>
+                    <td>{{ $item->questionId }}</td>
+                    <td>{{ $item->questionId }}</td>
                     <td>
                     <!--    <a href="{{ url('/master-questions/' . $item->questionId) }}" class="btn btn-success btn-xs" title="View fee"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"/></a>
                         <a href="{{ url('/master-questions/' . $item->questionId . '/edit') }}" class="btn btn-primary btn-xs" title="Edit fee"><span class="glyphicon glyphicon-pencil" aria-hidden="true"/></a>
                     -->    {!! Form::open([
                             'method'=>'DELETE',
-                            'url' => ['/master-questions', $item->questionId],
+                            'url' => ['/student-result', $item->resultId],
                             'style' => 'display:inline'
                         ]) !!}
                             {!! Form::button('<span class="glyphicon glyphicon-trash" aria-hidden="true" title="Delete fee" />', array(

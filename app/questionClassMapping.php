@@ -24,5 +24,5 @@ class questionClassMapping extends Model
      *
      * @var array
      */
-    protected $fillable = ['classId','setId','questionId','updateCounter','deleted','status','order'];
+    protected $fillable = ['classId','setId','masterSetId','questionId','updateCounter','deleted','status','order'];
 }

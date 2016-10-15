@@ -13,6 +13,7 @@ use App\school;
 use Carbon\Carbon;
 use Session;
 use DB;
+use raw;
 use Illuminate\Support\Facades\Input;
 class PDFController extends Controller
 {
@@ -182,6 +183,58 @@ class PDFController extends Controller
 	//return view('pdf.admitCard', ['student'=>$student,'schools'=>$schools,'address'=>$address[0]->addressLine1." ".$address[0]->addressLine2 ,'states'=>$states,'districts'=>$districts,'citys'=>$citys,'classess'=>$classess,]);
 		return $pdf->stream('admitCard.pdf');
 	}	
+
+	public function getStudentResult($studentEntityId,$stream){
+				$studentInfo = DB::table('students')->where('deleted',0)->where('entityId',$studentEntityId)->get();
+				if($studentInfo){
+					$classId = $studentInfo[0]->classId;
+					$schoolEntityId = $studentInfo[0]->schoolEntityId;
+					if($stream == 'PMO'){$streamName = 'totalMarksPmo'; } else{ $streamName = 'totalMarksPso'; }
+				//	$schoolInfo = DB::table('students')->where('deleted',0)->where('entityId',$studentEntityId)->get();
+					$studentClassWiseList = DB::table('students')->where('deleted',0)->where('schoolEntityId',$schoolEntityId)->orderBy($streamName, 'DESC')->where($stream,1)->get();
+					$rank = 1;
+					$tempMarks = 0;
+					foreach($studentClassWiseList as $studentClassList){
+						if($studentClassList->entityId == $studentInfo[0]->entityId){
+							$schookRank = $rank;
+						}
+						if($stream == 'PMO'){
+							if($tempMarks != $studentClassList->totalMarksPmo){
+								$tempMarks = $studentClassList->totalMarksPmo;
+								$rank++;
+							}
+						}else{
+							if($tempMarks != $studentClassList->totalMarksPso){
+								$tempMarks = $studentClassList->totalMarksPso;
+								$rank++;
+							}
+						}
+					}
+					
+					
+					$cityId = DB::table('addresses')->where('deleted',0)->where('entityId',$schoolEntityId)->value('cityId');
+					$studentCityWiseList = DB::raw("select * from students,schools , addresses where schools.entityId= addresses.entityId and addresses.cityId = 19 and students.classId = 2");
+					// DB::table('students, schools , addresses')
+										// ->where('schools.entityId','=','addresses.entityId')
+										// ->where('students.classId',$classId)
+										// ->where('students.deleted',0)
+										// ->where('addresses.cityId',$cityId)
+										// // ->where('students.'.$stream,1)
+										// // ->orderBy('students.'.$streamName, 'DESC')
+										//->get();
+				
+					var_dump($studentCityWiseList);
+
+
+
+				
+				}
+		
+	}
+
+
+
+
 	
 	public function CheckUser()
 	{

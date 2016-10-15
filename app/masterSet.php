@@ -1,14 +1,16 @@
 <?php
 namespace App;
+
 use Illuminate\Database\Eloquent\Model;
-class studentResult extends Model
+
+class masterSet extends Model
 {
     /**
      * The database table used by the model.
      *
      * @var string
      */
-    protected $table = 'student_result';
+    protected $table = 'master_set';
 
     /**
     * The database primary key value.
@@ -22,5 +24,5 @@ class studentResult extends Model
      *
      * @var array
      */
-    protected $fillable = ['questionId','answerId','studentId','correct','sessionId','stream','updateCounter','deleted','status','order','studentAnswerId'];
+    protected $fillable = ['setName','updateCounter','deleted','status'];
 }
