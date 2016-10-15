@@ -24,10 +24,13 @@ class studentResultController extends Controller
      */
     public function index()
     {
-        $studentResult = DB::table('student_result')->where('deleted',0)->paginate(15);
+        $studentResult = DB::table('student_result')
+                        ->join('master_question','master_question.questionId','=','student_result.questionId')
+						 ->join('master_answer','master_answer.answerId','=','student_result.answerId')
+						->where('student_result.deleted',0)
+						->paginate(30);
         return view('student-result.index', compact('studentResult'));
     }
-
     /**
      * Show the form for creating a new resource.
      *

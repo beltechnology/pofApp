@@ -20,10 +20,9 @@
                 <tr>
                     <th>S.No</th>
 					<th> Questions </th>
-					<th> Section </th>
-					<th> Stream </th>
-					<th> Marks </th>
-					<th> Question Type </th>
+					<th> Answer</th>
+					<th>Correct/Incorrect</th>
+					<th>Student Answer</th>
 					<th>Actions</th>
                 </tr>
             </thead>
@@ -33,11 +32,10 @@
                 {{-- */$x++;/* --}}
                 <tr>
                     <td>{{ $x }}</td>
-                    <td>{{ $item->questionId }}</td>
-                    <td>{{ $item->questionId }}</td>
-                    <td>{{ $item->stream }}</td>
-                    <td>{{ $item->questionId }}</td>
-                    <td>{{ $item->questionId }}</td>
+                    <td>{{ $item->text }}</td>
+                    <td>{{ $item->answerText }}</td>
+                    <td>{{ $item->correct }}</td>
+                    <td>{{ DB::table('master_answer')->where('master_answer.answerId',$item->studentAnswerId)->where('master_answer.deleted',0)->value('answerText') }}</td>
                     <td>
                     <!--    <a href="{{ url('/master-questions/' . $item->questionId) }}" class="btn btn-success btn-xs" title="View fee"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"/></a>
                         <a href="{{ url('/master-questions/' . $item->questionId . '/edit') }}" class="btn btn-primary btn-xs" title="Edit fee"><span class="glyphicon glyphicon-pencil" aria-hidden="true"/></a>
@@ -55,7 +53,7 @@
                         {!! Form::close() !!}
                     </td>
                 </tr>
-            @endforeach
+			@endforeach	
             </tbody>
         </table>
         <div class="pagination-wrapper"> {!! $studentResult->render() !!} </div>
