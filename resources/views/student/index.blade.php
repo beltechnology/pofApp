@@ -71,7 +71,16 @@
         <table class="table table-bordered table-striped table-hover">
             <thead>
                 <tr>
-                   <th>{{trans('messages.S_NO')}}</th> <th>{{ trans('messages.STUDENT_NAME') }}</th><th>{{ trans('messages.DOB') }}</th><th>{{ trans('messages.BOOKDETAIL_CLASS') }}</th><th>{{ trans('messages.ROLL_NO') }}</th><th> {{ trans('messages.HANDICAPPED') }}</th><th>{{ trans('messages.ACTIONS') }}<input type="checkbox" id="checkAll"></th><th>{{ trans('messages.EDIT') }}</th><th>{{ trans('messages.DELETE') }}</th>
+                   <th>{{trans('messages.S_NO')}}</th> 
+				   <th>{{ trans('messages.STUDENT_NAME') }}</th>
+				   <th>{{ trans('messages.DOB') }}</th>
+				   <th>{{ trans('messages.BOOKDETAIL_CLASS') }}</th>
+				   <th>{{ trans('messages.ROLL_NO') }}</th>
+				   <th> {{ trans('messages.HANDICAPPED') }}</th>
+				   <th>{{ trans('messages.ACTIONS') }}<input type="checkbox" id="checkAll"></th><th>{{ trans('messages.EDIT') }}</th>
+				   <th>{{ trans('messages.DELETE') }}</th>
+				   <th>Pso Result</th>
+				   <th>Pmo Result</th>
                 </tr>
             </thead>
             <tbody>
@@ -111,6 +120,16 @@
                             ));!!}
                         {!! Form::close() !!}
                     </td>
+                    <td>
+					@if($item->pso)
+                        <a href="{{ url('/getStudentResult/' . $item->entityId . '/pso') }}" class="btn btn-primary btn-xs" title="Edit student"><span class="glyphicon glyphicon-pencil" aria-hidden="true"/></a>
+					@endif
+					</td>
+                    <td>
+					@if($item->pmo)
+                        <a href="{{ url('/getStudentResult/' . $item->entityId . '/pmo') }}" class="btn btn-primary btn-xs" title="Edit student"><span class="glyphicon glyphicon-pencil" aria-hidden="true"/></a>
+					@endif
+					</td>
                 </tr>
             @endforeach
             </tbody>

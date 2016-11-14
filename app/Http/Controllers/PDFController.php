@@ -186,50 +186,139 @@ class PDFController extends Controller
 
 	public function getStudentResult($studentEntityId,$stream){
 				$studentInfo = DB::table('students')->where('deleted',0)->where('entityId',$studentEntityId)->get();
-				if($studentInfo){
+			if($studentInfo){
 					$classId = $studentInfo[0]->classId;
 					$schoolEntityId = $studentInfo[0]->schoolEntityId;
 					if($stream == 'PMO'){$streamName = 'totalMarksPmo'; } else{ $streamName = 'totalMarksPso'; }
-				//	$schoolInfo = DB::table('students')->where('deleted',0)->where('entityId',$studentEntityId)->get();
-					$studentClassWiseList = DB::table('students')->where('deleted',0)->where('schoolEntityId',$schoolEntityId)->orderBy($streamName, 'DESC')->where($stream,1)->get();
-					$rank = 1;
-					$tempMarks = 0;
-					foreach($studentClassWiseList as $studentClassList){
-						if($studentClassList->entityId == $studentInfo[0]->entityId){
-							$schookRank = $rank;
-						}
-						if($stream == 'PMO'){
-							if($tempMarks != $studentClassList->totalMarksPmo){
-								$tempMarks = $studentClassList->totalMarksPmo;
-								$rank++;
+					$tempMarks = 0;	
+					$tempStateMarks = 0;	
+					$tempCityMarks = 0;	
+					$tempSchoolMarks = 0;	
+					
+
+					
+					$natnationRank = 0;
+					$stateRank = 0;
+					$cityRank = 0;
+					$schoolRank = 0;
+
+					
+					
+					$studentNatnationRank = 1;
+					$studentSateRank = 1;
+					$studentCityRank = 1;
+					$studentSchoolRank = 1;
+					$addressInfo = DB::table('addresses')->where('deleted',0)->where('entityId',$schoolEntityId)->get();
+					$stateId = $addressInfo[0]->stateId;
+					$cityId = $addressInfo[0]->cityId;
+					$schoolInfo = DB::table('schools')
+								->join('addresses','schools.entityId','=','addresses.entityId')
+								->join('states','addresses.stateId','=','states.id')
+								->join('districts','addresses.districtId','=','districts.id')
+								->join('citys','addresses.cityId','=','citys.id')
+								->where('schools.deleted',0)
+								->where('schools.entityId',$schoolEntityId)
+								->get();
+								
+					
+					$studentList =	DB::select(DB::raw('select stud.*, sch.entityId sch , sch.schoolName, addr.stateId,addr.cityId from students stud , schools sch, addresses addr where stud.deleted = 0 and stud.classId = '.$classId.'  and stud.schoolEntityId = sch.entityId and sch.entityId = addr.entityId  order by stud.'.$streamName.' desc'));
+							if($stream == 'PMO'){
+								$analyticalReasoning = 0;
+								$everydayMathematicalReasoning = 0;
+								$standardMathematics = 0;
+								$questZone = 0;
+
+								$studentResultInfo =	DB::table('student_result')
+								->where('studentId',$studentInfo[0]->entityId)
+								->where('stream',$stream)
+								->where('correct',1)
+								->get();
+								if($studentResultInfo){
+									foreach($studentResultInfo as $studentResultData){
+									$section =	DB::table('master_question')
+										->where('questionId',$studentResultData->questionId)
+										->value('section');
+										if($section == 'Analytical Reasoning'){
+											$analyticalReasoning ++;
+										}
+										if($section == 'Everyday Mathematical Reasoning'){
+											$everydayMathematicalReasoning ++;
+										}
+										if($section == 'Standard Mathematics'){
+											$standardMathematics ++;
+										}
+										if($section == 'Quest Zone'){
+											$questZone ++;
+										}
+									}
+									$sectionData = ['analyticalReasoning'=>$analyticalReasoning,'everydayMathematicalReasoning'=>$everydayMathematicalReasoning,'standardMathematics'=>$standardMathematics,'questZone'=>$questZone] ;									
+								}	
+								}else{
+								$analyticalReasoning = 0;
+								$everydayScience = 0;
+								$questZone = 0;
+
+								$studentResultInfo =	DB::table('student_result')
+								->where('studentId',$studentInfo[0]->entityId)
+								->where('stream',$stream)
+								->where('correct',1)
+								->get();
+								if($studentResultInfo){
+									foreach($studentResultInfo as $studentResultData){
+									$section =	DB::table('master_question')
+										->where('questionId',$studentResultData->questionId)
+										->value('section');
+										if($section == 'Analytical Reasoning'){
+											$analyticalReasoning ++;
+										}
+										if($section == 'Everyday Science'){
+											$everydayScience ++;
+										}
+										if($section == 'Quest Zone'){
+											$questZone ++;
+										}
+									}
+									$sectionData = ['analyticalReasoning'=>$analyticalReasoning,'everydayScience'=>$everydayScience,'questZone'=>$questZone] ;									
+								}								
 							}
-						}else{
-							if($tempMarks != $studentClassList->totalMarksPso){
-								$tempMarks = $studentClassList->totalMarksPso;
-								$rank++;
+
+
+
+			if($studentList){
+					foreach($studentList as $studentListData){
+						//	 echo $schoolRank."________".$studentListData->entityId."******".$studentInfo[0]->entityId."-------".$schoolEntityId."========".$studentListData->schoolEntityId."<br>";
+							if($stream == 'PMO'){
+								if($tempMarks != $studentListData->totalMarksPmo){
+									$tempMarks = $studentListData->totalMarksPmo;
+									$natnationRank++;
+									if($stateId == $studentListData->stateId){ $stateRank++;}
+									if($cityId == $studentListData->cityId ){ $cityRank++; }
+									if($schoolEntityId == $studentListData->schoolEntityId){ $schoolRank++; }								
+								}
+							}else{
+								if($tempMarks != $studentListData->totalMarksPso){
+									$tempMarks = $studentListData->totalMarksPso;
+									$natnationRank++;
+
+								}
+								if($tempStateMarks != $studentListData->totalMarksPso && $stateId== $studentListData->stateId ){$tempStateMarks=$studentListData->totalMarksPso; $stateRank++;}
+								if($tempCityMarks != $studentListData->totalMarksPso && $cityId== $studentListData->cityId ){$tempCityMarks=$studentListData->totalMarksPso; $cityRank++;}
+								if($tempSchoolMarks != $studentListData->totalMarksPso && $schoolEntityId== $studentListData->schoolEntityId ){$tempSchoolMarks = $studentListData->totalMarksPso; $schoolRank++;}
 							}
-						}
+							
+							if($studentListData->entityId == $studentInfo[0]->entityId){
+								if($natnationRank >0){$studentNatnationRank = $natnationRank;}
+								if($stateRank >0){$studentSateRank = $stateRank;}
+								if($cityRank >0){$studentCityRank = $cityRank;}
+								if($schoolRank >0){$studentSchoolRank = $schoolRank;}								
+							}
 					}
-					
-					
-					$cityId = DB::table('addresses')->where('deleted',0)->where('entityId',$schoolEntityId)->value('cityId');
-					$studentCityWiseList = DB::raw("select * from students,schools , addresses where schools.entityId= addresses.entityId and addresses.cityId = 19 and students.classId = 2");
-					// DB::table('students, schools , addresses')
-										// ->where('schools.entityId','=','addresses.entityId')
-										// ->where('students.classId',$classId)
-										// ->where('students.deleted',0)
-										// ->where('addresses.cityId',$cityId)
-										// // ->where('students.'.$stream,1)
-										// // ->orderBy('students.'.$streamName, 'DESC')
-										//->get();
-				
-					var_dump($studentCityWiseList);
-
-
-
-				
 				}
-		
+				
+			}
+			
+		$pdf = PDF::loadView('pdf.studentResult',['studentInfo'=>$studentInfo,'sectionData'=>$sectionData,'schoolInfo'=>$schoolInfo, 'studentNatnationRank'=>$studentNatnationRank, 'studentSateRank'=>$studentSateRank, 'studentCityRank'=>$studentCityRank, 'studentSchoolRank'=>$studentSchoolRank, 'stream'=>$stream]);
+		return $pdf->stream('studentResult.pdf');
 	}
 
 
