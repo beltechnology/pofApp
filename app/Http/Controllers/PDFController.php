@@ -315,9 +315,19 @@ class PDFController extends Controller
 					}
 				}
 				
+					$questionInfo = DB::table('student_result')
+								->join('master_question','student_result.questionId','=','master_question.questionId')
+								->join('master_answer','student_result.answerId','=','master_answer.answerId')
+								->where('student_result.deleted',0)
+								->where('student_result.stream',$stream)
+								->where('student_result.studentId',$studentEntityId)
+								->orderBy('section', 'asc')
+								->get();
+					
+				//	var_dump($questionInfo);
 			}
 			
-		$pdf = PDF::loadView('pdf.studentResult',['studentInfo'=>$studentInfo,'sectionData'=>$sectionData,'schoolInfo'=>$schoolInfo, 'studentNatnationRank'=>$studentNatnationRank, 'studentSateRank'=>$studentSateRank, 'studentCityRank'=>$studentCityRank, 'studentSchoolRank'=>$studentSchoolRank, 'stream'=>$stream]);
+		$pdf = PDF::loadView('pdf.studentResult',['studentInfo'=>$studentInfo,'sectionData'=>$sectionData,'schoolInfo'=>$schoolInfo, 'studentNatnationRank'=>$studentNatnationRank, 'studentSateRank'=>$studentSateRank, 'studentCityRank'=>$studentCityRank, 'studentSchoolRank'=>$studentSchoolRank, 'stream'=>$stream, 'questionInfo'=>$questionInfo]);
 		return $pdf->stream('studentResult.pdf');
 	}
 

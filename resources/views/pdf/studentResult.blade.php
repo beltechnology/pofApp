@@ -202,7 +202,7 @@ elseif($stream == 'pmo'){
 		<tr>
 			<td style="border:1px solid #000;"></td>
 			<td style="border:1px solid #000;">Total</td>
-			<td style="border:1px solid #000;">60</td>
+			<td style="border:1px solid #000;">100</td>
 			<td style="border:1px solid #000;">{{$sectionData['questZone']*3+$sectionData['analyticalReasoning']+($sectionData['standardMathematics']*2)+$sectionData['everydayMathematicalReasoning']}}</td>
 		</tr>
 	<tbody>
@@ -210,6 +210,167 @@ elseif($stream == 'pmo'){
 	</table>
 </div>
 @endforeach
+	<!-- questin wise PDF -->
+		<div style="margin-top:300px">
+			<div align="center"><h5> QUESTION WISE ANALYSIS</h5> </div>
+			<table style="width:700px ;">
+				<thead>
+					<tr>
+						<th style="border:1px solid #000;">SR.No</th>
+						<th style="border:1px solid #000;">Questions</th>
+						<th style="border:1px solid #000;">Answer Key</th>
+						<th style="border:1px solid #000;">Your Answer</th>
+						<th style="border:1px solid #000;">Answer<hr> Right/Wrong</th>
+						<th style="border:1px solid #000;">Right Answer<hr>in State %</th>
+						<th style="border:1px solid #000;">Right Answer<hr>in National %</th>
+					</tr>
+				</thead>
+					<?php $num = "";
+						  $count = 0;
+					?>
+					@foreach($questionInfo as $questions)
+					<?php if($num != $questions->section){
+						$num =  $questions->section;
+						
+						?>
+					<tr>
+						<td colspan="7" style="border:1px solid #000;">
+							<caption align="center"><h5>Section <?php echo $questions->section; ?></h5> </caption>
+						<td>
+					</tr>
+						<?php
+					}
+					$count++;
+					?>
+					<tr>
+						<td style="border:1px solid #000;">{{$count}}</td>
+						<td style="border:1px solid #000;"><?php echo mb_strimwidth($questions->text, 0, 15, "..."); ?></td>
+						<td style="border:1px solid #000;">{{ $questions->answerText}}</td>
+						<td style="border:1px solid #000;">{{ DB::table('master_answer')->where('master_answer.answerId',$questions->studentAnswerId)->where('master_answer.deleted',0)->value('answerText') }}</td>
+						<td style="border:1px solid #000;">@if($questions->correct == 1)Right @else Wrong @endif</td>
+						<td style="border:1px solid #000;">{{DB::table('student_result')
+								->join('students','student_result.studentId','=','students.entityId')
+								->join('schools','students.schoolEntityId','=','schools.entityId')
+								->join('addresses','schools.entityId','=','addresses.entityId')
+								->where('addresses.stateId',$schoolInfo[0]->state_id)
+								->where('student_result.stream',$stream)
+								->where('student_result.questionId',$questions->questionId)
+								->where('student_result.correct',1)
+								->count()/DB::table('student_result')
+								->join('students','student_result.studentId','=','students.entityId')
+								->join('schools','students.schoolEntityId','=','schools.entityId')
+								->join('addresses','schools.entityId','=','addresses.entityId')
+								->where('addresses.stateId',$schoolInfo[0]->state_id)
+								->where('student_result.stream',$stream)
+								->where('student_result.questionId',$questions->questionId)
+								->count()*100}}
+						</td>
+						<td style="border:1px solid #000;">{{DB::table('student_result')
+								->where('student_result.deleted',0)
+								->where('student_result.stream',$stream)
+								->where('questionId',$questions->questionId)
+								->where('correct',1)
+								->count()/DB::table('student_result')
+								->where('student_result.deleted',0)
+								->where('student_result.stream',$stream)
+								->where('questionId',$questions->questionId)
+								->count()*100}}
+						</td>
+					</tr>
+					@endforeach
+
+				<tbody>
+					
+				</tbody>
+			</table>
+		
+		</div>
+<!--    strat code for Topic wise analysis -->
+<div class="row"  style="margin-top:150px;">
+	<h5 align="center">TOPIC  WISE PERFORMANCE  ANALYSIS</h5>
+	<table style="width:700px ;">
+	<thead style="border:1px solid #000;">
+	<tr >
+		<th style="border:1px solid #000;">SR.No.</th>
+		<th style="border:1px solid #000;">Section Name</th>
+		<th style="border:1px solid #000;">Total Marks <br>(In Topic) </th>
+		<th style="border:1px solid #000;">Obtained Marks  </th>
+		<th style="border:1px solid #000;">Percentage </th>
+	</tr>
+	</thead>
+	@if($stream == 'pso')
+	<tbody style="border:1px solid #000;" >
+		<tr>
+			<td style="border:1px solid #000;">1</td>
+			<td style="border:1px solid #000;">Analytical Reasoning</td>
+			<td style="border:1px solid #000;">15</td>
+			<td style="border:1px solid #000;">{{$sectionData['analyticalReasoning']}}</td>
+			<td style="border:1px solid #000;">{{number_format($sectionData['analyticalReasoning']/15*100,2)}}</td>
+		</tr>
+		<tr>
+			<td style="border:1px solid #000;">2</td>
+			<td style="border:1px solid #000;">Everyday Science</td>
+			<td style="border:1px solid #000;">35</td>
+			<td style="border:1px solid #000;">{{$sectionData['everydayScience']}}</td>
+			<td style="border:1px solid #000;">{{number_format($sectionData['everydayScience']/35*100,2)}}</td>
+		</tr>
+		<tr>
+			<td style="border:1px solid #000;">3</td>
+			<td style="border:1px solid #000;">Quest Zone</td>
+			<td style="border:1px solid #000;">10</td>
+			<td style="border:1px solid #000;">{{$sectionData['questZone']*3}}</td>
+			<td style="border:1px solid #000;">{{number_format($sectionData['questZone']*3/10*100,2)}}</td>
+		</tr>
+		<tr>
+			<td style="border:1px solid #000;"></td>
+			<td style="border:1px solid #000;">Total</td>
+			<td style="border:1px solid #000;">60</td>
+			<td style="border:1px solid #000;">{{$sectionData['questZone']*3+$sectionData['everydayScience']+$sectionData['analyticalReasoning']}}</td>
+			<td style="border:1px solid #000;">{{number_format($sectionData['questZone']*3+$sectionData['everydayScience']+$sectionData['analyticalReasoning']/60*100,2)}}</td>
+		</tr>
+		</tbody>
+	@elseif($stream == 'pmo')
+	<tbody style="border:1px solid #000;">
+		<tr>
+			<td style="border:1px solid #000;">1</td>
+			<td style="border:1px solid #000;">Analytical Reasoning</td>
+			<td style="border:1px solid #000;">15</td>
+			<td style="border:1px solid #000;">{{$sectionData['analyticalReasoning']}}</td>
+			<td style="border:1px solid #000;">{{number_format($sectionData['analyticalReasoning']/15*100,2)}}</td>
+		</tr>
+		<tr>
+			<td style="border:1px solid #000;">2</td>
+			<td style="border:1px solid #000;">Everyday Mathematical Reasoning</td>
+			<td style="border:1px solid #000;">15</td>
+			<td style="border:1px solid #000;">{{$sectionData['everydayMathematicalReasoning']}}</td>
+			<td style="border:1px solid #000;">{{number_format($sectionData['everydayMathematicalReasoning']/15*100,2)}}</td>
+		</tr>
+		<tr>
+			<td style="border:1px solid #000;">3</td>
+			<td style="border:1px solid #000;">Standard Mathematics</td>
+			<td style="border:1px solid #000;">20</td>
+			<td style="border:1px solid #000;">{{$sectionData['standardMathematics']*2}}</td>
+			<td style="border:1px solid #000;">{{number_format($sectionData['standardMathematics']*2/20*100,2)}}</td>
+		</tr>
+		<tr>
+			<td style="border:1px solid #000;">4</td>
+			<td style="border:1px solid #000;">Quest Zone</td>
+			<td style="border:1px solid #000;">10</td>
+			<td style="border:1px solid #000;">{{$sectionData['questZone']*3}}</td>
+			<td style="border:1px solid #000;">{{number_format($sectionData['questZone']*3/10*100,2)}}</td>
+		</tr>
+		<tr>
+			<td style="border:1px solid #000;"></td>
+			<td style="border:1px solid #000;">Total</td>
+			<td style="border:1px solid #000;">100</td>
+			<td style="border:1px solid #000;">{{$sectionData['questZone']*3+$sectionData['analyticalReasoning']+($sectionData['standardMathematics']*2)+$sectionData['everydayMathematicalReasoning']}}</td>
+			<td style="border:1px solid #000;">{{number_format($sectionData['questZone']*3+$sectionData['analyticalReasoning']+($sectionData['standardMathematics']*2)+$sectionData['everydayMathematicalReasoning']/100*100,2)}}</td>
+		</tr>
+	<tbody>
+	@endif
+	</table>
+</div>
+
 </div>
 </body>
 </html>

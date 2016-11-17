@@ -85,11 +85,13 @@ class studentResultController extends Controller
 							
 						if($answerArray['q'.$i])
 						{
-						$answerId = DB::table('master_answer')->where('master_answer.deleted',0)->where('master_answer.answerText',$answerArray['q'.$i])->value('answerId');
+							$answerId = DB::table('master_answer')->where('master_answer.deleted',0)->where('master_answer.answerText',$answerArray['q'.$i])->value('answerId');
 						}
 						else{
 							$answerId =DB::table('master_answer')->where('master_answer.deleted',0)->where('master_answer.answerText','')->value('answerId');
 						}
+						
+						$answerQuestionId = DB::table('answer_key')->where('answer_key.deleted',0)->where('answer_key.questionId',$questionId)->where('answer_key.classMapId',$classMapId)->value('answerId');
 						$answerKeyId = DB::table('answer_key')->where('answer_key.deleted',0)->where('answer_key.questionId',$questionId)->where('answer_key.answerId',$answerId)->where('answer_key.classMapId',$classMapId)->value('answerKeyId');
 						$answerResponse = false;
 						if($answerKeyId){
@@ -97,7 +99,7 @@ class studentResultController extends Controller
 							$questionMarks = DB::table('master_question')->where('master_question.deleted',0)->where('master_question.questionId',$questionId)->value('marks');
 							$totalMarks = $totalMarks+$questionMarks;
 						}
-							$studentResult = ['questionId'=>$questionId, 'studentId'=>$studentsEntityId, 'answerId'=>$answerKeyId, 'correct'=>$answerResponse, 'stream'=>$value->stream, 'order'=>$i, 'studentAnswerId'=>$answerId,];
+							$studentResult = ['questionId'=>$questionId, 'studentId'=>$studentsEntityId, 'answerId'=>$answerQuestionId, 'correct'=>$answerResponse, 'stream'=>$value->stream, 'order'=>$i, 'studentAnswerId'=>$answerId,];
 							studentResult::create($studentResult);
 							
 						}
@@ -111,6 +113,7 @@ class studentResultController extends Controller
 					}
 				 }
 			}
+			
         Session::flash('flash_message', 'masterQuestion added!');
         return redirect('student-result');
     }
