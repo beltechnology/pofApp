@@ -70,8 +70,8 @@ class masterQuestionsController extends Controller
 						// class mapping
 						$classId = DB::table('class_names')->where('class_names.deleted',0)->where('class_names.name',$value->class_name)->value('id');	
 						
-						$questionClassMapping = ['questionId'=>$lastInsertId, 'classId'=>$classId,'setId'=>$questionSetId, 'masterSetId'=>$masterSetId,'order'=>$value->question_no];
-						$questionClassMappingData = questionclassmapping::create($questionClassMapping);
+						$questionClassMapping = ['questionId'=>$lastInsertId, 'classId'=>$classId,'setId'=>$questionSetId, 'masterSetId'=>$masterSetId,'order'=>$value->question_no,'stream'=>$value->stream];
+						$questionClassMappingData = questionClassMapping::create($questionClassMapping);
 						$questionClassMappingId = $questionClassMappingData->classMapId;
 						// answer key mapping 
 						$answerId = DB::table('master_answer')->where('master_answer.deleted',0)->where('master_answer.answerText',$value->answer_key)->value('answerId');	
@@ -93,12 +93,13 @@ class masterQuestionsController extends Controller
 								$questionSet = questionSet::create($questionSet);
 								$setId = $questionSet->id;
 							}
-							$classMapId = DB::table('questionclassmapping')->where('questionclassmapping.deleted',0)->where('questionclassmapping.questionId',$questionId)->where('questionclassmapping.setId',$setId)->where('questionclassmapping.classId',$classId)->value('classMapId');	
+							$classMapId = DB::table('questionclassmapping')->where('questionclassmapping.deleted',0)->where('questionclassmapping.questionId',$questionId)->where('questionclassmapping.setId',$setId)->where('questionclassmapping.classId',$classId)->where('questionclassmapping.stream',$value->stream)->value('classMapId');	
 								// class mapping
+								echo $value->stream;
 							if(!$classMapId && $setId)
 							{
-								$questionClassMapping = ['questionId'=>$questionId, 'classId'=>$classId,'setId'=>$setId, 'masterSetId'=>$masterSetId, 'order'=>$value->question_no] ;
-								$questionClassMappingData = questionclassmapping::create($questionClassMapping);
+								$questionClassMapping = ['questionId'=>$questionId, 'classId'=>$classId,'setId'=>$setId, 'masterSetId'=>$masterSetId, 'order'=>$value->question_no,'stream'=>$value->stream] ;
+								$questionClassMappingData = questionClassMapping::create($questionClassMapping);
 								$classMapId = $questionClassMappingData->classMapId;
 							}
 								$answerId = DB::table('master_answer')->where('master_answer.deleted',0)->where('master_answer.answerText',$value->answer_key)->value('answerId');	
@@ -116,7 +117,7 @@ class masterQuestionsController extends Controller
 				 }
 			}
         Session::flash('flash_message', 'masterQuestion added!');
-    //    return redirect('master-questions');
+        return redirect('master-questions');
     }
 
     /**

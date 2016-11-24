@@ -77,12 +77,12 @@ class studentResultController extends Controller
 					"q41"=>$value->q41, "q42"=>$value->q42, "q43"=>$value->q43, "q44"=>$value->q44, "q45"=>$value->q45, "q46"=>$value->q46, "q47"=>$value->q47, "q48"=>$value->q48, "q49"=>$value->q49, "q50"=>$value->q50,
 					"q51"=>$value->q51, "q52"=>$value->q52, "q53"=>$value->q53, "q54"=>$value->q54, "q55"=>$value->q55, "q56"=>$value->q56, "q57"=>$value->q57, "q58"=>$value->q58, "q59"=>$value->q59, "q60"=>$value->q60,];
 						for($i=1;$i<= 60;$i++){						
-							$classMapId = DB::table('questionclassmapping')->where('questionclassmapping.deleted',0)->where('questionclassmapping.order',$i)->where('questionclassmapping.masterSetId',$masterSetId)->where('questionclassmapping.classId',$classId)->value('classMapId');	
+							$classMapId = DB::table('questionclassmapping')->where('questionclassmapping.deleted',0)->where('questionclassmapping.order',$i)->where('questionclassmapping.masterSetId',$masterSetId)->where('questionclassmapping.classId',$classId)->where('questionclassmapping.stream',$value->stream)->value('classMapId');	
 							$questionId = DB::table('questionclassmapping')->where('questionclassmapping.deleted',0)->where('questionclassmapping.classMapId',$classMapId)->value('questionId');
 
 
 
-							
+					//	echo $questionId."_".$value->stream."_".$classMapId."<br>";	
 						if($answerArray['q'.$i])
 						{
 							$answerId = DB::table('master_answer')->where('master_answer.deleted',0)->where('master_answer.answerText',$answerArray['q'.$i])->value('answerId');
