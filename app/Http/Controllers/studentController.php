@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\student;
 use App\entity;
 use App\school;
+use App\secondLevelStudent;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Session;
@@ -277,7 +278,7 @@ class studentController extends Controller
 
         Session::flash('flash_message', 'student deleted!');
 
-        return redirect('student');
+    //    return redirect('student');
     }
 	
     public function attendanceScreen()
@@ -287,6 +288,33 @@ class studentController extends Controller
 
 		foreach(Input::get('attendance') as $attendance){
 		 DB::table('students')->where('entityId', $attendance)->update(['attendance' => Input::get('attendanceBtn')]);
+		}
+		return redirect('student');
+    }
+	
+	
+	
+    public function studentSecondLevel()
+    {
+		$validUser = $this->CheckUser();
+		if($validUser) return	view('errors.404');
+			if(!empty(Input::get('secondLevelStudent'))){
+			foreach(Input::get('secondLevelStudent') as $secondLevelStudent){
+			$studentInfo =  DB::table('students')->where('entityId', $secondLevelStudent)->get();
+			$stream = false;
+			if($studentInfo[0]->pso){
+				$stream = "pso";
+			}
+			if($studentInfo[0]->pmo){
+				$stream = "pmo";
+			}
+			$exitstudentInfo =  DB::table('secondlevelstudent')->where('studentEntityId', $secondLevelStudent)->get();
+				if(!$exitstudentInfo && $stream){
+					$studentData = ['studentEntityId'=>$secondLevelStudent,'SecondLevelSchoolId'=>$studentInfo[0]->schoolEntityId,'stream'=>$stream];
+					secondLevelStudent::create($studentData);
+					DB::table('students')->where('entityId', $secondLevelStudent)->update(['resultDeclared' => 2]);
+				}
+			}
 		}
 		return redirect('student');
     }

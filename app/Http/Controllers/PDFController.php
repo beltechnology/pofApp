@@ -189,7 +189,7 @@ class PDFController extends Controller
 			if($studentInfo){
 					$classId = $studentInfo[0]->classId;
 					$schoolEntityId = $studentInfo[0]->schoolEntityId;
-					if($stream == 'PMO'){$streamName = 'totalMarksPmo'; } else{ $streamName = 'totalMarksPso'; }
+					if($stream == 'pmo'){$streamName = 'totalMarksPmo'; } else{ $streamName = 'totalMarksPso'; }
 					$tempMarks = 0;	
 					$tempStateMarks = 0;	
 					$tempCityMarks = 0;	
@@ -222,7 +222,7 @@ class PDFController extends Controller
 								
 					
 					$studentList =	DB::select(DB::raw('select stud.*, sch.entityId sch , sch.schoolName, addr.stateId,addr.cityId from students stud , schools sch, addresses addr where stud.deleted = 0 and stud.classId = '.$classId.'  and stud.schoolEntityId = sch.entityId and sch.entityId = addr.entityId  order by stud.'.$streamName.' desc'));
-							if($stream == 'PMO'){
+							if($stream == 'pmo'){
 								$analyticalReasoning = 0;
 								$everydayMathematicalReasoning = 0;
 								$standardMathematics = 0;
@@ -287,7 +287,7 @@ class PDFController extends Controller
 			if($studentList){
 					foreach($studentList as $studentListData){
 						//	 echo $schoolRank."________".$studentListData->entityId."******".$studentInfo[0]->entityId."-------".$schoolEntityId."========".$studentListData->schoolEntityId."<br>";
-							if($stream == 'PMO'){
+							if($stream == 'pmo'){
 								if($tempMarks != $studentListData->totalMarksPmo){
 									$tempMarks = $studentListData->totalMarksPmo;
 									$natnationRank++;
@@ -324,14 +324,75 @@ class PDFController extends Controller
 								->orderBy('section', 'asc')
 								->get();
 					
-				//	var_dump($questionInfo);
+			//		var_dump($sectionData);
 			}
+			$totalClass = DB::table('students')->where('classId',$classId)->where('deleted',0)->where('schoolEntityId',$schoolEntityId)->sum('totalMarksPso');
 			
-		$pdf = PDF::loadView('pdf.studentResult',['studentInfo'=>$studentInfo,'sectionData'=>$sectionData,'schoolInfo'=>$schoolInfo, 'studentNatnationRank'=>$studentNatnationRank, 'studentSateRank'=>$studentSateRank, 'studentCityRank'=>$studentCityRank, 'studentSchoolRank'=>$studentSchoolRank, 'stream'=>$stream, 'questionInfo'=>$questionInfo]);
-		return $pdf->stream('studentResult.pdf');
+		return View('pdf.studentResult',['studentInfo'=>$studentInfo,'sectionData'=>$sectionData,'schoolInfo'=>$schoolInfo, 'studentNatnationRank'=>$studentNatnationRank, 'studentSateRank'=>$studentSateRank, 'studentCityRank'=>$studentCityRank, 'studentSchoolRank'=>$studentSchoolRank, 'stream'=>$stream, 'questionInfo'=>$questionInfo]);
+	//	$pdf = PDF::loadView('pdf.studentResult',['studentInfo'=>$studentInfo,'sectionData'=>$sectionData,'schoolInfo'=>$schoolInfo, 'studentNatnationRank'=>$studentNatnationRank, 'studentSateRank'=>$studentSateRank, 'studentCityRank'=>$studentCityRank, 'studentSchoolRank'=>$studentSchoolRank, 'stream'=>$stream, 'questionInfo'=>$questionInfo]);
+	//	return $pdf->stream('studentResult.pdf');
 	}
 
+//  student result sheet pdf start code----
 
+	public function getResultSheetData(){
+		
+					$schoolInfo = DB::table('schools')
+								->join('addresses','schools.entityId','=','addresses.entityId')
+								->join('states','addresses.stateId','=','states.id')
+								->join('districts','addresses.districtId','=','districts.id')
+								->join('citys','addresses.cityId','=','citys.id')
+								->where('schools.deleted',0)
+								->where('schools.entityId',session()->get('entityId'))
+								->get();
+	
+		if(Input::get('filterClass') != 0 && Input::get('subject') != "ALL" )
+		{
+					$student= DB::table('students')
+                        ->join('class_names','class_names.id','=','students.classId')
+						->where('students.deleted',0)
+						->where('class_names.deleted',0)
+						->where('students.sessionYear',session()->get('activeSession'))
+						->where('students.schoolEntityId',session()->get('entityId'))
+						->where('students.classId','=',Input::get('filterClass'))
+						->where('students.'.Input::get('subject'),'=',1)
+						->orderBy('students.rollNo','asc')
+						->get();
+						
+
+		}
+		elseif(Input::get('filterClass') == 0 && Input::get('subject') != "ALL" )
+		{
+					$student= DB::table('class_names')
+                        ->join('students','class_names.id','=','students.classId')
+						->where('students.deleted',0)
+						->where('class_names.deleted',0)
+						->where('students.sessionYear',session()->get('activeSession'))
+						->where('students.schoolEntityId',session()->get('entityId'))
+						->where('students.'.Input::get('subject'),'=',1)
+						->orderBy('students.rollNo','asc')
+						->get();
+						
+
+		}
+		else{
+					$student= DB::table('students')
+                        ->join('class_names','class_names.id','=','students.classId')
+						->where('students.deleted',0)
+						->where('class_names.deleted',0)
+						->where('students.sessionYear',session()->get('activeSession'))
+						->where('students.schoolEntityId',session()->get('entityId'))
+						->orderBy('students.rollNo','asc')
+						->get();						
+		}
+
+						
+					$stream = Input::get('subject');	
+					//	var_dump($schools);
+					$pdf = PDF::loadView('pdf.resultSheet',['student'=>$student,'schools'=>$schoolInfo, 'stream'=>$stream,]);
+					return $pdf->stream('resultSheet.pdf');
+	//	return View('pdf.resultSheet',['student'=>$student]);
+}
 
 
 	

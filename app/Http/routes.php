@@ -40,6 +40,7 @@ Route::group(array('middleware' => 'auth'), function() {
 	Route::resource('session-year', 'SessionYearController');
 	Route::resource('class-section', 'ClassSectionController');
 	Route::resource('changePassword','changepasswordController');
+	Route::resource('secondLevelStudent','secondLevelStudentController');
 	Route::get('/changePassword','changepasswordController@index');
 	Route::get('/search', 'employeeController@filter');
 	Route::post('/search', 'employeeController@filter');
@@ -50,11 +51,13 @@ Route::group(array('middleware' => 'auth'), function() {
 	Route::get('/search-school', 'schoolsController@filter');
 	Route::post('/activate-school', 'schoolsController@activateSchool');
 	Route::get('/getPDF', 'PDFController@getPDF');
+	Route::get('/getResultSheetData', 'PDFController@getResultSheetData');
 	Route::get('/getAdmitPDF', 'PDFController@getAdmitPDF');
 	Route::get('/searchFilter', 'studentController@searchFilter');
 	Route::get('getStudentResult/{id}/{stream}','PDFController@getStudentResult');
 	Route::resource('/changeYear', 'SessionYearController@changeYear');
 	Route::get('/studentAttendance', 'studentController@attendanceScreen');
+	Route::get('/studentSecondLevel', 'studentController@studentSecondLevel');
 	Route::resource('second-level-exam', 'SecondLevelExamController');
 	Route::resource('module-config', 'ModuleConfigController');
 	Route::get('/employee/create/ajax-state',function()

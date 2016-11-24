@@ -867,7 +867,7 @@ input[type=checkbox]:checked + label:before { letter-spacing: 5px; } /* allow sp
     padding: 0px;
 }
 
-#searchFilter,#attendanceForm {
+#searchFilter,#attendanceForm,#secondLevel {
     font-size: 14px;
 	float:left;
 }

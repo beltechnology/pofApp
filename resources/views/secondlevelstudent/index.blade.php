@@ -53,20 +53,14 @@
 	   </select>
 	   		  <button id="GetPDF">GetPDF</button>
 	   		  <button id="admitCard">Admit Card</button>
-	   		  <button id="resultSheet">Result Sheet</button>
 
 	</form>
 	<form method="get" id="attendanceForm" action="studentAttendance" class="">
 	   		  <button id="present" class="attendanceBtn" type="submit" name="attendanceBtn" value="1" disabled>Present</button>
 	   		  <button id="absent "  class="attendanceBtn" type="submit"  name="attendanceBtn" value="0" disabled>Absent </button>
 	</form>
-	<form method="get" id="secondLevel" action="studentSecondLevel" class="">
-	   		  <button id="secondLevelButton"  class="attendanceBtn" type="submit"  name="secondLevelButton"  disabled>Second LevelStudent </button>
-	</form>
 	   </h1>
-	    <div class="add-emp add-school col-md-2">
-            <a href="{{ url('/student/create') }}" title="Add New student"><p>{{ trans('messages.ADD') }} <span class="glyphicon glyphicon-plus" aria-hidden="true"/></p></a>
-            </div>
+	
   </div>
 	 
 	</div>
@@ -81,13 +75,8 @@
 				   <th>{{ trans('messages.BOOKDETAIL_CLASS') }}</th>
 				   <th>{{ trans('messages.ROLL_NO') }}</th>
 				   <th> {{ trans('messages.HANDICAPPED') }}</th>
-				   <th>{{ trans('messages.ACTIONS') }}<input type="checkbox" id="checkAll"></th><th>{{ trans('messages.EDIT') }}</th>
+				   <th>{{ trans('messages.ACTIONS') }}<input type="checkbox" id="checkAll"></th>
 				   <th>{{ trans('messages.DELETE') }}</th>
-				   <th>Pso Result</th>
-				   <th>Pmo Result</th>
-				   <th>PSO Rank</th>
-				   <th>PMO Rank</th>
-				   <th>Second Level</th>
                 </tr>
             </thead>
             <tbody>
@@ -109,14 +98,11 @@
 					<td>{{ $item->name }}</td>
 					<td>{{ $item->rollNo }}</td>
 					<td>@if($item->handicapped === trans('messages.ZERO'))  NO @else  Yes @endif</td>
-					<td><input type="checkbox" class="attendance" name="attendance[]" value="{{$item->entityId}}"></td>
-                    <td>
-                        <a href="{{ url('/student/' . $item->entityId . '/edit') }}" class="btn btn-primary btn-xs" title="Edit student"><span class="glyphicon glyphicon-pencil" aria-hidden="true"/></a>
-					</td>
+					<td><input type="checkbox" class="attendance" name="attendance[]" value="{{$item->studentEntityId}}"></td>
 					<td>
                         {!! Form::open([
                             'method'=>'DELETE',
-                            'url' => ['/student', $item->entityId],
+                            'url' => ['/secondlevelstudent', $item->studentEntityId],
                             'style' => 'display:inline'
                         ]) !!}
                             {!! Form::button('<span class="glyphicon glyphicon-trash" aria-hidden="true" title="Delete student" />', array(
@@ -127,43 +113,6 @@
                             ));!!}
                         {!! Form::close() !!}
                     </td>
-                    <td>
-					@if($item->pso && $item->resultDeclared )
-                        <a href="{{ url('/getStudentResult/' . $item->entityId . '/pso') }}" class="btn btn-primary btn-xs" title="Edit student"><span class="glyphicon glyphicon-pencil" aria-hidden="true"/></a>
-					@endif
-					</td>
-                    <td>
-					@if($item->pmo  && $item->resultDeclared )
-                        <a href="{{ url('/getStudentResult/' . $item->entityId . '/pmo') }}" class="btn btn-primary btn-xs" title="Edit student"><span class="glyphicon glyphicon-pencil" aria-hidden="true"/></a>
-					@endif
-					</td>
-					<td>
-				@if($item->resultDeclared)
-					{{$schoolrankPso = DB::table('students')
-						->where('students.deleted',0)
-						->where('students.sessionYear',session()->get('activeSession'))
-						->where('students.schoolEntityId',session()->get('entityId'))
-						->where('students.classId','=',$item->classId)
-						->where('students.totalMarksPso','>',$item->totalMarksPso)
-						->count()+1}}
-				@endif		
-						</td>
-					<td>
-					@if($item->resultDeclared)
-					{{$schoolrankPmo = DB::table('students')
-						->where('students.deleted',0)
-						->where('students.sessionYear',session()->get('activeSession'))
-						->where('students.schoolEntityId',session()->get('entityId'))
-						->where('students.classId','=',$item->classId)
-						->where('students.totalMarksPmo','>',$item->totalMarksPmo)
-						->count()+1}}
-						@endif
-						</td>
-					<td>
-					@if($item->resultDeclared == 1)
-					@if($schoolrankPso <= 3 && $item->totalMarksPso > 40)<input type="checkbox" class="pso" onclick="checkBoxForSecondLevelStudent(this);" value="{{$item->entityId}}" /> @endif @if($schoolrankPmo <= 3 && $item->totalMarksPmo > 50)<input type="checkbox" class="pso" onclick="checkBoxForSecondLevelStudent(this);" value="{{$item->entityId}}" /> @endif
-				@endif
-				</td>
                 </tr>
             @endforeach
             </tbody>
@@ -333,27 +282,5 @@ function checkLength()
 }
 
 
-function checkBoxForSecondLevelStudent(ele){
-	var secondLevel = $("#secondLevel");
-			if($(ele).prop("checked") == true){
-			secondLevel.append("<input type='hidden' name='secondLevelStudent[]' id='secondLevelStudent_"+$(ele).val()+"' value='"+$(ele).val()+"'>");
-			}
-			else if($(ele).prop("checked") == false){
-			secondLevel.find("#secondLevelStudent_"+$(ele).val()).remove();
-			}
-	checkSecondLevelstudentLength();
-}
-
-function checkSecondLevelstudentLength()
-{
-	var secondLevel = $("#secondLevel");
-		if(secondLevel.find("input[type='hidden']").length > 0)
-		{
-			$("#secondLevelButton").removeAttr('disabled');
-		}
-		else{
-			$("#secondLevelButton").attr('disabled','disabled');
-		}
-}
 </script>
 @endsection

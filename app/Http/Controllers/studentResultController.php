@@ -105,10 +105,10 @@ class studentResultController extends Controller
 						}
 							
 							if($value->stream == 'PSO'){
-							DB::table('students')->where('students.entityId', $studentsEntityId)->update(['totalMarksPso' => $totalMarks]);
+							DB::table('students')->where('students.entityId', $studentsEntityId)->update(['totalMarksPso' => $totalMarks,'resultDeclared'=>1]);
 							}
 							elseif($value->stream == 'PMO'){
-							DB::table('students')->where('students.entityId', $studentsEntityId)->update(['totalMarksPmo' => $totalMarks]);
+							DB::table('students')->where('students.entityId', $studentsEntityId)->update(['totalMarksPmo' => $totalMarks,'resultDeclared'=>1]);
 							}
 					}
 				 }

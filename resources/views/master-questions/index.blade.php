@@ -9,6 +9,7 @@
             </div>
             
             <div class=" col-md-7 category-filter">
+			<a href="/master-questions/create" class="pull-right">Add Question</a>
             </div>
             
             <div class="add-emp  col-md-2">
