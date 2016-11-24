@@ -319,9 +319,9 @@ class PDFController extends Controller
 								->join('master_question','student_result.questionId','=','master_question.questionId')
 								->join('master_answer','student_result.answerId','=','master_answer.answerId')
 								->where('student_result.deleted',0)
-								->where('student_result.stream',$stream)
+								->where('student_result.stream',strtoupper($stream))
 								->where('student_result.studentId',$studentEntityId)
-								->orderBy('section', 'asc')
+								->orderBy('student_result.order', 'asc')
 								->get();
 					
 			//		var_dump($sectionData);
