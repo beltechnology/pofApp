@@ -147,15 +147,15 @@ elseif($stream == 'pmo'){
 	<tbody style="border:1px solid #000;">
 		<tr>
 			<td style="border:1px solid #000;">
-				<span  style="width:115px">Roll No : </span>
+				<span  style="width:115px">Roll No:</span>
 				<span style="width:115px">{{$student->rollNo}}</span><br>
 			</td>
 			<td style="border:1px solid #000;  ">
-				<span  style="float:left">School Rank : </span>
+				<span  style="float:left">School Rank</span>
 				<span style="float:right">{{$studentSchoolRank}}</span><br>
 			</td>
 			<td style="border:1px solid #000; ">
-				<span  style="float:left">National Rank : </span>
+				<span  style="float:left">International Rank : </span>
 				<span style="float:right">{{$studentNatnationRank}}</span><br>
 			</td>
 		</tr>
@@ -165,7 +165,7 @@ elseif($stream == 'pmo'){
 				<span style="float:right">{{$totalObtainMarks }}</span><br>
 			</td>
 			<td style="border:1px solid #000; ">
-				<span  style="float:left">City Rank : </span>
+				<span  style="float:left">City Rank</span>
 				<span style="float:right">{{$studentCityRank}}</span><br>
 			</td>
 			<td style="border:1px solid #000;  ">
@@ -180,7 +180,7 @@ elseif($stream == 'pmo'){
 				<span style="float:right">{{$totalMarks }}</span><br>
 			</td>
 			<td style="border:1px solid #000;  ">
-				<span  style="float:left">State Rank : </span>
+				<span  style="float:left">State Rank</span>
 				<span style="float:right">{{$studentSateRank}}</span><br>
 			</td>
 			<td style="border:1px solid #000; ">
@@ -191,7 +191,7 @@ elseif($stream == 'pmo'){
 		
 		<tr>
 			<td style="border:1px solid #000;">
-				<span  style="float:left;">Percentile Score : </span>
+				<span  style="float:left;">Percentale Score:</span>
 				<span style="float:right">{{  number_format($totalObtainMarks/$totalMarks*100,2) }}</span>
 			</td>
 			<td style="border:1px solid #000;  ">
@@ -283,6 +283,7 @@ elseif($stream == 'pmo'){
 </div>
 @endforeach
 	<!-- questin wise PDF -->
+	
 		<div class="performance-content" style="margin-top:700px">
 			<div align="center"><h5 style="padding: 8px 0px; background:#000; color:#fff;"> QUESTION WISE ANALYSIS</h5> </div>
 			<table align="center" style="width:900px; padding: 12px 60px 12px 0px;">
@@ -331,7 +332,7 @@ elseif($stream == 'pmo'){
 					
 					?>
 					<tr>
-						<td style="border:1px solid #000;">{{$questions->order}}</td>
+						<td style="border:1px solid #000;">{{$count}}</td>
 						<td style="border:1px solid #000;"><?php echo mb_strimwidth($questions->text, 0, 15, "..."); ?></td>
 						<td style="border:1px solid #000;">{{ $questions->answerText}}</td>
 						<td style="border:1px solid #000;">{{ DB::table('master_answer')->where('master_answer.answerId',$questions->studentAnswerId)->where('master_answer.deleted',0)->value('answerText') }}</td>
@@ -580,10 +581,7 @@ elseif($stream == 'pmo'){
                     },
                       axisX: {
 				labelAngle: -30
-			}, 
-		 axisX:{
-				labelFontSize: 12
-			  },			
+			},                   
 					axisY: {      
 					minimum: 0,
 					maximum: 100
@@ -605,6 +603,9 @@ elseif($stream == 'pmo'){
                     title: {
                         text: "Average"
                     },
+                     axisX:{
+		        labelFontSize: 12
+		      },
                     axisX: {
 				labelAngle: -30
 			},

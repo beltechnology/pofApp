@@ -137,11 +137,7 @@
     {!! Form::close() !!}
 </div>
 <script>
-	$(document).ready(function(){
-		
-		var textCode = $("#paymentModeId option:selected").text();		   
-		  checkCurrentForm(textCode);		
-	});
+
  if($('#paymentModeId').val() == 3)
  {
       if({{$payment->paymentStatus}} == 1){

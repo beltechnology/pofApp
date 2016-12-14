@@ -10,7 +10,7 @@ class questionClassMapping extends Model
      *
      * @var string
      */
-    protected $table = 'questionClassMapping';
+    protected $table = 'questionclassmapping';
 
     /**
     * The database primary key value.
@@ -24,5 +24,5 @@ class questionClassMapping extends Model
      *
      * @var array
      */
-    protected $fillable = ['classId','setId','masterSetId','questionId','updateCounter','deleted','status','order'];
+    protected $fillable = ['classId','setId','masterSetId','questionId','updateCounter','deleted','status','order','stream'];
 }

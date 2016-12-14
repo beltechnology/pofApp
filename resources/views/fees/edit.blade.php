@@ -9,7 +9,7 @@
    		
     	<ul class="nav navbar-nav">
 	@foreach ($articles as $article)
-		@if($article->moduleType === 2)	
+		@if($article->moduleType === trans('messages.TWO'))	
 			@if($article->muduleLink === "/fees")
 				<li  class="active"><a  href="{{ url($article->muduleLink.'/'.session()->get('entityId').'/edit') }}">{{ $article->name }}</a></li>
 			@elseif($article->muduleLink === "/student")
@@ -41,7 +41,7 @@
 			</div>
 			<div class="col-md-6">
             <div class="form-group">
-                <div class="col-sm-offset-3 col-sm-3 active-btn ">
+                <div class="col-sm-offset-3 col-sm-3 active-btn  hide">
 				 {!! Form::open(['method'=>'DELETE','url' => ['/fees', $fee->entityId],'style' => 'display:inline']) !!}              
 				{!! Form::submit(trans('messages.ACTIVATE'), ['class' => 'btn btn-primary ','onclick'=>'return confirm("Confirm to school activate ?")']) !!}
 				{!! Form::close() !!}
@@ -123,7 +123,7 @@
             $(".studentsFees , .otherExpenses").on("change keyup mouseup", function(){
                var studentsFees= $(".studentsFees").val();
 			   var otherExpenses= $(".otherExpenses").val();
-			   var totalAmout=Number(studentsFees)+Number(otherExpenses);
+			   var totalAmout=Number(studentsFees)-Number(otherExpenses);
 			   
 			   $(".totalAmount").val(totalAmout);
             });

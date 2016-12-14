@@ -7,7 +7,6 @@ use App\Http\Controllers\Controller;
 use App\student;
 use App\entity;
 use App\school;
-use App\secondLevelStudent;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Session;
@@ -278,7 +277,7 @@ class studentController extends Controller
 
         Session::flash('flash_message', 'student deleted!');
 
-    //    return redirect('student');
+        return redirect('student');
     }
 	
     public function attendanceScreen()
@@ -316,7 +315,7 @@ class studentController extends Controller
 				}
 			}
 		}
-		return redirect('student');
+	//	return redirect('student');
     }
 	
 	

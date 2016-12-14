@@ -56,11 +56,11 @@
 	   		  <button id="resultSheet">Result Sheet</button>
 
 	</form>
-	<form method="get" id="attendanceForm" action="studentAttendance" class="">
+	<form method="get" id="attendanceForm" action="studentAttendance" class="pull-right">
 	   		  <button id="present" class="attendanceBtn" type="submit" name="attendanceBtn" value="1" disabled>Present</button>
 	   		  <button id="absent "  class="attendanceBtn" type="submit"  name="attendanceBtn" value="0" disabled>Absent </button>
 	</form>
-	<form method="get" id="secondLevel" action="studentSecondLevel" class="">
+	<form method="get" id="secondLevel" action="studentSecondLevel" class="pull-right">
 	   		  <button id="secondLevelButton"  class="attendanceBtn" type="submit"  name="secondLevelButton"  disabled>Second LevelStudent </button>
 	</form>
 	   </h1>
@@ -138,7 +138,7 @@
 					@endif
 					</td>
 					<td>
-				@if($item->resultDeclared)
+				@if($item->resultDeclared  && $item->pso == 1)
 					{{$schoolrankPso = DB::table('students')
 						->where('students.deleted',0)
 						->where('students.sessionYear',session()->get('activeSession'))
@@ -149,7 +149,7 @@
 				@endif		
 						</td>
 					<td>
-					@if($item->resultDeclared)
+					@if($item->resultDeclared && $item->pmo == 1)
 					{{$schoolrankPmo = DB::table('students')
 						->where('students.deleted',0)
 						->where('students.sessionYear',session()->get('activeSession'))
@@ -161,7 +161,12 @@
 						</td>
 					<td>
 					@if($item->resultDeclared == 1)
-					@if($schoolrankPso <= 3 && $item->totalMarksPso > 40)<input type="checkbox" class="pso" onclick="checkBoxForSecondLevelStudent(this);" value="{{$item->entityId}}" /> @endif @if($schoolrankPmo <= 3 && $item->totalMarksPmo > 50)<input type="checkbox" class="pso" onclick="checkBoxForSecondLevelStudent(this);" value="{{$item->entityId}}" /> @endif
+					@if($item->pso == 1)
+					@if($schoolrankPso <= 3 && $item->totalMarksPso > 40)<input type="checkbox" class="pso" onclick="checkBoxForSecondLevelStudent(this);" value="{{$item->entityId}}" /> 			@endif
+					@endif
+					@if($item->pmo== 1)
+					 @if($schoolrankPmo <= 3 && $item->totalMarksPmo > 50)<input type="checkbox" class="pso" onclick="checkBoxForSecondLevelStudent(this);" value="{{$item->entityId}}" /> @endif
+				@endif
 				@endif
 				</td>
                 </tr>

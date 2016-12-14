@@ -63,12 +63,19 @@ class studentResultController extends Controller
 				
 				 foreach ($data as $key => $value) {
 				//	var_dump($value);
+
+					$className =  abs($value->classid);
+					//var_dump($value);
+					//exit();
 					$masterSetId = $value->testid+1;
-					$classId = DB::table('class_names')->where('class_names.deleted',0)->where('class_names.name',$value->class)->value('id');
-					$studentRollNumber = $value->state_code.$value->school_code."-0".$value->class."-".$value->roll_no;
+					$classId = DB::table('class_names')->where('class_names.deleted',0)->where('class_names.name',$className)->value('id');
+					$studentRollNumber = $value->state_code.$value->school_code."-".$value->classid."-".$value->roll_no;
 					$schoolCode = $value->state_code.$value->school_code;
+
 					$schoolEntityId = DB::table('schools')->where('schools.deleted',0)->where('schools.uniqueSchoolCode',$schoolCode)->value('entityId');
 					$studentsEntityId = DB::table('students')->where('students.deleted',0)->where('students.schoolEntityId',$schoolEntityId)->where('students.rollNo',$studentRollNumber)->value('entityId');
+	
+									
 					$totalMarks	= 0;
 					$answerArray = ["q1"=>$value->q1, "q2"=>$value->q2, "q3"=>$value->q3, "q4"=>$value->q4, "q5"=>$value->q5, "q6"=>$value->q6, "q7"=>$value->q7,"q8"=>$value->q8, "q9"=>$value->q9, "q10"=>$value->q10, 
 					"q11"=>$value->q11,"q12"=>$value->q12, "q13"=>$value->q13, "q14"=>$value->q14, "q15"=>$value->q15, "q16"=>$value->q16, "q17"=>$value->q17, "q18"=>$value->q18, "q19"=>$value->q19, "q20"=>$value->q20,
@@ -90,8 +97,9 @@ class studentResultController extends Controller
 						else{
 							$answerId =DB::table('master_answer')->where('master_answer.deleted',0)->where('master_answer.answerText','')->value('answerId');
 						}
-						
+						if(!$answerId ){$answerId = "6";}
 						$answerQuestionId = DB::table('answer_key')->where('answer_key.deleted',0)->where('answer_key.questionId',$questionId)->where('answer_key.classMapId',$classMapId)->value('answerId');
+						
 						$answerKeyId = DB::table('answer_key')->where('answer_key.deleted',0)->where('answer_key.questionId',$questionId)->where('answer_key.answerId',$answerId)->where('answer_key.classMapId',$classMapId)->value('answerKeyId');
 						$answerResponse = false;
 						if($answerKeyId){
@@ -99,17 +107,29 @@ class studentResultController extends Controller
 							$questionMarks = DB::table('master_question')->where('master_question.deleted',0)->where('master_question.questionId',$questionId)->value('marks');
 							$totalMarks = $totalMarks+$questionMarks;
 						}
+						if($questionId && $studentsEntityId && $answerQuestionId && $answerId){
+							$resultId = DB::table('student_result')->where('student_result.deleted',0)->where('student_result.questionId',$questionId)->where('student_result.studentId',$studentsEntityId)->where('student_result.answerId',$answerQuestionId)->where('student_result.stream',$value->stream)->value('resultId');
+							if($resultId)
+							{
+								DB::table('student_result')->where('student_result.resultId', $resultId)->update(['correct' => $answerResponse,'studentAnswerId'=>$answerId]);	
+							}
+							else{
 							$studentResult = ['questionId'=>$questionId, 'studentId'=>$studentsEntityId, 'answerId'=>$answerQuestionId, 'correct'=>$answerResponse, 'stream'=>$value->stream, 'order'=>$i, 'studentAnswerId'=>$answerId,];
 							studentResult::create($studentResult);
+							}
+						}
+
 							
 						}
-							
-							if($value->stream == 'PSO'){
-							DB::table('students')->where('students.entityId', $studentsEntityId)->update(['totalMarksPso' => $totalMarks,'resultDeclared'=>1]);
+						//echo $studentsEntityId."<br>";
+						if($studentsEntityId){
+							  if($value->stream == 'PSO'){
+							     DB::table('students')->where('students.entityId', $studentsEntityId)->update(['totalMarksPso' => $totalMarks,'resultDeclared'=>1]);
+								}
+							 elseif($value->stream == 'PMO'){
+								DB::table('students')->where('students.entityId', $studentsEntityId)->update(['totalMarksPmo' => $totalMarks,'resultDeclared'=>1]);
 							}
-							elseif($value->stream == 'PMO'){
-							DB::table('students')->where('students.entityId', $studentsEntityId)->update(['totalMarksPmo' => $totalMarks,'resultDeclared'=>1]);
-							}
+						}
 					}
 				 }
 			}

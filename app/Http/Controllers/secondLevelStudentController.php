@@ -36,7 +36,7 @@ class secondLevelStudentController extends Controller
 						->where('secondlevelstudent.SecondLevelSchoolId',session()->get('entityId'))
 						->orderBy('students.rollNo','asc')
 						->paginate(30);
-        return view('secondlevelstudent.index', compact('student'))->with('studentClass',$studentClass);
+        return view('student.index', compact('student'))->with('studentClass',$studentClass);
     }
 
 
@@ -109,8 +109,8 @@ class secondLevelStudentController extends Controller
 		$validUser = $this->CheckUser();
 		if($validUser) return	view('errors.404');
 
-		DB::table('secondlevelstudent')->where('studentEntityId', $id)->update(['deleted' => 1]);
-	//	DB::table('entitys')->where('entityId', $id)->update(['deleted' => 1]);
+		DB::table('students')->where('entityId', $id)->update(['deleted' => 1]);
+		DB::table('entitys')->where('entityId', $id)->update(['deleted' => 1]);
 		
 
         Session::flash('flash_message', 'student deleted!');

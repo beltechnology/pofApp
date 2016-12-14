@@ -324,7 +324,7 @@ class PDFController extends Controller
 								->orderBy('student_result.order', 'asc')
 								->get();
 					
-			//		var_dump($sectionData);
+				//	var_dump($questionInfo );
 			}
 			$totalClass = DB::table('students')->where('classId',$classId)->where('deleted',0)->where('schoolEntityId',$schoolEntityId)->sum('totalMarksPso');
 			
@@ -390,8 +390,8 @@ class PDFController extends Controller
 					$stream = Input::get('subject');	
 					//	var_dump($schools);
 					$pdf = PDF::loadView('pdf.resultSheet',['student'=>$student,'schools'=>$schoolInfo, 'stream'=>$stream,]);
-					return $pdf->stream('resultSheet.pdf');
-	//	return View('pdf.resultSheet',['student'=>$student]);
+				//	return $pdf->stream('resultSheet.pdf');
+		return View('pdf.resultSheet',['student'=>$student,'schools'=>$schoolInfo, 'stream'=>$stream,]);
 }
 
 

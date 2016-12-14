@@ -17,7 +17,7 @@
    		
     	<ul class="nav navbar-nav">
 @foreach ($articles as $article)
-		@if($article->moduleType === 2)	
+		@if($article->moduleType === '2')	
 			@if($article->muduleLink === "/student-count")
 				<li  class="active"><a  href="{{ url($article->muduleLink.'/'.session()->get('entityId').'/edit') }}">{{ $article->name }}</a></li>
 			@elseif($article->muduleLink === "/student")

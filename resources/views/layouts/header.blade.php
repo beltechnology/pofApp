@@ -16,11 +16,11 @@
 <script src="../../js/jquery.min.js"></script>
 <!-- Latest compiled JavaScript -->
 <script src="../../js/bootstrap.min.js"></script>
-<script type="text/javascript" src="../../js/bootstrap.min.js"></script>
-<script type="text/javascript" src="../../js/bootstrap.js"></script>
+ <script type="text/javascript" src="../../js/bootstrap.min.js"></script>
+ <script type="text/javascript" src="../../js/bootstrap.js"></script>
 <script type="text/javascript" src="../../js/moment.js"></script>
 <script type="text/javascript" src="../../js/bootstrap-datetimepicker.min.js"></script>
-<script type="text/javascript" src="../../js/commonFunctions.js"></script>
+   <script type="text/javascript" src="../../js/commonFunctions.js"></script>
 
 </head>
 
