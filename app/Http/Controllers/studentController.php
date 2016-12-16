@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\student;
+use App\secondLevelStudent;
 use App\entity;
 use App\school;
 use Illuminate\Http\Request;
@@ -308,14 +309,15 @@ class studentController extends Controller
 				$stream = "pmo";
 			}
 			$exitstudentInfo =  DB::table('secondlevelstudent')->where('studentEntityId', $secondLevelStudent)->get();
-				if(!$exitstudentInfo && $stream){
+				if(!$exitstudentInfo && $stream && $studentInfo){
+				//	echo $stream;
 					$studentData = ['studentEntityId'=>$secondLevelStudent,'SecondLevelSchoolId'=>$studentInfo[0]->schoolEntityId,'stream'=>$stream];
 					secondLevelStudent::create($studentData);
 					DB::table('students')->where('entityId', $secondLevelStudent)->update(['resultDeclared' => 2]);
 				}
 			}
 		}
-	//	return redirect('student');
+		return redirect('student');
     }
 	
 	

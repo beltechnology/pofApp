@@ -189,7 +189,12 @@ class PDFController extends Controller
 			if($studentInfo){
 					$classId = $studentInfo[0]->classId;
 					$schoolEntityId = $studentInfo[0]->schoolEntityId;
-					if($stream == 'pmo'){$streamName = 'totalMarksPmo'; } else{ $streamName = 'totalMarksPso'; }
+					if($stream == 'pmo'){$streamName = 'totalMarksPmo'; 
+						$sectionData = ['analyticalReasoning'=>"",'everydayMathematicalReasoning'=>"",'standardMathematics'=>"",'questZone'=>""] ;								
+					}
+					else{ $streamName = 'totalMarksPso';
+						$sectionData = ['analyticalReasoning'=>"",'everydayScience'=>"",'questZone'=>""] ;
+					}
 					$tempMarks = 0;	
 					$tempStateMarks = 0;	
 					$tempCityMarks = 0;	
@@ -222,6 +227,7 @@ class PDFController extends Controller
 								
 					
 					$studentList =	DB::select(DB::raw('select stud.*, sch.entityId sch , sch.schoolName, addr.stateId,addr.cityId from students stud , schools sch, addresses addr where stud.deleted = 0 and stud.classId = '.$classId.'  and stud.schoolEntityId = sch.entityId and sch.entityId = addr.entityId  order by stud.'.$streamName.' desc'));
+					
 							if($stream == 'pmo'){
 								$analyticalReasoning = 0;
 								$everydayMathematicalReasoning = 0;
@@ -233,15 +239,17 @@ class PDFController extends Controller
 								->where('stream',$stream)
 								->where('correct',1)
 								->get();
+								
 								if($studentResultInfo){
 									foreach($studentResultInfo as $studentResultData){
 									$section =	DB::table('master_question')
 										->where('questionId',$studentResultData->questionId)
 										->value('section');
+										//echo $section."<br>";
 										if($section == 'Analytical Reasoning'){
 											$analyticalReasoning ++;
 										}
-										if($section == 'Everyday Mathematical Reasoning'){
+										if($section == 'Everyday Mathmatical Reasoning'){
 											$everydayMathematicalReasoning ++;
 										}
 										if($section == 'Standard Mathematics'){
@@ -251,7 +259,7 @@ class PDFController extends Controller
 											$questZone ++;
 										}
 									}
-									$sectionData = ['analyticalReasoning'=>$analyticalReasoning,'everydayMathematicalReasoning'=>$everydayMathematicalReasoning,'standardMathematics'=>$standardMathematics,'questZone'=>$questZone] ;									
+									$sectionData = ['analyticalReasoning'=>$analyticalReasoning,'everydayMathematicalReasoning'=>$everydayMathematicalReasoning,'standardMathematics'=>$standardMathematics,'questZone'=>$questZone] ;								
 								}	
 								}else{
 								$analyticalReasoning = 0;
@@ -390,8 +398,8 @@ class PDFController extends Controller
 					$stream = Input::get('subject');	
 					//	var_dump($schools);
 					$pdf = PDF::loadView('pdf.resultSheet',['student'=>$student,'schools'=>$schoolInfo, 'stream'=>$stream,]);
-				//	return $pdf->stream('resultSheet.pdf');
-		return View('pdf.resultSheet',['student'=>$student,'schools'=>$schoolInfo, 'stream'=>$stream,]);
+					return $pdf->stream('resultSheet.pdf');
+	//	return View('pdf.resultSheet',['student'=>$student]);
 }
 
 

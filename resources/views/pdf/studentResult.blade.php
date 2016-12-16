@@ -86,16 +86,15 @@ button#cmd {
 <div class="row">
 <h5 align="left">Dear Parents, </h5>
 <div class="top-para">
-	<p>Rising stars will be honoured/ We have congratulated all the rising stars of 2016</p>
+	<p>We have congratulated all the rising stars of 2016</p>
 	<p>However, Parents whose Children did not score good grades should recall history in hurry  that one example of dedication is not  the sole criteria of student’s assessment specifically school grades .The gigantic corporates like Bill Gates and others were college dropouts. </p>
-	<p>It  was A-level, B-level and C-level result today. No matter what grade your child scored , congratulations are in order—for all parents. Your son or daughter has achieved something big  by just by doing them</p>
 	<p>---Now this is the time to convey my congratulations to all the parents of students  for the School Assessment Test. I always felt that Parents should be genuinely honoured  for their  unique son or daughter after declaration of result.</p>
 	<p>However, We are thrilled by the amazing response of parents  to the Olympiad initiative We are proud to have gained national reputation in just one year.</p>
 	<p>Olympiad’s Examination Assessment has revealed who has come top of the class in 2016.</p>
 
 	</div>
 
-	<div class="studentDetails " style="border:1px solid #000; margin:100px 50px 100px 50px;">
+	<div class="studentDetails " style="border:1px solid #000; margin:250px 50px 100px 50px;">
 			<div>
 			<h3 align="center">Class : {{DB::table('class_names')->where('class_names.deleted',0)->where('class_names.id',$student->classId)->value('name')}}</h3>
 			</div>
@@ -115,9 +114,9 @@ button#cmd {
 </div>
 <div>
 
-	<b><div class="top-para">However,  there is still a lot of hard work ahead.<br>
-	Each student possesses a different list of skills.<br>
-	Amongst the 2016 winners are inspirational stories..
+	<b><div class="top-para" style="text-align:center;">
+	"Each student possesses a different list of skills."<br>
+	
 	</div></b>
 </div>
 
@@ -142,7 +141,7 @@ elseif($stream == 'pmo'){
 <div class="row">
 <div class="performance-content">
 	<h5 align="center" style="font-size:18px;">CURRENT YEAR PERFORMANCE</h5>
-	<h5 align="center" style="font-size:18px;">1st {{$stream}} {{$student->sessionYear}}</h5>
+	<h5 align="center" style="font-size:18px;">{{$student->sessionYear}}st {{strtoupper($stream)}} </h5>
 	<table align="center" style="width:=1000px">
 	<tbody style="border:1px solid #000;">
 		<tr>
@@ -151,11 +150,11 @@ elseif($stream == 'pmo'){
 				<span style="width:115px">{{$student->rollNo}}</span><br>
 			</td>
 			<td style="border:1px solid #000;  ">
-				<span  style="float:left">School Rank</span>
+				<span  style="float:left">School Rank : </span>
 				<span style="float:right">{{$studentSchoolRank}}</span><br>
 			</td>
 			<td style="border:1px solid #000; ">
-				<span  style="float:left">International Rank : </span>
+				<span  style="float:left">National Rank : </span>
 				<span style="float:right">{{$studentNatnationRank}}</span><br>
 			</td>
 		</tr>
@@ -165,7 +164,7 @@ elseif($stream == 'pmo'){
 				<span style="float:right">{{$totalObtainMarks }}</span><br>
 			</td>
 			<td style="border:1px solid #000; ">
-				<span  style="float:left">City Rank</span>
+				<span  style="float:left">City Rank : </span>
 				<span style="float:right">{{$studentCityRank}}</span><br>
 			</td>
 			<td style="border:1px solid #000;  ">
@@ -180,7 +179,7 @@ elseif($stream == 'pmo'){
 				<span style="float:right">{{$totalMarks }}</span><br>
 			</td>
 			<td style="border:1px solid #000;  ">
-				<span  style="float:left">State Rank</span>
+				<span  style="float:left">State Rank : </span>
 				<span style="float:right">{{$studentSateRank}}</span><br>
 			</td>
 			<td style="border:1px solid #000; ">
@@ -283,87 +282,7 @@ elseif($stream == 'pmo'){
 </div>
 @endforeach
 	<!-- questin wise PDF -->
-	
-		<div class="performance-content" style="margin-top:700px">
-			<div align="center"><h5 style="padding: 8px 0px; background:#000; color:#fff;"> QUESTION WISE ANALYSIS</h5> </div>
-			<table align="center" style="width:900px; padding: 12px 60px 12px 0px;">
-				<thead>
-					<tr>
-						<th style="border:1px solid #000;">SR.No</th>
-						<th style="border:1px solid #000;">Questions</th>
-						<th style="border:1px solid #000;">Answer Key</th>
-						<th style="border:1px solid #000;">Your Answer</th>
-						<th style="border:1px solid #000;">Answer<hr> Right/Wrong</th>
-						<th style="border:1px solid #000;">Right Answer<hr>in State %</th>
-						<th style="border:1px solid #000;">Right Answer<hr>in National %</th>
-					</tr>
-				</thead>
-					<?php $num = "";
-						  $count = 0;
-					?>
-					@foreach($questionInfo as $questions)
-					<?php if($num != $questions->section){
-						$num =  $questions->section;
-						
-						?>
-					<tr>
-						<td colspan="7" style="border:1px solid #000;">
-							<h5 style="font-size:18px; ">Section {{$questions->section}}</h5>
-						<td>
-					</tr>
-						<?php
-					}
-					if($count == 0){
-							$stateStudentCount = DB::table('student_result')
-								->join('students','student_result.studentId','=','students.entityId')
-								->join('schools','students.schoolEntityId','=','schools.entityId')
-								->join('addresses','schools.entityId','=','addresses.entityId')
-								->where('addresses.stateId',$schoolInfo[0]->state_id)
-								->where('student_result.stream',$stream)
-								->where('student_result.questionId',$questions->questionId)
-								->count();
-							$nationStudentCount = DB::table('student_result')
-								->where('student_result.deleted',0)
-								->where('student_result.stream',$stream)
-								->where('questionId',$questions->questionId)
-								->count();
-								}
-					$count++;
-					
-					?>
-					<tr>
-						<td style="border:1px solid #000;">{{$count}}</td>
-						<td style="border:1px solid #000;"><?php echo mb_strimwidth($questions->text, 0, 15, "..."); ?></td>
-						<td style="border:1px solid #000;">{{ $questions->answerText}}</td>
-						<td style="border:1px solid #000;">{{ DB::table('master_answer')->where('master_answer.answerId',$questions->studentAnswerId)->where('master_answer.deleted',0)->value('answerText') }}</td>
-						<td style="border:1px solid #000;">@if($questions->correct == 1)<img src="../../images/check.png" width="15" /></span> @else X @endif</td>
-						<td style="border:1px solid #000;">{{DB::table('student_result')
-								->join('students','student_result.studentId','=','students.entityId')
-								->join('schools','students.schoolEntityId','=','schools.entityId')
-								->join('addresses','schools.entityId','=','addresses.entityId')
-								->where('addresses.stateId',$schoolInfo[0]->state_id)
-								->where('student_result.stream',$stream)
-								->where('student_result.questionId',$questions->questionId)
-								->where('student_result.correct',1)
-								->count()/$stateStudentCount*100}}
-						</td>
-						<td style="border:1px solid #000;">{{DB::table('student_result')
-								->where('student_result.deleted',0)
-								->where('student_result.stream',$stream)
-								->where('questionId',$questions->questionId)
-								->where('correct',1)
-								->count()/$nationStudentCount*100}}
-						</td>
-					</tr>
-					
-					@endforeach
 
-				<tbody>
-					
-				</tbody>
-			</table>
-		
-		</div>
 <!--    strat code for Topic wise analysis -->
 <div class="row"  style="margin-top:300px;">
 <div class="performance-content">
@@ -411,7 +330,7 @@ elseif($stream == 'pmo'){
 		</tbody>
 <?php
         $dataPoints = array(
-            array("y" => number_format($sectionData['analyticalReasoning']/15*100,2), "label" => "Analytical Reasoning"),
+            array("y" => number_format($sectionData['analyticalReasoning']/15*100,2), "label" => "Reasoning"),
             array("y" => number_format($sectionData['everydayScience']/35*100,2), "label" => "Everyday Science"),
             array("y" => number_format($sectionData['questZone']*3/30*100,2), "label" => "Quest Zone")
         );
@@ -456,7 +375,7 @@ elseif($stream == 'pmo'){
 	<tbody>
 <?php
         $dataPoints = array(
-            array("y" => number_format($sectionData['analyticalReasoning']/15*100,2), "label" => "Analytical Reasoning"),
+            array("y" => number_format($sectionData['analyticalReasoning']/15*100,2), "label" => "Reasoning"),
             array("y" => number_format($sectionData['everydayMathematicalReasoning']/15*100,2), "label" => "Everyday Mathematical Reasoning"),
             array("y" => number_format($sectionData['standardMathematics']*2/40*100,2), "label" => "Standard Mathematics"),
             array("y" => number_format($sectionData['questZone']*3/30*100,2), "label" => "Quest Zone")
@@ -490,7 +409,8 @@ elseif($stream == 'pmo'){
 		</tr>
 		<tr>
 			<td style="border:1px solid #000;">Class Average Marks</td>
-			<td style="border:1px solid #000;">{{$classAvg = number_format(DB::table('students')->where('classId',$student->classId)->where('deleted',0)->where('schoolEntityId',$student->schoolEntityId)->sum('totalMarksPso')/DB::table('students')->where('classId',$student->classId)->where('deleted',0)->where('schoolEntityId',$student->schoolEntityId)->count(),2)}}</td>
+			<td style="border:1px solid #000;">{{$classAvg = number_format(DB::table('students')->where('classId',$student->classId)->where('deleted',0)->where('schoolEntityId',$student->schoolEntityId)->where('students.attendance',1)->where('students.pso',1)->sum('totalMarksPso')/
+			DB::table('students')->where('classId',$student->classId)->where('deleted',0)->where('students.attendance',1)->where('students.pso',1)->where('schoolEntityId',$student->schoolEntityId)->count(),2)}}</td>
 		</tr>
 		<tr>
 			<td style="border:1px solid #000;">State Average Marks</td>
@@ -500,17 +420,21 @@ elseif($stream == 'pmo'){
 								->where('addresses.stateId',$schoolInfo[0]->state_id)
 								->where('students.classId',$student->classId)
 								->where('students.deleted',0)
+								->where('students.attendance',1)
+								->where('students.pso',1)							
 								->sum('totalMarksPso')/DB::table('students')
 								->join('schools','students.schoolEntityId','=','schools.entityId')
 								->join('addresses','schools.entityId','=','addresses.entityId')
 								->where('addresses.stateId',$schoolInfo[0]->state_id)
 								->where('students.classId',$student->classId)
 								->where('students.deleted',0)
+								->where('students.attendance',1)
+								->where('students.pso',1)
 								->count(),2)}}</td>
 		</tr>
 		<tr>
 			<td style="border:1px solid #000;">National Average Marks</td>
-			<td style="border:1px solid #000;">{{$nationalAvg =number_format(DB::table('students')->where('classId',$student->classId)->where('deleted',0)->sum('totalMarksPso')/DB::table('students')->where('classId',$student->classId)->where('deleted',0)->count(),2)}}</td>
+			<td style="border:1px solid #000;">{{$nationalAvg =number_format(DB::table('students')->where('classId',$student->classId)->where('deleted',0)			->where('attendance',1)->where('pso',1)->sum('totalMarksPso')/DB::table('students')->where('classId',$student->classId)->where('deleted',0)->where('attendance',1)->where('pso',1)->count(),2)}}</td>
 		</tr>
 		</tbody>
 <?php
@@ -529,7 +453,8 @@ elseif($stream == 'pmo'){
 		</tr>
 		<tr>
 			<td style="border:1px solid #000;">Class Average Marks</td>
-			<td style="border:1px solid #000;">{{$classAvg = number_format(DB::table('students')->where('classId',$student->classId)->where('deleted',0)->where('schoolEntityId',$student->schoolEntityId)->sum('totalMarksPmo')/DB::table('students')->where('classId',$student->classId)->where('deleted',0)->where('schoolEntityId',$student->schoolEntityId)->count(),2)}}</td>
+			<td style="border:1px solid #000;">{{$classAvg = number_format(DB::table('students')->where('classId',$student->classId)->where('deleted',0)->where('attendance',1)->where('pmo',1)->where('schoolEntityId',$student->schoolEntityId)->sum('totalMarksPmo')/
+			DB::table('students')->where('classId',$student->classId)->where('attendance',1)->where('pmo',1)->where('deleted',0)->where('schoolEntityId',$student->schoolEntityId)->count(),2)}}</td>
 		</tr>
 		<tr>
 			<td style="border:1px solid #000;">State Average Marks</td>
@@ -539,17 +464,21 @@ elseif($stream == 'pmo'){
 								->where('addresses.stateId',$schoolInfo[0]->state_id)
 								->where('students.classId',$student->classId)
 								->where('students.deleted',0)
+								->where('students.attendance',1)
+								->where('students.pmo',1)
 								->sum('totalMarksPmo')/DB::table('students')
 								->join('schools','students.schoolEntityId','=','schools.entityId')
 								->join('addresses','schools.entityId','=','addresses.entityId')
 								->where('addresses.stateId',$schoolInfo[0]->state_id)
 								->where('students.classId',$student->classId)
 								->where('students.deleted',0)
+								->where('students.attendance',1)
+								->where('students.pmo',1)
 								->count(),2)}}</td>
 		</tr>
 		<tr>
 			<td style="border:1px solid #000;">National Average Marks</td>
-			<td style="border:1px solid #000;">{{$nationalAvg = number_format(DB::table('students')->where('classId',$student->classId)->where('deleted',0)->sum('totalMarksPmo')/DB::table('students')->where('classId',$student->classId)->where('deleted',0)->count(),2)}}</td>
+			<td style="border:1px solid #000;">{{$nationalAvg = number_format(DB::table('students')->where('classId',$student->classId)->where('deleted',0)			->where('attendance',1)->where('pmo',1)->sum('totalMarksPmo')/DB::table('students')->where('classId',$student->classId)->where('deleted',0)->where('attendance',1)->where('pmo',1)->count(),2)}}</td>
 		</tr>
 		</tbody>
 <?php
@@ -580,7 +509,9 @@ elseif($stream == 'pmo'){
                         text: "Percentage"
                     },
                       axisX: {
-				labelAngle: -30
+				
+		        labelFontSize: 16
+
 			},                   
 					axisY: {      
 					minimum: 0,
@@ -604,11 +535,9 @@ elseif($stream == 'pmo'){
                         text: "Average"
                     },
                      axisX:{
-		        labelFontSize: 12
+		        labelFontSize: 16
 		      },
-                    axisX: {
-				labelAngle: -30
-			},
+                   
 					axisY: {      
 					minimum: 0,
 					maximum: 100
@@ -634,7 +563,7 @@ elseif($stream == 'pmo'){
 			
 </script>
 
-<div class="modal-backdrop fade in"><img src="../../images/giphy.gif" align="center"  /></div>
+<div class="modal-backdrop fade in"><img src="../../images/default.svg" align="center"  /></div>
 
 </body>
 </html>
