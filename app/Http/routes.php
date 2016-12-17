@@ -183,3 +183,4 @@ Route::auth();
 Route::resource('question-sets', 'questionSetsController');
 Route::resource('master-questions', 'masterQuestionsController');
 Route::resource('student-result', 'studentResultController');
+Route::resource('exam-center', 'examCenterController');

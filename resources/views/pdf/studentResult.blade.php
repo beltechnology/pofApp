@@ -84,7 +84,7 @@ button#cmd {
 <div class="main-pdf">
 @foreach($studentInfo as $student)
 <div class="row">
-<h5 align="left">Dear Parents, </h5>
+<h5 align="left" style="font-size: 20px;">Dear Parents, </h5>
 <div class="top-para">
 	<p>We have congratulated all the rising stars of 2016</p>
 	<p>However, Parents whose Children did not score good grades should recall history in hurry  that one example of dedication is not  the sole criteria of student’s assessment specifically school grades .The gigantic corporates like Bill Gates and others were college dropouts. </p>
@@ -114,7 +114,7 @@ button#cmd {
 </div>
 <div>
 
-	<b><div class="top-para" style="text-align:center;">
+	<b><div class="top-para" style="text-align:center; font-size:20px">
 	"Each student possesses a different list of skills."<br>
 	
 	</div></b>
@@ -190,7 +190,7 @@ elseif($stream == 'pmo'){
 		
 		<tr>
 			<td style="border:1px solid #000;">
-				<span  style="float:left;">Percentale Score:</span>
+				<span  style="float:left;">Percentage Score:</span>
 				<span style="float:right">{{  number_format($totalObtainMarks/$totalMarks*100,2) }}</span>
 			</td>
 			<td style="border:1px solid #000;  ">
@@ -376,7 +376,7 @@ elseif($stream == 'pmo'){
 <?php
         $dataPoints = array(
             array("y" => number_format($sectionData['analyticalReasoning']/15*100,2), "label" => "Reasoning"),
-            array("y" => number_format($sectionData['everydayMathematicalReasoning']/15*100,2), "label" => "Everyday Mathematical Reasoning"),
+            array("y" => number_format($sectionData['everydayMathematicalReasoning']/15*100,2), "label" => "Everyday Mathematical "),
             array("y" => number_format($sectionData['standardMathematics']*2/40*100,2), "label" => "Standard Mathematics"),
             array("y" => number_format($sectionData['questZone']*3/30*100,2), "label" => "Quest Zone")
         );
