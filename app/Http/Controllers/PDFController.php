@@ -17,6 +17,37 @@ use raw;
 use Illuminate\Support\Facades\Input;
 class PDFController extends Controller
 {
+	
+    public function secondLevelAttendanceSheet()
+	{
+		$validUser = $this->CheckUser();
+		if($validUser) return	view('errors.404');
+		
+		$schools= DB::table('schools')->where('deleted',0)->where('entityId',session()->get('schoolCenterId'))->get();
+		$second_level_exams= DB::table('second_level_exams')->where('deleted',0)->where('examType',Input::get('subject'))->get();
+		if(Input::get('subject') != "0" )
+		{
+				   $student= DB::table('secondlevelstudent')
+                        ->join('students','students.entityId','=','secondlevelstudent.studentEntityId')
+                        ->join('class_names','class_names.id','=','students.classId')
+                        ->join('schools','schools.entityId','=','secondlevelstudent.SecondLevelSchoolId')
+						->where('secondlevelstudent.stream',Input::get('subject'))
+						->where('students.deleted',0)
+						->where('class_names.deleted',0)
+						->where('class_names.id',Input::get('filterClass'))
+						->where('students.sessionYear',session()->get('activeSession'))
+						->where('schools.centerSchoolId',session()->get('schoolCenterId'))
+						->orderBy('students.rollNo','asc')
+						->get();
+						
+		}
+		
+		$pdf = PDF::loadView('pdf.secondLevelAttendance',['student'=>$student,'schools'=>$schools,'second_level_exams'=>$second_level_exams]);
+//	return view('pdf.attendance', ['student'=>$student,'schools'=>$schools,'address'=>$address[0]->addressLine1." ".$address[0]->addressLine2 ,'states'=>$states,'districts'=>$districts,'citys'=>$citys,'classess'=>$classess,]);
+//	$pdf = PDF::loadView('pdf.attendance',['student'=>$student,'schools'=>$schools,'address'=>$address[0]->addressLine1." ".$address[0]->addressLine2 ,'states'=>$states,'districts'=>$districts,'citys'=>$citys,'classess'=>$classess,]);
+		return $pdf->stream('secondLevelAttendance.pdf');
+	}	
+	
     public function getPDF()
 	{
 		$validUser = $this->CheckUser();
@@ -226,7 +257,7 @@ class PDFController extends Controller
 								->get();
 								
 					
-					$studentList =	DB::select(DB::raw('select stud.*, sch.entityId sch , sch.schoolName, addr.stateId,addr.cityId from students stud , schools sch, addresses addr where stud.deleted = 0 and stud.classId = '.$classId.'  and stud.schoolEntityId = sch.entityId and sch.entityId = addr.entityId  order by stud.'.$streamName.' desc'));
+					$studentList =	DB::select(DB::raw('select stud.*, sch.entityId sch , sch.schoolName, addr.stateId,addr.cityId from students stud , schools sch, addresses addr where stud.deleted = 0 and stud.attendance = 1 and stud.classId = '.$classId.'  and stud.schoolEntityId = sch.entityId and sch.entityId = addr.entityId  order by stud.'.$streamName.' desc'));
 					
 							if($stream == 'pmo'){
 								$analyticalReasoning = 0;
@@ -401,6 +432,60 @@ class PDFController extends Controller
 					return $pdf->stream('resultSheet.pdf');
 	//	return View('pdf.resultSheet',['student'=>$student]);
 }
+
+/// second level Student admin card 
+
+
+    public function secondLevelAdmitCard()
+	{
+		$validUser = $this->CheckUser();
+		if($validUser) return	view('errors.404');
+		if(Input::get('subject'))
+		{
+		$schools= DB::table('schools')->where('deleted',0)->where('entityId',session()->get('SecondLevelSchoolId'))->get();
+		$schoolCenter= DB::table('schools')
+						->join('entitys','entitys.entityId','=','schools.entityId')
+                        ->join('addresses','addresses.entityId','=','schools.entityId')
+						->join('states','states.id','=','addresses.stateId')
+						->join('phones','phones.entityId','=','schools.entityId')
+						->join('emailaddresses','emailaddresses.entityId','=','schools.entityId')
+						->join('citys','citys.id','=','addresses.cityId')
+						->join('districts','districts.id','=','addresses.districtId')
+						->where('schools.entityId',session()->get('schoolCenterId'))
+						->where('schools.deleted',0)
+						->get();
+		$second_level_exams= DB::table('second_level_exams')->where('deleted',0)->where('examType',Input::get('subject'))->get();
+		
+	    $student= DB::table('secondlevelstudent')
+                        ->join('students','students.entityId','=','secondlevelstudent.studentEntityId')
+                        ->join('class_names','class_names.id','=','students.classId')
+						->where('secondlevelstudent.deleted',0)
+						->where('students.deleted',0)
+						->where('class_names.deleted',0)
+						->where('students.sessionYear',session()->get('activeSession'))
+						->where('secondlevelstudent.SecondLevelSchoolId',session()->get('SecondLevelSchoolId'))
+						->where('secondlevelstudent.stream',Input::get('subject'))
+						->orderBy('students.rollNo','asc')
+						->get();
+
+						
+		$address = DB::table('addresses')->where('deleted',0)->where('entityId',session()->get('entityId'))->get();
+		$states = DB::table('states')->where('deleted',0)->where('id',$address[0]->stateId)->value('stateName');
+		$districts = DB::table('districts')->where('deleted',0)->where('id',$address[0]->districtId)->value('name');
+		$citys = DB::table('citys')->where('deleted',0)->where('id',$address[0]->cityId)->value('cityName');
+		$classess = DB::table('class_names')->where('deleted',0)->get();
+		
+	//var_dump($schoolCenter);	
+		$pdf = PDF::loadView('pdf.secondLevelAdmitCard',['student'=>$student,'schools'=>$schools,'address'=>$address[0]->addressLine1." ".$address[0]->addressLine2 ,'states'=>$states,'districts'=>$districts,'citys'=>$citys,'classess'=>$classess,'schoolCenter'=>$schoolCenter,'second_level_exams'=>$second_level_exams,]);
+		return $pdf->stream('secondLevelAdmitCard.pdf');
+		}
+		else{
+			return	view('errors.404');
+		}
+	}	
+
+
+
 
 
 	

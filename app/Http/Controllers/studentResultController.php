@@ -13,7 +13,9 @@ use App\answerKey;
 use App\questionClassMapping;
 use App\ClassNameController;
 use App\studentResult;
-
+use App\secondLevelStudentResult;
+use App\secondLevelStudent;
+use Illuminate\Support\Facades\Redirect;
 
 class studentResultController extends Controller
 {
@@ -24,12 +26,14 @@ class studentResultController extends Controller
      */
     public function index()
     {
-        $studentResult = DB::table('student_result')
-                        ->join('master_question','master_question.questionId','=','student_result.questionId')
-						 ->join('master_answer','master_answer.answerId','=','student_result.answerId')
-						->where('student_result.deleted',0)
-						->paginate(30);
-        return view('student-result.index', compact('studentResult'));
+        // $studentResult = DB::table('student_result')
+                        // ->join('master_question','master_question.questionId','=','student_result.questionId')
+						// ->join('master_answer','master_answer.answerId','=','student_result.answerId')
+						// ->where('student_result.deleted',0)
+						// ->where('student_result.stream','PMO')
+						// ->paginate(30);
+    //    return view('student-result.index', compact('studentResult'));
+	return redirect ('student-result/create');
     }
     /**
      * Show the form for creating a new resource.
@@ -60,82 +64,166 @@ class studentResultController extends Controller
 			$data = Excel::load($path, function($reader) {})->get();
 
 			if(!empty($data) && $data->count()){
-				
+				$studentResultCount = 0;
 				 foreach ($data as $key => $value) {
 				//	var_dump($value);
+					if($value->stream !=null){
+						$studentResultCount++;
+						$className =  abs($value->classid);
+						$masterSetId = $value->testid+1;
+						$classId = DB::table('class_names')->where('class_names.deleted',0)->where('class_names.name',$className)->value('id');
+						$studentRollNumber = $value->state_code.$value->school_code."-".$value->classid."-".$value->roll_no;
+						$schoolCode = $value->state_code.$value->school_code;
 
-					$className =  abs($value->classid);
-					//var_dump($value);
-					//exit();
-					$masterSetId = $value->testid+1;
-					$classId = DB::table('class_names')->where('class_names.deleted',0)->where('class_names.name',$className)->value('id');
-					$studentRollNumber = $value->state_code.$value->school_code."-".$value->classid."-".$value->roll_no;
-					$schoolCode = $value->state_code.$value->school_code;
-
-					$schoolEntityId = DB::table('schools')->where('schools.deleted',0)->where('schools.uniqueSchoolCode',$schoolCode)->value('entityId');
-					$studentsEntityId = DB::table('students')->where('students.deleted',0)->where('students.schoolEntityId',$schoolEntityId)->where('students.rollNo',$studentRollNumber)->value('entityId');
-	
-									
-					$totalMarks	= 0;
-					$answerArray = ["q1"=>$value->q1, "q2"=>$value->q2, "q3"=>$value->q3, "q4"=>$value->q4, "q5"=>$value->q5, "q6"=>$value->q6, "q7"=>$value->q7,"q8"=>$value->q8, "q9"=>$value->q9, "q10"=>$value->q10, 
-					"q11"=>$value->q11,"q12"=>$value->q12, "q13"=>$value->q13, "q14"=>$value->q14, "q15"=>$value->q15, "q16"=>$value->q16, "q17"=>$value->q17, "q18"=>$value->q18, "q19"=>$value->q19, "q20"=>$value->q20,
-					"q21"=>$value->q21, "q22"=>$value->q22, "q23"=>$value->q23, "q24"=>$value->q24, "q25"=>$value->q25, "q26"=>$value->q26, "q27"=>$value->q27, "q28"=>$value->q28, "q29"=>$value->q29, "q30"=>$value->q30,
-					"q31"=>$value->q31, "q32"=>$value->q32, "q33"=>$value->q33, "q34"=>$value->q34, "q35"=>$value->q35, "q36"=>$value->q36, "q37"=>$value->q37, "q38"=>$value->q38, "q39"=>$value->q39, "q40"=>$value->q40,
-					"q41"=>$value->q41, "q42"=>$value->q42, "q43"=>$value->q43, "q44"=>$value->q44, "q45"=>$value->q45, "q46"=>$value->q46, "q47"=>$value->q47, "q48"=>$value->q48, "q49"=>$value->q49, "q50"=>$value->q50,
-					"q51"=>$value->q51, "q52"=>$value->q52, "q53"=>$value->q53, "q54"=>$value->q54, "q55"=>$value->q55, "q56"=>$value->q56, "q57"=>$value->q57, "q58"=>$value->q58, "q59"=>$value->q59, "q60"=>$value->q60,];
-						for($i=1;$i<= 60;$i++){						
-							$classMapId = DB::table('questionclassmapping')->where('questionclassmapping.deleted',0)->where('questionclassmapping.order',$i)->where('questionclassmapping.masterSetId',$masterSetId)->where('questionclassmapping.classId',$classId)->where('questionclassmapping.stream',$value->stream)->value('classMapId');	
-							$questionId = DB::table('questionclassmapping')->where('questionclassmapping.deleted',0)->where('questionclassmapping.classMapId',$classMapId)->value('questionId');
-
-
-
-					//	echo $questionId."_".$value->stream."_".$classMapId."<br>";	
-						if($answerArray['q'.$i])
-						{
-							$answerId = DB::table('master_answer')->where('master_answer.deleted',0)->where('master_answer.answerText',$answerArray['q'.$i])->value('answerId');
+						$schoolEntityId = DB::table('schools')->where('schools.deleted',0)->where('schools.uniqueSchoolCode',$schoolCode)->value('entityId');
+						$studentsEntityId = DB::table('students')->where('students.deleted',0)->where('students.schoolEntityId',$schoolEntityId)->where('students.rollNo',$studentRollNumber)->value('entityId');
+					if($masterSetId > 0 && $masterSetId< 3){
+						$resultCount = DB::table('student_result')->where('student_result.deleted',0)->where('student_result.studentId',$studentsEntityId)->where('student_result.stream',$value->stream)->count();
+						if($resultCount	> 0){
+							
+							$updateTrue = true;
 						}
 						else{
-							$answerId =DB::table('master_answer')->where('master_answer.deleted',0)->where('master_answer.answerText','')->value('answerId');
+							$updateTrue =false;
 						}
-						if(!$answerId ){$answerId = "6";}
-						$answerQuestionId = DB::table('answer_key')->where('answer_key.deleted',0)->where('answer_key.questionId',$questionId)->where('answer_key.classMapId',$classMapId)->value('answerId');
-						
-						$answerKeyId = DB::table('answer_key')->where('answer_key.deleted',0)->where('answer_key.questionId',$questionId)->where('answer_key.answerId',$answerId)->where('answer_key.classMapId',$classMapId)->value('answerKeyId');
-						$answerResponse = false;
-						if($answerKeyId){
-							$answerResponse = true;
-							$questionMarks = DB::table('master_question')->where('master_question.deleted',0)->where('master_question.questionId',$questionId)->value('marks');
-							$totalMarks = $totalMarks+$questionMarks;
-						}
-						if($questionId && $studentsEntityId && $answerQuestionId && $answerId){
-							$resultId = DB::table('student_result')->where('student_result.deleted',0)->where('student_result.questionId',$questionId)->where('student_result.studentId',$studentsEntityId)->where('student_result.answerId',$answerQuestionId)->where('student_result.stream',$value->stream)->value('resultId');
-							if($resultId)
+						//echo $resultCount;
+						$totalMarks	= 0;
+						$answerArray = ["q1"=>$value->q1, "q2"=>$value->q2, "q3"=>$value->q3, "q4"=>$value->q4, "q5"=>$value->q5, "q6"=>$value->q6, "q7"=>$value->q7,"q8"=>$value->q8, "q9"=>$value->q9, "q10"=>$value->q10, 
+						"q11"=>$value->q11,"q12"=>$value->q12, "q13"=>$value->q13, "q14"=>$value->q14, "q15"=>$value->q15, "q16"=>$value->q16, "q17"=>$value->q17, "q18"=>$value->q18, "q19"=>$value->q19, "q20"=>$value->q20,
+						"q21"=>$value->q21, "q22"=>$value->q22, "q23"=>$value->q23, "q24"=>$value->q24, "q25"=>$value->q25, "q26"=>$value->q26, "q27"=>$value->q27, "q28"=>$value->q28, "q29"=>$value->q29, "q30"=>$value->q30,
+						"q31"=>$value->q31, "q32"=>$value->q32, "q33"=>$value->q33, "q34"=>$value->q34, "q35"=>$value->q35, "q36"=>$value->q36, "q37"=>$value->q37, "q38"=>$value->q38, "q39"=>$value->q39, "q40"=>$value->q40,
+						"q41"=>$value->q41, "q42"=>$value->q42, "q43"=>$value->q43, "q44"=>$value->q44, "q45"=>$value->q45, "q46"=>$value->q46, "q47"=>$value->q47, "q48"=>$value->q48, "q49"=>$value->q49, "q50"=>$value->q50,
+						"q51"=>$value->q51, "q52"=>$value->q52, "q53"=>$value->q53, "q54"=>$value->q54, "q55"=>$value->q55, "q56"=>$value->q56, "q57"=>$value->q57, "q58"=>$value->q58, "q59"=>$value->q59, "q60"=>$value->q60,];
+							for($i=1;$i<= 60;$i++){						
+								$classMapId = DB::table('questionclassmapping')->where('questionclassmapping.deleted',0)->where('questionclassmapping.order',$i)->where('questionclassmapping.masterSetId',$masterSetId)->where('questionclassmapping.classId',$classId)->where('questionclassmapping.stream',$value->stream)->value('classMapId');	
+								$questionId = DB::table('questionclassmapping')->where('questionclassmapping.deleted',0)->where('questionclassmapping.classMapId',$classMapId)->value('questionId');
+
+
+
+						//	echo $questionId."_".$value->stream."_".$classMapId."<br>";	
+							if($answerArray['q'.$i])
 							{
-								DB::table('student_result')->where('student_result.resultId', $resultId)->update(['correct' => $answerResponse,'studentAnswerId'=>$answerId]);	
+								$answerId = DB::table('master_answer')->where('master_answer.deleted',0)->where('master_answer.answerText',$answerArray['q'.$i])->value('answerId');
 							}
 							else{
-							$studentResult = ['questionId'=>$questionId, 'studentId'=>$studentsEntityId, 'answerId'=>$answerQuestionId, 'correct'=>$answerResponse, 'stream'=>$value->stream, 'order'=>$i, 'studentAnswerId'=>$answerId,];
-							studentResult::create($studentResult);
+								$answerId =DB::table('master_answer')->where('master_answer.deleted',0)->where('master_answer.answerText','')->value('answerId');
 							}
-						}
-
+							if(!$answerId ){$answerId = "6";}
+							$answerQuestionId = DB::table('answer_key')->where('answer_key.deleted',0)->where('answer_key.questionId',$questionId)->where('answer_key.classMapId',$classMapId)->value('answerId');
 							
-						}
-						//echo $studentsEntityId."<br>";
-						if($studentsEntityId){
-							  if($value->stream == 'PSO'){
-							     DB::table('students')->where('students.entityId', $studentsEntityId)->update(['totalMarksPso' => $totalMarks,'resultDeclared'=>1]);
+							$answerKeyId = DB::table('answer_key')->where('answer_key.deleted',0)->where('answer_key.questionId',$questionId)->where('answer_key.answerId',$answerId)->where('answer_key.classMapId',$classMapId)->value('answerKeyId');
+							$answerResponse = false;
+							if($answerKeyId){
+								$answerResponse = true;
+								$questionMarks = DB::table('master_question')->where('master_question.deleted',0)->where('master_question.questionId',$questionId)->value('marks');
+								$totalMarks = $totalMarks+$questionMarks;
+							}
+							if($questionId && $studentsEntityId && $answerQuestionId && $answerId){
+								if($updateTrue){
+									$resultId = DB::table('student_result')->where('student_result.deleted',0)->where('student_result.questionId',$questionId)->where('student_result.studentId',$studentsEntityId)->where('student_result.answerId',$answerQuestionId)->where('student_result.stream',$value->stream)->value('resultId');
+									if($resultId)
+									{
+										DB::table('student_result')->where('student_result.resultId', $resultId)->update(['correct' => $answerResponse,'studentAnswerId'=>$answerId]);	
+									}
+									else{
+									$studentResult = ['questionId'=>$questionId, 'studentId'=>$studentsEntityId, 'answerId'=>$answerQuestionId, 'correct'=>$answerResponse, 'stream'=>$value->stream, 'order'=>$i, 'studentAnswerId'=>$answerId,];
+									studentResult::create($studentResult);
+									}
 								}
-							 elseif($value->stream == 'PMO'){
-								DB::table('students')->where('students.entityId', $studentsEntityId)->update(['totalMarksPmo' => $totalMarks,'resultDeclared'=>1]);
+								else{
+									$studentResult = ['questionId'=>$questionId, 'studentId'=>$studentsEntityId, 'answerId'=>$answerQuestionId, 'correct'=>$answerResponse, 'stream'=>$value->stream, 'order'=>$i, 'studentAnswerId'=>$answerId,];
+									studentResult::create($studentResult);
+								}
+							}
+
+								
+							}
+							//echo $studentsEntityId."<br>";
+							if($studentsEntityId){
+								  if($value->stream == 'PSO'){
+									 DB::table('students')->where('students.entityId', $studentsEntityId)->update(['totalMarksPso' => $totalMarks,'resultDeclared'=>1]);
+									}
+								 elseif($value->stream == 'PMO'){
+									DB::table('students')->where('students.entityId', $studentsEntityId)->update(['totalMarksPmo' => $totalMarks,'resultDeclared'=>1]);
+								}
 							}
 						}
+						elseif($masterSetId > 2 && $masterSetId< 5){
+	// second level result
+						$resultCount = DB::table('second_level_student_result')->where('second_level_student_result.deleted',0)->where('second_level_student_result.studentId',$studentsEntityId)->where('second_level_student_result.stream',$value->stream)->count();
+						if($resultCount	> 0){
+							
+							$updateTrue = true;
+						}
+						else{
+							$updateTrue =false;
+						}
+						//echo $resultCount;
+						$totalMarks	= 0;
+						$answerArray = ["q1"=>$value->q1, "q2"=>$value->q2, "q3"=>$value->q3, "q4"=>$value->q4, "q5"=>$value->q5, "q6"=>$value->q6, "q7"=>$value->q7,"q8"=>$value->q8, "q9"=>$value->q9, "q10"=>$value->q10, 
+						"q11"=>$value->q11,"q12"=>$value->q12, "q13"=>$value->q13, "q14"=>$value->q14, "q15"=>$value->q15, "q16"=>$value->q16, "q17"=>$value->q17, "q18"=>$value->q18, "q19"=>$value->q19, "q20"=>$value->q20,
+						"q21"=>$value->q21, "q22"=>$value->q22, "q23"=>$value->q23, "q24"=>$value->q24, "q25"=>$value->q25, "q26"=>$value->q26, "q27"=>$value->q27, "q28"=>$value->q28, "q29"=>$value->q29, "q30"=>$value->q30,
+						"q31"=>$value->q31, "q32"=>$value->q32, "q33"=>$value->q33, "q34"=>$value->q34, "q35"=>$value->q35, "q36"=>$value->q36, "q37"=>$value->q37, "q38"=>$value->q38, "q39"=>$value->q39, "q40"=>$value->q40,
+						"q41"=>$value->q41, "q42"=>$value->q42, "q43"=>$value->q43, "q44"=>$value->q44, "q45"=>$value->q45, "q46"=>$value->q46, "q47"=>$value->q47, "q48"=>$value->q48, "q49"=>$value->q49, "q50"=>$value->q50,
+						"q51"=>$value->q51, "q52"=>$value->q52, "q53"=>$value->q53, "q54"=>$value->q54, "q55"=>$value->q55, "q56"=>$value->q56, "q57"=>$value->q57, "q58"=>$value->q58, "q59"=>$value->q59, "q60"=>$value->q60,];
+							for($i=1;$i<= 60;$i++){						
+								$classMapId = DB::table('questionclassmapping')->where('questionclassmapping.deleted',0)->where('questionclassmapping.order',$i)->where('questionclassmapping.masterSetId',$masterSetId)->where('questionclassmapping.classId',$classId)->where('questionclassmapping.stream',$value->stream)->value('classMapId');	
+								$questionId = DB::table('questionclassmapping')->where('questionclassmapping.deleted',0)->where('questionclassmapping.classMapId',$classMapId)->value('questionId');
+
+
+
+						//	echo $questionId."_".$value->stream."_".$classMapId."<br>";	
+							if($answerArray['q'.$i])
+							{
+								$answerId = DB::table('master_answer')->where('master_answer.deleted',0)->where('master_answer.answerText',$answerArray['q'.$i])->value('answerId');
+							}
+							else{
+								$answerId =DB::table('master_answer')->where('master_answer.deleted',0)->where('master_answer.answerText','')->value('answerId');
+							}
+							if(!$answerId ){$answerId = "6";}
+							$answerQuestionId = DB::table('answer_key')->where('answer_key.deleted',0)->where('answer_key.questionId',$questionId)->where('answer_key.classMapId',$classMapId)->value('answerId');
+							
+							$answerKeyId = DB::table('answer_key')->where('answer_key.deleted',0)->where('answer_key.questionId',$questionId)->where('answer_key.answerId',$answerId)->where('answer_key.classMapId',$classMapId)->value('answerKeyId');
+							$answerResponse = false;
+							if($answerKeyId){
+								$answerResponse = true;
+								$questionMarks = DB::table('master_question')->where('master_question.deleted',0)->where('master_question.questionId',$questionId)->value('marks');
+								$totalMarks = $totalMarks+$questionMarks;
+							}
+							if($questionId && $studentsEntityId && $answerQuestionId && $answerId){
+								if($updateTrue){
+									$resultId = DB::table('second_level_student_result')->where('second_level_student_result.deleted',0)->where('second_level_student_result.questionId',$questionId)->where('second_level_student_result.studentId',$studentsEntityId)->where('second_level_student_result.answerId',$answerQuestionId)->where('second_level_student_result.stream',$value->stream)->value('resultId');
+									if($resultId)
+									{
+										DB::table('second_level_student_result')->where('second_level_student_result.resultId', $resultId)->update(['correct' => $answerResponse,'studentAnswerId'=>$answerId]);	
+									}
+									else{
+									$studentResult = ['questionId'=>$questionId, 'studentId'=>$studentsEntityId, 'answerId'=>$answerQuestionId, 'correct'=>$answerResponse, 'stream'=>$value->stream, 'order'=>$i, 'studentAnswerId'=>$answerId,];
+									secondLevelStudentResult::create($studentResult);
+									}
+								}
+								else{
+									$studentResult = ['questionId'=>$questionId, 'studentId'=>$studentsEntityId, 'answerId'=>$answerQuestionId, 'correct'=>$answerResponse, 'stream'=>$value->stream, 'order'=>$i, 'studentAnswerId'=>$answerId,];
+									secondLevelStudentResult::create($studentResult);
+								}
+							}
+
+								
+							}
+							//echo $studentsEntityId."<br>";
+							if($studentsEntityId){
+									 DB::table('secondLevelStudent')->where('secondLevelStudent.studentEntityId', $studentsEntityId)->update(['totalMarks' => $totalMarks,'resultDeclared'=>1]);
+							}
+// second level end Code							
+						}
+					}
 					}
 				 }
 			}
 			
         Session::flash('flash_message', 'masterQuestion added!');
-        return redirect('student-result');
+        return Redirect::back()->withErrors([$studentResultCount]);
+	// view('student-result.message')->with(['studentResultCount'=>$studentResultCount]);
     }
 
     /**

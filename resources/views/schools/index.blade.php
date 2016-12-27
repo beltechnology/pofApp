@@ -56,6 +56,7 @@
 					<th> {{ trans('messages.EDIT') }}</th>
 					<th> {{ trans('messages.DELETE') }}</th>
 					<th>{{ trans('messages.ACTIONS') }}<input type="checkbox" id="selectall" /></th>
+					<th>Create Center</th>
                 </tr>
             </thead>
             <tbody>
@@ -94,6 +95,18 @@
                         {!! Form::close() !!}
                     </td>
 					<td><input type="checkbox" class="checkbox1" value='{{$item->entityId}}'  /> </td>
+					<td>
+					<form action="assignExamCenter" method="POST">
+						<input type="hidden" name="schoolEntity" value="{{$item->entityId}}" />
+						{{ csrf_field() }}
+						@if($item->examCenter)
+						<button type="submit" class="btn btn-primary btnFormSubmit" name="assignCenter" value="0"><span class="glyphicon glyphicon-remove"></span></button>
+						@else
+						<button type="submit"class="btn btn-primary"  name="assignCenter" value="1"><span class="glyphicon glyphicon-ok"></span></button>
+						@endif
+					</form> 
+					</td>
+					
                 </tr>
             @endforeach
             </tbody>
@@ -102,7 +115,18 @@
     </div>
 
 </div>
-<script>$('#btnActive').click(function (event) {		$('#activateSchool').val(0);		var res = confirm('Do you really want to activate school?');		if(res)		{					$('form#activateSchoolForm').submit();		}});$('#btnDeactive').click(function (event) {		$('#activateSchool').val(1);		var res = confirm('Do you really want to Deactivate school?');		if(res)		{			$('form#activateSchoolForm').submit();		}});
+<script>
+$('#btnActive').click(function (event) {
+	$('#activateSchool').val(0);
+	var res = confirm('Do you really want to activate school?');
+	if(res)		{
+		$('form#activateSchoolForm').submit();		}});
+		$('#btnDeactive').click(function (event) {
+			$('#activateSchool').val(1);
+			var res = confirm('Do you really want to Deactivate school?');
+			if(res)		{			
+			$('form#activateSchoolForm').submit();		}
+			});
 $(document).ready(function() {
     $('#selectall').click(function(event) {  //on click 
         if(this.checked) { // check select status

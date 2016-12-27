@@ -7,57 +7,26 @@
   		<div class="container-fluid">
    		
     	<ul class="nav navbar-nav">
-	@foreach ($articles as $article)
-		@if($article->moduleType === trans('messages.TWO'))	
-			@if($article->muduleLink === "/student")
-				<li   class="active" ><a  href="{{ url($article->muduleLink) }}">{{ $article->name }} </a></li>
-			@else
-				<li><a  href="{{ url($article->muduleLink.'/'.session()->get('entityId').'/edit') }}">{{ $article->name }} </a></li>
-			@endif
-		@endif
-    @endforeach
+				<li>Second Level Student List</li>
     </ul>
   </div>
 </nav>
  <div class="h1-two col-md-12">
-	 <h1 class="text-left col-md-2"><a href="{{ url('/fees/'.session()->get('entityId').'/edit') }}" class="fa fa-angle-left  fa-2x"> {{ trans('messages.TABS_FEES') }}</a> </h1>
-      <h1 class="text-center col-md-8"> 
-	  <form id="searchFilter" name="searchFilter" action="searchFilter" method="get">
-	  <select name="filterClass" id="filterName">
-	  <option value="0"> All Class</option>
-	  @foreach ($studentClass as $studentDropDown)
-		<?php if(isset($_GET['filterClass']))
-		{
-			if($studentDropDown->id == $_GET['filterClass'])
-			{?>
-	  	  <option  selected ="selected" value="{{$studentDropDown->id}}">{{$studentDropDown->name}}</option>
-			<?php
-				
-			}
-			else{ ?>
-	  	  <option value="{{$studentDropDown->id}}">{{$studentDropDown->name}}</option>
-			<?php
-			}
-		}
-		else{?>
-	  	  <option value="{{$studentDropDown->id}}">{{$studentDropDown->name}}</option>
-	<?php	}
-	?>
-	  @endforeach
-	   </select>
-	   
-	  <select name="subject" id="subject">
-		  <option value="ALL"> All</option>
+	 <h1 class="text-left col-md-5"><a href="{{ url('/centerAllottedSchoolList') }}" class="fa fa-angle-left  fa-2x"> Center Allotted SchoolList</a> </h1>
+      <h1 class="text-center col-md-7"> 
+	  <form id="searchFilter" name="searchFilter" action="/secondLevelAdmitCard" method="get">
+   
+	  <select name="subject" id="subject" required>
+		  <option value=""> Select Subject</option>
 	  	  <option value="pmo">PMO</option>
 	  	  <option value="pso">PSO</option>
 	   </select>
-	   		  <button id="GetPDF">GetPDF</button>
-	   		  <button id="admitCard">Admit Card</button>
+	   		  <button id="admitCard" type="submit">Admit Card</button>
 
 	</form>
-	<form method="get" id="attendanceForm" action="studentAttendance" class="">
-	   		  <button id="present" class="attendanceBtn" type="submit" name="attendanceBtn" value="1" disabled>Present</button>
-	   		  <button id="absent "  class="attendanceBtn" type="submit"  name="attendanceBtn" value="0" disabled>Absent </button>
+	<form method="get" id="attendanceForm" action="secondLevelAttendance" class="">
+	   	<button id="present" class="attendanceBtn" type="submit" name="attendanceBtn" value="1" disabled>Present</button>
+	   	<button id="absent "  class="attendanceBtn" type="submit"  name="attendanceBtn" value="0" disabled>Absent </button>
 	</form>
 	   </h1>
 	
@@ -75,6 +44,7 @@
 				   <th>{{ trans('messages.BOOKDETAIL_CLASS') }}</th>
 				   <th>{{ trans('messages.ROLL_NO') }}</th>
 				   <th> {{ trans('messages.HANDICAPPED') }}</th>
+				   <th>Subject</th>
 				   <th>{{ trans('messages.ACTIONS') }}<input type="checkbox" id="checkAll"></th>
 				   <th>{{ trans('messages.DELETE') }}</th>
                 </tr>
@@ -84,7 +54,7 @@
             @foreach($student as $item)
                 {{-- */$x++;/* --}}
 				<?php
-					if($item->attendance == trans('messages.ZERO')){
+					if($item->studentAttendance == trans('messages.ZERO')){
 						$class = "danger";
 					}
 					else{
@@ -98,6 +68,7 @@
 					<td>{{ $item->name }}</td>
 					<td>{{ $item->rollNo }}</td>
 					<td>@if($item->handicapped === trans('messages.ZERO'))  NO @else  Yes @endif</td>
+					<td>{{$item->stream}}</td>
 					<td><input type="checkbox" class="attendance" name="attendance[]" value="{{$item->studentEntityId}}"></td>
 					<td>
                         {!! Form::open([
@@ -125,107 +96,9 @@
 
 <script>
 $(document).ready(function(){
-	$("#filterName").change(function(){
-		$("#searchFilter").removeAttr("target");
-		$("#searchFilter").attr("action","searchFilter");
-		$("#page").remove();
-		$("#searchFilter").submit();
-	});
-	
-	$("#subject").change(function(){
-		$("#searchFilter").removeAttr("target");
-		$("#searchFilter").attr("action","searchFilter");
-		$("#page").remove();
-		$("#searchFilter").submit();
-	});
-	
-	$("#GetPDF").click(function(){
-			$("#searchFilter").removeAttr("target");
-
-	if($("#subject").val()== "ALL")
-		{
-			alert("Please select the exam type.");
-		}
-		else if($("#filterName").val()!= 0)
-		{
-			alert("Please select the all class option.");
-		}
-		else{
-			$("#page").remove();
-			$("#searchFilter").attr("action","getPDF");
-			$("#searchFilter").attr("target","_blank");
-			$("#searchFilter").submit();
-			window.reload();
-		}
-	});
-	
-	$("#resultSheet").click(function(){
-			$("#searchFilter").removeAttr("target");
-
-	if($("#subject").val()== "ALL")
-		{
-			alert("Please select the exam type.");
-		}
-		else if($("#filterName").val()!= 0)
-		{
-			alert("Please select the all class option.");
-		}
-		else{
-			$("#page").remove();
-			$("#searchFilter").attr("action","getResultSheetData");
-			$("#searchFilter").attr("target","_blank");
-			$("#searchFilter").submit();
-			window.reload();
-		}
-	});
-	
-
 	$("#admitCard").click(function(){
-		$("#searchFilter").removeAttr("target");
-		if($("#subject").val()== "ALL")
-		{
-			alert("Please select the exam type.");
-		}
-		else if($("#filterName").val()!= 0)
-		{
-			$("#searchFilter").attr("action","getAdmitPDF");
-			$("#searchFilter").attr("target","_blank");
-			<?php
-			if(isset($_GET['page']))
-			{?>
-			$("#page").remove();
-			$("#searchFilter").append('<input type="hidden" id="page" name="page" value="<?php echo $_GET["page"] ?>"/>');
-			<?php
-			}
-			?>
-
-			$("#searchFilter").submit();
-			window.reload();
-		}
-		else{
-			<?php
-			if(isset($_GET['page']))
-			{?>
-			$("#page").remove();
-			$("#searchFilter").append('<input type="hidden" id="page" name="page" value="<?php echo $_GET["page"] ?>"/>');
-			<?php
-			}
-			?>
-			
-			$("#searchFilter").attr("action","getAdmitPDF");
-			$("#searchFilter").attr("target","_blank");
-			$("#searchFilter").submit();
-			window.reload();
-		}
 	});
 	
-	<?php 
-	if(isset($_GET['subject']))
-	{
-		?>
-	$("#subject").val("<?php echo $_GET['subject']?>");
-		<?php
-	}?>
 	
 	$("#checkAll").change(function () {
 		$("input:checkbox").prop('checked', $(this).prop("checked"));

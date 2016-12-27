@@ -14,7 +14,18 @@
             </div>
       
              </div>
-       
+			 
+            <div class="form-group">
+                <div class="col-sm-4"><label></label></div>
+                <div class="col-sm-8">
+                                       @if($errors->any())
+                                    <span class="has-error  help-block" >
+                                        <strong class="  help-block">{{$errors->first()}} student Result successfully uploaded </strong>
+                                    </span>
+                                @endif
+                </div>
+            </div>
+
 			 <div class=" col-md-6 button-group">
     <div class="form-group">
         <div class=" team_btn">

@@ -25,5 +25,5 @@ class secondLevelStudent extends Model
      *
      * @var array
      */
-    protected $fillable = ['studentEntityId', 'SecondLevelSchoolId', 'deleted', 'stream',];
+    protected $fillable = ['studentEntityId', 'SecondLevelSchoolId', 'deleted', 'stream','totalMarks','resultDeclared',];
 }

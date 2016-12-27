@@ -162,10 +162,10 @@
 					<td>
 					@if($item->resultDeclared == 1)
 					@if($item->pso == 1)
-					@if($schoolrankPso <= 3 && $item->totalMarksPso > 40)<input type="checkbox" class="pso" onclick="checkBoxForSecondLevelStudent(this);" value="{{$item->entityId}}" /> 			@endif
+					@if($schoolrankPso <= 3 && $item->totalMarksPso > trans('messages.PSO_PASSING_MARKS'))<input type="checkbox" class="pso" onclick="checkBoxForSecondLevelStudent(this);" value="{{$item->entityId}}" /> 			@endif
 					@endif
 					@if($item->pmo== 1)
-					 @if($schoolrankPmo <= 3 && $item->totalMarksPmo > 50)<input type="checkbox" class="pso" onclick="checkBoxForSecondLevelStudent(this);" value="{{$item->entityId}}" /> @endif
+					 @if($schoolrankPmo <= 3 && $item->totalMarksPmo > trans('messages.PMO_PASSING_MARKS'))<input type="checkbox" class="pso" onclick="checkBoxForSecondLevelStudent(this);" value="{{$item->entityId}}" /> @endif
 				@endif
 				@endif
 				</td>

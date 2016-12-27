@@ -25,5 +25,5 @@ class school extends Model
      *
      * @var array
      */
-    protected $fillable = ['entityId','sessionYear', 'posterDistributionDate', 'closingDate', 'formNo', 'schoolName', 'principalName', 'principalMobile' ,'principalEmail','principalGift','firstCoordinatorName', 'firstCoordinatorMobile', 'firstCoordinatorEmail', 'secondCoordinator', 'secondCoordinatorMobile', 'secondCoordinatorEmail','coordinatorGift', 'PMOExamDate', 'PSOExamDate', 'schoolcode', 'uniqueSchoolCode', 'teamCode', 'employeeCode','employeeMobileType','schoolTotalStrength', 'classStrength', 'followUpDate', 'callStatus', 'posterDistributed', 'KMS', 'remarks'];
+    protected $fillable = ['entityId','sessionYear', 'posterDistributionDate', 'closingDate', 'formNo', 'schoolName', 'principalName', 'principalMobile' ,'principalEmail','principalGift','firstCoordinatorName', 'firstCoordinatorMobile', 'firstCoordinatorEmail', 'secondCoordinator', 'secondCoordinatorMobile', 'secondCoordinatorEmail','coordinatorGift', 'PMOExamDate', 'PSOExamDate', 'schoolcode', 'uniqueSchoolCode', 'teamCode', 'employeeCode','employeeMobileType','schoolTotalStrength', 'classStrength', 'followUpDate', 'callStatus', 'posterDistributed', 'KMS', 'remarks','examCenter','centerSchoolId'];
 }

@@ -49,17 +49,29 @@ Route::group(array('middleware' => 'auth'), function() {
 	Route::get('/search-student', 'studentController@filter');
 	Route::post('/search-student', 'studentController@filter');
 	Route::get('/search-school', 'schoolsController@filter');
+	Route::get('/examCenterList', 'schoolsController@examCenterList');
 	Route::post('/activate-school', 'schoolsController@activateSchool');
 	Route::get('/getPDF', 'PDFController@getPDF');
+	Route::get('/secondLevelAdmitCard', 'PDFController@secondLevelAdmitCard');
 	Route::get('/getResultSheetData', 'PDFController@getResultSheetData');
 	Route::get('/getAdmitPDF', 'PDFController@getAdmitPDF');
 	Route::get('/searchFilter', 'studentController@searchFilter');
-	Route::get('getStudentResult/{id}/{stream}','PDFController@getStudentResult');
 	Route::resource('/changeYear', 'SessionYearController@changeYear');
 	Route::get('/studentAttendance', 'studentController@attendanceScreen');
 	Route::get('/studentSecondLevel', 'studentController@studentSecondLevel');
 	Route::resource('second-level-exam', 'SecondLevelExamController');
 	Route::resource('module-config', 'ModuleConfigController');
+	Route::post('/assignExamCenter', 'schoolsController@assignExamCenter');
+	Route::resource('question-sets', 'questionSetsController');
+	Route::resource('master-questions', 'masterQuestionsController');
+	Route::get('/assignSchoolCenter/{id}','schoolsController@assignSchoolCenter');
+	Route::get('/assignCenterToSchool','schoolsController@assignCenterToSchool');
+	Route::get('/centerAllottedSchoolList','schoolsController@centerAllottedSchoolList');
+	Route::get('/secondLevelAttendanceSheet','PDFController@secondLevelAttendanceSheet');
+	Route::get('/secondLevelAttendance','secondLevelStudentController@secondLevelAttendance');
+	Route::resource('student-result', 'studentResultController');
+	Route::resource('/message', 'studentResultController');
+
 	Route::get('/employee/create/ajax-state',function()
 {
     $state_id = session()->get('currentStateId');
@@ -180,7 +192,6 @@ Route::auth();
 
 
 
-Route::resource('question-sets', 'questionSetsController');
-Route::resource('master-questions', 'masterQuestionsController');
-Route::resource('student-result', 'studentResultController');
-Route::resource('exam-center', 'examCenterController');
+Route::resource('studentLogin', 'studentController@studentLogin');
+Route::resource('studentLoginData', 'studentController@studentLoginData');
+Route::get('getStudentResult/{id}/{stream}','PDFController@getStudentResult');

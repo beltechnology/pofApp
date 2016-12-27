@@ -1,29 +1,26 @@
 <?php
-
 namespace App;
-
 use Illuminate\Database\Eloquent\Model;
-
-class SecondLevelExam extends Model
+class secondLevelStudentResult extends Model
 {
     /**
      * The database table used by the model.
      *
      * @var string
      */
-    protected $table = 'second_level_exams';
+    protected $table = 'second_level_student_result';
 
     /**
     * The database primary key value.
     *
     * @var string
     */
-    protected $primaryKey = 'id';
+    protected $primaryKey = 'resultId';
 
     /**
      * Attributes that should be mass-assignable.
      *
      * @var array
      */
-    protected $fillable = ['examType', 'dateOfExam', 'reportingTime', 'examTime', 'tillTime'];
+    protected $fillable = ['questionId','answerId','studentId','correct','sessionId','stream','updateCounter','deleted','status','order','studentAnswerId'];
 }

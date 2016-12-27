@@ -13,6 +13,8 @@ use Carbon\Carbon;
 use Session;
 use DB;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Foundation\Validation\ValidatesRequests;
+use Illuminate\Support\Facades\Redirect;
 class studentController extends Controller
 {
     /**
@@ -319,6 +321,48 @@ class studentController extends Controller
 		}
 		return redirect('student');
     }
+	
+	public function studentLogin(){
+		
+		return view('studentLogin.index');
+	}
+	
+	
+	public function studentLoginData(){
+		
+	if(isset($_POST['rollNo']) && ($_POST['stream']))
+	{
+	$entityId = DB::table('students')->where('students.deleted',0)->where('students.attendance',1)->where('students.rollNo',$_POST['rollNo'])->where('students.'.$_POST['stream'],1)->value('entityId');	
+	if($entityId){
+		
+		$resultId = DB::table('student_result')->where('student_result.deleted',0)->where('student_result.studentId',$entityId)->where('student_result.stream',strtoupper($_POST['stream']))->lists('resultId');
+		if($resultId){
+			if(count($resultId) == 60){
+				return Redirect('getStudentResult/'.$entityId.'/'.$_POST['stream']);
+			}
+			else{
+				return Redirect::back()->withInput(Input::all())->withErrors(['student result in progress.']);
+			}
+			
+		}
+		else{
+			return Redirect::back()->withInput(Input::all())->withErrors(['student absent.']);
+		}
+		
+	}
+	else{
+		return Redirect::back()->withInput(Input::all())->withErrors(['Invalid roll no or stream.']);
+	}
+		
+		
+		
+	}
+	else{
+		return Redirect::back()->withInput(Input::all())->withErrors(['Fill required field.']);
+	}
+		
+	//	return Redirect::back()->withInput(Input::all())->withErrors(['stream']);
+	}
 	
 	
 	

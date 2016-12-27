@@ -47,6 +47,16 @@
                 </div>
             </div>
 
+            <div class="form-group {{ $errors->has('tillTime') ? 'has-error' : ''}}">
+                {!! Form::label('tillTime', 'Till Time', ['class' => 'col-sm-3 control-label']) !!}
+                <div class="col-sm-6 input-group datetime">
+                    {!! Form::text('tillTime', null, ['class' => 'form-control', 'required' => 'required', 'readonly' => 'readonly']) !!}
+					<span class="input-group-addon">
+                        <span class="glyphicon glyphicon-time watch"></span>
+                    </span>
+                    {!! $errors->first('tillTime', '<p class="help-block">:message</p>') !!}
+                </div>
+            </div>
 
     <div class="form-group">
         <div class="col-sm-offset-3 col-sm-3">

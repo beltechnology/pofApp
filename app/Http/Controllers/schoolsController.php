@@ -24,7 +24,7 @@ use DB;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Session;
-
+use Illuminate\Support\Facades\Redirect;
 class schoolsController extends Controller
 {
     /**
@@ -52,6 +52,98 @@ class schoolsController extends Controller
 						->paginate(trans('messages.PAGINATE'));
         return view('schools.index', compact('schools'));
     }
+
+   public function examCenterList()
+    {
+		$validUser = $this->CheckUser();
+		if($validUser) return	view('errors.404');
+
+		$schools= DB::table('schools')
+                        ->join('entitys','entitys.entityId','=','schools.entityId')
+                        ->join('addresses','addresses.entityId','=','schools.entityId')
+						->join('phones','phones.entityId','=','schools.entityId')
+						->join('emailaddresses','emailaddresses.entityId','=','schools.entityId')
+						->join('citys','citys.id','=','addresses.cityId')
+						->join('districts','districts.id','=','addresses.districtId')
+						->where('schools.deleted',0)
+						->where('schools.examCenter',1)
+						->where('schools.sessionYear',session()->get('activeSession'))
+						->where('addresses.stateId',session()->get('currentStateId'))
+						->groupBy('schools.entityId')
+						->orderBy('schools.entityId','desc')
+						->paginate(trans('messages.PAGINATE'));
+        return view('schools.examCenterList', compact('schools'));
+    }
+	
+	public function assignCenterToSchool()
+	{
+			if(Input::get('schoolList'))
+			{ 	
+				foreach(Input::get('schoolList') as $schoolId)
+				{
+						if(Input::get('assignCenter') == 1){
+						DB::table('schools')->where('entityId', $schoolId)->update(['centerSchoolId' => session()->get('schoolCenterId')]);	
+						}
+						elseif(Input::get('assignCenter') == 0){
+						DB::table('schools')->where('entityId', $schoolId)->update(['centerSchoolId' =>0]);	
+						}
+				}
+			}
+			
+		return Redirect::back();	
+	}
+	
+	
+   public function assignSchoolCenter($id)
+    {
+		$validUser = $this->CheckUser();
+		if($validUser) return	view('errors.404');
+		
+		session()->put('schoolCenterId',$id);
+
+		$schools= DB::table('schools')
+                        ->join('entitys','entitys.entityId','=','schools.entityId')
+                        ->join('addresses','addresses.entityId','=','schools.entityId')
+						->join('phones','phones.entityId','=','schools.entityId')
+						->join('emailaddresses','emailaddresses.entityId','=','schools.entityId')
+						->join('citys','citys.id','=','addresses.cityId')
+						->join('districts','districts.id','=','addresses.districtId')
+						->where('schools.deleted',0)
+						->where('schools.centerSchoolId',0)
+						->where('schools.sessionYear',session()->get('activeSession'))
+						->where('addresses.stateId',session()->get('currentStateId'))
+						->groupBy('schools.entityId')
+						->orderBy('districts.id','desc')
+						->paginate(trans('messages.PAGINATE'));
+        return view('schools.assignSchoolCenter', compact('schools'));
+    }
+	
+   public function centerAllottedSchoolList()
+    {
+		$validUser = $this->CheckUser();
+		if($validUser) return	view('errors.404');
+		
+		$schoolCenterId = session()->get('schoolCenterId');
+		$studentClass = DB::table('class_names')->where('deleted',0)->get();
+		$schools= DB::table('schools')
+                        ->join('entitys','entitys.entityId','=','schools.entityId')
+                        ->join('addresses','addresses.entityId','=','schools.entityId')
+						->join('phones','phones.entityId','=','schools.entityId')
+						->join('emailaddresses','emailaddresses.entityId','=','schools.entityId')
+						->join('citys','citys.id','=','addresses.cityId')
+						->join('districts','districts.id','=','addresses.districtId')
+						->where('schools.deleted',0)
+						->where('schools.centerSchoolId',$schoolCenterId)
+						->where('schools.sessionYear',session()->get('activeSession'))
+						->where('addresses.stateId',session()->get('currentStateId'))
+						->groupBy('schools.entityId')
+						->orderBy('districts.id','desc')
+						->paginate(trans('messages.PAGINATE'));
+        return view('schools.centerAllottedSchoolList', compact('schools'))->with('studentClass',$studentClass);;
+    }
+	
+	
+	
 	
 	public function filter()
     {
@@ -339,9 +431,9 @@ class schoolsController extends Controller
 		$validUser = $this->CheckUser();
 		if($validUser) return	view('errors.404');
 
-        $school = school::findOrFail($id);
-
-        return view('schools.show', compact('school'));
+    //    $school = school::findOrFail($id);
+		session()->put('SecondLevelSchoolId',$id);
+        return redirect('secondLevelStudent');
     }
 
     /**
@@ -456,6 +548,19 @@ class schoolsController extends Controller
         Session::flash('flash_message', 'school deleted!');
 		return redirect('schools');
     }
+	
+	public function assignExamCenter(){
+		$validUser = $this->CheckUser();
+		if($validUser) return	view('errors.404');
+		if(isset($_POST['assignCenter']) && ($_POST['schoolEntity'])){
+			DB::table('schools')->where('entityId', $_POST['schoolEntity'])->update(['examCenter' => $_POST['assignCenter']]);	
+		}
+		return Redirect::back();
+	//	return redirect()->route('schools', ['page'=>1]);
+		
+	} 
+	
+	
 	
 	public function CheckUser()
 	{

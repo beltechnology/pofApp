@@ -94,7 +94,7 @@ else{
 	<td style="width:30%;  border:1px solid #000;">{{ $studentDetail->studentName}}<br>
 	@if($studentDetail->attendance)
 		Participation Certificate 
-		@if($totalMarks > 40)
+		@if($totalMarks > trans('messages.PSO_PASSING_MARKS'))
 			@if($schoolrank == 1)
 				+ Gold Medal 
 			@elseif($schoolrank == 2)
@@ -130,7 +130,7 @@ else{
 								->lists('students.totalMarksPso'))+1
 								}}
 							</td>
-	<td style="width:5%; border:1px solid #000;">@if($schoolrank <= 3 && $totalMarks > 40) Yes @else No @endif</td>
+	<td style="width:5%; border:1px solid #000;">@if($schoolrank <= 3 && $totalMarks > trans('messages.PSO_PASSING_MARKS')) Yes @else No @endif</td>
 	@else
 	<td style="width:25%; border:1px solid #000;" colspan="5" >Absent</td>
  @endif	
@@ -157,7 +157,7 @@ else{
 	<td style="width:25%;  border:1px solid #000;">{{ $studentDetail->studentName}}<br>
 	@if($studentDetail->attendance)
 		Participation Certificate 
-		@if($totalMarks > 50)
+		@if($totalMarks > trans('messages.PMO_PASSING_MARKS'))
 			@if($schoolrank == 1)
 				+ Gold Medal 
 			@elseif($schoolrank == 2)
@@ -190,7 +190,7 @@ else{
 								->where('students.pmo','=',1)
 								->groupBy('students.totalMarksPmo')
 								->lists('students.totalMarksPmo'))+1}}</td>
-	<td style="width:5%; border:1px solid #000;">@if($schoolrank <= 3 && $totalMarks > 50) Yes @else No @endif</td>
+	<td style="width:5%; border:1px solid #000;">@if($schoolrank <= 3 && $totalMarks > trans('messages.PMO_PASSING_MARKS')) Yes @else No @endif</td>
 	@else
 	<td style="width:25%; border:1px solid #000;" colspan="5" >Absent</td>
  @endif	

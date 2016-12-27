@@ -13,6 +13,8 @@ use Carbon\Carbon;
 use Session;
 use DB;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Redirect;
+
 class secondLevelStudentController extends Controller
 {
     /**
@@ -24,20 +26,29 @@ class secondLevelStudentController extends Controller
     {
 		$validUser = $this->CheckUser();
 		if($validUser) return	view('errors.404');
-
+	//echo session()->get('SecondLevelSchoolId');
 		$studentClass = DB::table('class_names')->where('deleted',0)->get();
-	   $student= DB::table('secondlevelstudent')
+	    $student= DB::table('secondlevelstudent')
                         ->join('students','students.entityId','=','secondlevelstudent.studentEntityId')
                         ->join('class_names','class_names.id','=','students.classId')
 						->where('secondlevelstudent.deleted',0)
 						->where('students.deleted',0)
 						->where('class_names.deleted',0)
 						->where('students.sessionYear',session()->get('activeSession'))
-						->where('secondlevelstudent.SecondLevelSchoolId',session()->get('entityId'))
+						->where('secondlevelstudent.SecondLevelSchoolId',session()->get('SecondLevelSchoolId'))
 						->orderBy('students.rollNo','asc')
 						->paginate(30);
-        return view('student.index', compact('student'))->with('studentClass',$studentClass);
+        return view('secondlevelstudent.index', compact('student'))->with('studentClass',$studentClass);
     }
+	public function secondLevelAttendance(){
+		$validUser = $this->CheckUser();
+		if($validUser) return	view('errors.404');
+
+		foreach(Input::get('attendance') as $attendance){
+		 DB::table('secondlevelstudent')->where('studentEntityId', $attendance)->update(['studentAttendance' => Input::get('attendanceBtn')]);
+		}
+		return Redirect::back();
+	}
 
 
     /**
@@ -84,6 +95,8 @@ class secondLevelStudentController extends Controller
      */
     public function edit($id)
     {
+		
+		
     }
 
     /**

@@ -18,7 +18,7 @@
                     <td>{{ $item->examType }}</td>
 					<td>{{ $item->dateOfExam }}</td>
 					<td>{{ $item->reportingTime }}</td>
-					<td>{{ $item->examTime }}</td>
+					<td>{{ $item->examTime }} To {{$item->tillTime}}</td>
                     <td>
                         <a href="{{ url('/second-level-exam/' . $item->id . '/edit') }}" class="btn btn-primary btn-xs" title="Edit SecondLevelExam"><span class="glyphicon glyphicon-pencil" aria-hidden="true"/></a>
                     </td>

@@ -41,7 +41,7 @@ class SecondLevelExamController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, ['examType' => 'required', 'dateOfExam' => 'required', 'reportingTime' => 'required', 'examTime' => 'required', ]);
+        $this->validate($request, ['examType' => 'required', 'dateOfExam' => 'required', 'reportingTime' => 'required', 'examTime' => 'required','tillTime'=>'required', ]);
 
         SecondLevelExam::create($request->all());
 
@@ -87,7 +87,7 @@ class SecondLevelExamController extends Controller
      */
     public function update($id, Request $request)
     {
-        $this->validate($request, ['examType' => 'required', 'dateOfExam' => 'required', 'reportingTime' => 'required', 'examTime' => 'required', ]);
+        $this->validate($request, ['examType' => 'required', 'dateOfExam' => 'required', 'reportingTime' => 'required', 'examTime' => 'required','tillTime'=>'required', ]);
 
         $secondlevelexam = SecondLevelExam::findOrFail($id);
         $secondlevelexam->update($request->all());
