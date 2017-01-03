@@ -40,6 +40,30 @@ class secondLevelStudentController extends Controller
 						->paginate(30);
         return view('secondlevelstudent.index', compact('student'))->with('studentClass',$studentClass);
     }
+
+    public function secondLevelStudentResult()
+    {
+		$validUser = $this->CheckUser();
+		if($validUser) return	view('errors.404');
+	    $student= DB::table('secondlevelstudent')
+                        ->join('students','students.entityId','=','secondlevelstudent.studentEntityId')
+                        ->join('class_names','class_names.id','=','students.classId')
+                        ->join('schools','schools.entityId','=','secondlevelstudent.SecondLevelSchoolId')
+						->where('secondlevelstudent.deleted',0)
+						->where('students.deleted',0)
+						->where('secondlevelstudent.studentAttendance',1)
+						->where('class_names.deleted',0)
+						->where('students.sessionYear',session()->get('activeSession'))
+						->orderBy('class_names.name','asc')
+					//	->where('secondlevelstudent.totalMarks', '>', 40)
+						->select('students.studentName', 'students.fatherName', 'secondlevelstudent.stream', 'class_names.name', 'secondlevelstudent.totalMarks', 'students.rollNo', 'schools.schoolName', 'students.classId')
+						->paginate(30);
+					//	var_dump( $student);
+        return view('secondlevelstudent.secondLevelStudentResult', compact('student'));
+    }
+
+
+
 	public function secondLevelAttendance(){
 		$validUser = $this->CheckUser();
 		if($validUser) return	view('errors.404');

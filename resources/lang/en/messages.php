@@ -255,4 +255,5 @@ return [
 	'SCHOOL_MAIL_SUBJECT_ACTIVATION'=>'POF INDIA',
 	'PMO_PASSING_MARKS'=>'60',
 	'PSO_PASSING_MARKS'=>'50',
+	'DISCLAIMER'=>'Disclimer :- The result shown here are system generated. There can be issues with calculations at times ,  for any discrepancy please contact us on the given contact details. We will be happy to resolve your issue.',
 ];

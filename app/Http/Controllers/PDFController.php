@@ -327,13 +327,22 @@ class PDFController extends Controller
 					foreach($studentList as $studentListData){
 						//	 echo $schoolRank."________".$studentListData->entityId."******".$studentInfo[0]->entityId."-------".$schoolEntityId."========".$studentListData->schoolEntityId."<br>";
 							if($stream == 'pmo'){
+								// if($tempMarks != $studentListData->totalMarksPmo){
+									// $tempMarks = $studentListData->totalMarksPmo;
+									// $natnationRank++;
+									// if($stateId == $studentListData->stateId){ $stateRank++;}
+									// if($cityId == $studentListData->cityId ){ $cityRank++; }
+									// if($schoolEntityId == $studentListData->schoolEntityId){ $schoolRank++; }								
+								// }
 								if($tempMarks != $studentListData->totalMarksPmo){
 									$tempMarks = $studentListData->totalMarksPmo;
 									$natnationRank++;
-									if($stateId == $studentListData->stateId){ $stateRank++;}
-									if($cityId == $studentListData->cityId ){ $cityRank++; }
-									if($schoolEntityId == $studentListData->schoolEntityId){ $schoolRank++; }								
+
 								}
+								if($tempStateMarks != $studentListData->totalMarksPmo && $stateId== $studentListData->stateId ){$tempStateMarks=$studentListData->totalMarksPmo; $stateRank++;}
+								if($tempCityMarks != $studentListData->totalMarksPmo && $cityId== $studentListData->cityId ){$tempCityMarks=$studentListData->totalMarksPmo; $cityRank++;}
+								if($tempSchoolMarks != $studentListData->totalMarksPmo && $schoolEntityId== $studentListData->schoolEntityId ){$tempSchoolMarks = $studentListData->totalMarksPmo; $schoolRank++;}
+								
 							}else{
 								if($tempMarks != $studentListData->totalMarksPso){
 									$tempMarks = $studentListData->totalMarksPso;
@@ -376,14 +385,14 @@ class PDFController extends Controller
 
 	public function getResultSheetData(){
 		
-					$schoolInfo = DB::table('schools')
-								->join('addresses','schools.entityId','=','addresses.entityId')
-								->join('states','addresses.stateId','=','states.id')
-								->join('districts','addresses.districtId','=','districts.id')
-								->join('citys','addresses.cityId','=','citys.id')
-								->where('schools.deleted',0)
-								->where('schools.entityId',session()->get('entityId'))
-								->get();
+		$schoolInfo = DB::table('schools')
+					->join('addresses','schools.entityId','=','addresses.entityId')
+					->join('states','addresses.stateId','=','states.id')
+					->join('districts','addresses.districtId','=','districts.id')
+					->join('citys','addresses.cityId','=','citys.id')
+					->where('schools.deleted',0)
+					->where('schools.entityId',session()->get('entityId'))
+					->get();
 	
 		if(Input::get('filterClass') != 0 && Input::get('subject') != "ALL" )
 		{
@@ -484,8 +493,29 @@ class PDFController extends Controller
 		}
 	}	
 
-
-
+    public function secondLevelStudentResultSheet()
+    {
+		$validUser = $this->CheckUser();
+		if($validUser) return	view('errors.404');
+	    $student= DB::table('secondlevelstudent')
+                        ->join('students','students.entityId','=','secondlevelstudent.studentEntityId')
+                        ->join('class_names','class_names.id','=','students.classId')
+                        ->join('schools','schools.entityId','=','secondlevelstudent.SecondLevelSchoolId')
+						->where('secondlevelstudent.deleted',0)
+						->where('students.deleted',0)
+						->where('secondlevelstudent.studentAttendance',1)
+						->where('class_names.deleted',0)
+						->where('students.sessionYear',session()->get('activeSession'))
+						->orderBy('class_names.name','asc')
+						->where('secondlevelstudent.totalMarks', '>', 75)
+						->where('secondlevelstudent.stream', Input::get('subject'))
+						->select('students.studentName', 'students.fatherName', 'secondlevelstudent.stream', 'class_names.name', 'secondlevelstudent.totalMarks', 'students.rollNo', 'schools.schoolName', 'students.classId')
+						->get();
+					//	var_dump( $student);
+					$pdf = PDF::loadView('pdf.secondLevelStudentResultSheet',['student'=> $student]);
+					return $pdf->stream('secondLevelStudentResultSheet.pdf');
+    //    return view('pdf.secondLevelStudentResultSheet', compact('student'));
+    }
 
 
 	

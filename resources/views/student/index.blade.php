@@ -222,10 +222,10 @@ $(document).ready(function(){
 		{
 			alert("Please select the exam type.");
 		}
-		else if($("#filterName").val()!= 0)
-		{
-			alert("Please select the all class option.");
-		}
+		// else if($("#filterName").val()!= 0)
+		// {
+			// alert("Please select the all class option.");
+		// }
 		else{
 			$("#page").remove();
 			$("#searchFilter").attr("action","getResultSheetData");

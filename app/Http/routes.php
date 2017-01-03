@@ -55,6 +55,7 @@ Route::group(array('middleware' => 'auth'), function() {
 	Route::get('/secondLevelAdmitCard', 'PDFController@secondLevelAdmitCard');
 	Route::get('/getResultSheetData', 'PDFController@getResultSheetData');
 	Route::get('/getAdmitPDF', 'PDFController@getAdmitPDF');
+	Route::get('/secondLevelStudentResultSheet', 'PDFController@secondLevelStudentResultSheet');
 	Route::get('/searchFilter', 'studentController@searchFilter');
 	Route::resource('/changeYear', 'SessionYearController@changeYear');
 	Route::get('/studentAttendance', 'studentController@attendanceScreen');
@@ -69,6 +70,7 @@ Route::group(array('middleware' => 'auth'), function() {
 	Route::get('/centerAllottedSchoolList','schoolsController@centerAllottedSchoolList');
 	Route::get('/secondLevelAttendanceSheet','PDFController@secondLevelAttendanceSheet');
 	Route::get('/secondLevelAttendance','secondLevelStudentController@secondLevelAttendance');
+	Route::get('/secondLevelStudentResult','secondLevelStudentController@secondLevelStudentResult');
 	Route::resource('student-result', 'studentResultController');
 	Route::resource('/message', 'studentResultController');
 

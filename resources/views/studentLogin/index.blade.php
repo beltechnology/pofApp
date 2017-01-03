@@ -46,6 +46,10 @@
 
                             </div>
                         </div>
+                        <div class="form-group" style="color:red; padding:5px; font-size:12px;">
+						{{ trans('messages.DISCLAIMER') }}
+                        </div>
+                        </div>
                     </form>
                 </div>
             </div>
