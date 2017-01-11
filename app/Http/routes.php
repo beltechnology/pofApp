@@ -67,8 +67,10 @@ Route::group(array('middleware' => 'auth'), function() {
 	Route::resource('question-sets', 'questionSetsController');
 	Route::resource('master-questions', 'masterQuestionsController');
 	Route::get('/assignSchoolCenter/{id}','schoolsController@assignSchoolCenter');
+	Route::get('/searchAssignSchoolCenter/{id}','schoolsController@searchAssignSchoolCenter');
 	Route::get('/assignCenterToSchool','schoolsController@assignCenterToSchool');
 	Route::get('/centerAllottedSchoolList','schoolsController@centerAllottedSchoolList');
+	Route::get('/searchCenterAllottedSchoolList','schoolsController@searchCenterAllottedSchoolList');
 	Route::get('/secondLevelAttendanceSheet','PDFController@secondLevelAttendanceSheet');
 	Route::get('/secondLevelAttendance','secondLevelStudentController@secondLevelAttendance');
 	Route::get('/secondLevelStudentResult','secondLevelStudentController@secondLevelStudentResult');

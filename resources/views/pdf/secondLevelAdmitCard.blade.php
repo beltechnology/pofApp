@@ -6,7 +6,7 @@
 
 <style>
 @page { margin: 0px; }
-body { margin: 10px 0px 0px 35px; }
+body { margin: 10px 0px 0px 10px; }
 
 .olympiad-foundation p{text-align:center;}
 
@@ -27,7 +27,17 @@ td{line-height:16px;}
 </head>
 
 <body class="">
-<?php $i= 0; 
+<?php
+					$server = $_SERVER['HTTP_HOST'];
+					if($server == 'localhost:8000'){
+						$adminImagePath = 'D:/mainlinePof/pofApp/public';
+					}
+					else{
+						$adminImagePath = 'http://'.$server;
+					}
+
+
+ $i= 0; 
 $j = 0;
 ?>
 
@@ -93,7 +103,7 @@ if($i== 3){
 	<td style="width:20%;">&nbsp;</td>
 </tr>
 <tr align="center">
-	<td style=""><img src="http://test.pofindia.com/images/download.jpg"   height="100" /></td>
+	<td style=""><img src="{{$adminImagePath}}/images/logo.jpg" width="130"  height="80" /><br>&nbsp;&nbsp;&nbsp;&nbsp;</td>
 	<td style="width:60%;">
 			<table>
 				<tr>
@@ -103,7 +113,6 @@ if($i== 3){
 					<td><?php
 					$examType = "";
 					$examDate = "";
-					
 					if(isset($_GET['subject']))
 					{
 						if($_GET['subject'] == 'pmo')
@@ -152,7 +161,7 @@ if($i== 3){
 			</table>
 	</td>
 	
-	<td style="width:20%;"><img src="http://test.pofindia.com/images/download.jpg"   height="100" /></td>
+	<td style="width:20%;"><img src="{{$adminImagePath}}/images/photo.jpg" width="100"  height="100" /><br>Signature of candidate</td>
 </tr>
 <tr>
 	<td style="width:20%;">&nbsp;</td>
@@ -161,13 +170,13 @@ if($i== 3){
 
 </tr>
 <tr>
-	<td style="width:20%;"><img src="http://test.pofindia.com/images/download.jpg"   height="35" /></td>
+	<td style="width:20%;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="{{$adminImagePath}}/images/<?php echo $examType;?>.jpg"  align="center" width="100"   height="40" /></td>
 	<td style="width:60%;">Center of Examination : {{$schoolCenter[0]->schoolName}}, {{$schoolCenter[0]->addressLine1}}<br> , {{$schoolCenter[0]->cityName}} , {{$schoolCenter[0]->name}}, {{$schoolCenter[0]->stateName}}</td>
-	<td style="width:20%;"><img src="http://test.pofindia.com/images/download.jpg"   height="35" /></td>
+	<td style="width:20%;">&nbsp;&nbsp;&nbsp;&nbsp;</td>
 
 </tr>
 <tr>
-	<td style="width:20%;"><img src="http://test.pofindia.com/images/download.jpg"   height="35" /></td>
+	<td style="width:20%;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Web : pofindia.com <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Email : info@pofindia.com </td>
 	<td style="width:60%;">
 		 <table>
 				<tr>
@@ -177,9 +186,10 @@ if($i== 3){
 				</tr>
 		 </table>
 	</td>
-	<td style="width:20%;"><img src="http://test.pofindia.com/images/download.jpg"   height="35" /></td>
+	<td style="width:20%;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="{{$adminImagePath}}/images/sign.jpg"   height="40" /></td>
 
 </tr>
+
 </table>
 
 @endforeach

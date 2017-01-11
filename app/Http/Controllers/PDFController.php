@@ -537,7 +537,7 @@ public function export($entityId){
 						$conter = 0;
 						foreach($data as $valDatas){
 							$schoolrank = 0;
-							if($valDatas->resultDeclared == 1)
+							if($valDatas->resultDeclared)
 							{
 								if($valDatas->pso == 1){
 									$stream = "PSO";

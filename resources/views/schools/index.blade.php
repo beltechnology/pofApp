@@ -6,18 +6,18 @@
             <div class=" col-md-1 category-name">
     <h1 class="school_category">{{ trans('messages.SCHOOLS') }}</h1>
 	</div>
-            <div class=" col-md-7 category-filter">
-		<form action="search-school" method="get" role="search">
-			<div class="input-group">
-				<input type="text" class="form-control" name="q"
-					placeholder="Search Schools , School Code , City Name or  Principal Name "> <span class="input-group-btn">
-					<button type="submit" class="btn btn-default">
-						<span class="glyphicon glyphicon-search"></span>
-					</button>
-				</span>
-			</div>
-		</form>
-		            </div>
+        <div class=" col-md-7 category-filter">
+			<form action="search-school" method="get" role="search">
+				<div class="input-group">
+					<input type="text" class="form-control" name="q"
+						placeholder="Search Schools , School Code , City Name or  Principal Name "> <span class="input-group-btn">
+						<button type="submit" class="btn btn-default">
+							<span class="glyphicon glyphicon-search"></span>
+						</button>
+					</span>
+				</div>
+			</form>
+		</div>
 
             <div class=" col-md-3 category-filter">
 		<form action="activate-school" method="POST"   id="activateSchoolForm">

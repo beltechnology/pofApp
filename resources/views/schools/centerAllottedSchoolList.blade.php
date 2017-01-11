@@ -2,63 +2,77 @@
 @section('content')
     <div class=" col-md-10 category">
 	         <div class=" col-md-12 top-filter">
-	<div class="edit_school">	
-        <nav class="navbar navbar-default">
-  		<div class="container-fluid">
-    	<ul class="nav navbar-nav">
-				<li  class=""><a  href="/assignSchoolCenter/{{session()->get('schoolCenterId')}}">School List for assign Center</a></li>
-				<li  class="active"><a  href="/examCenterList">Center Allotted School List </a></li>
-    </ul>
-  </div>
-</nav>
-
-	</div>
-            <div class=" col-md-3 category-filter">
-			{{ DB::table('schools')->where('schools.deleted',0)->where('schools.entityId',session()->get('schoolCenterId'))->value('schoolName')}}
-			</div>
-			<div class=" col-md-3 category-filter">
-					<form action="/assignCenterToSchool" method="get"   id="schoolListForm">
-					{{ csrf_field() }}
-						<div class="input-group">
-								<button type="submit" class="btn btn-primary btnFormSubmit" name="assignCenter" " value="0"  id="assignCenter" >Remove center</button>
+				<div class="edit_school">	
+					<nav class="navbar navbar-default">
+						<div class="container-fluid">
+							<ul class="nav navbar-nav">
+								<li  class=""><a  href="/assignSchoolCenter/{{session()->get('schoolCenterId')}}">School list for assign center</a></li>
+								<li  class="active"><a  href="/centerAllottedSchoolList">Center allotted school list </a></li>
+							</ul>
 						</div>
-					</form>
-            </div>
+					</nav>
+				</div>
+				<div class=" col-md-4 category-filter">
+				{{ DB::table('schools')->where('schools.deleted',0)->where('schools.entityId',session()->get('schoolCenterId'))->value('schoolName')  }}
+				</div>
+				<div class=" col-md-2 category-filter">
+						<form action="/assignCenterToSchool" method="get"   id="schoolListForm">
+						{{ csrf_field() }}
+							<div class="input-group">
+									<button type="submit" class="btn btn-primary btnFormSubmit" name="assignCenter" " value="0"  id="assignCenter" >Remove center</button>
+							</div>
+						</form>
+				</div>
 			
 			 <div class=" col-md-6 category-filter">
 					<form action="/secondLevelAttendanceSheet" method="get" target="_blank"  id="schoolListForm">
-	  <select name="filterClass" id="filterName" required >
-	  <option value=""> Select Class</option>
-	  @foreach ($studentClass as $studentDropDown)
-		<?php if(isset($_GET['filterClass']))
-		{
-			if($studentDropDown->id == $_GET['filterClass'])
-			{?>
-	  	  <option  selected ="selected" value="{{$studentDropDown->id}}">{{$studentDropDown->name}}</option>
-			<?php
-				
-			}
-			else{ ?>
-	  	  <option value="{{$studentDropDown->id}}">{{$studentDropDown->name}}</option>
-			<?php
-			}
-		}
-		else{?>
-	  	  <option value="{{$studentDropDown->id}}">{{$studentDropDown->name}}</option>
-	<?php	}
-	?>
-	  @endforeach
-	   </select>
-							<select name="subject" id="subject" required>
-								<option value=""> Select Subject</option>
-								<option value="pmo">PMO</option>
-								<option value="pso">PSO</option>
-							</select>
-								<button type="submit" class="btn btn-primary btnFormSubmit"  id="assignCenter" >Attendance Sheet </button>
+						<select name="filterClass" id="filterName" required >
+							<option value=""> Select Class</option>
+							@foreach ($studentClass as $studentDropDown)
+							<?php if(isset($_GET['filterClass']))
+							{
+							if($studentDropDown->id == $_GET['filterClass'])
+							{?>
+							<option  selected ="selected" value="{{$studentDropDown->id}}">{{$studentDropDown->name}}</option>
+							<?php
+
+							}
+							else{ ?>
+							<option value="{{$studentDropDown->id}}">{{$studentDropDown->name}}</option>
+							<?php
+							}
+							}
+							else{?>
+							<option value="{{$studentDropDown->id}}">{{$studentDropDown->name}}</option>
+							<?php	}
+							?>
+							@endforeach
+						</select>
+						<select name="subject" id="subject" required>
+							<option value=""> Select Subject</option>
+							<option value="pmo">PMO</option>
+							<option value="pso">PSO</option>
+						</select>
+						<button type="submit" class="btn btn-primary btnFormSubmit"  id="assignCenter" >Attendance Sheet </button>
 					</form>
             </div>
 		</div>
-
+		<div class=" col-md-12 top-filter">
+			<div class=" col-md-3 category-filter"></div>
+			<div class=" col-md-6 category-filter">
+				<form action="/searchCenterAllottedSchoolList" method="get" role="search">
+					<div class="input-group">
+						<input type="text" class="form-control" name="q"
+							placeholder="Search Schools , School Code , City Name or  Principal Name "> <span class="input-group-btn">
+							<button type="submit" class="btn btn-default">
+								<span class="glyphicon glyphicon-search"></span>
+							</button>
+						</span>
+					</div>
+				</form>
+			</div>
+			<div class=" col-md-3 category-filter"></div>
+		</div>
 		<h1 style="color:red;">  {{ session()->get('concurrency_message')}} </h1>
 		<div class="table">
         <table class="table table-bordered table-striped table-hover">

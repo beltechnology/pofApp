@@ -93,7 +93,7 @@ class schoolsController extends Controller
 		return Redirect::back();	
 	}
 	
-	
+	// 
    public function assignSchoolCenter($id)
     {
 		$validUser = $this->CheckUser();
@@ -115,6 +115,41 @@ class schoolsController extends Controller
 						->groupBy('schools.entityId')
 						->orderBy('districts.id','desc')
 						->paginate(trans('messages.PAGINATE'));
+        return view('schools.assignSchoolCenter', compact('schools'));
+    }
+	
+	
+	// search assignSchoolCenter
+	
+   public function searchAssignSchoolCenter($id)
+    {
+		$validUser = $this->CheckUser();
+		if($validUser) return	view('errors.404');
+		
+		session()->put('schoolCenterId',$id);
+		$q = Input::get ( 'q' );
+		$schools= DB::table('schools')
+                        ->join('entitys','entitys.entityId','=','schools.entityId')
+                        ->join('addresses','addresses.entityId','=','schools.entityId')
+						->join('phones','phones.entityId','=','schools.entityId')
+						->join('emailaddresses','emailaddresses.entityId','=','schools.entityId')
+						->join('citys','citys.id','=','addresses.cityId')
+						->join('districts','districts.id','=','addresses.districtId')
+						->where('schools.deleted',0)
+						->where('schools.centerSchoolId',0)
+						->where('schools.sessionYear',session()->get('activeSession'))
+						->where('addresses.stateId',session()->get('currentStateId'))
+						->where(function ($query) use ($q) {
+							return $query->orWhere('schools.formNo', 'like', '%'.$q.'%')
+							->orwhere('schools.schoolName', 'like', '%'.$q.'%')
+							->orwhere('schools.schoolcode', 'like', '%'.$q.'%')
+							->orwhere('schools.uniqueSchoolCode', 'like', '%'.$q.'%')
+							->orwhere('citys.cityName', 'like', '%'.$q.'%')
+							->orwhere('schools.principalName', 'like', '%'.$q.'%');
+						})
+						->orderBy('schools.entityId','desc')
+						->paginate(trans('messages.PAGINATE'));
+						$pagination = $schools->appends ( array ('q' => Input::get ( 'q' )));						
         return view('schools.assignSchoolCenter', compact('schools'));
     }
 	
@@ -142,8 +177,40 @@ class schoolsController extends Controller
         return view('schools.centerAllottedSchoolList', compact('schools'))->with('studentClass',$studentClass);;
     }
 	
-	
-	
+// searchCenterAllottedSchoolList	
+   public function searchCenterAllottedSchoolList()
+    {
+		$validUser = $this->CheckUser();
+		if($validUser) return	view('errors.404');
+		
+		$q = Input::get ( 'q' );
+		$schoolCenterId = session()->get('schoolCenterId');
+		$studentClass = DB::table('class_names')->where('deleted',0)->get();
+		$schools= DB::table('schools')
+                        ->join('entitys','entitys.entityId','=','schools.entityId')
+                        ->join('addresses','addresses.entityId','=','schools.entityId')
+						->join('phones','phones.entityId','=','schools.entityId')
+						->join('emailaddresses','emailaddresses.entityId','=','schools.entityId')
+						->join('citys','citys.id','=','addresses.cityId')
+						->join('districts','districts.id','=','addresses.districtId')
+						->where('schools.deleted',0)
+						->where('schools.centerSchoolId',$schoolCenterId)
+						->where('schools.sessionYear',session()->get('activeSession'))
+						->where('addresses.stateId',session()->get('currentStateId'))
+						->where(function ($query) use ($q) {
+							return $query->orWhere('schools.formNo', 'like', '%'.$q.'%')
+							->orwhere('schools.schoolName', 'like', '%'.$q.'%')
+							->orwhere('schools.schoolcode', 'like', '%'.$q.'%')
+							->orwhere('schools.uniqueSchoolCode', 'like', '%'.$q.'%')
+							->orwhere('citys.cityName', 'like', '%'.$q.'%')
+							->orwhere('schools.principalName', 'like', '%'.$q.'%');
+						})
+						->orderBy('schools.entityId','desc')
+						->paginate(trans('messages.PAGINATE'));
+						$pagination = $schools->appends ( array ('q' => Input::get ( 'q' )));						
+        return view('schools.centerAllottedSchoolList', compact('schools'))->with('studentClass',$studentClass);;
+    }
+
 	
 	public function filter()
     {
