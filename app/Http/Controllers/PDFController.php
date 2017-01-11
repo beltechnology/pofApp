@@ -8,12 +8,14 @@ use PDF;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\student;
+use App\User;
 use App\entity;
 use App\school;
 use Carbon\Carbon;
 use Session;
 use DB;
 use raw;
+use Excel;
 use Illuminate\Support\Facades\Input;
 class PDFController extends Controller
 {
@@ -477,14 +479,12 @@ class PDFController extends Controller
 						->orderBy('students.rollNo','asc')
 						->get();
 
-						
-		$address = DB::table('addresses')->where('deleted',0)->where('entityId',session()->get('entityId'))->get();
+		$address = DB::table('addresses')->where('deleted',0)->where('entityId',session()->get('SecondLevelSchoolId'))->get();
 		$states = DB::table('states')->where('deleted',0)->where('id',$address[0]->stateId)->value('stateName');
 		$districts = DB::table('districts')->where('deleted',0)->where('id',$address[0]->districtId)->value('name');
 		$citys = DB::table('citys')->where('deleted',0)->where('id',$address[0]->cityId)->value('cityName');
 		$classess = DB::table('class_names')->where('deleted',0)->get();
-		
-	//var_dump($schoolCenter);	
+
 		$pdf = PDF::loadView('pdf.secondLevelAdmitCard',['student'=>$student,'schools'=>$schools,'address'=>$address[0]->addressLine1." ".$address[0]->addressLine2 ,'states'=>$states,'districts'=>$districts,'citys'=>$citys,'classess'=>$classess,'schoolCenter'=>$schoolCenter,'second_level_exams'=>$second_level_exams,]);
 		return $pdf->stream('secondLevelAdmitCard.pdf');
 		}
@@ -517,8 +517,142 @@ class PDFController extends Controller
     //    return view('pdf.secondLevelStudentResultSheet', compact('student'));
     }
 
+public function export($entityId){
+				   $data= DB::table('students')
+                        ->join('class_names','class_names.id','=','students.classId')
+                        ->join('schools','schools.entityId','=','students.schoolEntityId')
+						->where('students.deleted',0)
+						->where('class_names.deleted',0)
+						->where('students.sessionYear',session()->get('activeSession'))
+						->where('students.schoolEntityId',$entityId)
+						->orderBy('students.rollNo','asc')
+						->select('schools.schoolName','schools.principalName','schools.uniqueSchoolCode','class_names.name','students.*')
+						->get();
+						
+						$address = DB::table('addresses')->where('deleted',0)->where('entityId',$entityId)->get();
+						$states = DB::table('states')->where('deleted',0)->where('id',$address[0]->stateId)->value('stateName');
+						$districts = DB::table('districts')->where('deleted',0)->where('id',$address[0]->districtId)->value('name');
+						$city = DB::table('citys')->where('deleted',0)->where('id',$address[0]->cityId)->value('cityName');
+						$valData = "";
+						$conter = 0;
+						foreach($data as $valDatas){
+							$schoolrank = 0;
+							if($valDatas->resultDeclared == 1)
+							{
+								if($valDatas->pso == 1){
+									$stream = "PSO";
+									$marks = $valDatas->totalMarksPso;
+									$schoolrank = count(DB::table('students')
+									->where('students.deleted',0)
+									->where('students.sessionYear',session()->get('activeSession'))
+									->where('students.schoolEntityId',$entityId)
+									->where('students.classId','=',$valDatas->classId)
+									->where('students.attendance',1)
+									->where('students.pso',1)
+									->where('students.totalMarksPso','>',$valDatas->totalMarksPso)
+									->groupBy('students.totalMarksPso')
+									->select('students.studentName')
+									->get())+1;
+									if($schoolrank <= 3 && $valDatas->totalMarksPso > trans('messages.PSO_PASSING_MARKS')){
+										$result = "Yes";
+										if($schoolrank == 1){
+										$madel = "Gold";	
+										}
+										elseif($schoolrank == 2){
+										$madel = "Silver";	
+										}
+										elseif($schoolrank == 3){
+										$madel = "Bronz";	
+										}
+										else{
+										$madel = "None";	
+										}
+									}
+									else{
+										$result = "No";	
+										$madel = "No";
+									}
+								}
+								if($valDatas->pmo == 1){
+								$stream = "PMO";
+								$marks = $valDatas->totalMarksPmo;
+									$schoolrank = count(DB::table('students')
+									->where('students.deleted',0)
+									->where('students.sessionYear',session()->get('activeSession'))
+									->where('students.schoolEntityId',$entityId)
+									->where('students.classId','=',$valDatas->classId)
+									->where('students.attendance',1)
+									->where('students.pmo',1)
+									->where('students.totalMarksPmo','>',$valDatas->totalMarksPmo)
+									->groupBy('students.totalMarksPmo')
+									->select('students.studentName')
+									->get())+1;
+									
+									if($schoolrank <= 3 && $valDatas->totalMarksPmo > trans('messages.PMO_PASSING_MARKS')){
+										$result = "Yes";
+										if($schoolrank == 1){
+										$madel = "Gold";	
+										}
+										elseif($schoolrank == 2){
+										$madel = "Silver";	
+										}
+										elseif($schoolrank == 3){
+										$madel = "Bronz";	
+										}
+										else{
+										$madel = "None";	
+										}
+									}
+									else{
+										$result = "No";	
+										$madel = "No";
+									}
+								}
+							}
+							else{
+								if($valDatas->pso == 1){
+									$stream = "PSO";
+								}
+								if($valDatas->pmo == 1){
+									$stream = "PMO";
+								}
+								$schoolrank = "Absent";
+								$result = "Absent";	
+								$madel = "Absent";
+								$marks = "Absent";
+							}
+								$conter = ++$conter;
+								$valData[] =	array(
+								"Sr. No." => $conter,
+								"School Name" => $valDatas->schoolName,
+								"Address" => $address[0]->addressLine1,
+								"City"=> $city,
+								"District"=> $districts,
+								"Student Name" => $valDatas->studentName,
+								"Father Name" => $valDatas->fatherName,
+								"School Code" => $valDatas->uniqueSchoolCode,
+								"Class" => $valDatas->name,
+								"rollNo" => $valDatas->rollNo,
+								"Stream" => $stream,
+								"Marks" => $marks,
+								"Rank" => $schoolrank,
+								"Medal" => $madel,
+								"Second Level" => $result
+								);
+						
+							
+						}
+		
+		return Excel::create('studentResult', function($excel) use ($valData) {
+			$excel->sheet('Sheet', function($sheet) use ($valData)
+	        {
+				$sheet->fromArray($valData);
+	        });
+		})->download('xls');	
+  }
 
-	
+
+  
 	public function CheckUser()
 	{
 		$userRole = new \App\library\myFunctions;

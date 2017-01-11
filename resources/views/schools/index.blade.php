@@ -57,6 +57,7 @@
 					<th> {{ trans('messages.DELETE') }}</th>
 					<th>{{ trans('messages.ACTIONS') }}<input type="checkbox" id="selectall" /></th>
 					<th>Create Center</th>
+					<th>Excel</th>
                 </tr>
             </thead>
             <tbody>
@@ -106,6 +107,7 @@
 						@endif
 					</form> 
 					</td>
+					<td><a href="/export/{{$item->entityId}}">Excel<span class="glyphicon glyphicon-download"></span></a> </td>
 					
                 </tr>
             @endforeach

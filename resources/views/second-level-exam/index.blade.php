@@ -1,7 +1,26 @@
 @extends('layouts.header')
 @section('content')
 <div class=" col-md-10 category">
-    <h1>Second level exam time </h1>
+	<div class="edit_school">	
+        <nav class="navbar navbar-default">
+  		<div class="container-fluid">
+    	<ul class="nav navbar-nav">
+	@foreach ($articles as $article)
+		@if($article->moduleType ==  trans('messages.THREE'))	
+			@if($article->muduleLink === "/second-level-exam")
+				<li  class="active"><a  href="{{ url($article->muduleLink) }}">{{ $article->name }}</a></li>
+			@else
+				<li><a  href="{{ url($article->muduleLink) }}">{{ $article->name }} </a></li>
+			@endif
+		@endif
+    @endforeach 		
+    </ul>
+  </div>
+</nav>
+
+	</div>
+	
+    <h1>Reporting  time </h1>
     <div class="table">
         <table class="table table-bordered table-striped table-hover">
             <thead>

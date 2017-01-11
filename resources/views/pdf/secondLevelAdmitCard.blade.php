@@ -6,7 +6,7 @@
 
 <style>
 @page { margin: 0px; }
-body { margin: 10px 0px 0px 35px;  }
+body { margin: 10px 0px 0px 35px; }
 
 .olympiad-foundation p{text-align:center;}
 
@@ -93,7 +93,7 @@ if($i== 3){
 	<td style="width:20%;">&nbsp;</td>
 </tr>
 <tr align="center">
-	<td style="width:20%;">&nbsp;</td>
+	<td style=""><img src="http://test.pofindia.com/images/download.jpg"   height="100" /></td>
 	<td style="width:60%;">
 			<table>
 				<tr>
@@ -152,7 +152,7 @@ if($i== 3){
 			</table>
 	</td>
 	
-	<td style="width:20%;">&nbsp;</td>
+	<td style="width:20%;"><img src="http://test.pofindia.com/images/download.jpg"   height="100" /></td>
 </tr>
 <tr>
 	<td style="width:20%;">&nbsp;</td>
@@ -161,13 +161,13 @@ if($i== 3){
 
 </tr>
 <tr>
-	<td style="width:20%;">&nbsp;</td>
+	<td style="width:20%;"><img src="http://test.pofindia.com/images/download.jpg"   height="35" /></td>
 	<td style="width:60%;">Center of Examination : {{$schoolCenter[0]->schoolName}}, {{$schoolCenter[0]->addressLine1}}<br> , {{$schoolCenter[0]->cityName}} , {{$schoolCenter[0]->name}}, {{$schoolCenter[0]->stateName}}</td>
-	<td style="width:20%;">&nbsp;</td>
+	<td style="width:20%;"><img src="http://test.pofindia.com/images/download.jpg"   height="35" /></td>
 
 </tr>
 <tr>
-	<td style="width:20%;">&nbsp;</td>
+	<td style="width:20%;"><img src="http://test.pofindia.com/images/download.jpg"   height="35" /></td>
 	<td style="width:60%;">
 		 <table>
 				<tr>
@@ -177,7 +177,7 @@ if($i== 3){
 				</tr>
 		 </table>
 	</td>
-	<td style="width:20%;">&nbsp;</td>
+	<td style="width:20%;"><img src="http://test.pofindia.com/images/download.jpg"   height="35" /></td>
 
 </tr>
 </table>

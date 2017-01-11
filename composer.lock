@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "318c0740695627413e5c9cebab6e22a0",
-    "content-hash": "6e2c167a228fe010444a9a4fdc8f1107",
+    "hash": "b1c9b3479dc142aaecdcfa724f199fad",
+    "content-hash": "9c53df5f1688850cab45f0333c565a03",
     "packages": [
         {
             "name": "appzcoder/crud-generator",

@@ -88,7 +88,7 @@
             </div>
             
             <div class=" reserved col-md-3">
-            <p>{{ trans('messages.ALL_RIGHTS_RESERVED') }}</p>
+            <p>{{ trans('messages.ALL_RIGHTS_RESERVED') }} VERSION : {{ App::versionNumber() }}</p>
             </div>
             
           	</div>

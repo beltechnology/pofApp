@@ -1,8 +1,27 @@
 @extends('layouts.header')
 @section('content')
 <div class=" col-md-10 category create-emp-list">
+	<div class="edit_school">	
+        <nav class="navbar navbar-default">
+  		<div class="container-fluid">
+    	<ul class="nav navbar-nav">
+	@foreach ($articles as $article)
+		@if($article->moduleType ==  trans('messages.THREE'))	
+			@if($article->muduleLink === "/second-level-exam")
+				<li  class="active"><a  href="{{ url($article->muduleLink) }}">{{ $article->name }}</a></li>
+			@else
+				<li><a  href="{{ url($article->muduleLink) }}">{{ $article->name }} </a></li>
+			@endif
+		@endif
+    @endforeach 		
+    </ul>
+  </div>
+</nav>
 
-    <h1>Edit Second Level Exam Time </h1>
+	</div>
+	
+    <h1>Reporting  time </h1>
+
 
     {!! Form::model($secondlevelexam, [
         'method' => 'PATCH',

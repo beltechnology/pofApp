@@ -13,10 +13,10 @@
    		
     	<ul class="nav navbar-nav">
 @foreach ($articles as $article)
-		@if($article->moduleType === trans('messages.TWO'))	
-			@if($article->muduleLink === "/book-details")
+		@if($article->moduleType == trans('messages.TWO'))	
+			@if($article->muduleLink == "/book-details")
 				<li  class="active"><a  href="{{ url($article->muduleLink.'/'.session()->get('entityId').'/edit') }}">{{ $article->name }}</a></li>
-			@elseif($article->muduleLink === "/student")
+			@elseif($article->muduleLink == "/student")
 				<li><a  href="{{ url($article->muduleLink) }}">{{ $article->name }} </a></li>
 			@else
 				<li><a  href="{{ url($article->muduleLink.'/'.session()->get('entityId').'/edit') }}">{{ $article->name }} </a></li>

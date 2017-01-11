@@ -1,6 +1,24 @@
 @extends('layouts.header')
 @section('content')
 <div class=" col-md-10 category">
+	<div class="edit_school">	
+        <nav class="navbar navbar-default">
+  		<div class="container-fluid">
+    	<ul class="nav navbar-nav">
+	@foreach ($articles as $article)
+		@if($article->moduleType ==  trans('messages.THREE'))	
+			@if($article->muduleLink == "/student-result/create")
+				<li  class="active"><a  href="{{ url($article->muduleLink) }}">{{ $article->name }}</a></li>
+			@else
+				<li><a  href="{{ url($article->muduleLink) }}">{{ $article->name }} </a></li>
+			@endif
+		@endif
+    @endforeach 		
+    </ul>
+  </div>
+</nav>
+
+	</div>
     <hr/>
 <div class="row">
     {!! Form::open(['url' => '/student-result', 'class' => 'form-horizontal', 'enctype' => 'multipart/form-data']) !!}

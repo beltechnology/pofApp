@@ -56,6 +56,7 @@ Route::group(array('middleware' => 'auth'), function() {
 	Route::get('/getResultSheetData', 'PDFController@getResultSheetData');
 	Route::get('/getAdmitPDF', 'PDFController@getAdmitPDF');
 	Route::get('/secondLevelStudentResultSheet', 'PDFController@secondLevelStudentResultSheet');
+	Route::get('/export/{entityId}', 'PDFController@export');
 	Route::get('/searchFilter', 'studentController@searchFilter');
 	Route::resource('/changeYear', 'SessionYearController@changeYear');
 	Route::get('/studentAttendance', 'studentController@attendanceScreen');

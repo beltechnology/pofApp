@@ -8,7 +8,7 @@
    		
     	<ul class="nav navbar-nav">
 	@foreach ($articles as $article)
-		@if($article->moduleType === trans('messages.TWO'))	
+		@if($article->moduleType == trans('messages.TWO'))	
 			@if($article->muduleLink === "/student")
 				<li   class="active" ><a  href="{{ url($article->muduleLink) }}">{{ $article->name }} </a></li>
 			@else
@@ -77,7 +77,7 @@
                 <tr>
                    <th>{{trans('messages.S_NO')}}</th> 
 				   <th>{{ trans('messages.STUDENT_NAME') }}</th>
-				   <th>{{ trans('messages.DOB') }}</th>
+				   <th>{{ trans('messages.FATHER_NAME') }}</th>
 				   <th>{{ trans('messages.BOOKDETAIL_CLASS') }}</th>
 				   <th>{{ trans('messages.ROLL_NO') }}</th>
 				   <th> {{ trans('messages.HANDICAPPED') }}</th>
@@ -105,7 +105,7 @@
                 <tr class="{{$class}}">
 					<td>{{ $x }}</td>
                     <td>{{ $item->studentName }}</td>
-					<td>{{ $item->dob }}</td>
+					<td>{{ $item->fatherName }}</td>
 					<td>{{ $item->name }}</td>
 					<td>{{ $item->rollNo }}</td>
 					<td>@if($item->handicapped === trans('messages.ZERO'))  NO @else  Yes @endif</td>
@@ -139,24 +139,30 @@
 					</td>
 					<td>
 				@if($item->resultDeclared  && $item->pso == 1)
-					{{$schoolrankPso = DB::table('students')
+					{{$schoolrankPso = count(DB::table('students')
 						->where('students.deleted',0)
 						->where('students.sessionYear',session()->get('activeSession'))
 						->where('students.schoolEntityId',session()->get('entityId'))
 						->where('students.classId','=',$item->classId)
 						->where('students.totalMarksPso','>',$item->totalMarksPso)
-						->count()+1}}
+						->groupBy('students.totalMarksPso')
+						->select('students.studentName')
+						->get())+1
+						}}
 				@endif		
 						</td>
 					<td>
 					@if($item->resultDeclared && $item->pmo == 1)
-					{{$schoolrankPmo = DB::table('students')
+					{{$schoolrankPmo = count(DB::table('students')
 						->where('students.deleted',0)
 						->where('students.sessionYear',session()->get('activeSession'))
 						->where('students.schoolEntityId',session()->get('entityId'))
 						->where('students.classId','=',$item->classId)
 						->where('students.totalMarksPmo','>',$item->totalMarksPmo)
-						->count()+1}}
+						->groupBy('students.totalMarksPmo')
+						->select('students.studentName')
+						->get())+1
+						}}
 						@endif
 						</td>
 					<td>

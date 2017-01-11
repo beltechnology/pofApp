@@ -26,7 +26,7 @@ else
 	$active = "";
 }
 ?>
-	@if($article->moduleType === trans('messages.ONE'))	
+	@if($article->moduleType == trans('messages.ONE'))	
         <li class="sideMenu"> 
 			<a class="menu {{$active}}"  href="{{ url($article->muduleLink) }}">
 			   <i class="{{ $article->image }}"></i>
