@@ -33,6 +33,7 @@ class secondLevelStudentController extends Controller
                         ->join('class_names','class_names.id','=','students.classId')
 						->where('secondlevelstudent.deleted',0)
 						->where('students.deleted',0)
+						->where('students.resultDeclared',2)
 						->where('class_names.deleted',0)
 						->where('students.sessionYear',session()->get('activeSession'))
 						->where('secondlevelstudent.SecondLevelSchoolId',session()->get('SecondLevelSchoolId'))
@@ -51,6 +52,7 @@ class secondLevelStudentController extends Controller
                         ->join('schools','schools.entityId','=','secondlevelstudent.SecondLevelSchoolId')
 						->where('secondlevelstudent.deleted',0)
 						->where('students.deleted',0)
+						->where('students.resultDeclared',2)
 						->where('secondlevelstudent.studentAttendance',1)
 						->where('class_names.deleted',0)
 						->where('students.sessionYear',session()->get('activeSession'))
@@ -146,13 +148,9 @@ class secondLevelStudentController extends Controller
 		$validUser = $this->CheckUser();
 		if($validUser) return	view('errors.404');
 
-		DB::table('students')->where('entityId', $id)->update(['deleted' => 1]);
-		DB::table('entitys')->where('entityId', $id)->update(['deleted' => 1]);
-		
-
+		DB::table('students')->where('entityId', $id)->update(['resultDeclared' => 1]);
         Session::flash('flash_message', 'student deleted!');
-
-        return redirect('student');
+        return Redirect::back();
     }
 	
 	

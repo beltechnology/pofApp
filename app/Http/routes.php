@@ -200,3 +200,4 @@ Route::auth();
 Route::resource('studentLogin', 'studentController@studentLogin');
 Route::resource('studentLoginData', 'studentController@studentLoginData');
 Route::get('getStudentResult/{id}/{stream}','PDFController@getStudentResult');
+Route::get('getSecondLevelStudentResult/{id}/{stream}','PDFController@getSecondLevelStudentResult');

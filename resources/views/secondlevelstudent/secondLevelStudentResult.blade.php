@@ -40,6 +40,7 @@
 				   <th>Father Name</th>
 				   <th>{{ trans('messages.BOOKDETAIL_CLASS') }}</th>
 				   <th>{{ trans('messages.ROLL_NO') }}</th>
+				   <th>Marks</th>
 				   <th>Subject</th>
 				   <th>Rank</th>
                 </tr>
@@ -55,6 +56,7 @@
                     <td>{{ $item->fatherName }}</td>
 					<td>{{ $item->name }}</td>
 					<td>{{ $item->rollNo }}</td>
+					<td>{{$item->totalMarks}}</td>
 					<td>{{$item->stream}}</td>
 					<td>{{$schoolrank = DB::table('secondlevelstudent')
 						->join('students','students.entityId','=','secondlevelstudent.studentEntityId')

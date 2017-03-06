@@ -28,8 +28,18 @@
 
                             <div class="col-md-6">
                             <label for="pso">
-							<input id="pso" type="radio" class="" name="stream" value="pso" required> PSO </label>
+							  <input id="pso" type="radio" class="" name="stream" value="pso" required> PSO </label>
                               <label for="pmo">   <input id="pmo" type="radio" class="" name="stream" value="pmo" required> PMO</label>
+                            </div>
+                        </div>
+
+                        <div class="form-group{{ $errors->has('level') ? ' has-error' : '' }}">
+                            <label for="level" class="col-md-4 control-label">Level</label>
+
+                            <div class="col-md-6">
+                            <label for="first">
+							  <input id="first" type="radio" class="" name="level" value="first" required> FIRST LEVEL  </label>
+                              <label for="second">   <input id="second" type="radio" class="" name="level" value="second" required>  SECOND LEVEL</label>
 
                                 @if($errors->any())
                                     <span class="has-error  help-block" >
@@ -38,6 +48,8 @@
                                 @endif
                             </div>
                         </div>
+
+						
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
                                 <button type="submit" class="btn btn-primary">

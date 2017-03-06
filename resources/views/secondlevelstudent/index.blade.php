@@ -73,7 +73,7 @@
 					<td>
                         {!! Form::open([
                             'method'=>'DELETE',
-                            'url' => ['/secondlevelstudent', $item->studentEntityId],
+                            'url' => ['/secondLevelStudent', $item->studentEntityId],
                             'style' => 'display:inline'
                         ]) !!}
                             {!! Form::button('<span class="glyphicon glyphicon-trash" aria-hidden="true" title="Delete student" />', array(

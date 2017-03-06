@@ -317,6 +317,9 @@ class studentController extends Controller
 					secondLevelStudent::create($studentData);
 					DB::table('students')->where('entityId', $secondLevelStudent)->update(['resultDeclared' => 2]);
 				}
+				elseif($exitstudentInfo){
+					DB::table('students')->where('entityId', $secondLevelStudent)->update(['resultDeclared' => 2]);
+				}
 			}
 		}
 		return redirect('student');
@@ -330,23 +333,46 @@ class studentController extends Controller
 	
 	public function studentLoginData(){
 		
-	if(isset($_POST['rollNo']) && ($_POST['stream']))
+	if(isset($_POST['rollNo']) && ($_POST['stream']) && ($_POST['level']))
 	{
 	$entityId = DB::table('students')->where('students.deleted',0)->where('students.attendance',1)->where('students.rollNo',$_POST['rollNo'])->where('students.'.$_POST['stream'],1)->value('entityId');	
 	if($entityId){
-		
-		$resultId = DB::table('student_result')->where('student_result.deleted',0)->where('student_result.studentId',$entityId)->where('student_result.stream',strtoupper($_POST['stream']))->lists('resultId');
-		if($resultId){
-			if(count($resultId) == 60){
-				return Redirect('getStudentResult/'.$entityId.'/'.$_POST['stream']);
+		if($_POST['level'] == 'second')
+		{
+			$secondLevelId = DB::table('secondlevelstudent')->where('secondlevelstudent.deleted',0)->where('secondlevelstudent.studentAttendance',1)->where('secondlevelstudent.studentEntityId',$entityId)->where('secondlevelstudent.stream',$_POST['stream'])->value('secondLevelId');
+			if($secondLevelId){
+				$resultId = DB::table('second_level_student_result')->where('second_level_student_result.deleted',0)->where('second_level_student_result.studentId',$entityId)->where('second_level_student_result.stream',strtoupper($_POST['stream']))->lists('resultId');
+				if($resultId){
+					if(count($resultId) == 60){
+						return Redirect('getSecondLevelStudentResult/'.$entityId.'/'.$_POST['stream']);
+					}
+					else{
+						return Redirect::back()->withInput(Input::all())->withErrors(['student result in progress.']);
+					}
+					
+				}
+				else{
+					return Redirect::back()->withInput(Input::all())->withErrors(['student absent.']);
+				}
 			}
 			else{
-				return Redirect::back()->withInput(Input::all())->withErrors(['student result in progress.']);
+				return Redirect::back()->withInput(Input::all())->withErrors(['Invalid roll no or stream.']);	
 			}
-			
 		}
 		else{
-			return Redirect::back()->withInput(Input::all())->withErrors(['student absent.']);
+			$resultId = DB::table('student_result')->where('student_result.deleted',0)->where('student_result.studentId',$entityId)->where('student_result.stream',strtoupper($_POST['stream']))->lists('resultId');
+			if($resultId){
+				if(count($resultId) == 60){
+					return Redirect('getStudentResult/'.$entityId.'/'.$_POST['stream']);
+				}
+				else{
+					return Redirect::back()->withInput(Input::all())->withErrors(['student result in progress.']);
+				}
+				
+			}
+			else{
+				return Redirect::back()->withInput(Input::all())->withErrors(['student absent.']);
+			}
 		}
 		
 	}

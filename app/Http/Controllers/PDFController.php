@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Redirect;
 use PDF;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -35,6 +35,7 @@ class PDFController extends Controller
                         ->join('schools','schools.entityId','=','secondlevelstudent.SecondLevelSchoolId')
 						->where('secondlevelstudent.stream',Input::get('subject'))
 						->where('students.deleted',0)
+						->where('students.resultDeclared',2)
 						->where('class_names.deleted',0)
 						->where('class_names.id',Input::get('filterClass'))
 						->where('students.sessionYear',session()->get('activeSession'))
@@ -328,7 +329,7 @@ class PDFController extends Controller
 			if($studentList){
 					foreach($studentList as $studentListData){
 						//	 echo $schoolRank."________".$studentListData->entityId."******".$studentInfo[0]->entityId."-------".$schoolEntityId."========".$studentListData->schoolEntityId."<br>";
-							if($stream == 'pmo'){
+							if($stream == 'pmo' && $studentListData->pmo){
 								// if($tempMarks != $studentListData->totalMarksPmo){
 									// $tempMarks = $studentListData->totalMarksPmo;
 									// $natnationRank++;
@@ -345,7 +346,7 @@ class PDFController extends Controller
 								if($tempCityMarks != $studentListData->totalMarksPmo && $cityId== $studentListData->cityId ){$tempCityMarks=$studentListData->totalMarksPmo; $cityRank++;}
 								if($tempSchoolMarks != $studentListData->totalMarksPmo && $schoolEntityId== $studentListData->schoolEntityId ){$tempSchoolMarks = $studentListData->totalMarksPmo; $schoolRank++;}
 								
-							}else{
+							}elseif($stream == 'pso' && $studentListData->pso){
 								if($tempMarks != $studentListData->totalMarksPso){
 									$tempMarks = $studentListData->totalMarksPso;
 									$natnationRank++;
@@ -472,6 +473,7 @@ class PDFController extends Controller
                         ->join('class_names','class_names.id','=','students.classId')
 						->where('secondlevelstudent.deleted',0)
 						->where('students.deleted',0)
+						->where('students.resultDeclared',2)
 						->where('class_names.deleted',0)
 						->where('students.sessionYear',session()->get('activeSession'))
 						->where('secondlevelstudent.SecondLevelSchoolId',session()->get('SecondLevelSchoolId'))
@@ -505,6 +507,7 @@ class PDFController extends Controller
 						->where('students.deleted',0)
 						->where('secondlevelstudent.studentAttendance',1)
 						->where('class_names.deleted',0)
+						->where('students.resultDeclared',2)
 						->where('students.sessionYear',session()->get('activeSession'))
 						->orderBy('class_names.name','asc')
 						->where('secondlevelstudent.totalMarks', '>', 75)
@@ -516,6 +519,39 @@ class PDFController extends Controller
 					return $pdf->stream('secondLevelStudentResultSheet.pdf');
     //    return view('pdf.secondLevelStudentResultSheet', compact('student'));
     }
+	
+    public function getSecondLevelStudentResult($studentEntityId,$stream)
+    {
+	    $student= DB::table('secondlevelstudent')
+                         ->join('students','students.entityId','=','secondlevelstudent.studentEntityId')
+                         ->join('class_names','class_names.id','=','students.classId')
+                         ->join('schools','schools.entityId','=','secondlevelstudent.SecondLevelSchoolId')
+						 ->join('addresses','schools.entityId','=','addresses.entityId')
+						 ->join('states','addresses.stateId','=','states.id')
+						 ->join('districts','addresses.districtId','=','districts.id')
+						 ->join('citys','addresses.cityId','=','citys.id')
+						 ->where('secondlevelstudent.deleted',0)
+						 ->where('students.deleted',0)
+						 ->where('secondlevelstudent.studentAttendance',1)
+						 ->where('class_names.deleted',0)
+						 ->where('students.resultDeclared',2)
+						// ->where('students.sessionYear',session()->get('activeSession'))
+						->orderBy('class_names.name','asc')
+						->where('secondlevelstudent.stream', $stream)
+						->where('secondlevelstudent.studentEntityId', $studentEntityId)
+						->select('students.studentName','students.entityId','students.sessionYear', 'addresses.addressLine1','addresses.pincode','states.stateName','citys.cityName', 'districts.name as districtName', 'students.fatherName', 'secondlevelstudent.stream', 'class_names.name as className', 'secondlevelstudent.totalMarks', 'students.rollNo', 'schools.schoolName', 'schools.uniqueSchoolCode', 'students.classId')
+						->get();
+					if($student){
+						return view('pdf.getSecondLevelStudentResult', ['student'=>$student,'entityId'=>$studentEntityId,'stream'=>$stream]);
+					}
+					else{
+						return Redirect::back()->withInput(Input::all())->withErrors(['Invalid roll no or stream.']);	
+					}
+    }
+	
+	
+	
+	
 
 public function export($entityId){
 				   $data= DB::table('students')

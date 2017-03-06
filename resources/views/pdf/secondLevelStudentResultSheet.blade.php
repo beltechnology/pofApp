@@ -61,6 +61,7 @@ else{
 				   <th  style="width:20%; border:1px solid #000;">Father Name</th>
 				   <th  style="width:15%; border:1px solid #000;">{{ trans('messages.ROLL_NO') }}</th>
 				   <th  style="width:5%; border:1px solid #000;">{{ trans('messages.BOOKDETAIL_CLASS') }}</th>
+				   <th  style="width:5%; border:1px solid #000;">Marks</th>
 				   <th  style="width:5%; border:1px solid #000;">Subject</th>
 				   <th  style="width:5%; border:1px solid #000;">Rank</th>
                 </tr>
@@ -88,6 +89,7 @@ else{
                     <td style="width:20%; border:1px solid #000;">{{ $item->fatherName }}</td>
 					<td style="width:15%; border:1px solid #000;">{{ $item->rollNo }}</td>
 					<td style="width:5%; border:1px solid #000;">{{ $item->name }}</td>
+					<td style="width:5%; border:1px solid #000;">{{$item->totalMarks}}</td>
 					<td style="width:5%; border:1px solid #000;">{{$item->stream}}</td>
 					<td style="width:5%; border:1px solid #000;">{{$schoolrank}}</td>
                 </tr>

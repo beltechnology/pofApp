@@ -94,7 +94,7 @@ else{
 	<td style="border:1px solid #000;">&nbsp;</td>
 </tr>
 <?php
-if($j == 24){ ?>
+if($j == 23){ ?>
 	<tr>
 		<td colspan="3">&nbsp;</td>
 		<td colspan="3" align="right"><br><hr>Signature of the Teacher/Invigilator</td>
@@ -105,7 +105,7 @@ $j=0;
 ?>
 @endforeach
 <?php
-if($j < 24){ ?>
+if($j < 23){ ?>
 	<tr>
 		<td colspan="3">&nbsp;</td>
 		<td colspan="3" align="right"><br><hr>Signature of the Teacher/Invigilator</td>
