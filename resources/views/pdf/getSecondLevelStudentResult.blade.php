@@ -135,18 +135,19 @@ else{
     </tbody>
     <tfoot>
       <tr>
-        <td>Percentage Score:{{$student[0]->totalMarks/$total*100}}</td>
+        <td>Percentage Score:{{ $percentage = $student[0]->totalMarks/$total*100}}</td>
         <td>State:{{$student[0]->stateName}}</td>
       </tr>
     </tfoot>
   </table>
-@if($schoolrank <= 3)
+@if($schoolrank <= 3 && $percentage> 81)
 	<h3>Congratulation</h3>
-<h4>ELIGIBLE TO WIN IN {{strtoupper($stream)}} EXAM</h4>
+<!--<h4>ELIGIBLE TO WIN IN {{strtoupper($stream)}} EXAM</h4>-->
 
 @else
-<h3>GOOD JOB TRY NEXT TIME</h3>
-<h4>NOT ELIGIBLE TO WIN IN {{strtoupper($stream)}} EXAM</h4>
+<!--<h3>GOOD JOB TRY NEXT TIME</h3>
+// <h4>NOT ELIGIBLE TO WIN IN {{strtoupper($stream)}} EXAM</h4>-->
+<h4>Never give up… Today is hard, Tomorrow will be sunshine (Best of Luck)</h4>
 @endif
 
 <ol class="prize">

@@ -13,8 +13,11 @@
                             <label for="rollNo" class="col-md-4 control-label">Roll No.</label>
 
                             <div class="col-md-6">
-                                <input id="rollNo" type="text" class="form-control" name="rollNo" value="{{ old('rollNo') }}"maxlength="50" required>
-
+							<div class="row">
+                                <input id="state" type="text" class=" col-md-3" name="state" value="{{ old('state') }}"maxlength="50" required><span class=" col-md-1">-</span>
+                                <input id="className" type="text" class=" col-md-2" name="className" value="{{ old('className') }}"maxlength="50" required><span class=" col-md-1">-</span>
+                                <input id="rollNo" type="text" class=" col-md-3" name="rollNo" value="{{ old('rollNo') }}"maxlength="50" required>
+							</div>
                                 @if ($errors->has('rollNo'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('rollNo') }}</strong>

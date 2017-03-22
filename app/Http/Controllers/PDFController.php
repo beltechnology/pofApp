@@ -510,7 +510,7 @@ class PDFController extends Controller
 						->where('students.resultDeclared',2)
 						->where('students.sessionYear',session()->get('activeSession'))
 						->orderBy('class_names.name','asc')
-						->where('secondlevelstudent.totalMarks', '>', 75)
+						->where('secondlevelstudent.totalMarks', '>', 80)
 						->where('secondlevelstudent.stream', Input::get('subject'))
 						->select('students.studentName', 'students.fatherName', 'secondlevelstudent.stream', 'class_names.name', 'secondlevelstudent.totalMarks', 'students.rollNo', 'schools.schoolName', 'students.classId')
 						->get();

@@ -333,9 +333,10 @@ class studentController extends Controller
 	
 	public function studentLoginData(){
 		
-	if(isset($_POST['rollNo']) && ($_POST['stream']) && ($_POST['level']))
+	if(isset($_POST['rollNo']) && ($_POST['state']) && ($_POST['className']) && ($_POST['stream']) && ($_POST['level']))
 	{
-	$entityId = DB::table('students')->where('students.deleted',0)->where('students.attendance',1)->where('students.rollNo',$_POST['rollNo'])->where('students.'.$_POST['stream'],1)->value('entityId');	
+		$rollNumber = $_POST['state'].'-'.$_POST['className'].'-'.$_POST['rollNo'];
+	$entityId = DB::table('students')->where('students.deleted',0)->where('students.attendance',1)->where('students.rollNo',$rollNumber)->where('students.'.$_POST['stream'],1)->value('entityId');	
 	if($entityId){
 		if($_POST['level'] == 'second')
 		{

@@ -169,9 +169,6 @@ class studentResultController extends Controller
 							for($i=1;$i<= 60;$i++){						
 								$classMapId = DB::table('questionclassmapping')->where('questionclassmapping.deleted',0)->where('questionclassmapping.order',$i)->where('questionclassmapping.masterSetId',$masterSetId)->where('questionclassmapping.classId',$classId)->where('questionclassmapping.stream',$value->stream)->value('classMapId');	
 								$questionId = DB::table('questionclassmapping')->where('questionclassmapping.deleted',0)->where('questionclassmapping.classMapId',$classMapId)->value('questionId');
-
-
-
 						//	echo $questionId."_".$value->stream."_".$classMapId."<br>";	
 							if($answerArray['q'.$i])
 							{
@@ -190,29 +187,29 @@ class studentResultController extends Controller
 								$questionMarks = DB::table('master_question')->where('master_question.deleted',0)->where('master_question.questionId',$questionId)->value('marks');
 								$totalMarks = $totalMarks+$questionMarks;
 							}
-							if($questionId && $studentsEntityId && $answerQuestionId && $answerId){
-								if($updateTrue){
-									$resultId = DB::table('second_level_student_result')->where('second_level_student_result.deleted',0)->where('second_level_student_result.questionId',$questionId)->where('second_level_student_result.studentId',$studentsEntityId)->where('second_level_student_result.answerId',$answerQuestionId)->where('second_level_student_result.stream',$value->stream)->value('resultId');
-									if($resultId)
-									{
-										DB::table('second_level_student_result')->where('second_level_student_result.resultId', $resultId)->update(['correct' => $answerResponse,'studentAnswerId'=>$answerId]);	
+								if($questionId && $studentsEntityId && $answerQuestionId && $answerId){
+									if($updateTrue){
+										$resultId = DB::table('second_level_student_result')->where('second_level_student_result.deleted',0)->where('second_level_student_result.questionId',$questionId)->where('second_level_student_result.studentId',$studentsEntityId)->where('second_level_student_result.answerId',$answerQuestionId)->where('second_level_student_result.stream',$value->stream)->value('resultId');
+										if($resultId)
+										{
+											DB::table('second_level_student_result')->where('second_level_student_result.resultId', $resultId)->update(['correct' => $answerResponse,'studentAnswerId'=>$answerId]);	
+										}
+										else{
+										$studentResult = ['questionId'=>$questionId, 'studentId'=>$studentsEntityId, 'answerId'=>$answerQuestionId, 'correct'=>$answerResponse, 'stream'=>$value->stream, 'order'=>$i, 'studentAnswerId'=>$answerId,];
+										secondLevelStudentResult::create($studentResult);
+										}
 									}
 									else{
-									$studentResult = ['questionId'=>$questionId, 'studentId'=>$studentsEntityId, 'answerId'=>$answerQuestionId, 'correct'=>$answerResponse, 'stream'=>$value->stream, 'order'=>$i, 'studentAnswerId'=>$answerId,];
-									secondLevelStudentResult::create($studentResult);
+										$studentResult = ['questionId'=>$questionId, 'studentId'=>$studentsEntityId, 'answerId'=>$answerQuestionId, 'correct'=>$answerResponse, 'stream'=>$value->stream, 'order'=>$i, 'studentAnswerId'=>$answerId,];
+										secondLevelStudentResult::create($studentResult);
 									}
 								}
-								else{
-									$studentResult = ['questionId'=>$questionId, 'studentId'=>$studentsEntityId, 'answerId'=>$answerQuestionId, 'correct'=>$answerResponse, 'stream'=>$value->stream, 'order'=>$i, 'studentAnswerId'=>$answerId,];
-									secondLevelStudentResult::create($studentResult);
-								}
-							}
 
 								
 							}
 							//echo $studentsEntityId."<br>";
 							if($studentsEntityId){
-									 DB::table('secondLevelStudent')->where('secondLevelStudent.studentEntityId', $studentsEntityId)->update(['totalMarks' => $totalMarks,'resultDeclared'=>1]);
+									 DB::table('secondlevelstudent')->where('secondlevelstudent.studentEntityId', $studentsEntityId)->update(['totalMarks' => $totalMarks,'resultDeclared'=>1]);
 							}
 // second level end Code							
 						}
